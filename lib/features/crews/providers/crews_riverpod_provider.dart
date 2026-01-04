@@ -6,7 +6,7 @@ import '../../../providers/riverpod/app_state_riverpod_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:state_notifier/state_notifier.dart';
 
-import '../../../providers/riverpod/auth_riverpod_provider.dart';
+import '../../auth/auth.dart';
 import '../models/models.dart';
 import '../services/crew_service.dart';
 
@@ -287,3 +287,4 @@ CrewCreationNotifier crewCreationNotifier(Ref ref) {
 AsyncValue<void> crewCreationState(Ref ref) {
   return ref.watch(crewCreationStateProvider);
 }
+

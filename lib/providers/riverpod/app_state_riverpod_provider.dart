@@ -7,7 +7,7 @@ import '../../services/analytics_service.dart';
 import '../../services/connectivity_service.dart';
 import '../../services/offline_data_service.dart';
 import '../../services/local_notification_service.dart';
-import 'auth_riverpod_provider.dart';
+import '../../features/auth/auth.dart';
 import '../../features/jobs/jobs.dart';
 import '../../features/unions/unions.dart';
 
@@ -308,6 +308,7 @@ bool isAnyLoading(Ref ref) {
          jobsState.isLoading ||
          localsState.isLoading;
 }
+
 
 
 

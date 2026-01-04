@@ -8,7 +8,7 @@ import '../../../design_system/tailboard_theme.dart';
 import '../../../design_system/tailboard_components.dart';
 
 // Providers
-import '../../../providers/riverpod/auth_riverpod_provider.dart';
+import '../../auth/auth.dart';
 import '../../../features/jobs/jobs.dart';
 import '../providers/crews_riverpod_provider.dart';
 import '../providers/feed_provider.dart';
@@ -816,6 +816,7 @@ class MembersTab extends ConsumerWidget {
         );
   }
 }
+
 
 
 

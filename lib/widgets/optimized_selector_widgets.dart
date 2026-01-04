@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../providers/riverpod/auth_riverpod_provider.dart';
+import '../features/auth/auth.dart';
 import '../features/jobs/jobs.dart' as app_jobs_provider;
 import '../features/unions/unions.dart';
 import '../features/jobs/jobs.dart';
@@ -241,6 +241,7 @@ class CombinedAppStateSelector extends ConsumerWidget {
     return builder(context, combinedState, child);
   }
 }
+
 
 
 

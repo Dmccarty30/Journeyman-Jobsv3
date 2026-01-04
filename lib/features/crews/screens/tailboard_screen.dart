@@ -15,7 +15,7 @@ import '../../../navigation/app_router.dart';
 import '../providers/crews_riverpod_provider.dart';
 import '../providers/feed_provider.dart';
 import '../providers/feed_filter_provider.dart';
-import '../../../providers/riverpod/auth_riverpod_provider.dart';
+import '../../auth/auth.dart';
 import '../../../providers/core_providers.dart'
     hide selectedCrewProvider, currentUserProvider;
 
@@ -1224,3 +1224,4 @@ class _TailboardScreenState extends ConsumerState<TailboardScreen>
     );
   }
 }
+

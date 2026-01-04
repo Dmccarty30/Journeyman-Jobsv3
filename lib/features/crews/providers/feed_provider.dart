@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:state_notifier/state_notifier.dart';
 
 import '../../../providers/core_providers.dart' as core_providers;
-import '../../../providers/riverpod/auth_riverpod_provider.dart'
+import '../../auth/auth.dart'
     as auth_providers;
 import '../services/feed_service.dart';
 import '../models/post.dart';
@@ -403,3 +403,4 @@ Future<bool> userReactionToPost(
     rethrow;
   }
 }
+

@@ -1,7 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../../../providers/riverpod/auth_riverpod_provider.dart';
+import '../../auth/auth.dart';
 import '../models/post.dart';
 import '../models/shared_job.dart';
 import '../models/tailboard.dart';

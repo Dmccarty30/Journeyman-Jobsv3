@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 // Screens
 import '../screens/splash/splash_screen.dart';
 import '../screens/onboarding/welcome_screen.dart';
-import '../screens/onboarding/auth_screen.dart';
+import '../features/auth/auth.dart';
 import '../screens/onboarding/onboarding_steps_screen.dart';
 import '../screens/nav_bar_page.dart';
 // import '../screens/crews/crews_screen.dart'; // Deprecated
@@ -24,7 +24,7 @@ import '../features/profile/profile.dart';
 import '../screens/settings/support/help_support_screen.dart';
 import '../screens/settings/support/resources_screen.dart';
 import '../screens/settings/account/training_certificates_screen.dart';
-import '../screens/auth/forgot_password_screen.dart';
+import '../features/auth/auth.dart';
 import '../screens/settings/support/feedback_screen.dart';
 import '../screens/tools/electrical_calculators_screen.dart';
 import '../screens/tools/transformer_reference_screen.dart';
@@ -386,6 +386,8 @@ class AppRouter {
     }
   }
 }
+
+
 
 
 

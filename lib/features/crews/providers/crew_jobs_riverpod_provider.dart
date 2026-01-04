@@ -2,7 +2,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../features/jobs/models/job.dart';
-import '../../../providers/riverpod/auth_riverpod_provider.dart';
+import '../../auth/auth.dart';
 import 'crews_riverpod_provider.dart';
 
 part 'crew_jobs_riverpod_provider.g.dart';
@@ -49,3 +49,4 @@ String? crewJobsError(Ref ref, String crewId) {
   final jobsAsync = ref.watch(crewFilteredJobsStreamProvider(crewId));
   return jobsAsync.error?.toString();
 }
+
