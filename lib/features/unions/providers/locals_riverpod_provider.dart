@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../models/locals_record.dart';
-import '../../utils/concurrent_operations.dart';
-import '../../features/jobs/jobs.dart';
-import '../../features/jobs/providers/jobs_riverpod_provider.dart' show firestoreServiceProvider;
+import '../models/locals_record.dart';
+import '../../../utils/concurrent_operations.dart';
+import '../../jobs/jobs.dart';
+import '../../jobs/providers/jobs_riverpod_provider.dart' show firestoreServiceProvider;
 
 part 'locals_riverpod_provider.g.dart';
 

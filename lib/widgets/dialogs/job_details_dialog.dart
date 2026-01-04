@@ -7,9 +7,9 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../design_system/app_theme.dart';
 import '../../design_system/tailboard_theme.dart';
 import '../../features/jobs/jobs.dart';
-import '../../models/locals_record.dart';
-import '../../providers/riverpod/locals_riverpod_provider.dart';
-import '../../screens/locals/locals_screen.dart';
+import '../../features/unions/unions.dart';
+import '../../features/unions/unions.dart';
+import '../../features/unions/unions.dart';
 
 /// A dialog widget displaying detailed job information
 /// Matches the exact styling of the locals screen popup
@@ -508,4 +508,7 @@ class JobDetailsDialog extends ConsumerWidget {
     }
   }
 }
+
+
+
 

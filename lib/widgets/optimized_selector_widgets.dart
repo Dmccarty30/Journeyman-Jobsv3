@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/riverpod/auth_riverpod_provider.dart';
-import '../providers/riverpod/jobs_riverpod_provider.dart' as app_jobs_provider;
-import '../providers/riverpod/locals_riverpod_provider.dart';
-import '../models/job_model.dart';
+import '../features/jobs/jobs.dart' as app_jobs_provider;
+import '../features/unions/unions.dart';
+import '../features/jobs/jobs.dart';
 
 /// State class for jobs list to optimize rebuilds
 class JobsListState {
@@ -241,3 +241,6 @@ class CombinedAppStateSelector extends ConsumerWidget {
     return builder(context, combinedState, child);
   }
 }
+
+
+

@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../models/job_model.dart';
-import '../models/locals_record.dart';
+import '../features/jobs/jobs.dart';
+import '../features/unions/unions.dart';
 import '../features/crews/models/crew.dart';
 import '../features/crews/models/crew_member.dart';
 import 'connectivity_service.dart';
@@ -640,3 +640,4 @@ class OfflineDataService {
     }
   }
 }
+

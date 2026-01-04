@@ -4,8 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart' as permission;
-import '../models/job_model.dart';
-import '../models/locals_record.dart';
+import '../features/jobs/jobs.dart';
+import '../features/unions/unions.dart';
 import 'geographic_firestore_service.dart';
 import 'cache_service.dart';
 
@@ -853,3 +853,4 @@ class Coordinates {
   @override
   String toString() => '($latitude, $longitude)';
 }
+

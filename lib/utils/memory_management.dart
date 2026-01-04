@@ -1,8 +1,8 @@
 import 'dart:collection';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import '../models/job_model.dart';
-import '../models/locals_record.dart';
+import '../features/jobs/jobs.dart';
+import '../features/unions/unions.dart';
 
 /// Enhanced memory monitoring and management for the Journeyman Jobs app
 ///
@@ -761,3 +761,4 @@ class EnhancedMemoryMonitor extends MemoryMonitor {
     // Note: Widget disposal is handled individually, not globally
   }
 }
+

@@ -18,7 +18,7 @@ import '../features/crews/screens/crew_onboarding_screen.dart'; // Import for Cr
 import '../screens/home/home_screen.dart';
 import '../features/jobs/jobs.dart';
 import '../features/storm/storm.dart';
-import '../screens/locals/locals_screen.dart';
+import '../features/unions/unions.dart';
 import '../screens/settings/settings_screen.dart';
 import '../screens/settings/account/profile_screen.dart';
 import '../screens/settings/support/help_support_screen.dart';
@@ -386,5 +386,6 @@ class AppRouter {
     }
   }
 }
+
 
 
