@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'firestore_service.dart';
 import 'cache_service.dart';
-import '../models/filter_criteria.dart';
+import '../features/jobs/jobs.dart';
 import '../models/user_model.dart';
 
 /// A resilient wrapper around FirestoreService that provides:
@@ -593,3 +593,4 @@ extension FirestoreServiceResilience on FirestoreService {
     return ResilientFirestoreService();
   }
 }
+

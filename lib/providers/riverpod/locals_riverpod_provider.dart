@@ -3,7 +3,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../models/locals_record.dart';
 import '../../utils/concurrent_operations.dart';
-import 'jobs_riverpod_provider.dart' show firestoreServiceProvider;
+import '../../features/jobs/jobs.dart';
+import '../../features/jobs/providers/jobs_riverpod_provider.dart' show firestoreServiceProvider;
 
 part 'locals_riverpod_provider.g.dart';
 
@@ -303,3 +304,4 @@ List<String> allClassifications(Ref ref) {
   final List<String> list = set.toList()..sort();
   return list;
 }
+

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
-import '../models/job_model.dart';
-import '../models/filter_criteria.dart';
+import '../features/jobs/jobs.dart';
+import '../features/jobs/jobs.dart';
 
 /// High-performance filtering engine with caching and smart suggestions
 ///
@@ -583,3 +583,5 @@ class OptimizedDebouncer {
     _timer?.cancel();
   }
 }
+
+

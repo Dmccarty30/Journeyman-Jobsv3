@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:journeyman_jobs/design_system/components/reusable_components.dart';
 import '../app_theme.dart';
-import '../../models/job_model.dart';
+import '../../features/jobs/jobs.dart';
 import '../../utils/job_formatting.dart';
 import '../widgets/design_system_widgets.dart';
 
@@ -451,3 +451,4 @@ class JobCard extends StatelessWidget {
     );
   }
 }
+

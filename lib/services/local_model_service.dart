@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart'; // New import for Timestamp
-import '../../models/job_suggestion_model.dart'; // New import
+import '../features/jobs/jobs.dart'; // New import
 
 /// A service class to interface with a local AI model.
 ///
@@ -70,4 +70,5 @@ class LocalModelService {
     ];
   }
 }
+
 

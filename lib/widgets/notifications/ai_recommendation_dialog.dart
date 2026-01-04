@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../models/job_suggestion_model.dart'; // Assuming JobSuggestion is used
+import '../../features/jobs/jobs.dart'; // Assuming JobSuggestion is used
 
 class AiRecommendationDialog extends StatelessWidget {
   final JobSuggestion recommendation;
@@ -48,3 +48,4 @@ class AiRecommendationDialog extends StatelessWidget {
     );
   }
 }
+

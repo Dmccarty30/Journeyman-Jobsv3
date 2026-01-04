@@ -4,16 +4,11 @@ import 'package:go_router/go_router.dart';
 import 'package:journeyman_jobs/design_system/app_theme.dart';
 import 'package:journeyman_jobs/electrical_components/circuit_board_background.dart';
 import 'package:journeyman_jobs/features/crews/providers/crews_riverpod_provider.dart';
-import 'package:journeyman_jobs/legacy/flutterflow/schema/jobs_record.dart';
-import 'package:journeyman_jobs/models/job_model.dart';
+import 'package:journeyman_jobs/features/jobs/jobs.dart';
 import 'package:journeyman_jobs/models/user_model.dart';
 import 'package:journeyman_jobs/navigation/app_router.dart';
 import 'package:journeyman_jobs/providers/riverpod/auth_riverpod_provider.dart';
-import 'package:journeyman_jobs/providers/riverpod/jobs_riverpod_provider.dart';
 import 'package:journeyman_jobs/utils/text_formatting_wrapper.dart';
-import 'package:journeyman_jobs/widgets/condensed_job_card.dart';
-import 'package:journeyman_jobs/widgets/dialogs/job_details_dialog.dart';
-
 import 'package:journeyman_jobs/widgets/notification_badge.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
@@ -435,26 +430,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   Job _convertJobsRecordToJob(JobsRecord jobsRecord) {
     return Job(
-      id: jobsRecord.reference.id,
-      reference: jobsRecord.reference,
-      sharerId: jobsRecord.reference.id,
-      jobDetails: {
-        'company': jobsRecord.company,
-        'location': jobsRecord.location,
-        'classification': jobsRecord.classification,
-        'local': jobsRecord.local,
-        'wage': jobsRecord.wage,
-        'hours': jobsRecord.hours,
-        'perDiem': jobsRecord.perDiem,
-        'typeOfWork': jobsRecord.typeOfWork,
-        'startDate': jobsRecord.startDate,
-        'duration': jobsRecord.duration,
-        'jobDescription': jobsRecord.jobDescription,
-      },
+      id: jobsRecord.id,
       company: toTitleCase(jobsRecord.company),
       location: toTitleCase(jobsRecord.location),
       classification: toTitleCase(jobsRecord.classification),
-      local: jobsRecord.local,
+      local: jobsRecord.localNumber,
       wage: jobsRecord.wage,
       hours: jobsRecord.hours,
       perDiem: jobsRecord.perDiem,
@@ -462,6 +442,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       startDate: jobsRecord.startDate,
       duration: jobsRecord.duration,
       jobDescription: jobsRecord.jobDescription,
+      jobDetails: const {},
+      sharerId: jobsRecord.id,
     );
   }
 }
+
+
+

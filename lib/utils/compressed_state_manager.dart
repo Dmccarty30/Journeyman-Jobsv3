@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:crypto/crypto.dart';
-import '../models/filter_criteria.dart';
+import '../features/jobs/jobs.dart';
 import '../models/user_model.dart';
 
 /// Manages compressed and encrypted state persistence with versioning support

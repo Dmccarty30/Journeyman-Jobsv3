@@ -1,4 +1,5 @@
-import 'package:journeyman_jobs/providers/riverpod/jobs_riverpod_provider.dart';
+import 'package:journeyman_jobs/features/jobs/jobs.dart';
+import 'package:journeyman_jobs/features/jobs/providers/jobs_riverpod_provider.dart' show localModelServicePodProvider;
 import 'package:journeyman_jobs/services/local_model_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -17,3 +18,5 @@ Future<void> modelInitializer(Ref ref) async {
   final modelService = ref.watch(localModelServicePodProvider);
   await modelService.loadModel();
 }
+
+

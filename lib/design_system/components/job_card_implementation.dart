@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../models/job_model.dart';
+import '../../features/jobs/jobs.dart';
 
 /// Job Card Implementation following the exact wireframe specification
 /// from job-card-implementation.md
@@ -363,3 +363,4 @@ class JobCardImplementation extends StatelessWidget {
     return 'Contact Local';
   }
 }
+

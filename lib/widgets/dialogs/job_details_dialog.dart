@@ -6,7 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../design_system/app_theme.dart';
 import '../../design_system/tailboard_theme.dart';
-import '../../models/job_model.dart';
+import '../../features/jobs/jobs.dart';
 import '../../models/locals_record.dart';
 import '../../providers/riverpod/locals_riverpod_provider.dart';
 import '../../screens/locals/locals_screen.dart';
@@ -508,3 +508,4 @@ class JobDetailsDialog extends ConsumerWidget {
     }
   }
 }
+

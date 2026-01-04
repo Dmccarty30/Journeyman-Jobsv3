@@ -1,4 +1,4 @@
-import '../../../models/job_suggestion_model.dart';
+import '../../jobs/jobs.dart';
 
 class ChatCompositionService {
   /// Simulates composing a message for a user based on an AI job suggestion.
@@ -18,3 +18,4 @@ Would you like to learn more or apply?
 ''';
     }
 }
+

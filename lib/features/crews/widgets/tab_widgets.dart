@@ -9,14 +9,14 @@ import '../../../design_system/tailboard_components.dart';
 
 // Providers
 import '../../../providers/riverpod/auth_riverpod_provider.dart';
-import '../../../providers/riverpod/jobs_riverpod_provider.dart';
+import '../../../features/jobs/jobs.dart';
 import '../providers/crews_riverpod_provider.dart';
 import '../providers/feed_provider.dart';
 import '../providers/feed_filter_provider.dart';
 import '../providers/tailboard_riverpod_provider.dart';
 
 // Models
-import '../../../models/job_model.dart';
+import '../../../features/jobs/jobs.dart';
 import '../models/models.dart';
 
 // Widgets
@@ -816,4 +816,6 @@ class MembersTab extends ConsumerWidget {
         );
   }
 }
+
+
 
