@@ -14,11 +14,11 @@
 - [x] Task: Move `Profile` feature components and create `lib/features/profile/profile.dart`. (70e2840)
 - [x] Task: Conductor - User Manual Verification 'Core Features Migration' (Protocol in workflow.md) (5977340)
 
-## Phase 3: Auth and Navigation Migration
+## Phase 3: Auth and Navigation Migration [checkpoint: 3ea6e49]
 
 - [x] Task: Move `Authentication` components and create `lib/features/auth/auth.dart`. (f6bb3e7)
 - [x] Task: Move `Navigation` (go_router setup) to `lib/features/navigation/`. (18f761a)
-- [ ] Task: Conductor - User Manual Verification 'Auth and Navigation Migration' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Auth and Navigation Migration' (Protocol in workflow.md) (3ea6e49)
 
 ## Phase 4: Final Cleanup and Global Verification
 
