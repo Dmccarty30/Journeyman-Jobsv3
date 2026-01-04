@@ -6,13 +6,13 @@
 - [x] Task: Create `lib/features/` directory structure. (059bb7f)
 - [x] Task: Conductor - User Manual Verification 'Audit and Infrastructure' (Protocol in workflow.md) (50ac2e1)
 
-## Phase 2: Core Features Migration
+## Phase 2: Core Features Migration [checkpoint: 5977340]
 
 - [x] Task: Move `Jobs` feature components and create `lib/features/jobs/jobs.dart`. (f5983c1)
 - [x] Task: Move `Storm` feature components and create `lib/features/storm/storm.dart`. (2ebf76e)
 - [x] Task: Move `Unions` feature components and create `lib/features/unions/unions.dart`. (74bf702)
 - [x] Task: Move `Profile` feature components and create `lib/features/profile/profile.dart`. (70e2840)
-- [ ] Task: Conductor - User Manual Verification 'Core Features Migration' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Core Features Migration' (Protocol in workflow.md) (5977340)
 
 ## Phase 3: Auth and Navigation Migration
 
