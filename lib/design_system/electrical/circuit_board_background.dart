@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
-import '../design_system/app_theme.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 
 /// A highly customizable electrical circuit board background with animated
 /// current flow, interactive components, and PCB-style visual elements.
@@ -36,7 +36,7 @@ class ElectricalCircuitBackground extends StatefulWidget {
     this.traceColor,
     this.currentColor,
     this.copperColor,
-    this.child,
+    this.child, required String density,
   });
 
   /// Overall opacity of the circuit pattern (0.0 - 1.0)
@@ -798,3 +798,4 @@ class _InteractiveComponentsPainter extends CustomPainter {
         oldDelegate.ledColor != ledColor;
   }
 }
+

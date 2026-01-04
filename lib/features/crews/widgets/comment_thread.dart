@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../design_system/app_theme.dart';
-import '../models/post.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
+import '../crews.dart';
 import 'comment_item.dart';
 
 class CommentThread extends StatefulWidget {
@@ -167,3 +167,4 @@ class _CommentThreadState extends State<CommentThread> {
     );
   }
 }
+

@@ -4,8 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'firestore_service.dart';
 import 'cache_service.dart';
-import '../features/jobs/jobs.dart';
-import '../features/profile/profile.dart';
+import 'package:journeyman_jobs/features/jobs/jobs.dart';
+import 'package:journeyman_jobs/features/jobs/profile/profile.dart';
 
 /// A resilient wrapper around FirestoreService that provides:
 /// - Automatic retry logic for transient failures

@@ -419,3 +419,4 @@ class DiagramConfiguration {
   final List<ConnectionPoint> connectionPoints;
   final List<WireConnection> requiredConnections;
 }
+

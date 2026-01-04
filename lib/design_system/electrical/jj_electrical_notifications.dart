@@ -1,7 +1,6 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import '../design_system/app_theme.dart';
-import 'circuit_board_background.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 
 /// Unified electrical-themed notification widgets
 /// Includes toast, snack bar, and tooltip with lightning animations

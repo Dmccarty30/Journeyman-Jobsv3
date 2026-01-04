@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:journeyman_jobs/providers/job_filter_provider.dart';
+import 'package:journeyman_jobs/core/core.dartjob_filter_provider.dart';
 import 'package:journeyman_jobs/models/filter_criteria.dart';
 import 'package:journeyman_jobs/models/filter_preset.dart';
 import 'package:shared_preferences/shared_preferences.dart';

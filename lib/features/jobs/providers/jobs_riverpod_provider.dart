@@ -2,13 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../models/job_model.dart';
-import '../models/filter_criteria.dart';
-import '../../../models/user_feedback_model.dart';
-import '../../../services/feedback_service.dart';
-import '../../profile/profile.dart';
-import '../../../services/local_model_service.dart';
-import '../../../services/resilient_firestore_service.dart';
+import '../jobs.dart';
+import 'package:journeyman_jobs/core/core.dart';
+import '../profile/profile.dart';
 import '../../../utils/concurrent_operations.dart';
 // TODO: Add back when utility classes are implemented
 // import '../../utils/filter_performance.dart';
@@ -81,6 +77,10 @@ UserPreferenceService userPreferenceService(Ref ref) => UserPreferenceService();
 /// Local AI Model Service provider
 @riverpod
 LocalModelService localModelServicePod(Ref ref) => LocalModelService();
+
+/// Backwards compatibility alias for code using `localModelServiceProvider`
+// ignore: non_constant_identifier_names
+final localModelServiceProvider = localModelServicePodProvider;
 
 /// Jobs notifier for managing job data and operations
 @riverpod
@@ -302,7 +302,7 @@ class JobsNotifier extends _$JobsNotifier {
     final UserPreferenceService preferenceService =
         ref.read(userPreferenceServiceProvider);
     final LocalModelService localModelService =
-        ref.read(localModelServicePodProvider);
+        ref.read(localModelServiceProvider);
 
     // Placeholder: Get user preferences.
     // In a real app, this would fetch actual user preferences from Firestore via preferenceService.
@@ -543,3 +543,8 @@ Future<List<Job>> stormJobs(Ref ref) async {
   }).toList();
 }
 
+/// Backwards compatibility alias for legacy code using the old `jobsProvider` name.
+/// The @riverpod annotation generates `jobsNotifierProvider` from `JobsNotifier`,
+/// but existing code references `jobsProvider`. This alias maintains compatibility.
+// ignore: non_constant_identifier_names
+final jobsProvider = jobsNotifierProvider;

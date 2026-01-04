@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../design_system/app_theme.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 
 /// Simple, project-wide snack bar helper used by multiple screens.
 /// Provides consistent styling and three convenience methods:
@@ -99,3 +99,4 @@ class JJSnackBar {
     );
   }
 }
+

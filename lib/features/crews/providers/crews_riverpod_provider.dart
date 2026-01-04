@@ -1,14 +1,15 @@
 // lib/features/crews/providers/crews_riverpod_provider.dart
-import '../../../domain/enums/member_role.dart';
+import 'package:journeyman_jobs/core/providers/riverpod/app_state_riverpod_provider.dart';
 import '../services/job_matching_service_impl.dart';
 import '../services/job_sharing_service_impl.dart';
-import '../../../providers/riverpod/app_state_riverpod_provider.dart';
+
+import '../crews.dart' hide connectivityServiceProvider;
+import 'package:journeyman_jobs/core/core.dart'
+    hide connectivityServiceProvider;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:state_notifier/state_notifier.dart';
 
-import '../../auth/auth.dart';
-import '../models/models.dart';
-import '../services/crew_service.dart';
+import '../../auth/auth.dart' hide currentUserProvider;
 
 import '../../../domain/enums/permission.dart';
 
@@ -112,7 +113,7 @@ Stream<CrewMember?> userCrewMemberStream(Ref ref, String crewId) {
   final crewService = ref.watch(crewServiceProvider);
 
   if (userId == null) return Stream.value(null);
-  
+
   return crewService.getUserCrewMembersStream(crewId, userId).map((snapshot) {
     if (snapshot.docs.isEmpty) return null;
     return CrewMember.fromFirestore(snapshot.docs.first);
@@ -287,4 +288,3 @@ CrewCreationNotifier crewCreationNotifier(Ref ref) {
 AsyncValue<void> crewCreationState(Ref ref) {
   return ref.watch(crewCreationStateProvider);
 }
-

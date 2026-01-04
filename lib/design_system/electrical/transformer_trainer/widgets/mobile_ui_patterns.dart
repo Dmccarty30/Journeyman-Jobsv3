@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../../design_system/app_theme.dart';
-import '../models/transformer_models_export.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 import '../utils/accessibility_manager.dart';
 
 /// Mobile-specific bottom sheet for transformer controls

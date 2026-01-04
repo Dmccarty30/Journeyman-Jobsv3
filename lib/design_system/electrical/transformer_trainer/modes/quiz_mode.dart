@@ -2,12 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../design_system/app_theme.dart';
-import '../../../design_system/popup_theme.dart';
-import '../models/educational_content.dart';
-import '../models/transformer_models_export.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 import '../state/transformer_state.dart';
-import '../widgets/transformer_diagram.dart';
 
 /// Quiz mode for testing knowledge without guidance
 class QuizModeWidget extends StatelessWidget {
@@ -570,3 +566,5 @@ class QuizModeWidget extends StatelessWidget {
     );
   }
 }
+
+

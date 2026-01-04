@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../models/filter_criteria.dart';
-import '../models/filter_preset.dart';
+import '../jobs.dart';
 import '../../../utils/structured_logging.dart';
 
 part 'job_filter_riverpod_provider.g.dart';
@@ -583,3 +582,4 @@ List<QuickFilterSuggestion> quickFilterSuggestions(Ref ref) {
   final notifier = ref.watch(jobFilterProvider.notifier);
   return notifier.getQuickFilterSuggestions();
 }
+

@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../models/message.dart';
+import '../crews.dart';
 
 class MessageService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -95,3 +95,4 @@ class MessageService {
     }
   }
 }
+

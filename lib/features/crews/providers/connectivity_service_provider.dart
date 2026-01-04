@@ -1,5 +1,5 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:journeyman_jobs/services/connectivity_service.dart';
+import 'package:journeyman_jobs/core/core.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'connectivity_service_provider.g.dart';
@@ -58,3 +58,4 @@ class AppConnectivityService {
     return connectivityResults != ConnectivityResult.none;
   }
 }
+

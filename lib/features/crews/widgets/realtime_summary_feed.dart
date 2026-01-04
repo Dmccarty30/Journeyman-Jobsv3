@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../design_system/app_theme.dart';
-// Assuming models for posts, messages, jobs exist or will be created
-// import '../../crews.dart';// import '../../crews.dart';// import '../../crews.dart';class RealtimeSummaryFeed extends ConsumerWidget {
+import 'package:journeyman_jobs/design_system/design_system.dart';
+
+class RealtimeSummaryFeed extends ConsumerWidget {
   const RealtimeSummaryFeed({super.key});
 
   @override
@@ -52,4 +52,5 @@ import '../../../design_system/app_theme.dart';
     );
   }
 }
+
 

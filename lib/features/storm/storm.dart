@@ -1,5 +1,5 @@
 /// Storm Feature Barrel File
-library storm;
+library;
 
 // Models
 export 'models/storm_event.dart';

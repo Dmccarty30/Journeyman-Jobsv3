@@ -2,11 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'cache_service.dart';
-import '../features/profile/profile.dart';
+import 'package:journeyman_jobs/features/jobs/profile/profile.dart';
 import '../models/contractor_model.dart';
-import '../features/crews/models/models.dart';
-import '../services/connectivity_service.dart';
-import '../domain/exceptions/app_exception.dart';
+import 'package:journeyman_jobs/features/crews/crews.dart';
+import 'package:journeyman_jobs/core/core.dart';
+import 'package:journeyman_jobs/domain/exceptions/app_exception.dart';
 
 class DatabaseService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
@@ -56,7 +56,10 @@ class DatabaseService {
       throw OfflineError('No internet connection available');
     }
     try {
-      await _db.collection('users').doc(user.uid).set(user.toFirestore(), SetOptions(merge: true));
+      await _db
+          .collection('users')
+          .doc(user.uid)
+          .set(user.toFirestore(), SetOptions(merge: true));
     } on FirebaseException catch (e) {
       switch (e.code) {
         case 'permission-denied':
@@ -64,7 +67,8 @@ class DatabaseService {
         case 'network-request-failed':
           throw NetworkError(e.message ?? 'Network error');
         default:
-          throw AppException('Failed to update user: ${e.message}', code: e.code);
+          throw AppException('Failed to update user: ${e.message}',
+              code: e.code);
       }
     } on PlatformException catch (e) {
       throw NetworkError('Platform error: ${e.message}');
@@ -91,7 +95,8 @@ class DatabaseService {
         case 'network-request-failed':
           throw NetworkError(e.message ?? 'Network error');
         default:
-          throw AppException('Failed to update online status: ${e.message}', code: e.code);
+          throw AppException('Failed to update online status: ${e.message}',
+              code: e.code);
       }
     } on PlatformException catch (e) {
       throw NetworkError('Platform error: ${e.message}');
@@ -145,9 +150,8 @@ class DatabaseService {
     DocumentSnapshot? startAfter,
   }) {
     try {
-      Query query = _db.collection('contractors')
-          .orderBy('company')
-          .limit(limit);
+      Query query =
+          _db.collection('contractors').orderBy('company').limit(limit);
 
       if (startAfter != null) {
         query = query.startAfterDocument(startAfter);

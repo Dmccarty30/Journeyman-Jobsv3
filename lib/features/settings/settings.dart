@@ -1,5 +1,5 @@
 /// Settings Feature Barrel File
-library settings;
+library;
 
 // Screens
 export 'screens/appearance_display_screen.dart';

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:journeyman_jobs/design_system/app_theme.dart';
-import '../models/job_model.dart';
-import 'job_details_dialog.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
+import '../jobs.dart';
 import '../../../utils/text_formatting_wrapper.dart';
 
 /// A card widget displaying job details using RichText with icons
@@ -307,3 +306,5 @@ class RichTextJobCard extends StatelessWidget {
     }
   }
 }
+
+

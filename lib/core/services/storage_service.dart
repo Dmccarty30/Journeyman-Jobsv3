@@ -1,7 +1,7 @@
 import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:io';
-import '../domain/exceptions/app_exception.dart';
-import '../services/connectivity_service.dart';
+import 'package:journeyman_jobs/domain/exceptions/app_exception.dart';
+import 'package:journeyman_jobs/core/core.dart';
 
 class StorageService {
   final FirebaseStorage _storage = FirebaseStorage.instance;

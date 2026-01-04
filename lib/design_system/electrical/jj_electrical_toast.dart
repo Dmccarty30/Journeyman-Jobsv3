@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import '../design_system/app_theme.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 
 /// Enum for different toast types with electrical themes
 enum JJToastType {

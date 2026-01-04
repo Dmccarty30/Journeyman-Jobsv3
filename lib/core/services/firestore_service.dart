@@ -256,7 +256,7 @@ class FirestoreService {
 }
 
 // Helper classes
-enum OperationType { create, update, delete }
+enum OperationType { create, update, delete, loadJobs }
 
 class BatchOperation {
   final DocumentReference reference;

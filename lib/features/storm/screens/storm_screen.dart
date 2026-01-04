@@ -2,18 +2,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../features/navigation/navigation.dart';
-import '../../../../design_system/app_theme.dart';
-import '../../../../design_system/widgets/design_system_widgets.dart';
-import '../models/storm_event.dart';
-import '../../../../design_system/popup_theme.dart';
-import '../widgets/noaa_radar_map.dart';
-import '../services/power_outage_service.dart';
-import '../widgets/power_outage_card.dart';
+import '../storm.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../../../../electrical_components/circuit_board_background.dart';
-import '../widgets/storm_contractor_card.dart';
-import '../widgets/storm_tracker_section.dart';
-import '../widgets/fox_weather_widget.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 
 class StormScreen extends StatefulWidget {
   const StormScreen({super.key});
@@ -1039,4 +1030,5 @@ class StormDetailsSheet extends StatelessWidget {
     );
   }
 }
+
 

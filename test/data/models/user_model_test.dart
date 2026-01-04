@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:journeyman_jobs/models/user_model.dart';
+import 'package:journeyman_jobs/features/profile/profile.dart';
 import '../../fixtures/mock_data.dart';
 import '../../fixtures/test_constants.dart';
 

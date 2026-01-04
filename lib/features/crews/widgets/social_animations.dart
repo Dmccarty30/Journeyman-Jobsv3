@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
-import '../../../design_system/app_theme.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 
 /// Core animation utilities and constants for social interactions
 class SocialAnimations {

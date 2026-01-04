@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../features/auth/auth.dart';
-import '../features/jobs/jobs.dart' as app_jobs_provider;
-import '../features/unions/unions.dart';
-import '../features/jobs/jobs.dart';
+import 'package:journeyman_jobs/features/unions/providers/locals_riverpod_provider.dart';
+import 'package:journeyman_jobs/features/jobs/jobs.dart';
+import 'package:journeyman_jobs/features/auth/auth.dart';
 
 /// State class for jobs list to optimize rebuilds
 class JobsListState {
@@ -50,7 +49,7 @@ class JobsListStateSelector extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final jobsProviderState = ref.watch(app_jobs_provider.jobsProvider);
+    final jobsProviderState = ref.watch(jobsProvider);
     final jobsState = JobsListState(
       jobs: jobsProviderState.jobs,
       isLoading: jobsProviderState.isLoading,
@@ -215,7 +214,7 @@ class CombinedAppStateSelector extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final authProviderState = ref.watch(authProvider);
-    final jobsProviderState = ref.watch(app_jobs_provider.jobsProvider);
+    final jobsProviderState = ref.watch(jobsProvider);
     final localsProviderState = ref.watch(localsProvider);
     
     final combinedState = CombinedAppState(

@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:journeyman_jobs/services/firestore_service.dart';
+import 'package:journeyman_jobs/core/core.dart';
 import '../../fixtures/mock_data.dart';
 import '../../fixtures/test_constants.dart';
 

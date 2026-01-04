@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'social_animations.dart';
-import '../../../design_system/app_theme.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 
 /// Pull-to-refresh widget with electrical theme animation
 class ElectricalPullToRefresh extends StatefulWidget {
@@ -284,3 +284,4 @@ class ElectricalArcPainter extends CustomPainter {
     return oldDelegate.progress != progress || oldDelegate.color != color;
   }
 }
+

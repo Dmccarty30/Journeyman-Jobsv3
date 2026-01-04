@@ -2,8 +2,7 @@ import 'dart:async';
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
-import '../models/crew.dart';
-import '../models/crew_preferences.dart';
+import '../crews.dart';
 import 'job_sharing_service_impl.dart';
 
 /// Service responsible for matching jobs with crews based on preferences and performance

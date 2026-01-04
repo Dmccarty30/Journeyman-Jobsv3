@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:journeyman_jobs/models/job_model.dart';
+import 'package:journeyman_jobs/features/jobs/jobs.dart';
 import '../../fixtures/mock_data.dart';
 import '../../fixtures/test_constants.dart';
 

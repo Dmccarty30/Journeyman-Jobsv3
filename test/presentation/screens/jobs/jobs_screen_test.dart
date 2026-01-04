@@ -4,9 +4,9 @@ import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
 import 'package:provider/provider.dart';
 import 'package:journeyman_jobs/screens/jobs/optimized_jobs_screen.dart';
-import 'package:journeyman_jobs/providers/app_state_provider.dart';
-import 'package:journeyman_jobs/providers/job_filter_provider.dart';
-import 'package:journeyman_jobs/design_system/app_theme.dart';
+import 'package:journeyman_jobs/core/core.dartapp_state_provider.dart';
+import 'package:journeyman_jobs/core/core.dartjob_filter_provider.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 import 'package:journeyman_jobs/models/filter_criteria.dart';
 import '../../../fixtures/mock_data.dart';
 import '../../../fixtures/test_constants.dart';
@@ -487,3 +487,4 @@ void main() {
     });
   });
 }
+

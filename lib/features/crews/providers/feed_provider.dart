@@ -1,14 +1,10 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:state_notifier/state_notifier.dart';
 
-import '../../../providers/core_providers.dart' as core_providers;
+import 'package:journeyman_jobs/core/core.dart' as core_providers;
 import '../../auth/auth.dart'
     as auth_providers;
-import '../services/feed_service.dart';
-import '../models/post.dart';
-import '../models/tailboard.dart';
+import '../crews.dart';
 
 part 'feed_provider.g.dart';
 
@@ -403,4 +399,6 @@ Future<bool> userReactionToPost(
     rethrow;
   }
 }
+
+
 

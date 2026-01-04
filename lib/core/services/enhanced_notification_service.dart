@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../features/jobs/jobs.dart';
+import 'package:journeyman_jobs/features/jobs/jobs.dart';
 import 'fcm_service.dart';
 import 'local_notification_service.dart';
 

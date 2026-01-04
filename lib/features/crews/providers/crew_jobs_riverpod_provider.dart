@@ -1,7 +1,7 @@
 // lib/features/crews/providers/crew_jobs_riverpod_provider.dart
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../features/jobs/models/job.dart';
+import 'package:journeyman_jobs/features/jobs/jobs.dart';
 import '../../auth/auth.dart';
 import 'crews_riverpod_provider.dart';
 
@@ -11,14 +11,17 @@ part 'crew_jobs_riverpod_provider.g.dart';
 @riverpod
 Stream<List<Job>> crewFilteredJobsStream(Ref ref, String crewId) {
   final currentUser = ref.watch(currentUserProvider);
-  final jobMatchingService = ref.watch(jobMatchingServiceProvider as ProviderListenable);
+  final jobMatchingService =
+      ref.watch(jobMatchingServiceProvider as ProviderListenable);
   final crew = ref.watch(crewByIdProvider(crewId));
 
   if (currentUser == null || crew == null) {
     return Stream.value([]);
   }
 
-  return jobMatchingService.getCrewFilteredJobsStream(crew).handleError((error, stackTrace) {
+  return jobMatchingService
+      .getCrewFilteredJobsStream(crew)
+      .handleError((error, stackTrace) {
     // Log error or handle as needed
     return [];
   });
@@ -28,7 +31,7 @@ Stream<List<Job>> crewFilteredJobsStream(Ref ref, String crewId) {
 @riverpod
 List<Job> crewFilteredJobs(Ref ref, String crewId) {
   final jobsAsync = ref.watch(crewFilteredJobsStreamProvider(crewId));
-  
+
   return jobsAsync.when(
     data: (jobs) => jobs,
     loading: () => [],
@@ -49,4 +52,3 @@ String? crewJobsError(Ref ref, String crewId) {
   final jobsAsync = ref.watch(crewFilteredJobsStreamProvider(crewId));
   return jobsAsync.error?.toString();
 }
-

@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riverpod Provider Analysis Report</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        .content {
+            padding: 40px;
+        }
+        .summary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .summary h2 {
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .summary-item {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+        }
+        .summary-item .number {
+            font-size: 2.5em;
+            font-weight: bold;
+            display: block;
+        }
+        .summary-item .label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        .section h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        .provider-card {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        .provider-card:hover {
+            box-shadow: 0 5px 15px rgba(102,126,234,0.3);
+            transform: translateX(5px);
+        }
+        .provider-card h3 {
+            color: #333;
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+        .provider-info {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .info-label {
+            font-weight: 600;
+            color: #667eea;
+        }
+        .info-value {
+            color: #666;
+            font-family: 'Courier New', monospace;
+            background: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        .status {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        .status.found { background: #d4edda; color: #155724; }
+        .status.missing { background: #f8d7da; color: #721c24; }
+        .status.generated { background: #d1ecf1; color: #0c5460; }
+        .code {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin-top: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        .warning h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+        .critical {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        .critical h4 {
+            color: #721c24;
+            margin-bottom: 10px;
+        }
+        .file-tree {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+        .file-tree ul {
+            list-style: none;
+            padding-left: 20px;
+        }
+        .file-tree li {
+            padding: 5px 0;
+            color: #666;
+        }
+        .file-tree .file { color: #667eea; }
+        .file-tree .generated { color: #28a745; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔍 Riverpod Provider Analysis Report</h1>
+            <p>Complete provider definition locations and status</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">Generated: 2026-01-04 | Project: Journeyman-Jobs</p>
+        </div>
+        
+        <div class="content">
+            <div class="summary">
+                <h2>Executive Summary</h2>
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <span class="number">5</span>
+                        <span class="label">Providers Searched</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="number">3</span>
+                        <span class="label">Found</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="number">2</span>
+                        <span class="label">Missing/Issues</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="number">348</span>
+                        <span class="label">Total Dart Files</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="critical">
+                <h4>CRITICAL ISSUE DETECTED</h4>
+                <p><strong>jobsProvider</strong> is referenced throughout the codebase but <strong>jobs_riverpod_provider.g.dart</strong> does NOT exist!</p>
+                <p style="margin-top: 10px;">This means the provider was never generated by riverpod_generator. You need to run:</p>
+                <div class="code">dart run build_runner build --delete-conflicting-outputs</div>
+            </div>
+
+            <div class="section">
+                <h2>1. jobsProvider</h2>
+                <div class="provider-card">
+                    <h3>JobsNotifier Class Definition</h3>
+                    <span class="status found">FOUND</span>
+                    <div class="provider-info">
+                        <span class="info-label">File:</span>
+                        <span class="info-value">/mnt/d/Journeyman-Jobs/lib/features/jobs/providers/jobs_riverpod_provider.dart</span>
+                        <span class="info-label">Line:</span>
+                        <span class="info-value">83</span>
+                        <span class="info-label">Type:</span>
+                        <span class="info-value">@riverpod class JobsNotifier</span>
+                    </div>
+                    <div class="code">@riverpod
+class JobsNotifier extends _$JobsNotifier {
+  late final ConcurrentOperationManager _operationManager;
+  // Implementation...
+}</div>
+                </div>
+
+                <div class="provider-card">
+                    <h3>Generated Provider</h3>
+                    <span class="status missing">MISSING</span>
+                    <div class="provider-info">
+                        <span class="info-label">Expected File:</span>
+                        <span class="info-value">/mnt/d/Journeyman-Jobs/lib/features/jobs/providers/jobs_riverpod_provider.g.dart</span>
+                        <span class="info-label">Status:</span>
+                        <span class="info-value" style="color: red;">FILE DOES NOT EXIST</span>
+                        <span class="info-label">Provider Name:</span>
+                        <span class="info-value">jobsProvider (expected)</span>
+                    </div>
+                </div>
+
+                <div class="warning">
+                    <h4>References Found (8 locations)</h4>
+                    <ul style="list-style: none; padding-left: 0;">
+                        <li>• lib/core/providers/riverpod/app_state_riverpod_provider.dart:259</li>
+                        <li>• lib/core/providers/riverpod/app_state_riverpod_provider.dart:283</li>
+                        <li>• lib/core/providers/riverpod/app_state_riverpod_provider.dart:307</li>
+                        <li>• lib/features/jobs/profile/screens/home_screen.dart:341</li>
+                        <li>• lib/features/jobs/screens/jobs_screen.dart:44</li>
+                        <li>• lib/features/jobs/screens/jobs_screen.dart:324</li>
+                        <li>• lib/core/widgets/optimized_selector_widgets.dart:50 (as app_jobs_provider.jobsProvider)</li>
+                        <li>• lib/core/widgets/optimized_selector_widgets.dart:215 (as app_jobs_provider.jobsProvider)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>2. authProvider</h2>
+                <div class="provider-card">
+                    <h3>AuthNotifier Class Definition</h3>
+                    <span class="status found">FOUND</span>
+                    <div class="provider-info">
+                        <span class="info-label">File:</span>
+                        <span class="info-value">/mnt/d/Journeyman-Jobs/lib/features/auth/providers/auth_riverpod_provider.dart</span>
+                        <span class="info-label">Line:</span>
+                        <span class="info-value">92</span>
+                        <span class="info-label">Type:</span>
+                        <span class="info-value">@riverpod class AuthNotifier</span>
+                    </div>
+                    <div class="code">@riverpod
+class AuthNotifier extends _$AuthNotifier {
+  late final ConcurrentOperationManager _operationManager;
+  int _signInAttempts = 0;
+  int _successfulSignIns = 0;
+  // Implementation...
+}</div>
+                </div>
+
+                <div class="provider-card">
+                    <h3>Generated Provider</h3>
+                    <span class="status generated">GENERATED</span>
+                    <div class="provider-info">
+                        <span class="info-label">File:</span>
+                        <span class="info-value">/mnt/d/Journeyman-Jobs/lib/features/auth/providers/auth_riverpod_provider.g.dart</span>
+                        <span class="info-label">Line:</span>
+                        <span class="info-value">192</span>
+                        <span class="info-label">Provider Name:</span>
+                        <span class="info-value">authProvider</span>
+                    </div>
+                    <div class="code">final authProvider = AuthNotifierProvider._();</div>
+                </div>
+
+                <div class="provider-info" style="margin-top: 15px;">
+                    <span class="info-label">References:</span>
+                    <span class="info-value">7 locations found</span>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>3. offlineDataServiceProvider</h2>
+                <div class="provider-card">
+                    <h3>Provider Definition (Manual)</h3>
+                    <span class="status found">FOUND - DUPLICATE DEFINITION</span>
+                    <div class="provider-info">
+                        <span class="info-label">File 1:</span>
+                        <span class="info-value">/mnt/d/Journeyman-Jobs/lib/core/providers/riverpod/app_state_riverpod_provider.dart</span>
+                        <span class="info-label">Line:</span>
+                        <span class="info-value">46</span>
+                        <span class="info-label">Type:</span>
+                        <span class="info-value">Manual Provider (old style)</span>
+                    </div>
+                    <div class="code">final offlineDataServiceProvider = Provider&lt;OfflineDataService&gt;((ref) {
+  // Manual implementation
+});</div>
+                </div>
+
+                <div class="provider-card">
+                    <h3>Provider Definition (Generated)</h3>
+                    <span class="status generated">GENERATED</span>
+                    <div class="provider-info">
+                        <span class="info-label">File 2:</span>
+                        <span class="info-value">/mnt/d/Journeyman-Jobs/lib/core/providers/riverpod/offline_data_service_provider.dart</span>
+                        <span class="info-label">Line:</span>
+                        <span class="info-value">7-8</span>
+                        <span class="info-label">Type:</span>
+                        <span class="info-value">@Riverpod(keepAlive: true)</span>
+                    </div>
+                    <div class="code">@Riverpod(keepAlive: true)
+OfflineDataService offlineDataService(Ref ref) {
+  final connectivityService = ref.watch(connectivityServiceForOfflineProvider);
+  return OfflineDataService();
+}</div>
+                    <div class="provider-info" style="margin-top: 15px;">
+                        <span class="info-label">Generated File:</span>
+                        <span class="info-value">/mnt/d/Journeyman-Jobs/lib/core/providers/riverpod/offline_data_service_provider.g.dart:13</span>
+                    </div>
+                </div>
+
+                <div class="warning">
+                    <h4>CONFIGURATION ISSUE: Duplicate Provider Definitions</h4>
+                    <p>The same provider is defined in TWO different files with DIFFERENT implementations:</p>
+                    <ul>
+                        <li>Manual definition in app_state_riverpod_provider.dart</li>
+                        <li>Generated definition from offline_data_service_provider.dart</li>
+                    </ul>
+                    <p style="margin-top: 10px;"><strong>Recommendation:</strong> Remove the manual definition and use only the generated one.</p>
+                </div>
+
+                <div class="provider-info" style="margin-top: 15px;">
+                    <span class="info-label">References:</span>
+                    <span class="info-value">9 locations found</span>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>4. localModelServicePodProvider</h2>
+                <div class="provider-card">
+                    <h3>Provider Status</h3>
+                    <span class="status missing">NOT FOUND</span>
+                    <div class="provider-info">
+                        <span class="info-label">Searched Name:</span>
+                        <span class="info-value">localModelServicePodProvider</span>
+                        <span class="info-label">Status:</span>
+                        <span class="info-value" style="color: red;">DOES NOT EXIST</span>
+                    </div>
+                </div>
+
+                <div class="provider-card">
+                    <h3>Actual Provider Name</h3>
+                    <span class="status generated">FOUND - DIFFERENT NAME</span>
+                    <div class="provider-info">
+                        <span class="info-label">Actual Name:</span>
+                        <span class="info-value">localModelServiceProvider</span>
+                        <span class="info-label">File:</span>
+                        <span class="info-value">/mnt/d/Journeyman-Jobs/lib/core/providers/riverpod/local_ai_model_provider.dart</span>
+                        <span class="info-label">Line:</span>
+                        <span class="info-value">8-12</span>
+                        <span class="info-label">Generated File:</span>
+                        <span class="info-value">/mnt/d/Journeyman-Jobs/lib/core/providers/riverpod/local_ai_model_provider.g.dart:13</span>
+                    </div>
+                    <div class="code">@Riverpod(keepAlive: true)
+LocalModelService localModelService(Ref ref) {
+  return LocalModelService();
+}
+
+// Generated as: localModelServiceProvider</div>
+                </div>
+
+                <div class="critical">
+                    <h4>CRITICAL: Incorrect Provider Name Usage</h4>
+                    <p>Code is trying to use <strong>localModelServicePodProvider</strong> but the actual provider is <strong>localModelServiceProvider</strong></p>
+                    <p style="margin-top: 10px;"><strong>Affected Files (2 locations):</strong></p>
+                    <ul style="margin-top: 10px;">
+                        <li>• lib/core/providers/riverpod/local_ai_model_provider.dart:18</li>
+                        <li>• lib/features/jobs/providers/job_recommendation_provider.dart:21</li>
+                    </ul>
+                    <p style="margin-top: 10px;"><strong>Fix:</strong> Replace all instances of <code>localModelServicePodProvider</code> with <code>localModelServiceProvider</code></p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>5. app_jobs_provider</h2>
+                <div class="provider-card">
+                    <h3>Import Alias Reference</h3>
+                    <span class="status found">REFERENCE FOUND</span>
+                    <div class="provider-info">
+                        <span class="info-label">Usage:</span>
+                        <span class="info-value">app_jobs_provider.jobsProvider</span>
+                        <span class="info-label">File:</span>
+                        <span class="info-value">/mnt/d/Journeyman-Jobs/lib/core/widgets/optimized_selector_widgets.dart</span>
+                        <span class="info-label">Lines:</span>
+                        <span class="info-value">50, 215</span>
+                    </div>
+                </div>
+
+                <div class="warning">
+                    <h4>Import Alias Issue</h4>
+                    <p>The code references <code>app_jobs_provider.jobsProvider</code> but there is <strong>NO import statement</strong> with the alias <code>app_jobs_provider</code> in the file.</p>
+                    <p style="margin-top: 10px;">Current imports in optimized_selector_widgets.dart:</p>
+                    <div class="code">import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:journeyman_jobs/features/unions/providers/locals_riverpod_provider.dart';</div>
+                    <p style="margin-top: 10px;"><strong>Missing import:</strong></p>
+                    <div class="code">import 'package:journeyman_jobs/features/jobs/providers/jobs_riverpod_provider.dart' as app_jobs_provider;</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Additional Provider Files Found</h2>
+                <div class="file-tree">
+                    <strong>Generated Provider Files (9 files):</strong>
+                    <ul>
+                        <li class="generated">✓ lib/core/providers/riverpod/app_state_riverpod_provider.g.dart</li>
+                        <li class="generated">✓ lib/features/auth/providers/auth_riverpod_provider.g.dart</li>
+                        <li class="generated">✓ lib/features/crews/providers/crews_riverpod_provider.g.dart</li>
+                        <li class="generated">✓ lib/features/crews/providers/crew_jobs_riverpod_provider.g.dart</li>
+                        <li class="generated">✓ lib/features/crews/providers/global_feed_riverpod_provider.g.dart</li>
+                        <li class="generated">✓ lib/features/crews/providers/messaging_riverpod_provider.g.dart</li>
+                        <li class="generated">✓ lib/features/crews/providers/tailboard_riverpod_provider.g.dart</li>
+                        <li class="generated">✓ lib/features/jobs/providers/job_filter_riverpod_provider.g.dart</li>
+                        <li class="generated">✓ lib/features/unions/providers/locals_riverpod_provider.g.dart</li>
+                        <li class="file" style="color: red;">✗ lib/features/jobs/providers/jobs_riverpod_provider.g.dart (MISSING)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Recommendations</h2>
+                <div class="provider-card">
+                    <h3>1. Generate Missing Provider File</h3>
+                    <div class="code">dart run build_runner build --delete-conflicting-outputs</div>
+                    <p style="margin-top: 10px;">This will generate the missing <code>jobs_riverpod_provider.g.dart</code> file and create the <code>jobsProvider</code>.</p>
+                </div>
+
+                <div class="provider-card">
+                    <h3>2. Fix Provider Name Mismatch</h3>
+                    <p>Replace <code>localModelServicePodProvider</code> with <code>localModelServiceProvider</code> in:</p>
+                    <ul style="margin-top: 10px; list-style-position: inside;">
+                        <li>lib/core/providers/riverpod/local_ai_model_provider.dart:18</li>
+                        <li>lib/features/jobs/providers/job_recommendation_provider.dart:21</li>
+                    </ul>
+                </div>
+
+                <div class="provider-card">
+                    <h3>3. Add Missing Import</h3>
+                    <p>Add the following import to <code>optimized_selector_widgets.dart</code>:</p>
+                    <div class="code">import 'package:journeyman_jobs/features/jobs/providers/jobs_riverpod_provider.dart' as app_jobs_provider;</div>
+                </div>
+
+                <div class="provider-card">
+                    <h3>4. Resolve Duplicate Provider Definition</h3>
+                    <p>Remove the manual <code>offlineDataServiceProvider</code> definition from <code>app_state_riverpod_provider.dart</code> and use only the generated one from <code>offline_data_service_provider.dart</code>.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -90,7 +90,7 @@ class _MemberRosterItem extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 24,
-              backgroundColor: TailboardTheme.copper.withOpacity(0.2),
+              backgroundColor: TailboardTheme.copper.withValues(alpha:0.2),
               backgroundImage: member.avatarUrl.isNotEmpty ? NetworkImage(member.avatarUrl) : null,
               child: member.avatarUrl.isEmpty ? Text(
                       member.displayName.isNotEmpty ? member.displayName[0].toUpperCase() : '?',

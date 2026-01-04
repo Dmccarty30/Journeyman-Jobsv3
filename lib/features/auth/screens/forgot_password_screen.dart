@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import '../../../design_system/app_theme.dart';
-import '../../../design_system/widgets/design_system_widgets.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});

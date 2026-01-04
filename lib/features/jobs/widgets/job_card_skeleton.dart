@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../design_system/app_theme.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 
 /// Skeleton loading card for job listings
 /// Matches the design from assets/job-card-skeleton.png
@@ -134,3 +134,4 @@ class _JobCardSkeletonState extends State<JobCardSkeleton>
     );
   }
 }
+

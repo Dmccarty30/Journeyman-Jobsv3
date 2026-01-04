@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../models/job_model.dart';
-import '../../../design_system/app_theme.dart';
+import '../jobs.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 import '../../../utils/text_formatting_wrapper.dart';
 
 /// Condensed job card for home screen display
@@ -188,3 +188,5 @@ class CondensedJobCard extends StatelessWidget {
         ],
       );
 }
+
+

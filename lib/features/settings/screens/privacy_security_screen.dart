@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../design_system/app_theme.dart';
-import '../../../design_system/components/reusable_components.dart';
-import '../../../electrical_components/jj_circuit_breaker_switch.dart';
-import '../../../electrical_components/circuit_board_background.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 
 class PrivacySecurityScreen extends StatefulWidget {
   const PrivacySecurityScreen({super.key});
@@ -276,3 +273,4 @@ class _PrivacySecurityScreenState extends State<PrivacySecurityScreen> {
     );
   }
 }
+

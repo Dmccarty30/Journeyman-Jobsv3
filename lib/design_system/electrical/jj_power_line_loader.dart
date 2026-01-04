@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import '../design_system/app_theme.dart';
-import 'power_line_loader.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 
 /// JJ-themed wrapper for PowerLineLoader with consistent styling
 /// Provides a standardized loading indicator with electrical theme
@@ -216,3 +215,4 @@ class PowerLineLoaderController {
     _message = null;
   }
 }
+

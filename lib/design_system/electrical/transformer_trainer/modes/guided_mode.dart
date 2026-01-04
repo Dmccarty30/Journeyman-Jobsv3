@@ -2,12 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../design_system/app_theme.dart';
-import '../../../design_system/popup_theme.dart';
-import '../models/educational_content.dart';
-import '../models/transformer_models_export.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 import '../state/transformer_state.dart';
-import '../widgets/transformer_diagram.dart';
 
 /// Guided training mode with step-by-step instructions
 class GuidedModeWidget extends StatelessWidget {
@@ -389,3 +385,5 @@ class GuidedModeWidget extends StatelessWidget {
     );
   }
 }
+
+

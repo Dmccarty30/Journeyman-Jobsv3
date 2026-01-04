@@ -1,4 +1,3 @@
-export '../features/jobs/jobs.dart';
 export 'contractor_card.dart';
 export 'generic_connection_point.dart';
 

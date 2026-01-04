@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:journeyman_jobs/domain/use_cases/get_jobs_use_case.dart';
 import 'package:journeyman_jobs/data/repositories/job_repository.dart';
-import 'package:journeyman_jobs/models/job_model.dart';
+import 'package:journeyman_jobs/features/jobs/jobs.dart';
 import '../../fixtures/mock_data.dart';
 import '../../fixtures/test_constants.dart';
 

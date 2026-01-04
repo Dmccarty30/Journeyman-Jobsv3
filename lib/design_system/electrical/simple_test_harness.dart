@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../design_system/app_theme.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 
 // --------------------------------------------------------------------------
 // IMPORT YOUR COMPONENT FILES HERE
@@ -84,3 +84,4 @@ class _TestAreaState extends State<TestArea> {
     );
   }
 }
+

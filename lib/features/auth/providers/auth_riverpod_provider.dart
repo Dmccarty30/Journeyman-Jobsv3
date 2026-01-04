@@ -2,10 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../profile/profile.dart';
-import '../services/auth_service.dart';
+import '../../jobs/profile/profile.dart';
+import '../auth.dart';
 import '../../../utils/concurrent_operations.dart';
-import '../../../providers/core_providers.dart' hide AuthService;
+import 'package:journeyman_jobs/core/core.dart' hide AuthService, OperationType;
 
 part 'auth_riverpod_provider.g.dart';
 
@@ -225,4 +225,3 @@ bool isRouteProtected(Ref ref, String routePath) {
 
   return protectedRoutes.any((String route) => routePath.startsWith(route));
 }
-

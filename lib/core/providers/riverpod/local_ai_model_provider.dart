@@ -1,6 +1,6 @@
 import 'package:journeyman_jobs/features/jobs/jobs.dart';
-import 'package:journeyman_jobs/features/jobs/providers/jobs_riverpod_provider.dart' show localModelServicePodProvider;
-import 'package:journeyman_jobs/services/local_model_service.dart';
+
+import 'package:journeyman_jobs/core/core.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'local_ai_model_provider.g.dart';
@@ -15,8 +15,6 @@ LocalModelService localModelService(Ref ref) {
 Future<void> modelInitializer(Ref ref) async {
   // This provider handles the asynchronous initialization of the model.
   // UI can watch this provider to show a loading indicator while the model loads.
-  final modelService = ref.watch(localModelServicePodProvider);
+  final modelService = ref.watch(localModelServiceProvider);
   await modelService.loadModel();
 }
-
-

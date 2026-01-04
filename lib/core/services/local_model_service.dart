@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart'; // New import for Timestamp
-import '../features/jobs/jobs.dart'; // New import
+import 'package:journeyman_jobs/features/jobs/jobs.dart';
 
 /// A service class to interface with a local AI model.
 ///

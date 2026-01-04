@@ -1,7 +1,6 @@
 /// Use case for fetching jobs from the repository.
 library;
-import 'job_repository.dart';
-import '../models/job_model.dart';
+import '../jobs.dart';
 
 class GetJobsUseCase {
   final JobRepository repository;

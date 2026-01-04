@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
-import 'package:journeyman_jobs/design_system/app_theme.dart';
-import 'package:journeyman_jobs/providers/app_state_provider.dart';
-import 'package:journeyman_jobs/providers/job_filter_provider.dart';
-import 'package:journeyman_jobs/services/auth_service.dart';
-import 'package:journeyman_jobs/services/resilient_firestore_service.dart';
-import 'package:journeyman_jobs/services/connectivity_service.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
+import 'package:journeyman_jobs/core/core.dartapp_state_provider.dart';
+import 'package:journeyman_jobs/core/core.dartjob_filter_provider.dart';
+import 'package:journeyman_jobs/features/auth/auth.dart';
+import 'package:journeyman_jobs/core/core.dartresilient_firestore_service.dart';
+import 'package:journeyman_jobs/core/core.dart';
 import 'test_helpers.dart';
 
 /// Widget test helpers specifically for UI/widget testing
@@ -213,3 +213,5 @@ class WidgetTestDataBuilders {
     };
   }
 }
+
+

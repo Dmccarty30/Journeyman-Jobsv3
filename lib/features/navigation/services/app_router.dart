@@ -7,8 +7,8 @@ import '../../../screens/splash/splash_screen.dart';
 import '../../../screens/onboarding/welcome_screen.dart';
 import '../../auth/auth.dart';
 import '../../../screens/onboarding/onboarding_steps_screen.dart';
-import '../screens/nav_bar_page.dart';
-// import '../screens/crews/crews_screen.dart'; // Deprecated
+import '../navigation.dart';
+// import '../navigation.dart'; // Deprecated
 import '../../crews/screens/tailboard_screen.dart'; // New import for TailboardScreen
 import '../../crews/screens/create_crew_screen.dart'; // Import for CreateCrewScreen
 import '../../crews/screens/join_crew_screen.dart'; // Import for JoinCrewScreen
@@ -20,17 +20,13 @@ import '../../jobs/jobs.dart';
 import '../../storm/storm.dart';
 import '../../unions/unions.dart';
 import '../../../screens/settings/settings_screen.dart';
-import '../../profile/profile.dart';
+import '../../jobs/profile/profile.dart';
 import '../../../screens/settings/support/help_support_screen.dart';
 import '../../../screens/settings/support/resources_screen.dart';
 import '../../../screens/settings/account/training_certificates_screen.dart';
 import '../../../screens/settings/support/feedback_screen.dart';
 import '../../tools/tools.dart';
-import '../../tools/tools.dart';
-import '../../tools/tools.dart';
-import '../../tools/tools.dart';
 
-import '../../tools/tools.dart';
 import '../../../screens/settings/app/notifications_settings_screen.dart';
 import '../../../screens/settings/app/app_settings_screen.dart';
 import '../../../screens/settings/privacy_security_screen.dart'; // New import
@@ -385,6 +381,7 @@ class AppRouter {
     }
   }
 }
+
 
 
 

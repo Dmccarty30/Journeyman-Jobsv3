@@ -3,7 +3,7 @@ import 'package:mockito/mockito.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:journeyman_jobs/data/repositories/job_repository.dart';
-import 'package:journeyman_jobs/models/job_model.dart';
+import 'package:journeyman_jobs/features/jobs/jobs.dart';
 import '../../fixtures/mock_data.dart';
 import '../../fixtures/test_constants.dart';
 

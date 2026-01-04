@@ -1,6 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:journeyman_jobs/services/offline_data_service.dart';
-import 'package:journeyman_jobs/features/crews/providers/connectivity_service_provider.dart';
+import 'package:journeyman_jobs/core/core.dart';
+import 'package:journeyman_jobs/features/crews/crews.dart';
 
 part 'offline_data_service_provider.g.dart';
 

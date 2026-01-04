@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../services/contractor_service.dart';
-import '../../models/contractor_model.dart';
+import 'package:journeyman_jobs/core/core.dart';
 
 /// Provides an instance of ContractorService.
 final contractorServiceProvider = Provider<ContractorService>((ref) {

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
-import '../features/unions/unions.dart';
+import 'package:journeyman_jobs/features/unions/unions.dart';
 import 'resilient_firestore_service.dart';
 
 /// Geographic data sharding service for optimized regional queries

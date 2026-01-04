@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:math' as math;
-import '../design_system/app_theme.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 
 /// A custom switch widget that simulates a real electrical circuit breaker
 /// with authentic housing, physical switch animation, and electrical effects

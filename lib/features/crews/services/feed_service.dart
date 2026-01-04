@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart' show kDebugMode;
 
 import '../../../domain/exceptions/app_exception.dart';
-import '../models/post.dart';
+import '../crews.dart';
 
 class FeedService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -33,8 +32,9 @@ class FeedService {
       // Validate input
       if (crewId.isEmpty) throw AppException('Crew ID cannot be empty');
       if (authorId.isEmpty) throw AppException('Author ID cannot be empty');
-      if (content.trim().isEmpty)
+      if (content.trim().isEmpty) {
         throw AppException('Post content cannot be empty');
+      }
 
       final postData = {
         'authorId': authorId,
@@ -103,8 +103,9 @@ class FeedService {
     List<String>? mediaUrls,
   }) async {
     try {
-      if (content.trim().isEmpty)
+      if (content.trim().isEmpty) {
         throw AppException('Post content cannot be empty');
+      }
 
       final updateData = {
         'content': content.trim(),
@@ -152,7 +153,7 @@ class FeedService {
         
         String? oldType;
         if (reactionDoc.exists) {
-          final data = reactionDoc.data() as Map<String, dynamic>?;
+          final data = reactionDoc.data();
           oldType = data?['type'] as String?;
         }
         
@@ -199,7 +200,7 @@ class FeedService {
         
         if (!reactionDoc.exists || !postDoc.exists) return;
         
-        final type = (reactionDoc.data() as Map<String, dynamic>?)?['type'] as String;
+        final type = (reactionDoc.data())?['type'] as String;
         
         transaction.delete(reactionRef);
 
@@ -227,8 +228,9 @@ class FeedService {
     Map<String, dynamic> authorSnapshot = const {},
   }) async {
     try {
-      if (content.trim().isEmpty)
+      if (content.trim().isEmpty) {
         throw AppException('Comment content cannot be empty');
+      }
 
       final postRef = _feedCollection(crewId).doc(postId);
       
@@ -293,3 +295,4 @@ class FeedService {
     }
   }
 }
+

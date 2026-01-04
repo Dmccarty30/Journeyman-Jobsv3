@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:journeyman_jobs/electrical_components/jj_circuit_breaker_switch.dart';
-import 'package:journeyman_jobs/design_system/app_theme.dart';
+import 'package:journeyman_jobs/design_system/design_system.dartjj_circuit_breaker_switch.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 
 import '../../test_utils/test_helpers.dart';
 
@@ -420,3 +420,4 @@ void main() {
     });
   });
 }
+

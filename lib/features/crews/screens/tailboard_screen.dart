@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
+import '../widgets/crews_widgets.dart';
+import '../widgets/tailboard/tailboard_widgets.dart';
 
 // Design system imports
 import '../../../design_system/tailboard_theme.dart';
@@ -12,37 +14,18 @@ import '../../../design_system/tailboard_components.dart';
 import '../../../features/navigation/navigation.dart';
 
 // Providers
-import '../providers/crews_riverpod_provider.dart';
-import '../providers/feed_provider.dart';
-import '../providers/feed_filter_provider.dart';
+import '../crews.dart';
 import '../../auth/auth.dart';
-import '../../../providers/core_providers.dart'
+import 'package:journeyman_jobs/core/core.dart'
     hide selectedCrewProvider, currentUserProvider;
 
 // Models
-import '../models/models.dart';
 
 // Services
 
 // Widgets
-import '../widgets/crew_selection_dropdown.dart';
-import '../widgets/crew_preferences_dialog.dart';
-import '../widgets/dynamic_container_row.dart';
-import '../widgets/tab_widgets.dart';
 
 // Tailboard dialogs
-import '../widgets/tailboard/feed_sort_options_dialog.dart';
-import '../widgets/tailboard/feed_history_dialog.dart';
-import '../widgets/tailboard/construction_type_filter_dialog.dart';
-import '../widgets/tailboard/local_filter_dialog.dart';
-import '../widgets/tailboard/classification_filter_dialog.dart';
-import '../widgets/tailboard/job_preferences_dialog.dart';
-import '../widgets/tailboard/member_roster_dialog.dart';
-import '../widgets/tailboard/member_availability_dialog.dart';
-import '../widgets/tailboard/member_roles_dialog.dart';
-import '../widgets/tailboard/channels_list_dialog.dart';
-import '../widgets/tailboard/direct_messages_dialog.dart';
-import '../widgets/tailboard/chat_history_dialog.dart';
 
 class TailboardScreen extends ConsumerStatefulWidget {
   const TailboardScreen({super.key});
@@ -375,19 +358,22 @@ class _TailboardScreenState extends ConsumerState<TailboardScreen>
                 Row(
                   children: [
                     IconButton(
-                      icon: const Icon(Icons.image, color: TailboardTheme.copper),
+                      icon:
+                          const Icon(Icons.image, color: TailboardTheme.copper),
                       onPressed: () {
                         _showSnackBar('Image upload coming soon');
                       },
                     ),
                     IconButton(
-                      icon: const Icon(Icons.link, color: TailboardTheme.copper),
+                      icon:
+                          const Icon(Icons.link, color: TailboardTheme.copper),
                       onPressed: () {
                         _showSnackBar('Link attachment coming soon');
                       },
                     ),
                     IconButton(
-                      icon: const Icon(Icons.work, color: TailboardTheme.copper),
+                      icon:
+                          const Icon(Icons.work, color: TailboardTheme.copper),
                       onPressed: () {
                         _showSnackBar('Job tagging coming soon');
                       },
@@ -1224,5 +1210,3 @@ class _TailboardScreenState extends ConsumerState<TailboardScreen>
     );
   }
 }
-
-

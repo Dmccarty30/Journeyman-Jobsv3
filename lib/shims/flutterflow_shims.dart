@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../features/jobs/jobs.dart';
-import '../features/profile/profile.dart';
+import '../features/jobs/profile/profile.dart';
 
 enum AnimationTrigger { onPageLoad, onPageEnd, inherited }
 

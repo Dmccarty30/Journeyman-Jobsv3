@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../../design_system/app_theme.dart';
-import '../models/job_model.dart';
-import '../providers/jobs_riverpod_provider.dart';
-import '../widgets/rich_text_job_card.dart';
-import '../widgets/job_card_skeleton.dart';
-import '../widgets/job_details_dialog.dart';
-import '../../../electrical_components/circuit_board_background.dart';
-import '../../../electrical_components/jj_electrical_toast.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
+import '../jobs.dart';
 import '../../../features/navigation/navigation.dart';
 
 class JobsScreen extends ConsumerStatefulWidget {
@@ -437,4 +431,7 @@ class _JobsScreenState extends ConsumerState<JobsScreen> {
     );
   }
 }
+
+
+
 

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import '../app_theme.dart';
-import '../../electrical_components/electrical_components.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 import '../illustrations/electrical_illustrations.dart';
 
 // =================== CARDS ===================
@@ -662,3 +661,4 @@ class JJElectricalDialog extends StatelessWidget {
 /// JJElectricalToast.showSuccess(context: context, message: 'Job application sent!');
 /// JJElectricalToast.showError(context: context, message: 'Connection failed');
 /// JJElectricalToast.showPower(context: context, message: 'Power restored!');
+

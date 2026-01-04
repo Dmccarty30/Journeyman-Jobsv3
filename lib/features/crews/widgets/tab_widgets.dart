@@ -2,32 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:intl/intl.dart';
-
+import '../providers/tailboard_riverpod_provider.dart';
+import 'crews_widgets.dart';
+import 'tailboard/job_preferences_dialog.dart';
 // Design system
 import '../../../design_system/tailboard_theme.dart';
 import '../../../design_system/tailboard_components.dart';
 
 // Providers
-import '../../auth/auth.dart';
+import '../../auth/auth.dart' hide currentUserProvider;
 import '../../../features/jobs/jobs.dart';
-import '../providers/crews_riverpod_provider.dart';
-import '../providers/feed_provider.dart';
-import '../providers/feed_filter_provider.dart';
-import '../providers/tailboard_riverpod_provider.dart';
+import '../crews.dart' hide selectedCrewProvider;
 
 // Models
-import '../../../features/jobs/jobs.dart';
-import '../models/models.dart';
 
 // Widgets
-import '../widgets/post_card.dart';
-import '../widgets/chat_components.dart';
-import '../widgets/tailboard/job_preferences_dialog.dart';
-import '../widgets/tailboard/apply_job_dialog.dart';
-import '../../../widgets/dialogs/job_details_dialog.dart';
+import 'package:journeyman_jobs/core/core.dart';
 
 // Services
-import '../services/message_service.dart';
 
 // ============================================================
 // FILTER PROVIDERS
@@ -87,8 +79,8 @@ class FeedTab extends ConsumerWidget {
             filteredPosts.sort((a, b) => a.createdAt.compareTo(b.createdAt));
             break;
           case FeedSortOption.popular:
-            filteredPosts.sort(
-                (a, b) => (b.stats['likeCount'] ?? 0).compareTo(a.stats['likeCount'] ?? 0));
+            filteredPosts.sort((a, b) => (b.stats['likeCount'] ?? 0)
+                .compareTo(a.stats['likeCount'] ?? 0));
             break;
         }
 
@@ -113,7 +105,8 @@ class FeedTab extends ConsumerWidget {
             itemCount: filteredPosts.length,
             itemBuilder: (context, index) {
               final post = filteredPosts[index];
-              final commentsAsync = ref.watch(postCommentsProvider('global', post.id));
+              final commentsAsync =
+                  ref.watch(postCommentsProvider('global', post.id));
 
               return commentsAsync.when(
                 loading: () => _buildPostCard(
@@ -150,10 +143,10 @@ class FeedTab extends ConsumerWidget {
         comments: comments,
         onLike: (userId, post) {
           ref.read(reactionProvider).addReaction(
-            crewId: 'global',
-            postId: post.id,
-            type: 'like',
-          );
+                crewId: 'global',
+                postId: post.id,
+                type: 'like',
+              );
         },
         onComment: (userId, post) {
           // Placeholder for comment interaction
@@ -168,24 +161,24 @@ class FeedTab extends ConsumerWidget {
         },
         onDelete: (userId, post) {
           ref.read(postUpdateProvider).deletePost(
-            crewId: 'global',
-            postId: post.id,
-          );
+                crewId: 'global',
+                postId: post.id,
+              );
         },
         onEdit: (userId, post) {},
         onReaction: (userId, type, post) {
           ref.read(reactionProvider).addReaction(
-            crewId: 'global',
-            postId: post.id,
-            type: type,
-          );
+                crewId: 'global',
+                postId: post.id,
+                type: type,
+              );
         },
         onAddComment: (postId, content) {
           ref.read(commentProvider).addComment(
-            crewId: 'global',
-            postId: postId,
-            content: content,
-          );
+                crewId: 'global',
+                postId: postId,
+                content: content,
+              );
         },
         onLikeComment: (commentId, postId) {},
         onUnlikeComment: (commentId, postId) {},
@@ -246,7 +239,7 @@ class _JobsTabState extends ConsumerState<JobsTab> {
         icon: Icons.group_off,
       );
     }
-    
+
     final jobsAsync = ref.watch(suggestedJobsStreamProvider(selectedCrew.id));
 
     return Column(
@@ -263,38 +256,37 @@ class _JobsTabState extends ConsumerState<JobsTab> {
         Expanded(
           child: jobsAsync.when(
             loading: () => const ElectricalLoadingIndicator(
-                  message: 'Loading jobs...',
-                ),
+              message: 'Loading jobs...',
+            ),
             error: (error, stack) => SingleChildScrollView(
-                      child: EmptyStateWidget(
-                        icon: Icons.error_outline,
-                        title: 'Error Loading Jobs',
-                        message: error.toString(),
-                      ),
-                    ),
+              child: EmptyStateWidget(
+                icon: Icons.error_outline,
+                title: 'Error Loading Jobs',
+                message: error.toString(),
+              ),
+            ),
             data: (jobs) => jobs.isEmpty
-                      ? const SingleChildScrollView(
-                          child: EmptyStateWidget(
-                            icon: Icons.work_outline,
-                            title: 'No Jobs Found',
-                            message:
-                                'Try adjusting your filters or search criteria',
-                          ),
-                        )
-                      : RefreshIndicator(
-                          onRefresh: () async {
-                            ref.invalidate(suggestedJobsStreamProvider(selectedCrew.id));
-                          },
-                          color: TailboardTheme.copper,
-                          child: ListView.builder(
-                            padding:
-                                const EdgeInsets.all(TailboardTheme.spacingM),
-                            itemCount: jobs.length,
-                            itemBuilder: (context, index) {
-                              return _buildJobCard(jobs[index]);
-                            },
-                          ),
-                        ),
+                ? const SingleChildScrollView(
+                    child: EmptyStateWidget(
+                      icon: Icons.work_outline,
+                      title: 'No Jobs Found',
+                      message: 'Try adjusting your filters or search criteria',
+                    ),
+                  )
+                : RefreshIndicator(
+                    onRefresh: () async {
+                      ref.invalidate(
+                          suggestedJobsStreamProvider(selectedCrew.id));
+                    },
+                    color: TailboardTheme.copper,
+                    child: ListView.builder(
+                      padding: const EdgeInsets.all(TailboardTheme.spacingM),
+                      itemCount: jobs.length,
+                      itemBuilder: (context, index) {
+                        return _buildJobCard(jobs[index]);
+                      },
+                    ),
+                  ),
           ),
         ),
       ],
@@ -308,7 +300,7 @@ class _JobsTabState extends ConsumerState<JobsTab> {
       margin: const EdgeInsets.all(TailboardTheme.spacingM),
       padding: const EdgeInsets.all(TailboardTheme.spacingM),
       decoration: TailboardTheme.cardDecoration(
-        color: TailboardTheme.copper.withOpacity(0.1),
+        color: TailboardTheme.copper.withValues(alpha: 0.1),
       ),
       child: Row(
         children: [
@@ -411,7 +403,7 @@ class _JobsTabState extends ConsumerState<JobsTab> {
                   vertical: 4,
                 ),
                 decoration: BoxDecoration(
-                  color: TailboardTheme.copper.withOpacity(0.1),
+                  color: TailboardTheme.copper.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(TailboardTheme.radiusS),
                 ),
                 child: Text(
@@ -431,7 +423,8 @@ class _JobsTabState extends ConsumerState<JobsTab> {
               padding: const EdgeInsets.only(top: 8.0),
               child: Text(
                 'Notes: ${job.crewNotes}',
-                style: TailboardTheme.bodySmall.copyWith(fontStyle: FontStyle.italic),
+                style: TailboardTheme.bodySmall
+                    .copyWith(fontStyle: FontStyle.italic),
               ),
             ),
           const SizedBox(height: TailboardTheme.spacingM),
@@ -530,8 +523,7 @@ class _ChatTabState extends ConsumerState<ChatTab> {
     // Get messages stream
     final messageService = MessageService();
     return StreamBuilder<List<Message>>(
-      stream: messageService.getCrewMessagesStream(
-          selectedCrew.id, 'general'),
+      stream: messageService.getCrewMessagesStream(selectedCrew.id, 'general'),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const ElectricalLoadingIndicator(
@@ -566,7 +558,7 @@ class _ChatTabState extends ConsumerState<ChatTab> {
                   selectedCrew.id,
                   'general',
                   currentUser.uid,
-                  currentUser.displayName ?? 'User',
+                  currentUser.displayName,
                   message,
                 ),
               ),
@@ -591,7 +583,8 @@ class _ChatTabState extends ConsumerState<ChatTab> {
                   return MessageBubble(
                     message: message.content,
                     senderId: message.senderId,
-                    senderName: message.senderSnapshot['displayName'] ?? 'Unknown User',
+                    senderName:
+                        message.senderSnapshot['displayName'] ?? 'Unknown User',
                     timestamp: message.sentAt,
                     isCurrentUser: isCurrentUser,
                     avatarUrl: message.senderSnapshot['avatarUrl'],
@@ -604,7 +597,7 @@ class _ChatTabState extends ConsumerState<ChatTab> {
                 selectedCrew.id,
                 'general',
                 currentUser.uid,
-                currentUser.displayName ?? 'User',
+                currentUser.displayName,
                 message,
               ),
             ),
@@ -624,7 +617,7 @@ class _ChatTabState extends ConsumerState<ChatTab> {
     try {
       final messageService = MessageService();
       final currentUser = ref.read(currentUserProvider);
-      
+
       final senderSnapshot = {
         'displayName': currentUser?.displayName ?? senderName,
         'avatarUrl': currentUser?.photoURL,
@@ -727,14 +720,20 @@ class MembersTab extends ConsumerWidget {
             children: [
               CircleAvatar(
                 radius: 28,
-                backgroundColor: TailboardTheme.copper.withOpacity(0.2),
-                backgroundImage: member.avatarUrl.isNotEmpty ? NetworkImage(member.avatarUrl) : null,
-                child: member.avatarUrl.isEmpty ? Text(
-                  member.displayName.isNotEmpty ? member.displayName[0].toUpperCase() : '?',
-                  style: TailboardTheme.headingMedium.copyWith(
-                    color: TailboardTheme.copper,
-                  ),
-                ) : null,
+                backgroundColor: TailboardTheme.copper.withValues(alpha: 0.2),
+                backgroundImage: member.avatarUrl.isNotEmpty
+                    ? NetworkImage(member.avatarUrl)
+                    : null,
+                child: member.avatarUrl.isEmpty
+                    ? Text(
+                        member.displayName.isNotEmpty
+                            ? member.displayName[0].toUpperCase()
+                            : '?',
+                        style: TailboardTheme.headingMedium.copyWith(
+                          color: TailboardTheme.copper,
+                        ),
+                      )
+                    : null,
               ),
               Positioned(
                 right: 0,
@@ -780,7 +779,7 @@ class MembersTab extends ConsumerWidget {
                       vertical: 2,
                     ),
                     decoration: BoxDecoration(
-                      color: TailboardTheme.success.withOpacity(0.1),
+                      color: TailboardTheme.success.withValues(alpha: 0.1),
                       borderRadius:
                           BorderRadius.circular(TailboardTheme.radiusS),
                     ),
@@ -816,7 +815,3 @@ class MembersTab extends ConsumerWidget {
         );
   }
 }
-
-
-
-

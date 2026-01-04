@@ -3,8 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'dart:io';
-import 'package:journeyman_jobs/services/database_service.dart';
-import 'package:journeyman_jobs/models/user_model.dart';
+import 'package:journeyman_jobs/core/core.dartdatabase_service.dart';
+import 'package:journeyman_jobs/features/profile/profile.dart';
 import 'package:journeyman_jobs/models/crew_model.dart';
 import 'package:journeyman_jobs/models/post_model.dart';
 import 'package:journeyman_jobs/domain/exceptions/app_exception.dart';
@@ -373,3 +373,4 @@ void main() {
     });
   });
 }
+

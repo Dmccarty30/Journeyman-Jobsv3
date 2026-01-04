@@ -1,5 +1,5 @@
 /// Jobs Feature Barrel File
-library jobs;
+library;
 
 // Models
 export 'models/job_model.dart';
@@ -10,10 +10,27 @@ export 'models/filter_preset.dart';
 export 'models/jobs_record.dart';
 
 // Providers
-export 'providers/jobs_riverpod_provider.dart' hide firestoreService, firestoreServiceProvider, FirestoreServiceProvider, feedbackService, feedbackServiceProvider, FeedbackServiceProvider, userPreferenceService, userPreferenceServiceProvider, UserPreferenceServiceProvider, localModelServicePod, localModelServicePodProvider, LocalModelServicePodProvider;
+export 'providers/jobs_riverpod_provider.dart'
+    hide
+        firestoreService,
+        firestoreServiceProvider,
+        FirestoreServiceProvider,
+        feedbackService,
+        feedbackServiceProvider,
+        FeedbackServiceProvider,
+        userPreferenceService,
+        userPreferenceServiceProvider,
+        UserPreferenceServiceProvider;
 export 'providers/job_filter_riverpod_provider.dart';
 export 'providers/job_recommendation_provider.dart';
-export 'providers/user_job_preference_query_provider.dart' hide userPreferenceService, userPreferenceServiceProvider, UserPreferenceServiceProvider, firestoreService, firestoreServiceProvider, FirestoreServiceProvider;
+export 'providers/user_job_preference_query_provider.dart'
+    hide
+        userPreferenceService,
+        userPreferenceServiceProvider,
+        UserPreferenceServiceProvider,
+        firestoreService,
+        firestoreServiceProvider,
+        FirestoreServiceProvider;
 
 // Screens
 export 'screens/jobs_screen.dart';

@@ -3,8 +3,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 
-import '../../../design_system/app_theme.dart';
-import '../models/transformer_models_export.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 
 /// Base class for all transformer diagram painters with mobile optimizations
 abstract class BaseTransformerPainter extends CustomPainter {
@@ -317,3 +316,4 @@ abstract class BaseTransformerPainter extends CustomPainter {
     }
   }
 }
+

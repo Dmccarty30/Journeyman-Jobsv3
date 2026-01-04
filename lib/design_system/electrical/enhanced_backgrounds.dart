@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import '../design_system/app_theme.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 
 
 void main() {
@@ -392,3 +392,4 @@ class SparkPainter extends CustomPainter {
   @override
   bool shouldRepaint(SparkPainter oldDelegate) => true;
 }
+

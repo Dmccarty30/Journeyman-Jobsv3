@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'job_repository.dart';
-import '../models/job_model.dart';
+import '../jobs.dart';
 
 class JobRepositoryImpl implements JobRepository {
   final FirebaseFirestore firestore;
@@ -66,3 +65,4 @@ class JobRepositoryImpl implements JobRepository {
     }
   }
 }
+

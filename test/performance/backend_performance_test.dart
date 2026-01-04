@@ -2,12 +2,10 @@ import 'dart:async';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
-import 'package:journeyman_jobs/services/firestore_service.dart';
-import 'package:journeyman_jobs/services/cache_service.dart';
-import 'package:journeyman_jobs/services/offline_data_service.dart';
-import 'package:journeyman_jobs/services/connectivity_service.dart';
-import 'package:journeyman_jobs/services/performance_monitoring_service.dart';
-import 'package:journeyman_jobs/models/job_model.dart';
+import 'package:journeyman_jobs/core/core.dart';
+import 'package:journeyman_jobs/core/core.dartcache_service.dart';
+import 'package:journeyman_jobs/core/core.dartperformance_monitoring_service.dart';
+import 'package:journeyman_jobs/features/jobs/jobs.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 /// Comprehensive performance test suite for backend optimizations
@@ -660,3 +658,5 @@ extension FirestoreServiceExtensions on FirestoreService {
     };
   }
 }
+
+

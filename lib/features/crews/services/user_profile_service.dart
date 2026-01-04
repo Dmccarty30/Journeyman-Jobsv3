@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../../../services/analytics_service.dart';
+import 'package:journeyman_jobs/core/core.dart';
 
 /// Service for managing user profile operations related to crews.
 /// Provides methods for querying and updating crew-related fields in user profiles.

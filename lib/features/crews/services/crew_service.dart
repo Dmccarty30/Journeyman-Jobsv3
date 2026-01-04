@@ -1,8 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../models/crew.dart';
-import '../models/crew_member.dart';
-import '../models/crew_preferences.dart';
-import '../models/crew_stats.dart';
+import '../crews.dart';
 import 'job_matching_service_impl.dart';
 import 'job_sharing_service_impl.dart';
 import '../../../utils/validation.dart';
@@ -10,8 +7,7 @@ import '../../../domain/exceptions/app_exception.dart';
 import '../../../domain/exceptions/crew_exception.dart';
 import '../../../domain/exceptions/member_exception.dart';
 import '../../../domain/exceptions/messaging_exception.dart';
-import '../../../services/offline_data_service.dart';
-import '../../../services/connectivity_service.dart';
+import 'package:journeyman_jobs/core/core.dart';
 
 import 'package:journeyman_jobs/domain/enums/member_role.dart';
 import 'package:journeyman_jobs/domain/enums/permission.dart';
@@ -1294,3 +1290,5 @@ class CrewService {
 
   // End of class
 }
+
+

@@ -6,7 +6,7 @@
 /// Usage:
 /// ```dart
 /// // Import only what you need
-/// import 'package:journeyman_jobs/electrical_components/optimized_electrical_exports.dart'
+/// import 'package:journeyman_jobs/design_system/design_system.dartoptimized_electrical_exports.dart'
 ///     show ElectricalLoaders, CircuitBreakerComponents;
 /// ```
 library;
@@ -273,3 +273,4 @@ abstract class HeavyElectricalComponents {
 /// // Heavy components (consider lazy loading)
 /// import 'optimized_electrical_exports.dart' show HeavyElectricalComponents;
 /// ```
+

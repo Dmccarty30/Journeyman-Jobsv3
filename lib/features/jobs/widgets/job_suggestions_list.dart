@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../models/job_suggestion_model.dart';
-import 'job_suggestion_card.dart';
+import '../jobs.dart';
 
 // Placeholder provider for job suggestions
 final jobSuggestionsProvider = FutureProvider<List<JobSuggestion>>((ref) async {
@@ -64,3 +63,4 @@ class JobSuggestionsList extends ConsumerWidget {
     );
   }
 }
+

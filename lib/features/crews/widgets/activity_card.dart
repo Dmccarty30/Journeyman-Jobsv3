@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../models/tailboard.dart';
-import '../../../design_system/app_theme.dart';
+import '../crews.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 
 class ActivityCard extends ConsumerWidget {
   final ActivityItem activity;
@@ -175,3 +175,4 @@ class ActivityCard extends ConsumerWidget {
     );
   }
 }
+

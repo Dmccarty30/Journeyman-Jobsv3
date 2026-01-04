@@ -4,7 +4,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../../services/cache_service.dart';
+import 'package:journeyman_jobs/core/core.dart';
 import '../services/structured_logger.dart';
 import 'transformer_performance_monitor.dart';
 
@@ -259,3 +259,4 @@ class AssetMetadata {
   final AssetQuality quality;
   final DateTime loadTime;
 }
+

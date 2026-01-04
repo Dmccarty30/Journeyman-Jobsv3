@@ -2,10 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../features/jobs/jobs.dart';
-import '../features/unions/unions.dart';
-import '../features/crews/models/crew.dart';
-import '../features/crews/models/crew_member.dart';
+import 'package:journeyman_jobs/features/jobs/jobs.dart';
+import 'package:journeyman_jobs/features/unions/unions.dart';
+import 'package:journeyman_jobs/features/crews/crews.dart';
 import 'connectivity_service.dart';
 
 /// Offline data availability duration

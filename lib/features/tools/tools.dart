@@ -1,5 +1,5 @@
 /// Tools Feature Barrel File
-library tools;
+library;
 
 // Models
 export 'models/transformer_models.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../design_system/app_theme.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 
 /// A set of reusable Text widgets that adhere to the AppTheme typography.
 /// Usage:
@@ -89,3 +89,4 @@ class JJText extends StatelessWidget {
     );
   }
 }
+

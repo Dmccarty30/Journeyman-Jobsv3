@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../models/shared_job.dart';
-import '../../../design_system/app_theme.dart';
+import '../crews.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 
 class JobMatchCard extends ConsumerWidget {
   final SharedJob job;
@@ -26,7 +26,7 @@ class JobMatchCard extends ConsumerWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
         side: BorderSide(
-          color: AppTheme.accentCopper.withOpacity(0.3),
+          color: AppTheme.accentCopper.withValues(alpha:0.3),
           width: 1,
         ),
       ),
@@ -44,7 +44,7 @@ class JobMatchCard extends ConsumerWidget {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
-                      color: AppTheme.accentCopper.withOpacity(0.1),
+                      color: AppTheme.accentCopper.withValues(alpha:0.1),
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: Text(
@@ -60,7 +60,7 @@ class JobMatchCard extends ConsumerWidget {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
-                        color: AppTheme.successGreen.withOpacity(0.1),
+                        color: AppTheme.successGreen.withValues(alpha:0.1),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: const Row(
@@ -155,10 +155,10 @@ class JobMatchCard extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha:0.1),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: color.withOpacity(0.3),
+          color: color.withValues(alpha:0.3),
           width: 1,
         ),
       ),
@@ -194,3 +194,4 @@ class JobMatchCard extends ConsumerWidget {
     );
   }
 }
+

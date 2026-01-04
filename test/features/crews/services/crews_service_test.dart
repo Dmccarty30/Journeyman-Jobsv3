@@ -2,7 +2,7 @@ import 'dart:math';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:journeyman_jobs/services/crews_service.dart';
+import 'package:journeyman_jobs/core/core.dartcrews_service.dart';
 import 'package:journeyman_jobs/features/crews/models/crew.dart';
 import 'package:journeyman_jobs/features/crews/models/crew_preferences.dart';
 import 'package:journeyman_jobs/features/crews/models/crew_stats.dart';

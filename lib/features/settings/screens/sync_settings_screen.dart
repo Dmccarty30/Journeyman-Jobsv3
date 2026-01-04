@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../design_system/app_theme.dart';
-import '../services/connectivity_service.dart';
-import '../services/offline_data_service.dart';
-import '../widgets/offline_indicators.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
+import '../settings.dart';
 
 /// Screen for managing sync and offline data settings
 class SyncSettingsScreen extends StatefulWidget {
@@ -610,3 +608,4 @@ class _SyncSettingsScreenState extends State<SyncSettingsScreen> {
     );
   }
 }
+

@@ -49,7 +49,11 @@
       "Bash(cmd.exe /c \"flutter test --coverage\")",
       "Bash(tree:*)",
       "Bash(find:*)",
-      "Bash(xargs:*)"
+      "Bash(xargs:*)",
+      "Skill(sequential-thinking)",
+      "Bash(powershell.exe -Command \"flutter analyze 2>&1\")",
+      "Bash(grep:*)",
+      "Bash(dart analyze:*)"
     ],
     "deny": []
   },

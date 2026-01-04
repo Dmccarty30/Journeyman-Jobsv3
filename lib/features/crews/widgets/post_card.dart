@@ -1,9 +1,8 @@
 // ignore_for_file: unused_element
 
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import '../models/post.dart';
-import '../../../design_system/app_theme.dart';
+import '../crews.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 import 'reaction_animation.dart';
 import 'like_animation.dart';
 import 'comment_animation.dart';
@@ -537,4 +536,6 @@ class _PostCardState extends State<PostCard> {
     );
   }
 }
+
+
 

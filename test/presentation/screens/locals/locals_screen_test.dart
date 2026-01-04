@@ -3,9 +3,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
 import 'package:provider/provider.dart';
-import 'package:journeyman_jobs/screens/locals/locals_screen.dart';
-import 'package:journeyman_jobs/providers/app_state_provider.dart';
-import 'package:journeyman_jobs/design_system/app_theme.dart';
+import 'package:journeyman_jobs/features/unions/unions.dart';
+import 'package:journeyman_jobs/core/core.dartapp_state_provider.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 import '../../../fixtures/mock_data.dart';
 import '../../../fixtures/test_constants.dart';
 import '../../../helpers/widget_test_helpers.dart';
@@ -524,3 +524,5 @@ void main() {
     });
   });
 }
+
+

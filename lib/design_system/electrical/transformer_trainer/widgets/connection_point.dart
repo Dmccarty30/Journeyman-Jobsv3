@@ -2,8 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../../design_system/app_theme.dart';
-import '../../../models/transformer_models.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 
 /// Interactive connection point widget optimized for mobile devices
 class ConnectionPointWidget extends StatefulWidget {
@@ -434,3 +433,4 @@ class ConnectionPointTooltip extends StatelessWidget {
     }
   }
 }
+

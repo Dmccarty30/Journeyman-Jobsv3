@@ -1,6 +1,3 @@
-/// Crews Feature Barrel File
-library crews;
-
 // Models
 export 'models/crew.dart';
 export 'models/crew_member.dart';
@@ -15,12 +12,10 @@ export 'models/tailboard.dart';
 // Providers
 export 'providers/crews_riverpod_provider.dart';
 export 'providers/crew_jobs_riverpod_provider.dart';
-export 'providers/crew_selection_provider.dart';
 export 'providers/feed_provider.dart';
 export 'providers/feed_filter_provider.dart';
 export 'providers/global_feed_riverpod_provider.dart';
 export 'providers/messaging_riverpod_provider.dart';
-export 'providers/tailboard_riverpod_provider.dart';
 export 'providers/connectivity_service_provider.dart';
 
 // Screens

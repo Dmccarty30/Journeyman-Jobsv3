@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:journeyman_jobs/providers/app_state_provider.dart';
-import 'package:journeyman_jobs/models/job_model.dart';
-import 'package:journeyman_jobs/models/locals_record.dart';
-import 'package:journeyman_jobs/models/user_model.dart';
+import 'package:journeyman_jobs/core/core.dartapp_state_provider.dart';
+import 'package:journeyman_jobs/features/jobs/jobs.dart';
+import 'package:journeyman_jobs/features/unions/unions.dart';
+import 'package:journeyman_jobs/features/profile/profile.dart';
 import 'package:journeyman_jobs/models/filter_criteria.dart';
 import 'package:mockito/mockito.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -487,3 +487,6 @@ class MockQueryDocumentSnapshot extends Mock implements QueryDocumentSnapshot {
   @override
   Map<String, dynamic> data() => {};
 }
+
+
+

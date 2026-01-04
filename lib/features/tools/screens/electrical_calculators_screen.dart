@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:journeyman_jobs/design_system/components/reusable_components.dart';
-import '../../../../design_system/app_theme.dart';
-import '../../../../design_system/widgets/design_system_widgets.dart';
-import 'package:journeyman_jobs/electrical_components/electrical_components.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 
 class ElectricalCalculatorsScreen extends StatefulWidget {
   const ElectricalCalculatorsScreen({super.key});
@@ -800,4 +797,5 @@ class _VoltageDropCalculatorState extends State<_VoltageDropCalculator> {
     );
   }
 }
+
 

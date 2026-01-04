@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../features/tools/tools.dart';
+import 'package:journeyman_jobs/features/tools/tools.dart';
 
 /// Generic interactive connection point widget
 class GenericConnectionPointWidget extends StatefulWidget {

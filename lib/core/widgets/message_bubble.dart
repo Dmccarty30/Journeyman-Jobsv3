@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:journeyman_jobs/features/crews/models/message.dart';
+import 'package:journeyman_jobs/features/crews/crews.dart';
 
 class MessageBubble extends StatelessWidget {
   const MessageBubble({
@@ -19,7 +19,9 @@ class MessageBubble extends StatelessWidget {
         margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
         padding: const EdgeInsets.all(12.0),
         decoration: BoxDecoration(
-          color: isMe ? Colors.blue.withValues(alpha: 0.8) : Colors.grey.withValues(alpha: 0.3),
+          color: isMe
+              ? Colors.blue.withValues(alpha: 0.8)
+              : Colors.grey.withValues(alpha: 0.3),
           borderRadius: BorderRadius.only(
             topLeft: const Radius.circular(12.0),
             topRight: const Radius.circular(12.0),
@@ -28,11 +30,15 @@ class MessageBubble extends StatelessWidget {
           ),
         ),
         child: Column(
-          crossAxisAlignment: isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+          crossAxisAlignment:
+              isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
           children: [
-            if (!isMe && message.senderId.isNotEmpty) // Display sender name for others' messages
+            if (!isMe &&
+                message.senderId
+                    .isNotEmpty) // Display sender name for others' messages
               Text(
-                message.senderId, // Replace with actual sender name if available
+                message
+                    .senderId, // Replace with actual sender name if available
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: isMe ? Colors.white : Colors.black87,

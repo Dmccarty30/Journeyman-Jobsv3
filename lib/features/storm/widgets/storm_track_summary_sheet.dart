@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../../../design_system/app_theme.dart';
-import '../models/storm_track.dart';
+import '../storm.dart';
 
 class StormTrackSummarySheet extends StatelessWidget {
   final StormTrack track;
@@ -179,3 +179,4 @@ class StormTrackSummarySheet extends StatelessWidget {
     );
   }
 }
+

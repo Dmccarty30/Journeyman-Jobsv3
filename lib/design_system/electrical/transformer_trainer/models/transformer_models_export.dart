@@ -1,15 +1,15 @@
-/// @deprecated Use direct imports from '../../../models/transformer_models.dart' instead.
-/// 
+/// @deprecated Use direct imports from 'package:journeyman_jobs/features/tools/tools.dart' instead.
+///
 /// This file is maintained for backward compatibility but direct imports
-/// from the main models directory are preferred for clarity.
-/// 
+/// from the tools feature barrel file are preferred for clarity.
+///
 /// Migration example:
 /// ```dart
 /// // Old: import '../models/transformer_models_export.dart';
-/// // New: import '../../../features/tools/tools.dart';
+/// // New: import 'package:journeyman_jobs/features/tools/tools.dart';
 /// ```
 library;
 
-// Re-export all transformer models from the main models directory
-export '../../../models/transformer_models.dart';
+// Re-export all transformer models from the tools feature
+export 'package:journeyman_jobs/features/tools/models/transformer_models.dart';
 

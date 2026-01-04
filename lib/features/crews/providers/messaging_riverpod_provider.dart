@@ -1,9 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../auth/auth.dart';
-import '../models/message.dart';
-import '../services/message_service.dart';
-import 'crews_riverpod_provider.dart';
+import '../crews.dart';
 
 part 'messaging_riverpod_provider.g.dart';
 
@@ -72,4 +70,5 @@ int messageCount(Ref ref, String crewId, String channelId) {
   final messages = ref.watch(crewMessagesProvider(crewId, channelId));
   return messages.length;
 }
+
 

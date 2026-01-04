@@ -2,14 +2,13 @@ import 'dart:async'; // Required for Timer
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:journeyman_jobs/core/providers/riverpod/app_state_riverpod_provider.dart';
 import 'package:journeyman_jobs/features/jobs/jobs.dart';
 // ignore: depend_on_referenced_packages
 import 'package:riverpod/src/providers/stream_provider.dart';
 import 'dart:math'; // Required for max/min
-import '../design_system/app_theme.dart';
-import '../design_system/components/job_card.dart';
-import '../features/jobs/jobs.dart';
-import '../providers/riverpod/app_state_riverpod_provider.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
+import 'package:journeyman_jobs/core/core.dart';
 
 /// High-performance virtual scrolling job list with mobile optimizations
 ///
@@ -518,4 +517,6 @@ class _OptimizedVirtualJobListState extends ConsumerState<OptimizedVirtualJobLis
 
 extension on StreamProviderFamily<List<Job>, ({String crewId, int limit, DocumentSnapshot<Object?>? startAfter})> {
 }
+
+
 

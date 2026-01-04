@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../design_system/app_theme.dart';
-import '../services/connectivity_service.dart';
-import '../services/resilient_firestore_service.dart';
-import '../providers/riverpod/app_state_riverpod_provider.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
+import 'package:journeyman_jobs/core/core.dart';
 
 /// Widget that displays connectivity status and offline indicators
 /// 
@@ -394,3 +392,5 @@ class CompactOfflineIndicator extends ConsumerWidget {
     );
   }
 }
+
+

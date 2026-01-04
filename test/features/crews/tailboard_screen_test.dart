@@ -5,7 +5,7 @@ import 'package:journeyman_jobs/features/crews/screens/tailboard_screen.dart';
 import 'package:journeyman_jobs/features/crews/models/crew.dart';
 import 'package:journeyman_jobs/features/crews/models/crew_stats.dart';
 import 'package:journeyman_jobs/features/crews/providers/crews_riverpod_provider.dart';
-import 'package:journeyman_jobs/providers/riverpod/auth_riverpod_provider.dart';
+import 'package:journeyman_jobs/features/auth/auth.dart';
 import 'package:mocktail/mocktail.dart';
 
 void main() {
@@ -89,3 +89,4 @@ void main() {
     expect(find.text('Foreman'), findsOneWidget);
   });
 }
+

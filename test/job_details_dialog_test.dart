@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:journeyman_jobs/widgets/job_details_dialog.dart';
-import 'package:journeyman_jobs/models/job_model.dart';
-import 'package:journeyman_jobs/design_system/popup_theme.dart';
+import 'package:journeyman_jobs/core/core.dartjob_details_dialog.dart';
+import 'package:journeyman_jobs/features/jobs/jobs.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 
 void main() {
   testWidgets('JobDetailsDialog renders correctly', (WidgetTester tester) async {
@@ -106,3 +106,5 @@ void main() {
     expect(find.text('N/A'), findsWidgets); // Should show N/A for missing fields
   });
 }
+
+

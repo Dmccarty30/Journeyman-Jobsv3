@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../design_system/tailboard_theme.dart';
 import '../../../../design_system/tailboard_components.dart';
-import '../../crews.dart';import '../../../../domain/enums/member_role.dart' as domain;
+import '../../crews.dart';
 
 class MemberRolesDialog extends ConsumerStatefulWidget {
   const MemberRolesDialog({super.key});
@@ -163,7 +163,7 @@ class _MemberRoleItem extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 20,
-              backgroundColor: TailboardTheme.copper.withOpacity(0.2),
+              backgroundColor: TailboardTheme.copper.withValues(alpha:0.2),
               child: Text(
                       member.displayName.isNotEmpty ? member.displayName[0].toUpperCase() : '?',
                       style: TailboardTheme.bodyMedium.copyWith(

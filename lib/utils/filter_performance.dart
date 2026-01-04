@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import '../features/jobs/jobs.dart';
-import '../features/jobs/jobs.dart';
 
 /// High-performance filtering engine with caching and smart suggestions
 ///

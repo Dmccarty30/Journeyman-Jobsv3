@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
-import '../features/unions/unions.dart';
+import 'package:journeyman_jobs/features/unions/unions.dart';
 import 'resilient_firestore_service.dart';
 import 'cache_service.dart';
 

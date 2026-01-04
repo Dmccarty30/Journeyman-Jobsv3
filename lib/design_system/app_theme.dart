@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../electrical_components/circuit_board_background.dart' show ComponentDensity;
+import 'package:journeyman_jobs/design_system/design_system.dart' show ComponentDensity;
 
 /// Comprehensive electrical-themed design system for JJElectricalComponents
 /// Provides consistent theming across all electrical circuit-inspired UI components
@@ -803,3 +803,4 @@ class AppTheme {
     );
   }
 }
+

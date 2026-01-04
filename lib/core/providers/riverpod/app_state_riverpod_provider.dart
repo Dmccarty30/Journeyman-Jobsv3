@@ -3,19 +3,15 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../services/analytics_service.dart';
-import '../../services/connectivity_service.dart';
-import '../../services/offline_data_service.dart';
-import '../../services/local_notification_service.dart';
-import '../../features/auth/auth.dart';
-import '../../features/jobs/jobs.dart';
-import '../../features/unions/unions.dart';
+import 'package:journeyman_jobs/core/core.dart';
+import 'package:journeyman_jobs/features/auth/auth.dart';
+import 'package:journeyman_jobs/features/jobs/jobs.dart';
+import 'package:journeyman_jobs/features/unions/unions.dart';
 
 part 'app_state_riverpod_provider.g.dart';
 
 /// Global app state model
 class AppState {
-
   const AppState({
     this.isConnected = true,
     this.isInitialized = false,
@@ -32,12 +28,13 @@ class AppState {
     bool? isInitialized,
     String? globalError,
     Map<String, dynamic>? performanceMetrics,
-  }) => AppState(
-      isConnected: isConnected ?? this.isConnected,
-      isInitialized: isInitialized ?? this.isInitialized,
-      globalError: globalError ?? this.globalError,
-      performanceMetrics: performanceMetrics ?? this.performanceMetrics,
-    );
+  }) =>
+      AppState(
+        isConnected: isConnected ?? this.isConnected,
+        isInitialized: isInitialized ?? this.isInitialized,
+        globalError: globalError ?? this.globalError,
+        performanceMetrics: performanceMetrics ?? this.performanceMetrics,
+      );
 
   AppState clearError() => copyWith();
 }
@@ -65,7 +62,8 @@ class NotificationServiceAdapter {
 }
 
 @riverpod
-NotificationServiceAdapter notificationService(Ref ref) => NotificationServiceAdapter();
+NotificationServiceAdapter notificationService(Ref ref) =>
+    NotificationServiceAdapter();
 
 /// Analytics service adapter wrapping static analytics helpers
 class AnalyticsServiceAdapter {
@@ -75,9 +73,12 @@ class AnalyticsServiceAdapter {
     return;
   }
 
-  Future<void> logEvent(String eventName, {Map<String, dynamic>? parameters}) => AnalyticsService.logCustomEvent(eventName, parameters ?? <String, dynamic>{});
+  Future<void> logEvent(String eventName, {Map<String, dynamic>? parameters}) =>
+      AnalyticsService.logCustomEvent(
+          eventName, parameters ?? <String, dynamic>{});
 
-  Future<Map<String, dynamic>> getPerformanceMetrics() => AnalyticsService.getPerformanceMetrics();
+  Future<Map<String, dynamic>> getPerformanceMetrics() =>
+      AnalyticsService.getPerformanceMetrics();
 }
 
 @riverpod
@@ -119,11 +120,12 @@ class AppStateNotifier extends _$AppStateNotifier {
   @override
   AppState build() {
     // Listen to connectivity changes
-    ref.listen(connectivityStreamProvider, (AsyncValue<bool>? previous, AsyncValue<bool> next) {
+    ref.listen(connectivityStreamProvider,
+        (AsyncValue<bool>? previous, AsyncValue<bool> next) {
       next.when(
         data: (bool isConnected) {
           state = state.copyWith(isConnected: isConnected);
-          
+
           // Track connectivity events
           AnalyticsService.logCustomEvent(
             'connectivity_changed',
@@ -156,13 +158,14 @@ class AppStateNotifier extends _$AppStateNotifier {
       }
 
       state = state.copyWith(isInitialized: true);
-      
+
       // Track app initialization
       AnalyticsService.logCustomEvent('app_initialized', <String, dynamic>{});
     } catch (e) {
       state = state.copyWith(
         globalError: 'Failed to initialize app: $e',
-        isInitialized: true, // Still mark as initialized to prevent infinite loading
+        isInitialized:
+            true, // Still mark as initialized to prevent infinite loading
       );
     }
   }
@@ -170,10 +173,10 @@ class AppStateNotifier extends _$AppStateNotifier {
   /// Load initial data for authenticated users
   Future<void> _loadInitialData() async {
     try {
-        await Future.wait(<Future<void>>[
-          ref.read(jobsProvider.notifier).loadJobs(),
-          ref.read(localsProvider.notifier).loadLocals(),
-        ]);
+      await Future.wait(<Future<void>>[
+        ref.read(jobsNotifierProvider.notifier).loadJobs(),
+        ref.read(localsProvider.notifier).loadLocals(),
+      ]);
     } catch (e) {
       // Don't set global error for data loading failures
       // Individual providers will handle their own errors
@@ -184,10 +187,10 @@ class AppStateNotifier extends _$AppStateNotifier {
   Future<void> refreshAppData() async {
     try {
       final bool isAuthenticated = ref.read(isAuthenticatedProvider);
-      
+
       if (isAuthenticated) {
         await Future.wait<void>(<Future<void>>[
-          ref.read(jobsProvider.notifier).refreshJobs(),
+          ref.read(jobsNotifierProvider.notifier).refreshJobs(),
           ref.read(localsProvider.notifier).loadLocals(forceRefresh: true),
         ]);
       }
@@ -195,13 +198,14 @@ class AppStateNotifier extends _$AppStateNotifier {
       // Update performance metrics
       final Map<String, Object> performanceMetrics = <String, Object>{
         'last_refresh': DateTime.now().toIso8601String(),
-        'jobs_metrics': ref.read(jobsProvider.notifier).getPerformanceMetrics(),
+        'jobs_metrics': ref.read(jobsNotifierProvider.notifier).getPerformanceMetrics(),
       };
 
       state = state.copyWith(performanceMetrics: performanceMetrics);
-      
+
       // Track refresh event
-      AnalyticsService.logCustomEvent('app_data_refreshed', <String, dynamic>{});
+      AnalyticsService.logCustomEvent(
+          'app_data_refreshed', <String, dynamic>{});
     } catch (e) {
       state = state.copyWith(globalError: 'Failed to refresh data: $e');
       rethrow;
@@ -212,7 +216,7 @@ class AppStateNotifier extends _$AppStateNotifier {
   Future<void> handleUserSignIn() async {
     try {
       await _loadInitialData();
-      
+
       // Track sign in event
       AnalyticsService.logCustomEvent('user_signed_in', <String, dynamic>{});
     } catch (e) {
@@ -224,9 +228,9 @@ class AppStateNotifier extends _$AppStateNotifier {
   Future<void> handleUserSignOut() async {
     try {
       // Clear all provider states
-      ref.invalidate(jobsProvider);
+      ref.invalidate(jobsNotifierProvider);
       ref.invalidate(localsProvider);
-      
+
       // Track sign out event
       AnalyticsService.logCustomEvent('user_signed_out', <String, dynamic>{});
     } catch (e) {
@@ -241,8 +245,8 @@ class AppStateNotifier extends _$AppStateNotifier {
 
   /// Update performance metrics
   void updatePerformanceMetrics(Map<String, dynamic> metrics) {
-    final Map<String, dynamic> updatedMetrics = Map<String, dynamic>.from(state.performanceMetrics)
-      ..addAll(metrics);
+    final Map<String, dynamic> updatedMetrics =
+        Map<String, dynamic>.from(state.performanceMetrics)..addAll(metrics);
     state = state.copyWith(performanceMetrics: updatedMetrics);
   }
 }
@@ -252,7 +256,7 @@ class AppStateNotifier extends _$AppStateNotifier {
 Map<String, dynamic> appStatus(Ref ref) {
   final appState = ref.watch(appStateProvider);
   final authState = ref.watch(authProvider);
-  final jobsState = ref.watch(jobsProvider);
+  final jobsState = ref.watch(jobsNotifierProvider);
   final localsState = ref.watch(localsProvider);
 
   return <String, dynamic>{
@@ -273,10 +277,10 @@ Map<String, dynamic> appStatus(Ref ref) {
 @riverpod
 List<String> allErrors(Ref ref) {
   final List<String> errors = <String>[];
-  
+
   final appState = ref.watch(appStateProvider);
   final authState = ref.watch(authProvider);
-  final jobsState = ref.watch(jobsProvider);
+  final jobsState = ref.watch(jobsNotifierProvider);
   final localsState = ref.watch(localsProvider);
 
   if (appState.globalError != null) {
@@ -300,15 +304,11 @@ List<String> allErrors(Ref ref) {
 bool isAnyLoading(Ref ref) {
   final appState = ref.watch(appStateProvider);
   final authState = ref.watch(authProvider);
-  final jobsState = ref.watch(jobsProvider);
+  final jobsState = ref.watch(jobsNotifierProvider);
   final localsState = ref.watch(localsProvider);
 
   return !appState.isInitialized ||
-         authState.isLoading ||
-         jobsState.isLoading ||
-         localsState.isLoading;
+      authState.isLoading ||
+      jobsState.isLoading ||
+      localsState.isLoading;
 }
-
-
-
-

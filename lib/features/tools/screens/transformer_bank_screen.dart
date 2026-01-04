@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../design_system/app_theme.dart';
-import '../../../../electrical_components/circuit_pattern_painter.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 import 'transformer_reference_screen.dart';
 
 class TransformerBankScreen extends StatefulWidget {

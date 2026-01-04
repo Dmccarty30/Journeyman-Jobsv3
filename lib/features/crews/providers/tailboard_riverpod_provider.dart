@@ -1,11 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../auth/auth.dart';
-import '../models/post.dart';
-import '../models/shared_job.dart';
-import '../models/tailboard.dart';
-import '../services/tailboard_service.dart';
+import '../crews.dart';
 
 part 'tailboard_riverpod_provider.g.dart';
 
@@ -134,3 +130,4 @@ List<ActivityItem> activitiesByActor(Ref ref, String crewId, String actorId) {
   final activities = ref.watch(activityItemsProvider(crewId));
   return activities.where((activity) => activity.actorId == actorId).toList();
 }
+

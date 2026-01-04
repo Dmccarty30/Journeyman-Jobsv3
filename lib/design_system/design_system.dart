@@ -1,5 +1,5 @@
 /// Design System Barrel File
-library design_system;
+library;
 
 export 'app_theme.dart';
 export 'popup_theme.dart';
@@ -7,7 +7,7 @@ export 'tailboard_theme.dart';
 export 'theme_dark.dart';
 export 'theme_light.dart';
 export 'theme_variables.dart';
-export 'design_system.dart';
+// export 'design_system.dart'; // Circular export removed
 
 // Components
 export 'components/reusable_components.dart';

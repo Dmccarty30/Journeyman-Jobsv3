@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../design_system/app_theme.dart';
-import '../services/power_outage_service.dart';
+import '../storm.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 /// Widget to display power outage information for a state
@@ -308,4 +308,5 @@ class PowerOutageSummary extends StatelessWidget {
     );
   }
 }
+
 

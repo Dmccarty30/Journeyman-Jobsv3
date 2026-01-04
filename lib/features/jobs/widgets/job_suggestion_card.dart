@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/job_suggestion_model.dart';
+import '../jobs.dart';
 
 class JobSuggestionCard extends StatelessWidget {
   final JobSuggestion suggestion;
@@ -62,3 +62,4 @@ class JobSuggestionCard extends StatelessWidget {
     );
   }
 }
+

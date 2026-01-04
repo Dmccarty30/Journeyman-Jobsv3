@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:journeyman_jobs/design_system/components/reusable_components.dart';
-import '../app_theme.dart';
-import '../../features/jobs/jobs.dart';
-import '../../utils/job_formatting.dart';
-import '../widgets/design_system_widgets.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
+import 'package:journeyman_jobs/features/jobs/jobs.dart';
+import 'package:journeyman_jobs/utils/job_formatting.dart';
 
 /// Enum for JobCard variants
 enum JobCardVariant {
@@ -451,4 +449,5 @@ class JobCard extends StatelessWidget {
     );
   }
 }
+
 

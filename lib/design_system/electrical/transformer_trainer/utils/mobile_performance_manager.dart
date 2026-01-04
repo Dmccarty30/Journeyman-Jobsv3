@@ -154,3 +154,4 @@ extension DeviceDetection on BuildContext {
     return 28;
   }
 }
+

@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
-import 'package:journeyman_jobs/design_system/widgets/design_system_widgets.dart';
-import 'package:journeyman_jobs/electrical_components/electrical_components.dart';
-import '../../../design_system/app_theme.dart';
-import '../../../design_system/components/reusable_components.dart';
-import '../../../features/tools/tools.dart';
-import '../../../features/tools/tools.dart';
-import '../../../features/tools/tools.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 import '../../../features/tools/tools.dart';
 
 
@@ -595,6 +589,8 @@ class ResourceCard extends StatelessWidget {
     );
   }
 }
+
+
 
 
 

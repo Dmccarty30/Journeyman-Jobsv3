@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart'; // Add for context.go
 
-import '../../../design_system/app_theme.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 import '../../../features/navigation/navigation.dart'; // Add for AppRouter
 
 class JoinCrewScreen extends ConsumerStatefulWidget {
@@ -169,3 +169,4 @@ class JoinCrewScreenState extends ConsumerState<JoinCrewScreen> {
     );
   }
 }
+

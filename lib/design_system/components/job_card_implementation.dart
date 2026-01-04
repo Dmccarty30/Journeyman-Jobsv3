@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../features/jobs/jobs.dart';
+import 'package:journeyman_jobs/features/jobs/jobs.dart';
 
 /// Job Card Implementation following the exact wireframe specification
 /// from job-card-implementation.md

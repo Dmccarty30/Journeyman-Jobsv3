@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../models/message.dart';
-import '../../../design_system/app_theme.dart';
+import '../crews.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 
 class DMPreviewCard extends StatelessWidget {
   final Message lastMessage;
@@ -179,3 +179,4 @@ class DMPreviewCard extends StatelessWidget {
     }
   }
 }
+

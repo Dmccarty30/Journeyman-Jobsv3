@@ -2,10 +2,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
-import '../services/weather_radar_service.dart';
+import '../storm.dart';
 import '../../../../services/location_service.dart';
 import '../../../../design_system/app_theme.dart';
-import '../../../../electrical_components/electrical_loader.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 /// Interactive weather radar map widget with real-time storm tracking
@@ -576,4 +576,5 @@ class _InteractiveRadarMapState extends State<InteractiveRadarMap>
     return '${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}';
   }
 }
+
 

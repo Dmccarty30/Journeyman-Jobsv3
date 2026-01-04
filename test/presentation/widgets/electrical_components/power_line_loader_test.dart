@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:journeyman_jobs/electrical_components/power_line_loader.dart';
-import 'package:journeyman_jobs/design_system/app_theme.dart';
+import 'package:journeyman_jobs/design_system/design_system.dartpower_line_loader.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 import '../../../helpers/widget_test_helpers.dart';
 
 void main() {
@@ -496,3 +496,4 @@ class FakeAccessibilityFeatures implements AccessibilityFeatures {
   @override
   final bool reduceMotion;
 }
+

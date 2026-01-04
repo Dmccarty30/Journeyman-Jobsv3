@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 import 'social_animations.dart';
-import '../../../design_system/app_theme.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 
 /// Like animation widget with heart pop, color transitions, and particle effects
 class LikeAnimation extends StatefulWidget {

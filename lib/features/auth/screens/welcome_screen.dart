@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
-import '../../electrical_components/circuit_board_background.dart';
-import '../../design_system/app_theme.dart';
-import '../../design_system/widgets/design_system_widgets.dart';
-import '../../features/navigation/navigation.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
+import 'package:journeyman_jobs/features/navigation/navigation.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
@@ -136,7 +134,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                   ),
                                 ).animate().scale(
                                       delay: const Duration(milliseconds: 200),
-                                      duration: const Duration(milliseconds: 600),
+                                      duration:
+                                          const Duration(milliseconds: 600),
                                       curve: Curves.elasticOut,
                                     ),
 
@@ -153,13 +152,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                     .animate()
                                     .fadeIn(
                                       delay: const Duration(milliseconds: 400),
-                                      duration: const Duration(milliseconds: 600),
+                                      duration:
+                                          const Duration(milliseconds: 600),
                                     )
                                     .slideY(
                                       begin: 0.2,
                                       end: 0,
                                       delay: const Duration(milliseconds: 400),
-                                      duration: const Duration(milliseconds: 600),
+                                      duration:
+                                          const Duration(milliseconds: 600),
                                     ),
 
                                 const SizedBox(height: AppTheme.spacingMd),
@@ -176,13 +177,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                     .animate()
                                     .fadeIn(
                                       delay: const Duration(milliseconds: 600),
-                                      duration: const Duration(milliseconds: 600),
+                                      duration:
+                                          const Duration(milliseconds: 600),
                                     )
                                     .slideY(
                                       begin: 0.2,
                                       end: 0,
                                       delay: const Duration(milliseconds: 600),
-                                      duration: const Duration(milliseconds: 600),
+                                      duration:
+                                          const Duration(milliseconds: 600),
                                     ),
 
                                 const SizedBox(height: AppTheme.spacingLg),
@@ -199,13 +202,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                     .animate()
                                     .fadeIn(
                                       delay: const Duration(milliseconds: 800),
-                                      duration: const Duration(milliseconds: 600),
+                                      duration:
+                                          const Duration(milliseconds: 600),
                                     )
                                     .slideY(
                                       begin: 0.2,
                                       end: 0,
                                       delay: const Duration(milliseconds: 800),
-                                      duration: const Duration(milliseconds: 600),
+                                      duration:
+                                          const Duration(milliseconds: 600),
                                     ),
                               ],
                             ),
@@ -305,4 +310,3 @@ class WelcomePageData {
     required this.description,
   });
 }
-

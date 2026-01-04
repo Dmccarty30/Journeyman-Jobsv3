@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../design_system/popup_theme.dart';
-import '../../../design_system/app_theme.dart';
-import '../models/job_model.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
+import '../jobs.dart';
 import '../../crews/providers/crews_riverpod_provider.dart';
 
 /// A comprehensive dialog displaying detailed job information
@@ -417,3 +416,4 @@ class JobDetailsDialog extends ConsumerWidget {
     );
   }
 }
+

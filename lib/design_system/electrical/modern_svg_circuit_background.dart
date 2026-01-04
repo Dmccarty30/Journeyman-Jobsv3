@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 import 'dart:ui';
-import '../design_system/app_theme.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 
 class ModernSvgCircuitBackground extends StatefulWidget {
   final double opacity;
@@ -154,3 +154,4 @@ class _ModernCircuitPainter extends CustomPainter {
            oldDelegate.opacity != opacity;
   }
 }
+

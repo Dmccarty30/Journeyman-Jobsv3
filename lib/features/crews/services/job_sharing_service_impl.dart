@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../models/crew.dart';
-import '../models/shared_job.dart';
+import '../crews.dart';
 
 class JobSharingService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;

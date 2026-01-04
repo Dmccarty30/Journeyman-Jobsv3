@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../electrical_components/electrical_circuit_background.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 
 class JJElectricalScaffold extends StatelessWidget {
   final PreferredSizeWidget? appBar;

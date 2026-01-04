@@ -323,3 +323,4 @@ class _AdaptiveAnimatedWidgetState extends State<AdaptiveAnimatedWidget> {
     );
   }
 }
+

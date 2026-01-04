@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../../../design_system/app_theme.dart';
-import '../models/post.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
+import '../crews.dart';
 
 class CommentItem extends StatefulWidget {
   final PostComment comment;
@@ -55,7 +55,7 @@ class _CommentItemState extends State<CommentItem> {
             height: 36,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: AppTheme.accentCopper.withOpacity(0.2),
+              color: AppTheme.accentCopper.withValues(alpha:0.2),
               image: avatarUrl != null ? DecorationImage(
                 image: NetworkImage(avatarUrl),
                 fit: BoxFit.cover,
@@ -140,7 +140,7 @@ class _CommentItemState extends State<CommentItem> {
                       borderRadius: BorderRadius.circular(AppTheme.radiusSm),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
+                          color: Colors.black.withValues(alpha:0.1),
                           blurRadius: 8,
                           offset: const Offset(0, 2),
                         ),
@@ -197,3 +197,4 @@ class _CommentItemState extends State<CommentItem> {
     );
   }
 }
+

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../../design_system/app_theme.dart';
-import '../services/app_router.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
+import '../navigation.dart';
 
 class NavBarPage extends StatefulWidget {
   final Widget child;
@@ -116,3 +116,4 @@ class _NavBarPageState extends State<NavBarPage> {
     );
   }
 }
+

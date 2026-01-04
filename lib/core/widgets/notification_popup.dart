@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:journeyman_jobs/design_system/widgets/design_system_widgets.dart';
-import 'package:journeyman_jobs/electrical_components/electrical_components.dart';
-import '../design_system/app_theme.dart';
-import '../electrical_components/circuit_pattern_painter.dart';
-import '../features/navigation/navigation.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
+import 'package:journeyman_jobs/features/navigation/navigation.dart' hide CircuitPatternPainter;
 
 /// A themed popup widget for quick notification access
 /// Displays a electrical-themed popup with notification options
@@ -363,4 +360,7 @@ void showNotificationPopup(BuildContext context) {
     ),
   );
 }
+
+
+
 

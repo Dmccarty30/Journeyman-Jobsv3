@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'reaction_animation.dart';
-import '../../../design_system/app_theme.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 
 class EmojiReactionPicker extends StatelessWidget {
   final Function(String emoji) onEmojiSelected;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../providers/riverpod/app_state_riverpod_provider.dart';
+import 'package:journeyman_jobs/core/core.dart';
+import 'package:journeyman_jobs/core/providers/riverpod/offline_data_service_provider.dart';
 
 /// Connection status indicator that shows current connectivity state
 class ConnectionStatusIndicator extends ConsumerWidget {
@@ -561,3 +562,4 @@ class OfflineModeToggle extends ConsumerWidget {
     );
   }
 }
+

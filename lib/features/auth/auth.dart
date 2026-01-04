@@ -1,5 +1,5 @@
 /// Auth Feature Barrel File
-library auth;
+library;
 
 // Providers
 export 'providers/auth_riverpod_provider.dart';

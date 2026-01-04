@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../models/contractor_model.dart';
-import '../design_system/app_theme.dart';
-import '../utils/text_formatting_wrapper.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
+import 'package:journeyman_jobs/utils/text_formatting_wrapper.dart';
 
 /// A card widget that displays contractor information with interactive links
 /// for phone, email, and website contact methods.

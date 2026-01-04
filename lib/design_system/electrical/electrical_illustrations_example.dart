@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../design_system/app_theme.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 import '../../design_system/illustrations/electrical_illustrations.dart';
-import '../../design_system/components/reusable_components.dart';
 
 void main() {
   runApp(const ElectricalIllustrationsExample());
@@ -216,3 +215,4 @@ extension ContextualIllustrations on String {
     return IllustrationHelper.getEmptyStateIllustration(this);
   }
 }
+

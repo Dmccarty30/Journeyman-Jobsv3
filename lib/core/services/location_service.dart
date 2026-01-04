@@ -4,8 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart' as permission;
-import '../features/jobs/jobs.dart';
-import '../features/unions/unions.dart';
+import 'package:journeyman_jobs/features/jobs/jobs.dart';
+import 'package:journeyman_jobs/features/unions/unions.dart';
 import 'geographic_firestore_service.dart';
 import 'cache_service.dart';
 

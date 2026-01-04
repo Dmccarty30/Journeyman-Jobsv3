@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:journeyman_jobs/providers/core_providers.dart';
 import 'dart:async';
 
 
@@ -101,3 +100,4 @@ class _ChatInputState extends ConsumerState<ChatInput> {
     super.dispose();
   }
 }
+

@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
-import 'package:journeyman_jobs/services/crews_service.dart';
+import 'package:journeyman_jobs/core/core.dartcrews_service.dart';
 import 'package:journeyman_jobs/features/crews/services/counter_service.dart';
 import 'package:journeyman_jobs/domain/exceptions/crew_exception.dart';
 import 'package:journeyman_jobs/features/crews/models/crew.dart';

@@ -1,8 +1,7 @@
 import 'package:journeyman_jobs/features/jobs/jobs.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import '../models/job_suggestion_model.dart';
-import '../../../services/subscription_service.dart';
-import 'jobs_riverpod_provider.dart'; // New import
+import 'package:journeyman_jobs/core/core.dart';
+// New import
 
 part 'job_recommendation_provider.g.dart';
 
@@ -19,7 +18,7 @@ Future<List<JobSuggestion>> jobRecommendations(Ref ref) async {
     return []; // Return empty list if not a pro subscriber
   }
 
-  final localModelService = ref.watch(localModelServicePodProvider);
+  final localModelService = ref.watch(localModelServiceProvider);
 
   // Placeholder for user preferences. In a real app, this would come from a user preferences provider.
   final Map<String, dynamic> userPreferences = {
@@ -30,4 +29,6 @@ Future<List<JobSuggestion>> jobRecommendations(Ref ref) async {
 
   return localModelService.getJobRecommendations(userPreferences);
 }
+
+
 

@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-import '../models/notification/notification_preferences_model.dart';
+import 'package:journeyman_jobs/features/jobs/profile/profile.dart';
 import 'fcm_service.dart';
 
 /// Service to manage notification preferences, bindings, and delivery

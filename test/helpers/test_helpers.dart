@@ -4,11 +4,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 // TODO: Uncomment when Riverpod providers are fixed
-// import 'package:journeyman_jobs/providers/app_state_provider.dart';
-// import 'package:journeyman_jobs/providers/job_filter_provider.dart';
-import 'package:journeyman_jobs/services/auth_service.dart';
-import 'package:journeyman_jobs/services/resilient_firestore_service.dart';
-import 'package:journeyman_jobs/services/connectivity_service.dart';
+// import 'package:journeyman_jobs/core/core.dartapp_state_provider.dart';
+// import 'package:journeyman_jobs/core/core.dartjob_filter_provider.dart';
+import 'package:journeyman_jobs/features/auth/auth.dart';
+import 'package:journeyman_jobs/core/core.dartresilient_firestore_service.dart';
+import 'package:journeyman_jobs/core/core.dart';
 import 'package:mockito/mockito.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
@@ -460,3 +460,5 @@ class ElectricalTestSetup {
     return firestoreService;
   }
 }
+
+

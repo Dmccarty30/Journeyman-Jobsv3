@@ -2,7 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../models/message.dart';
+import '../crews.dart';
 import '../../auth/auth.dart';
 
 part 'global_feed_riverpod_provider.g.dart';
@@ -65,4 +65,5 @@ class SendGlobalMessageNotifier extends _$SendGlobalMessageNotifier {
 int unreadGlobalCount(Ref ref) {
   return 0; // Simplified for now
 }
+
 

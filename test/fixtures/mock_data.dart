@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:journeyman_jobs/models/job_model.dart';
-import 'package:journeyman_jobs/models/user_model.dart';
+import 'package:journeyman_jobs/features/jobs/jobs.dart';
+import 'package:journeyman_jobs/features/profile/profile.dart';
 import 'package:journeyman_jobs/legacy/flutterflow/schema/locals_record.dart';
 
 /// Centralized mock data for all tests
@@ -299,3 +299,4 @@ class TestConstants {
   static const String firestoreErrorMessage = 'Firestore operation failed';
   static const String permissionErrorMessage = 'Permission denied';
 }
+

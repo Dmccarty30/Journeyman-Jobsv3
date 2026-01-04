@@ -1,5 +1,5 @@
 /// Core Module Barrel File
-library core;
+library;
 
 // Models
 export 'models/contractor_model.dart';
@@ -34,8 +34,8 @@ export 'services/usage_report_service.dart';
 export 'services/user_analytics_service.dart';
 
 // Providers
-export 'providers/core_providers.dart';
-export 'providers/core_providers.g.dart';
+export 'providers/core_providers.dart' hide FirestoreService;
+// export 'providers/core_providers.g.dart'; // Part files should not be exported
 
 // Widgets
 export 'widgets/contractor_card.dart';
@@ -49,4 +49,3 @@ export 'widgets/offline_indicators.dart';
 export 'widgets/optimized_selector_widgets.dart';
 export 'widgets/optimized_virtual_job_list.dart';
 export 'widgets/widgets.dart';
-

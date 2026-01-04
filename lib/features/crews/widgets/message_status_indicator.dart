@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/message.dart';
-import '../../../design_system/app_theme.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 
 class MessageStatusIndicator extends StatelessWidget {
   final String status; // 'sent', 'delivered', 'read', 'failed'
@@ -127,3 +126,4 @@ class CompactMessageStatusIndicator extends StatelessWidget {
     }
   }
 }
+

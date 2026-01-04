@@ -4,8 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
 
-import '../../../services/cache_service.dart';
-import '../../../services/performance_monitoring_service.dart';
+import 'package:journeyman_jobs/core/core.dart';
 import '../services/structured_logger.dart';
 import 'mobile_performance_manager.dart';
 
@@ -302,3 +301,4 @@ class AnimationMetrics {
   final double averageFps;
   final DateTime timestamp;
 }
+

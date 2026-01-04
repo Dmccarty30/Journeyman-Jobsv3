@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../models/locals_record.dart';
-import '../../../../design_system/app_theme.dart';
-import '../providers/locals_riverpod_provider.dart';
+import '../unions.dart';
 import 'dart:io' show Platform;
 import '../../../../widgets/notification_badge.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../features/navigation/navigation.dart';
 import '../../../../utils/text_formatting_wrapper.dart';
-import '../../../../electrical_components/circuit_board_background.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
+import 'package:journeyman_jobs/core/core.dart';
 
 class LocalsScreen extends ConsumerStatefulWidget {
   const LocalsScreen({super.key});
@@ -1073,3 +1072,4 @@ class LocalDetailsDialog extends StatelessWidget {
     }
   }
 }
+

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/job_model.dart';
+import '../jobs.dart';
 import '../../../utils/text_formatting_wrapper.dart';
 
 class OptimizedJobCard extends StatelessWidget {
@@ -101,3 +101,4 @@ class _DetailChip extends StatelessWidget {
     return const SizedBox.shrink();
   }
 }
+

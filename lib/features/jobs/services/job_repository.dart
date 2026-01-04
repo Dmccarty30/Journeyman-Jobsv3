@@ -1,4 +1,4 @@
-import '../models/job_model.dart';
+import '../jobs.dart';
 
 /// JobRepository interface for data access related to jobs.
 abstract class JobRepository {
@@ -8,3 +8,4 @@ abstract class JobRepository {
   Future<void> updateJob(Job job);
   Future<void> deleteJob(String id);
 }
+

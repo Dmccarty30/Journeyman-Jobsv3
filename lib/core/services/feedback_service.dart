@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../models/user_feedback_model.dart';
+import 'package:journeyman_jobs/features/jobs/profile/profile.dart';
 
 class FeedbackService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;

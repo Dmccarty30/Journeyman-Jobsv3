@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:journeyman_jobs/design_system/components/reusable_components.dart';
-import 'package:journeyman_jobs/electrical_components/electrical_components.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../design_system/app_theme.dart';
-import '../../../design_system/widgets/design_system_widgets.dart';
 
 class DataStorageScreen extends StatefulWidget {
   const DataStorageScreen({super.key});
@@ -135,7 +132,7 @@ class _DataStorageScreenState extends State<DataStorageScreen> {
                       Container(
                         padding: const EdgeInsets.all(AppTheme.spacingSm),
                         decoration: BoxDecoration(
-                          color: AppTheme.primaryNavy.withOpacity(0.1),
+                          color: AppTheme.primaryNavy.withValues(alpha:0.1),
                           borderRadius: BorderRadius.circular(AppTheme.radiusSm),
                         ),
                         child: const Icon(Icons.storage, color: AppTheme.primaryNavy),
@@ -197,7 +194,7 @@ class _DataStorageScreenState extends State<DataStorageScreen> {
           Container(
             padding: const EdgeInsets.all(AppTheme.spacingSm),
             decoration: BoxDecoration(
-              color: AppTheme.primaryNavy.withOpacity(0.1),
+              color: AppTheme.primaryNavy.withValues(alpha:0.1),
               borderRadius: BorderRadius.circular(AppTheme.radiusSm),
             ),
             child: Icon(icon, color: AppTheme.primaryNavy),
@@ -225,3 +222,4 @@ class _DataStorageScreenState extends State<DataStorageScreen> {
     );
   }
 }
+

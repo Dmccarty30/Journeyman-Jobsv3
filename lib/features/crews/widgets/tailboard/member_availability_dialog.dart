@@ -168,7 +168,7 @@ class _AvailabilityItem extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 20,
-                  backgroundColor: TailboardTheme.copper.withOpacity(0.2),
+                  backgroundColor: TailboardTheme.copper.withValues(alpha:0.2),
                   backgroundImage: member.avatarUrl.isNotEmpty ? NetworkImage(member.avatarUrl) : null,
                   child: member.avatarUrl.isEmpty ? Text(
                           member.displayName.isNotEmpty ? member.displayName[0].toUpperCase() : '?',
@@ -225,7 +225,7 @@ class _AvailabilityItem extends StatelessWidget {
               ),
               decoration: BoxDecoration(
                 color: isAvailable
-                    ? TailboardTheme.success.withOpacity(0.1)
+                    ? TailboardTheme.success.withValues(alpha:0.1)
                     : TailboardTheme.backgroundLight,
                 borderRadius: BorderRadius.circular(TailboardTheme.radiusL),
                 border: Border.all(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:journeyman_jobs/screens/onboarding/auth_screen.dart';
+import 'package:journeyman_jobs/features/auth/auth.dart';
 import 'package:mockito/mockito.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 

@@ -1,9 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../models/locals_record.dart';
+import '../unions.dart';
 import '../../../utils/concurrent_operations.dart';
-import '../../jobs/jobs.dart';
 import '../../jobs/providers/jobs_riverpod_provider.dart' show firestoreServiceProvider;
 
 part 'locals_riverpod_provider.g.dart';
@@ -305,3 +304,8 @@ List<String> allClassifications(Ref ref) {
   return list;
 }
 
+/// Backwards compatibility alias for legacy code using the old `localsProvider` name.
+/// The @riverpod annotation generates `localsNotifierProvider` from `LocalsNotifier`,
+/// but existing code references `localsProvider`. This alias maintains compatibility.
+// ignore: non_constant_identifier_names
+final localsProvider = localsNotifierProvider;

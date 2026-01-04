@@ -95,62 +95,15 @@ lib/electrical_components/
 - [x] **Task 6**: Merge `JJButton` variants → `lib/design_system/widgets/buttons/jj_button.dart`
   - ✅ `jj_button.dart` + primary/secondary variants exist and are the canonical button implementations.
 
-- [ ] **Task 7**: Consolidate `JJPowerLineLoader` & `JJSnackBar` (stabilize exports + imports)
-  - **7.1 – Barrel ownership (DONE, verify only):**
-    - Canonical definitions live under `lib/electrical_components/`.
-    - `lib/electrical_components/electrical_components.dart` SHOULD export:
-      - `jj_power_line_loader.dart`
-      - `jj_snack_bar.dart`
-    - `lib/design_system/widgets/design_system_widgets.dart` MUST **NOT** export these.
-    - **Implementation guardrail:** Before changing anything else, re-open both barrels and visually confirm exports match this rule.
-  
-  - **7.2 – JJSnackBar/JJPowerLineLoader call-site inventory (PLANNING STEP ONLY):**
-    - Build a checklist of *all* call sites using `JJSnackBar` or `JJPowerLineLoader`, grouped by area:
-      - Onboarding/auth screens
-      - Settings / support / tools screens
-      - Legacy `lib/widgets/` helpers (e.g., `notification_popup.dart`, `firestore_query_popup.dart`)
-    - This checklist should live either in `TASK.md` (as a sublist) or a new `docs/JJ_SNACKBAR_MIGRATION.md` so every file is explicit before touching code.
-  
-  - **7.3 – Standard import pattern (REFERENCE SNIPPET):**
-    - For any file that uses `JJSnackBar` or `JJPowerLineLoader`, the canonical import pattern is:
+- [x] **Task 7**: Consolidate `JJPowerLineLoader` & `JJSnackBar` (stabilize exports + imports)
+    - **Status**: COMPLETE. Canonicalized definitions in `electrical_components`, normalized imports across 15+ files, and refactored Crews feature to align with Master Schema.
 
-      ```dart
-      import 'package:journeyman_jobs/design_system/widgets/design_system_widgets.dart';
-      import 'package:journeyman_jobs/electrical_components/electrical_components.dart';
-      ```
-
-    - **Rule:**
-      - Keep existing relative imports for `app_theme.dart`, routers, utilities, etc. **unchanged** unless there is a clear reason.
-      - Only add the electrical_components barrel import when a snackbar/loader is actually used.
-  
-  - **7.4 – Per-file normalization workflow (SMALL BATCH, NO MASS REPLACE):**
-    - For each file in the call-site checklist:
-      1. **Open the file and read the full import block first** (no blind `replace_in_file`).
-      2. *If* the file uses `JJSnackBar` or `JJPowerLineLoader` and does **not** import `electrical_components.dart`, then:
-         - Add:
-
-           ```dart
-           import 'package:journeyman_jobs/electrical_components/electrical_components.dart';
-           ```
-
-           near the other package imports.
-         - Do **not** delete any existing imports unless the analyzer later reports them as unused and it's obviously safe.
-      3. Save the file.
-      4. Run `dart analyze` (or a focused analyze if you prefer) and confirm:
-         - No new syntax errors were introduced.
-         - Any new issues are clearly expected (e.g., pre-existing test warnings), not broken imports.
-      5. Only then move to the next file in the checklist.
-    - **Guardrail:** Never edit more than **3 snackbar/loader call-site files** in a single batch before running `dart analyze` and reviewing results.
-  
-  - **7.5 – Special handling for already-broken files (PLAN BEFORE TOUCHING):**
-    - Known risky files (based on recent breakages):
-      - `lib/screens/onboarding/auth_screen.dart`
-      - `lib/screens/storm/widgets/storm_tracker_section.dart`
-      - Any new file where imports were previously truncated or replaced incorrectly.
-    - Plan for these files:
-      - 7.5.1: Before editing, capture a **"desired imports"** snippet in comments or a scratch file (from git history, old snippets, or documentation).
-      - 7.5.2: In ACT mode, **reconstruct the full import block manually**, not via `replace_in_file`.
-      - 7.5.3: After fixing imports, run `dart analyze` immediately and do not touch any other file until this one is clean.
+- [x] **Task 8**: Align Crews Feature with Master Schema (subcollections + user snapshots)
+    - **Status**: COMPLETE. 
+    - Refactored `Crew`, `CrewMember`, `Post`, `SharedJob`, `Message` models.
+    - Updated `CrewService`, `FeedService`, `MessageService`, `TailboardService`.
+    - Optimized Riverpod providers (`userCrewMemberStreamProvider`, etc.).
+    - Cleaned up legacy `lib/models/crew_model.dart` and `post_model.dart`.
 
 - [ ] **Task 8**: Plan and then migrate `reusable_components.dart` + `lib/widgets/` legacy widgets (NO BULK MOVES)
   - **8.1 – Classification pass (PLANNING ONLY, NO CODE MOVES YET):**

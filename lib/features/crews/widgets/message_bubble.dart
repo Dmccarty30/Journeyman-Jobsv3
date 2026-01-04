@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart'; // For date formatting
-import '../models/message.dart';
-import '../../../design_system/app_theme.dart';
-import '../../../electrical_components/circuit_pattern_painter.dart'; // For circuit background
-import 'message_status_indicator.dart';
+import '../crews.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
+// For circuit background
 
 class MessageBubble extends StatelessWidget {
   final Message message;
@@ -36,7 +35,7 @@ class MessageBubble extends StatelessWidget {
           if (!isCurrentUser && showAvatar) ...[
             CircleAvatar(
               radius: AppTheme.radiusLg,
-              backgroundColor: AppTheme.accentCopper.withOpacity(0.2),
+              backgroundColor: AppTheme.accentCopper.withValues(alpha:0.2),
               child: Text(
                 _getInitials(senderName),
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -138,3 +137,5 @@ class MessageBubble extends StatelessWidget {
   }
 
   
+
+

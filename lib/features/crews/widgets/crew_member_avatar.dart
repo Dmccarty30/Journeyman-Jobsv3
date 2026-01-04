@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../design_system/app_theme.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 
 class CrewMemberAvatar extends StatelessWidget {
   final String memberName;

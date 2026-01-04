@@ -1,5 +1,5 @@
 /// Unions Feature Barrel File
-library unions;
+library;
 
 // Models
 export 'models/locals_record.dart';

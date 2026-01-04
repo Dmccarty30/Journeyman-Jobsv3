@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import '../../../design_system/app_theme.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 import '../../../features/navigation/navigation.dart';
 
 class CrewOnboardingScreen extends StatefulWidget {
@@ -157,4 +157,5 @@ class _CrewOnboardingScreenState extends State<CrewOnboardingScreen> {
     );
   }
 }
+
 

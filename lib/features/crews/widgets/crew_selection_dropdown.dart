@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:journeyman_jobs/features/crews/models/crew.dart';
-import 'package:journeyman_jobs/features/crews/providers/crews_riverpod_provider.dart';
+import '../models/crew.dart';
+import '../providers/crews_riverpod_provider.dart';
 
 class CrewSelectionDropdown extends ConsumerWidget {
   const CrewSelectionDropdown({super.key});

@@ -1,14 +1,12 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:journeyman_jobs/design_system/app_theme.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 import 'package:go_router/go_router.dart';
-import '../../../features/navigation/navigation.dart';
-import '../../../electrical_components/jj_electrical_toast.dart';
-
-import '../models/crew_preferences.dart';
-import '../providers/crews_riverpod_provider.dart';
 import '../widgets/crew_preferences_dialog.dart';
+import '../../../features/navigation/navigation.dart';
+
+import '../crews.dart';
 import '../../auth/auth.dart';
 
 class CreateCrewScreen extends ConsumerStatefulWidget {
@@ -46,8 +44,9 @@ class CreateCrewScreenState extends ConsumerState<CreateCrewScreen> {
         }
 
         // Create crew with initial preferences
-        final crewId = '${_crewNameController.text}-${DateTime.now().millisecondsSinceEpoch}';
-        
+        final crewId =
+            '${_crewNameController.text}-${DateTime.now().millisecondsSinceEpoch}';
+
         if (mounted) {
           // Show CrewPreferencesDialog after successful crew creation
           final updatedPreferences = await showDialog<CrewPreferences>(
@@ -70,7 +69,7 @@ class CreateCrewScreenState extends ConsumerState<CreateCrewScreen> {
               crewId: crewId,
               preferences: updatedPreferences,
             );
-            
+
             // Navigate to Tailboard screen
             // ignore: use_build_context_synchronously
             context.go('${AppRouter.crews}/$crewId');
@@ -79,14 +78,15 @@ class CreateCrewScreenState extends ConsumerState<CreateCrewScreen> {
             context.go('${AppRouter.crews}/$crewId');
           }
         }
-
       } catch (e) {
         if (mounted) {
-          JJElectricalToast.showError(context: context, message: 'Failed to create crew: $e');
+          JJElectricalToast.showError(
+              context: context, message: 'Failed to create crew: $e');
         }
       }
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -119,13 +119,23 @@ class CreateCrewScreenState extends ConsumerState<CreateCrewScreen> {
                 DropdownButtonFormField<String>(
                   initialValue: _selectedJobType,
                   items: const [
-                    DropdownMenuItem(value: 'Journeyman Lineman', child: Text('Journeyman Lineman')),
-                    DropdownMenuItem(value: 'Inside Wireman', child: Text('Inside Wireman')),
-                    DropdownMenuItem(value: 'Journeyman Electrician', child: Text('Journeyman Electrician')),
-                    DropdownMenuItem(value: 'Operator', child: Text('Operator')),
-                    DropdownMenuItem(value: 'URD Technician', child: Text('URD Technician')),
-                    DropdownMenuItem(value: 'Transmission Technician', child: Text('Transmission Technician')),
-                    DropdownMenuItem(value: 'Cable Splicer', child: Text('Cable Splicer')),
+                    DropdownMenuItem(
+                        value: 'Journeyman Lineman',
+                        child: Text('Journeyman Lineman')),
+                    DropdownMenuItem(
+                        value: 'Inside Wireman', child: Text('Inside Wireman')),
+                    DropdownMenuItem(
+                        value: 'Journeyman Electrician',
+                        child: Text('Journeyman Electrician')),
+                    DropdownMenuItem(
+                        value: 'Operator', child: Text('Operator')),
+                    DropdownMenuItem(
+                        value: 'URD Technician', child: Text('URD Technician')),
+                    DropdownMenuItem(
+                        value: 'Transmission Technician',
+                        child: Text('Transmission Technician')),
+                    DropdownMenuItem(
+                        value: 'Cable Splicer', child: Text('Cable Splicer')),
                   ],
                   onChanged: (String? newValue) {
                     setState(() {
@@ -157,11 +167,13 @@ class CreateCrewScreenState extends ConsumerState<CreateCrewScreen> {
                       children: [
                         IconButton(
                           icon: const Icon(Icons.remove),
-                          onPressed: () => setState(() => _minHourlyRate = max(15, _minHourlyRate - 5)),
+                          onPressed: () => setState(() =>
+                              _minHourlyRate = max(15, _minHourlyRate - 5)),
                         ),
                         IconButton(
                           icon: const Icon(Icons.add),
-                          onPressed: () => setState(() => _minHourlyRate = min(100, _minHourlyRate + 5)),
+                          onPressed: () => setState(() =>
+                              _minHourlyRate = min(100, _minHourlyRate + 5)),
                         ),
                       ],
                     ),
@@ -179,11 +191,15 @@ class CreateCrewScreenState extends ConsumerState<CreateCrewScreen> {
                 ),
                 const SizedBox(height: 32),
                 ElevatedButton.icon(
-                  onPressed: ref.watch(currentUserProvider) != null ? _createCrew : null,
+                  onPressed: ref.watch(currentUserProvider) != null
+                      ? _createCrew
+                      : null,
                   icon: const Icon(Icons.check),
                   label: const Text('Create Crew'),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: ref.watch(currentUserProvider) != null ? Theme.of(context).primaryColor : Colors.grey,
+                    backgroundColor: ref.watch(currentUserProvider) != null
+                        ? Theme.of(context).primaryColor
+                        : Colors.grey,
                   ),
                 ),
               ],
@@ -194,5 +210,3 @@ class CreateCrewScreenState extends ConsumerState<CreateCrewScreen> {
     );
   }
 }
-
-

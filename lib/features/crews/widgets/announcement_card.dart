@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../models/post.dart';
-import '../../../design_system/app_theme.dart';
+import '../crews.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 
 class AnnouncementCard extends ConsumerWidget {
   final Post post;
@@ -306,3 +306,4 @@ class AnnouncementCard extends ConsumerWidget {
   }
 
   
+

@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:journeyman_jobs/features/jobs/jobs.dart';
 import 'dart:math'; // Required for max/min
-import '../../../design_system/app_theme.dart';
+import 'package:journeyman_jobs/design_system/design_system.dart';
 import '../../../design_system/components/job_card.dart';
-import '../models/job_model.dart';
-import '../../../providers/riverpod/app_state_riverpod_provider.dart';
+import '../jobs.dart';
+import 'package:journeyman_jobs/core/core.dart';
 
 /// High-performance virtual scrolling job list with infinite loading
 /// 
@@ -582,4 +582,7 @@ class SliverVirtualJobList extends StatelessWidget {
     );
   }
 }
+
+
+
 
