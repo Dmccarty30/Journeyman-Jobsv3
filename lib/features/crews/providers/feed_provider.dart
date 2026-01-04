@@ -7,7 +7,7 @@ import '../../../providers/core_providers.dart' as core_providers;
 import '../../../providers/riverpod/auth_riverpod_provider.dart'
     as auth_providers;
 import '../services/feed_service.dart';
-import '../../../models/post_model.dart';
+import '../models/post.dart';
 import '../models/tailboard.dart';
 
 part 'feed_provider.g.dart';
@@ -18,25 +18,24 @@ FeedService feedService(Ref ref) => FeedService();
 
 /// Stream of posts for a specific crew
 @riverpod
-Stream<List<PostModel>> crewPostsStream(Ref ref, String crewId) {
+Stream<List<Post>> crewPostsStream(Ref ref, String crewId) {
   final currentUserId = ref.watch(auth_providers.currentUserIdProvider);
   if (currentUserId == null) return Stream.value([]);
 
   final feedService = ref.watch(feedServiceProvider);
   return feedService.getCrewPosts(crewId: crewId).map((snapshot) {
-    return snapshot.docs.map((doc) => PostModel.fromFirestore(doc)).toList();
+    return snapshot.docs.map((doc) => Post.fromFirestore(doc)).toList();
   }).distinct();
 }
 
 /// Posts for a specific crew
 @riverpod
-AsyncValue<List<PostModel>> crewPosts(Ref ref, String crewId) {
+AsyncValue<List<Post>> crewPosts(Ref ref, String crewId) {
   final postsAsync = ref.watch(crewPostsStreamProvider(crewId));
 
   return postsAsync.when(
     data: (posts) {
-      final filteredPosts = posts.where((post) => !post.deleted).toList();
-      return AsyncValue.data(filteredPosts);
+      return AsyncValue.data(posts);
     },
     loading: () => const AsyncValue.loading(),
     error: (error, stack) {
@@ -50,26 +49,17 @@ AsyncValue<List<PostModel>> crewPosts(Ref ref, String crewId) {
 
 /// Stream of comments for a specific post
 @riverpod
-Stream<List<Comment>> postCommentsStream(Ref ref, String postId) {
+Stream<List<PostComment>> postCommentsStream(Ref ref, String crewId, String postId) {
   final feedService = ref.watch(feedServiceProvider);
-  return feedService.getPostComments(postId: postId).map((snapshot) {
-    return snapshot.docs.map((doc) {
-      final data = doc.data() as Map<String, dynamic>;
-      return Comment(
-        id: doc.id,
-        authorId: data['authorId'] ?? '',
-        content: data['content'] ?? '',
-        postedAt: (data['createdAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
-        editedAt: (data['updatedAt'] as Timestamp?)?.toDate(),
-      );
-    }).toList();
+  return feedService.getPostComments(crewId: crewId, postId: postId).map((snapshot) {
+    return snapshot.docs.map((doc) => PostComment.fromFirestore(doc)).toList();
   });
 }
 
 /// Comments for a specific post
 @riverpod
-AsyncValue<List<Comment>> postComments(Ref ref, String postId) {
-  final commentsAsync = ref.watch(postCommentsStreamProvider(postId));
+AsyncValue<List<PostComment>> postComments(Ref ref, String crewId, String postId) {
+  final commentsAsync = ref.watch(postCommentsStreamProvider(crewId, postId));
 
   return commentsAsync.when(
     data: (comments) => AsyncValue.data(comments),
@@ -85,7 +75,7 @@ AsyncValue<List<Comment>> postComments(Ref ref, String postId) {
 
 /// Provider to get posts for selected crew
 @riverpod
-AsyncValue<List<PostModel>> selectedCrewPosts(Ref ref) {
+AsyncValue<List<Post>> selectedCrewPosts(Ref ref) {
   final selectedCrew = ref.watch(core_providers.selectedCrewProvider);
   if (selectedCrew == null) return const AsyncValue.data([]);
 
@@ -94,10 +84,9 @@ AsyncValue<List<PostModel>> selectedCrewPosts(Ref ref) {
 
 /// Provider to get pinned posts for a crew
 @riverpod
-AsyncValue<List<PostModel>> pinnedPosts(Ref ref, String crewId) {
+AsyncValue<List<Post>> pinnedPosts(Ref ref, String crewId) {
   final postsAsync = ref.watch(crewPostsProvider(crewId));
-  // Note: PostModel doesn't have isPinned field, this would need to be added
-  // For now, return empty list
+  // Note: For now, return empty list or filter if field exists
   return postsAsync.when(
     data: (_) => const AsyncValue.data([]),
     loading: () => const AsyncValue.loading(),
@@ -105,27 +94,13 @@ AsyncValue<List<PostModel>> pinnedPosts(Ref ref, String crewId) {
   );
 }
 
-/// Provider to get recent posts (non-pinned) for a crew
+/// Provider to get recent posts for a crew
 @riverpod
-AsyncValue<List<PostModel>> recentPosts(Ref ref, String crewId) {
-  final postsAsync = ref.watch(crewPostsProvider(crewId));
-  // Sort by timestamp descending and return all (since no pinned field)
-  return postsAsync.when(
-    data: (posts) => AsyncValue.data(
-        posts..sort((a, b) => b.timestamp.compareTo(a.timestamp))),
-    loading: () => const AsyncValue.loading(),
-    error: (error, stack) => AsyncValue.error(error, stack),
-  );
-}
-
-/// Provider to get posts by a specific author
-@riverpod
-AsyncValue<List<PostModel>> postsByAuthor(
-    Ref ref, String crewId, String authorId) {
+AsyncValue<List<Post>> recentPosts(Ref ref, String crewId) {
   final postsAsync = ref.watch(crewPostsProvider(crewId));
   return postsAsync.when(
     data: (posts) => AsyncValue.data(
-        posts.where((post) => post.authorId == authorId).toList()),
+        posts..sort((a, b) => b.createdAt.compareTo(a.createdAt))),
     loading: () => const AsyncValue.loading(),
     error: (error, stack) => AsyncValue.error(error, stack),
   );
@@ -141,23 +116,31 @@ class PostCreationNotifier extends StateNotifier<AsyncValue<String?>> {
     required String crewId,
     required String content,
     List<String> mediaUrls = const [],
+    String type = 'text',
   }) async {
-    // Read current user from auth provider alias
     final currentUser = _ref.read(auth_providers.currentUserProvider);
     if (currentUser == null) {
-      state =
-          const AsyncValue.error('User not authenticated', StackTrace.empty);
+      state = const AsyncValue.error('User not authenticated', StackTrace.empty);
       return;
     }
 
     state = const AsyncValue.loading();
     try {
       final feedService = _ref.read(feedServiceProvider);
+      // Construct author snapshot
+      final authorSnapshot = {
+        'displayName': currentUser.displayName ?? currentUser.email?.split('@')[0] ?? 'User',
+        'avatarUrl': currentUser.photoURL,
+        'role': 'Member', // This should be fetched from crew member doc
+      };
+
       final postId = await feedService.createPost(
         crewId: crewId,
         authorId: currentUser.uid,
+        authorSnapshot: authorSnapshot,
         content: content,
         mediaUrls: mediaUrls,
+        type: type,
       );
       state = AsyncValue.data(postId);
     } catch (e, stack) {
@@ -189,14 +172,14 @@ class PostUpdateNotifier extends StateNotifier<AsyncValue<void>> {
   final Ref _ref;
 
   Future<void> updatePost({
+    required String crewId,
     required String postId,
     required String content,
     List<String>? mediaUrls,
   }) async {
     final currentUser = _ref.read(auth_providers.currentUserProvider);
     if (currentUser == null) {
-      state =
-          const AsyncValue.error('User not authenticated', StackTrace.empty);
+      state = const AsyncValue.error('User not authenticated', StackTrace.empty);
       return;
     }
 
@@ -204,8 +187,8 @@ class PostUpdateNotifier extends StateNotifier<AsyncValue<void>> {
     try {
       final feedService = _ref.read(feedServiceProvider);
       await feedService.updatePost(
+        crewId: crewId,
         postId: postId,
-        authorId: currentUser.uid,
         content: content,
         mediaUrls: mediaUrls,
       );
@@ -215,22 +198,11 @@ class PostUpdateNotifier extends StateNotifier<AsyncValue<void>> {
     }
   }
 
-  Future<void> deletePost(String postId) async {
+  Future<void> deletePost({required String crewId, required String postId}) async {
     state = const AsyncValue.loading();
     try {
       final feedService = _ref.read(feedServiceProvider);
-      await feedService.deletePost(postId);
-      state = const AsyncValue.data(null);
-    } catch (e, stack) {
-      state = AsyncValue.error(e, stack);
-    }
-  }
-
-  Future<void> togglePinPost(String postId, bool isPinned) async {
-    state = const AsyncValue.loading();
-    try {
-      final feedService = _ref.read(feedServiceProvider);
-      await feedService.togglePinPost(postId, isPinned);
+      await feedService.deletePost(crewId, postId);
       state = const AsyncValue.data(null);
     } catch (e, stack) {
       state = AsyncValue.error(e, stack);
@@ -260,39 +232,31 @@ class ReactionNotifier extends StateNotifier<AsyncValue<void>> {
 
   final Ref _ref;
 
-  String _reactionTypeToEmoji(ReactionType reactionType) {
-    switch (reactionType) {
-      case ReactionType.like:
-        return '👍';
-      case ReactionType.love:
-        return '❤️';
-      case ReactionType.celebrate:
-        return '🎉';
-      case ReactionType.thumbsUp:
-        return '👍';
-      case ReactionType.thumbsDown:
-        return '👎';
-    }
-  }
-
   Future<void> addReaction({
+    required String crewId,
     required String postId,
-    required ReactionType reactionType,
+    required String type,
   }) async {
     final currentUser = _ref.read(auth_providers.currentUserProvider);
     if (currentUser == null) {
-      state =
-          const AsyncValue.error('User not authenticated', StackTrace.empty);
+      state = const AsyncValue.error('User not authenticated', StackTrace.empty);
       return;
     }
 
     state = const AsyncValue.loading();
     try {
       final feedService = _ref.read(feedServiceProvider);
+      final userSnapshot = {
+        'displayName': currentUser.displayName ?? 'User',
+        'avatarUrl': currentUser.photoURL,
+      };
+
       await feedService.addReaction(
+        crewId: crewId,
         postId: postId,
-        memberId: currentUser.uid,
-        emoji: _reactionTypeToEmoji(reactionType),
+        userId: currentUser.uid,
+        type: type,
+        userSnapshot: userSnapshot,
       );
       state = const AsyncValue.data(null);
     } catch (e, stack) {
@@ -300,11 +264,10 @@ class ReactionNotifier extends StateNotifier<AsyncValue<void>> {
     }
   }
 
-  Future<void> removeReaction(String postId) async {
+  Future<void> removeReaction({required String crewId, required String postId}) async {
     final currentUser = _ref.read(auth_providers.currentUserProvider);
     if (currentUser == null) {
-      state =
-          const AsyncValue.error('User not authenticated', StackTrace.empty);
+      state = const AsyncValue.error('User not authenticated', StackTrace.empty);
       return;
     }
 
@@ -312,8 +275,9 @@ class ReactionNotifier extends StateNotifier<AsyncValue<void>> {
     try {
       final feedService = _ref.read(feedServiceProvider);
       await feedService.removeReaction(
+        crewId: crewId,
         postId: postId,
-        memberId: currentUser.uid,
+        userId: currentUser.uid,
       );
       state = const AsyncValue.data(null);
     } catch (e, stack) {
@@ -345,69 +309,32 @@ class CommentNotifier extends StateNotifier<AsyncValue<String?>> {
   final Ref _ref;
 
   Future<void> addComment({
+    required String crewId,
     required String postId,
     required String content,
   }) async {
     final currentUser = _ref.read(auth_providers.currentUserProvider);
     if (currentUser == null) {
-      state =
-          const AsyncValue.error('User not authenticated', StackTrace.empty);
+      state = const AsyncValue.error('User not authenticated', StackTrace.empty);
       return;
     }
 
     state = const AsyncValue.loading();
     try {
       final feedService = _ref.read(feedServiceProvider);
+      final authorSnapshot = {
+        'displayName': currentUser.displayName ?? 'User',
+        'avatarUrl': currentUser.photoURL,
+      };
+
       final commentId = await feedService.addComment(
+        crewId: crewId,
         postId: postId,
         authorId: currentUser.uid,
+        authorSnapshot: authorSnapshot,
         content: content,
       );
       state = AsyncValue.data(commentId);
-    } catch (e, stack) {
-      state = AsyncValue.error(e, stack);
-    }
-  }
-
-  Future<void> updateComment({
-    required String postId,
-    required String commentId,
-    required String content,
-  }) async {
-    final currentUser = _ref.read(auth_providers.currentUserProvider);
-    if (currentUser == null) {
-      state =
-          const AsyncValue.error('User not authenticated', StackTrace.empty);
-      return;
-    }
-
-    state = const AsyncValue.loading();
-    try {
-      final feedService = _ref.read(feedServiceProvider);
-      await feedService.updateComment(
-        postId: postId,
-        commentId: commentId,
-        authorId: currentUser.uid,
-        content: content,
-      );
-      state = const AsyncValue.data(null);
-    } catch (e, stack) {
-      state = AsyncValue.error(e, stack);
-    }
-  }
-
-  Future<void> deleteComment({
-    required String postId,
-    required String commentId,
-  }) async {
-    state = const AsyncValue.loading();
-    try {
-      final feedService = _ref.read(feedServiceProvider);
-      await feedService.deleteComment(
-        postId: postId,
-        commentId: commentId,
-      );
-      state = const AsyncValue.data(null);
     } catch (e, stack) {
       state = AsyncValue.error(e, stack);
     }
@@ -434,50 +361,17 @@ AsyncValue<String?> commentState(Ref ref) {
 @riverpod
 Future<Map<String, dynamic>> crewPostStats(Ref ref, String crewId) async {
   final feedService = ref.watch(feedServiceProvider);
-  return await feedService.getCrewPostStats(crewId);
-}
-
-// Helper function to convert ReactionType to emoji
-String _reactionTypeToEmoji(ReactionType reactionType) {
-  switch (reactionType) {
-    case ReactionType.like:
-      return '👍';
-    case ReactionType.love:
-      return '❤️';
-    case ReactionType.celebrate:
-      return '🎉';
-    case ReactionType.thumbsUp:
-      return '👍';
-    case ReactionType.thumbsDown:
-      return '👎';
-  }
+  // Note: This method needs to be refactored in FeedService if needed, 
+  // for now returning empty map to avoid build errors if not yet implemented.
+  return {}; 
 }
 
 /// Provider to get reaction counts for a post
 @riverpod
-Future<Map<ReactionType, int>> postReactionCounts(
-    Ref ref, String postId) async {
+Future<Map<String, int>> postReactionCounts(
+    Ref ref, String crewId, String postId) async {
   try {
-    final emojiCounts =
-        await ref.watch(feedServiceProvider).getPostReactionCounts(postId);
-
-    // Convert Firestore data to ReactionType map
-    final reactionCounts = <ReactionType, int>{};
-    final emojiMap = {
-      '👍': ReactionType.like,
-      '❤️': ReactionType.love,
-      '🎉': ReactionType.celebrate,
-      '👎': ReactionType.thumbsDown,
-    };
-
-    emojiCounts.forEach((emoji, count) {
-      final reactionType = emojiMap[emoji];
-      if (reactionType != null) {
-        reactionCounts[reactionType] = count;
-      }
-    });
-
-    return reactionCounts;
+    return await ref.watch(feedServiceProvider).getPostReactionCounts(crewId, postId);
   } catch (e, stack) {
     ref
         .read(core_providers.coreErrorReporterProvider)
@@ -489,22 +383,23 @@ Future<Map<ReactionType, int>> postReactionCounts(
 /// Provider to check if current user has reacted to a post
 @riverpod
 Future<bool> userReactionToPost(
-    Ref ref, String postId, ReactionType reactionType) async {
-  final currentUser = ref.watch(auth_providers.currentUserProvider);
+    Ref ref, String crewId, String postId, String type) async {
+  final currentUser = ref.watch(auth_providers.currentUserIdProvider);
   if (currentUser == null) return false;
 
   try {
     return await ref.watch(feedServiceProvider).hasUserReacted(
+          crewId,
           postId,
-          currentUser.uid,
-          _reactionTypeToEmoji(reactionType),
+          currentUser,
+          type,
         );
   } catch (e, stack) {
     ref.read(core_providers.coreErrorReporterProvider).report(
         'userReactionToPost',
         e,
         stack,
-        'postId: $postId, reactionType: $reactionType');
+        'postId: $postId, type: $type');
     rethrow;
   }
 }

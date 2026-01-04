@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import '../../../design_system/app_theme.dart';
 import '../../../design_system/components/reusable_components.dart';
 import 'package:journeyman_jobs/design_system/widgets/design_system_widgets.dart';
+import 'package:journeyman_jobs/electrical_components/electrical_components.dart';
 
 
 class HelpSupportScreen extends StatefulWidget {

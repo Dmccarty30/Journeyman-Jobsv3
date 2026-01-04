@@ -11,9 +11,9 @@ part 'messaging_riverpod_provider.g.dart';
 @riverpod
 MessageService messageService(Ref ref) => MessageService();
 
-/// Stream of crew messages
+/// Stream of crew messages for a specific channel
 @riverpod
-Stream<List<Message>> crewMessagesStream(Ref ref, String crewId) {
+Stream<List<Message>> crewMessagesStream(Ref ref, String crewId, String channelId) {
   final currentUser = ref.watch(currentUserProvider);
   
   if (currentUser == null) {
@@ -21,13 +21,13 @@ Stream<List<Message>> crewMessagesStream(Ref ref, String crewId) {
   }
   
   final messageService = ref.watch(messageServiceProvider);
-  return messageService.getCrewMessagesStream(crewId, currentUser.uid);
+  return messageService.getCrewMessagesStream(crewId, channelId);
 }
 
-/// Crew messages
+/// Crew messages for a specific channel
 @riverpod
-List<Message> crewMessages(Ref ref, String crewId) {
-  final messagesAsync = ref.watch(crewMessagesStreamProvider(crewId));
+List<Message> crewMessages(Ref ref, String crewId, String channelId) {
+  final messagesAsync = ref.watch(crewMessagesStreamProvider(crewId, channelId));
   
   return messagesAsync.when(
     data: (messages) => messages,
@@ -36,91 +36,29 @@ List<Message> crewMessages(Ref ref, String crewId) {
   );
 }
 
-/// Stream of direct messages between two users
+/// Provider to get chat channels for a crew
 @riverpod
-Stream<List<Message>> directMessagesStream(
-  Ref ref,
-  String userId1,
-  String userId2,
-) {
-  final currentUser = ref.watch(currentUserProvider);
-  
-  if (currentUser == null) {
-    return Stream.value([]);
-  }
-  
+Stream<List<ChatChannel>> crewChannelsStream(Ref ref, String crewId) {
   final messageService = ref.watch(messageServiceProvider);
-  return messageService.getDirectMessagesStream(userId1, userId2, currentUser.uid);
+  return messageService.getCrewChannelsStream(crewId);
 }
 
-/// Direct messages between two users
+/// Crew channels
 @riverpod
-List<Message> directMessages(
-  Ref ref,
-  String userId1,
-  String userId2,
-) {
-  final messagesAsync = ref.watch(directMessagesStreamProvider(userId1, userId2));
+List<ChatChannel> crewChannels(Ref ref, String crewId) {
+  final channelsAsync = ref.watch(crewChannelsStreamProvider(crewId));
   
-  return messagesAsync.when(
-    data: (messages) => messages,
+  return channelsAsync.when(
+    data: (channels) => channels,
     loading: () => [],
     error: (_, __) => [],
   );
 }
 
-/// Provider to get unread crew messages count for current user
+/// Provider to get recent messages (last 24 hours) across channels
 @riverpod
-int unreadCrewMessagesCount(Ref ref, String crewId) {
-  final currentUser = ref.watch(currentUserProvider);
-  final messages = ref.watch(crewMessagesProvider(crewId));
-  
-  if (currentUser == null) return 0;
-  
-  return messages.where((message) {
-    return message.isCrewMessage && !message.isReadBy(currentUser.uid);
-  }).length;
-}
-
-/// Provider to get unread direct messages count for current user
-@riverpod
-int unreadDirectMessagesCount(Ref ref, String otherUserId) {
-  final currentUser = ref.watch(currentUserProvider);
-  final messages = ref.watch(directMessagesProvider(
-    currentUser?.uid ?? '',
-    otherUserId,
-  ));
-  
-  if (currentUser == null) return 0;
-  
-  return messages.where((message) {
-    return message.isDirectMessage && 
-           message.senderId != currentUser.uid &&
-           !message.isReadBy(currentUser.uid);
-  }).length;
-}
-
-/// Provider to get total unread messages count for current user across all crews
-@riverpod
-int totalUnreadMessages(Ref ref) {
-  final currentUser = ref.watch(currentUserProvider);
-  final crews = ref.watch(userCrewsProvider);
-  
-  if (currentUser == null) return 0;
-  
-  int totalUnread = 0;
-  
-  for (final crew in crews) {
-    totalUnread += ref.watch(unreadCrewMessagesCountProvider(crew.id));
-  }
-  
-  return totalUnread;
-}
-
-/// Provider to get recent messages (last 24 hours)
-@riverpod
-List<Message> recentMessages(Ref ref, String crewId) {
-  final messages = ref.watch(crewMessagesProvider(crewId));
+List<Message> recentMessages(Ref ref, String crewId, String channelId) {
+  final messages = ref.watch(crewMessagesProvider(crewId, channelId));
   final twentyFourHoursAgo = DateTime.now().subtract(const Duration(hours: 24));
   
   return messages.where((message) {
@@ -128,135 +66,9 @@ List<Message> recentMessages(Ref ref, String crewId) {
   }).toList();
 }
 
-/// Provider to get messages by sender
+/// Provider to get message count for a crew channel
 @riverpod
-List<Message> messagesBySender(Ref ref, String crewId, String senderId) {
-  final messages = ref.watch(crewMessagesProvider(crewId));
-  return messages.where((message) => message.senderId == senderId).toList();
-}
-
-/// Provider to get messages with attachments
-@riverpod
-List<Message> messagesWithAttachments(Ref ref, String crewId) {
-  final messages = ref.watch(crewMessagesProvider(crewId));
-  return messages.where((message) => message.hasAttachments).toList();
-}
-
-/// Provider to get latest message in a crew
-@riverpod
-Message? latestMessage(Ref ref, String crewId) {
-  final messages = ref.watch(crewMessagesProvider(crewId));
-  if (messages.isEmpty) return null;
-  
-  return messages.reduce((a, b) => a.sentAt.isAfter(b.sentAt) ? a : b);
-}
-
-/// Provider to get last message timestamp
-@riverpod
-DateTime? lastMessageTimestamp(Ref ref, String crewId) {
-  final latest = ref.watch(latestMessageProvider(crewId));
-  return latest?.sentAt;
-}
-
-/// Provider to check if crew has unread messages
-@riverpod
-bool hasUnreadCrewMessages(Ref ref, String crewId) {
-  final unreadCount = ref.watch(unreadCrewMessagesCountProvider(crewId));
-  return unreadCount > 0;
-}
-
-/// Provider to get message by ID
-@riverpod
-Message? messageById(Ref ref, String crewId, String messageId) {
-  final messages = ref.watch(crewMessagesProvider(crewId));
-  return messages.firstWhere(
-    (message) => message.id == messageId,
-    orElse: () => null as dynamic,
-  );
-}
-
-/// Provider to get read receipts for a message
-@riverpod
-Map<String, DateTime> messageReadReceipts(Ref ref, String crewId, String messageId) {
-  final message = ref.watch(messageByIdProvider(crewId, messageId));
-  return message?.readBy ?? {};
-}
-
-/// Provider to get read receipt count for a message
-@riverpod
-int messageReadReceiptCount(Ref ref, String crewId, String messageId) {
-  final readBy = ref.watch(messageReadReceiptsProvider(crewId, messageId));
-  return readBy.length;
-}
-
-/// Provider to check if message has been read by specific user
-@riverpod
-bool isMessageReadBy(Ref ref, String crewId, String messageId, String userId) {
-  final message = ref.watch(messageByIdProvider(crewId, messageId));
-  return message?.isReadBy(userId) ?? false;
-}
-
-/// Provider to get messages in chronological order
-@riverpod
-List<Message> chronologicalMessages(Ref ref, String crewId) {
-  final messages = ref.watch(crewMessagesProvider(crewId));
-  return List.from(messages)..sort((a, b) => a.sentAt.compareTo(b.sentAt));
-}
-
-/// Provider to get messages in reverse chronological order
-@riverpod
-List<Message> reverseChronologicalMessages(Ref ref, String crewId) {
-  final messages = ref.watch(crewMessagesProvider(crewId));
-  return List.from(messages)..sort((a, b) => b.sentAt.compareTo(a.sentAt));
-}
-
-/// Provider to get text messages only
-@riverpod
-List<Message> textMessages(Ref ref, String crewId) {
-  final messages = ref.watch(crewMessagesProvider(crewId));
-  return messages.where((message) => message.type == MessageType.text).toList();
-}
-
-/// Provider to get messages with job shares
-@riverpod
-List<Message> jobShareMessages(Ref ref, String crewId) {
-  final messages = ref.watch(crewMessagesProvider(crewId));
-  return messages.where((message) => message.type == MessageType.jobShare).toList();
-}
-
-/// Provider to get system notification messages
-@riverpod
-List<Message> systemNotificationMessages(Ref ref, String crewId) {
-  final messages = ref.watch(crewMessagesProvider(crewId));
-  return messages.where((message) => message.type == MessageType.systemNotification).toList();
-}
-
-/// Provider to get message count for a crew
-@riverpod
-int messageCount(Ref ref, String crewId) {
-  final messages = ref.watch(crewMessagesProvider(crewId));
+int messageCount(Ref ref, String crewId, String channelId) {
+  final messages = ref.watch(crewMessagesProvider(crewId, channelId));
   return messages.length;
-}
-
-/// Provider to get today's messages
-@riverpod
-List<Message> todaysMessages(Ref ref, String crewId) {
-  final messages = ref.watch(crewMessagesProvider(crewId));
-  final today = DateTime.now();
-  final startOfDay = DateTime(today.year, today.month, today.day);
-  
-  return messages.where((message) {
-    return message.sentAt.isAfter(startOfDay);
-  }).toList();
-}
-
-/// Provider to get messages from last week
-@riverpod
-List<Message> lastWeekMessages(Ref ref, String crewId) {
-  final messages = ref.watch(crewMessagesProvider(crewId));
-  final oneWeekAgo = DateTime.now().subtract(const Duration(days: 7));
-  
-  return messages.where((message) {
-    return message.sentAt.isAfter(oneWeekAgo);
-  }).toList();
 }

@@ -15,7 +15,7 @@ class ActivityCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isRead = activity.isReadBy(currentUserId);
+    final isRead = activity.readByMemberIds.contains(currentUserId);
     final timeAgo = _formatTimeAgo(activity.timestamp);
 
     return Card(
@@ -104,8 +104,9 @@ class ActivityCard extends ConsumerWidget {
         return AppTheme.warningYellow;
       case ActivityType.milestoneReached:
         return AppTheme.secondaryCopper;
+      default:
+        return AppTheme.textSecondary;
     }
-// Default fallback
   }
 
   IconData _getActivityIcon() {
@@ -122,8 +123,9 @@ class ActivityCard extends ConsumerWidget {
         return Icons.announcement;
       case ActivityType.milestoneReached:
         return Icons.celebration;
+      default:
+        return Icons.notifications;
     }
-// Default fallback
   }
 
   String _getActivityText() {

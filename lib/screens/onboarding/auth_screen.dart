@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import '../../design_system/app_theme.dart';
 import '../../design_system/widgets/design_system_widgets.dart';
 import '../../navigation/app_router.dart';
+import '../../electrical_components/electrical_components.dart';
 import '../../electrical_components/modern_svg_circuit_background.dart';
 
 class AuthScreen extends StatefulWidget {

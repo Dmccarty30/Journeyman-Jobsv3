@@ -1129,7 +1129,7 @@ class _TailboardScreenState extends ConsumerState<TailboardScreen>
                       ],
                     ),
                     Text(
-                      '${crew.memberIds.length} members',
+                      '${crew.memberCount} members',
                       style: TailboardTheme.bodySmall,
                     ),
                   ],

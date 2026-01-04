@@ -13,12 +13,11 @@ import '../../../providers/riverpod/jobs_riverpod_provider.dart';
 import '../providers/crews_riverpod_provider.dart';
 import '../providers/feed_provider.dart';
 import '../providers/feed_filter_provider.dart';
+import '../providers/tailboard_riverpod_provider.dart';
 
 // Models
 import '../../../models/job_model.dart';
-import '../models/crew_member.dart';
-import '../models/message.dart';
-import '../models/tailboard.dart';
+import '../models/models.dart';
 
 // Widgets
 import '../widgets/post_card.dart';
@@ -82,14 +81,14 @@ class FeedTab extends ConsumerWidget {
         // Apply sorting
         switch (feedFilter.sortOption) {
           case FeedSortOption.recent:
-            filteredPosts.sort((a, b) => b.timestamp.compareTo(a.timestamp));
+            filteredPosts.sort((a, b) => b.createdAt.compareTo(a.createdAt));
             break;
           case FeedSortOption.oldest:
-            filteredPosts.sort((a, b) => a.timestamp.compareTo(b.timestamp));
+            filteredPosts.sort((a, b) => a.createdAt.compareTo(b.createdAt));
             break;
           case FeedSortOption.popular:
             filteredPosts.sort(
-                (a, b) => (b.reactions.length).compareTo(a.reactions.length));
+                (a, b) => (b.stats['likeCount'] ?? 0).compareTo(a.stats['likeCount'] ?? 0));
             break;
         }
 
@@ -114,13 +113,13 @@ class FeedTab extends ConsumerWidget {
             itemCount: filteredPosts.length,
             itemBuilder: (context, index) {
               final post = filteredPosts[index];
-              final commentsAsync = ref.watch(postCommentsProvider(post.id));
+              final commentsAsync = ref.watch(postCommentsProvider('global', post.id));
 
               return commentsAsync.when(
                 loading: () => _buildPostCard(
-                    context, ref, post, <Comment>[], currentUser.uid),
+                    context, ref, post, <PostComment>[], currentUser.uid),
                 error: (_, __) => _buildPostCard(
-                    context, ref, post, <Comment>[], currentUser.uid),
+                    context, ref, post, <PostComment>[], currentUser.uid),
                 data: (comments) => _buildPostCard(
                     context, ref, post, comments, currentUser.uid),
               );
@@ -134,8 +133,8 @@ class FeedTab extends ConsumerWidget {
   Widget _buildPostCard(
     BuildContext context,
     WidgetRef ref,
-    post,
-    List<Comment>? comments,
+    Post post,
+    List<PostComment>? comments,
     String currentUserId,
   ) {
     final currentUserName =
@@ -150,12 +149,10 @@ class FeedTab extends ConsumerWidget {
         currentUserName: currentUserName,
         comments: comments,
         onLike: (userId, post) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: const Text('Liked post!'),
-              backgroundColor: TailboardTheme.copper,
-              duration: const Duration(seconds: 1),
-            ),
+          ref.read(reactionProvider).addReaction(
+            crewId: 'global',
+            postId: post.id,
+            type: 'like',
           );
         },
         onComment: (userId, post) {
@@ -169,17 +166,27 @@ class FeedTab extends ConsumerWidget {
             ),
           );
         },
-        onDelete: (userId, post) {},
-        onEdit: (userId, post) {},
-        onReaction: (userId, emoji, post) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Reaction added: $emoji'),
-              backgroundColor: TailboardTheme.copper,
-            ),
+        onDelete: (userId, post) {
+          ref.read(postUpdateProvider).deletePost(
+            crewId: 'global',
+            postId: post.id,
           );
         },
-        onAddComment: (postId, content) {},
+        onEdit: (userId, post) {},
+        onReaction: (userId, type, post) {
+          ref.read(reactionProvider).addReaction(
+            crewId: 'global',
+            postId: post.id,
+            type: type,
+          );
+        },
+        onAddComment: (postId, content) {
+          ref.read(commentProvider).addComment(
+            crewId: 'global',
+            postId: postId,
+            content: content,
+          );
+        },
         onLikeComment: (commentId, postId) {},
         onUnlikeComment: (commentId, postId) {},
         onEditComment: (commentId, postId) {},
@@ -215,32 +222,37 @@ class _JobsTabState extends ConsumerState<JobsTab> {
     super.dispose();
   }
 
-  void _showJobDetails(BuildContext context, Job job) {
-    showDialog(
-      context: context,
-      builder: (context) => JobDetailsDialog(
-        job: job,
-        isDarkTheme: true,
-      ),
+  void _showJobDetails(BuildContext context, SharedJob sharedJob) {
+    // This would need to fetch the full job details from global collection
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Fetching global job details...')),
     );
   }
 
-  void _applyToJob(BuildContext context, Job job) {
-    showDialog(
-      context: context,
-      builder: (context) => ApplyJobDialog(job: job),
-    );
+  void _applyToJob(BuildContext context, SharedJob sharedJob) {
+    // showDialog(
+    //   context: context,
+    //   builder: (context) => ApplyJobDialog(job: job),
+    // );
   }
 
   @override
   Widget build(BuildContext context) {
     final selectedCrew = ref.watch(selectedCrewProvider);
-    final jobsState = ref.watch(jobsProvider);
+    if (selectedCrew == null) {
+      return const EmptyStateWidget(
+        title: 'No Crew Selected',
+        message: 'Select a crew to view available jobs',
+        icon: Icons.group_off,
+      );
+    }
+    
+    final jobsAsync = ref.watch(suggestedJobsStreamProvider(selectedCrew.id));
 
     return Column(
       children: [
-        // Preferences banner (if crew selected)
-        if (selectedCrew != null) _buildPreferencesBanner(selectedCrew),
+        // Preferences banner
+        _buildPreferencesBanner(selectedCrew),
 
         // Search bar
         _buildSearchBar(),
@@ -249,19 +261,18 @@ class _JobsTabState extends ConsumerState<JobsTab> {
 
         // Job list
         Expanded(
-          child: jobsState.isLoading
-              ? const ElectricalLoadingIndicator(
+          child: jobsAsync.when(
+            loading: () => const ElectricalLoadingIndicator(
                   message: 'Loading jobs...',
-                )
-              : jobsState.error != null
-                  ? SingleChildScrollView(
+                ),
+            error: (error, stack) => SingleChildScrollView(
                       child: EmptyStateWidget(
                         icon: Icons.error_outline,
                         title: 'Error Loading Jobs',
-                        message: jobsState.error!,
+                        message: error.toString(),
                       ),
-                    )
-                  : jobsState.jobs.isEmpty
+                    ),
+            data: (jobs) => jobs.isEmpty
                       ? const SingleChildScrollView(
                           child: EmptyStateWidget(
                             icon: Icons.work_outline,
@@ -272,31 +283,32 @@ class _JobsTabState extends ConsumerState<JobsTab> {
                         )
                       : RefreshIndicator(
                           onRefresh: () async {
-                            ref.invalidate(jobsProvider);
+                            ref.invalidate(suggestedJobsStreamProvider(selectedCrew.id));
                           },
                           color: TailboardTheme.copper,
                           child: ListView.builder(
                             padding:
                                 const EdgeInsets.all(TailboardTheme.spacingM),
-                            itemCount: jobsState.jobs.length,
+                            itemCount: jobs.length,
                             itemBuilder: (context, index) {
-                              return _buildJobCard(jobsState.jobs[index]);
+                              return _buildJobCard(jobs[index]);
                             },
                           ),
                         ),
+          ),
         ),
       ],
     );
   }
 
-  Widget _buildPreferencesBanner(dynamic selectedCrew) {
+  Widget _buildPreferencesBanner(Crew selectedCrew) {
     final preferencesCount = selectedCrew.preferences.jobTypes.length;
 
     return Container(
       margin: const EdgeInsets.all(TailboardTheme.spacingM),
       padding: const EdgeInsets.all(TailboardTheme.spacingM),
       decoration: TailboardTheme.cardDecoration(
-        color: TailboardTheme.copper.withValues(alpha: 0.1),
+        color: TailboardTheme.copper.withOpacity(0.1),
       ),
       child: Row(
         children: [
@@ -377,7 +389,7 @@ class _JobsTabState extends ConsumerState<JobsTab> {
     );
   }
 
-  Widget _buildJobCard(Job job) {
+  Widget _buildJobCard(SharedJob job) {
     return Container(
       margin: const EdgeInsets.only(bottom: TailboardTheme.spacingM),
       padding: const EdgeInsets.all(TailboardTheme.spacingM),
@@ -389,7 +401,7 @@ class _JobsTabState extends ConsumerState<JobsTab> {
             children: [
               Expanded(
                 child: Text(
-                  job.jobTitle ?? job.company,
+                  job.title,
                   style: TailboardTheme.headingSmall,
                 ),
               ),
@@ -399,11 +411,11 @@ class _JobsTabState extends ConsumerState<JobsTab> {
                   vertical: 4,
                 ),
                 decoration: BoxDecoration(
-                  color: TailboardTheme.copper.withValues(alpha: 0.1),
+                  color: TailboardTheme.copper.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(TailboardTheme.radiusS),
                 ),
                 child: Text(
-                  job.classification ?? 'General',
+                  job.status.toUpperCase(),
                   style: TailboardTheme.labelSmall.copyWith(
                     color: TailboardTheme.copper,
                   ),
@@ -412,15 +424,16 @@ class _JobsTabState extends ConsumerState<JobsTab> {
             ],
           ),
           const SizedBox(height: TailboardTheme.spacingS),
-          _buildJobDetail(Icons.business, job.company),
           _buildJobDetail(Icons.location_on, job.location),
-          if (job.local != null)
-            _buildJobDetail(Icons.groups, 'Local ${job.local}'),
-          if (job.wage != null)
-            _buildJobDetail(
-                Icons.attach_money, '\$${job.wage!.toStringAsFixed(2)}/hr'),
-          if (job.hours != null)
-            _buildJobDetail(Icons.access_time, '${job.hours} hrs/week'),
+          _buildJobDetail(Icons.attach_money, job.rate),
+          if (job.crewNotes.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: Text(
+                'Notes: ${job.crewNotes}',
+                style: TailboardTheme.bodySmall.copyWith(fontStyle: FontStyle.italic),
+              ),
+            ),
           const SizedBox(height: TailboardTheme.spacingM),
           Row(
             children: [
@@ -478,7 +491,6 @@ class ChatTab extends ConsumerStatefulWidget {
 
 class _ChatTabState extends ConsumerState<ChatTab> {
   final ScrollController _scrollController = ScrollController();
-  final MessageService _messageService = MessageService();
 
   @override
   void dispose() {
@@ -516,9 +528,10 @@ class _ChatTabState extends ConsumerState<ChatTab> {
     }
 
     // Get messages stream
+    final messageService = MessageService();
     return StreamBuilder<List<Message>>(
-      stream: _messageService.getCrewMessagesStream(
-          selectedCrew.id, currentUser.uid),
+      stream: messageService.getCrewMessagesStream(
+          selectedCrew.id, 'general'),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const ElectricalLoadingIndicator(
@@ -551,6 +564,7 @@ class _ChatTabState extends ConsumerState<ChatTab> {
               ChatInput(
                 onSendMessage: (message) => _sendMessage(
                   selectedCrew.id,
+                  'general',
                   currentUser.uid,
                   currentUser.displayName ?? 'User',
                   message,
@@ -577,9 +591,10 @@ class _ChatTabState extends ConsumerState<ChatTab> {
                   return MessageBubble(
                     message: message.content,
                     senderId: message.senderId,
-                    senderName: _getSenderName(message),
+                    senderName: message.senderSnapshot['displayName'] ?? 'Unknown User',
                     timestamp: message.sentAt,
                     isCurrentUser: isCurrentUser,
+                    avatarUrl: message.senderSnapshot['avatarUrl'],
                   );
                 },
               ),
@@ -587,6 +602,7 @@ class _ChatTabState extends ConsumerState<ChatTab> {
             ChatInput(
               onSendMessage: (message) => _sendMessage(
                 selectedCrew.id,
+                'general',
                 currentUser.uid,
                 currentUser.displayName ?? 'User',
                 message,
@@ -598,25 +614,28 @@ class _ChatTabState extends ConsumerState<ChatTab> {
     );
   }
 
-  String _getSenderName(Message message) {
-    // Try to get name from message metadata
-    if (message.senderId.isNotEmpty) {
-      // In a real app, fetch from user profile
-      return message.senderId; // Placeholder
-    }
-    return 'Unknown User';
-  }
-
   Future<void> _sendMessage(
     String crewId,
+    String channelId,
     String senderId,
     String senderName,
     String content,
   ) async {
     try {
-      await _messageService.sendCrewMessage(
+      final messageService = MessageService();
+      final currentUser = ref.read(currentUserProvider);
+      
+      final senderSnapshot = {
+        'displayName': currentUser?.displayName ?? senderName,
+        'avatarUrl': currentUser?.photoURL,
+        'role': 'Member',
+      };
+
+      await messageService.sendCrewMessage(
         crewId: crewId,
+        channelId: channelId,
         senderId: senderId,
+        senderSnapshot: senderSnapshot,
         content: content,
       );
       _scrollToBottom();
@@ -708,13 +727,14 @@ class MembersTab extends ConsumerWidget {
             children: [
               CircleAvatar(
                 radius: 28,
-                backgroundColor: TailboardTheme.copper.withValues(alpha: 0.2),
-                child: Text(
-                  member.userId[0].toUpperCase(),
+                backgroundColor: TailboardTheme.copper.withOpacity(0.2),
+                backgroundImage: member.avatarUrl.isNotEmpty ? NetworkImage(member.avatarUrl) : null,
+                child: member.avatarUrl.isEmpty ? Text(
+                  member.displayName.isNotEmpty ? member.displayName[0].toUpperCase() : '?',
                   style: TailboardTheme.headingMedium.copyWith(
                     color: TailboardTheme.copper,
                   ),
-                ),
+                ) : null,
               ),
               Positioned(
                 right: 0,
@@ -723,7 +743,7 @@ class MembersTab extends ConsumerWidget {
                   width: 14,
                   height: 14,
                   decoration: BoxDecoration(
-                    color: member.isActive
+                    color: member.status == 'active'
                         ? TailboardTheme.success
                         : TailboardTheme.textTertiary,
                     shape: BoxShape.circle,
@@ -742,7 +762,7 @@ class MembersTab extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'User ${member.userId.substring(0, 8)}',
+                  member.displayName,
                   style: TailboardTheme.bodyMedium.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
@@ -752,50 +772,26 @@ class MembersTab extends ConsumerWidget {
                   'Joined $joinedDate',
                   style: TailboardTheme.bodySmall,
                 ),
-                if (member.role.toString() != 'MemberRole.member')
+                if (member.role != 'Member')
                   Container(
+                    margin: const EdgeInsets.only(top: 4),
                     padding: const EdgeInsets.symmetric(
                       horizontal: TailboardTheme.spacingS,
                       vertical: 2,
                     ),
                     decoration: BoxDecoration(
-                      color: TailboardTheme.success.withValues(alpha: 0.1),
+                      color: TailboardTheme.success.withOpacity(0.1),
                       borderRadius:
                           BorderRadius.circular(TailboardTheme.radiusS),
                     ),
                     child: Text(
-                      member.role.toString().split('.').last.toUpperCase(),
+                      member.role.toUpperCase(),
                       style: TailboardTheme.labelSmall.copyWith(
                         color: TailboardTheme.success,
                       ),
                     ),
                   ),
               ],
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: TailboardTheme.spacingM,
-              vertical: TailboardTheme.spacingS,
-            ),
-            decoration: BoxDecoration(
-              color: member.isAvailable
-                  ? TailboardTheme.success.withValues(alpha: 0.1)
-                  : TailboardTheme.backgroundDark,
-              borderRadius: BorderRadius.circular(TailboardTheme.radiusL),
-              border: Border.all(
-                color: member.isAvailable
-                    ? TailboardTheme.success
-                    : TailboardTheme.border,
-              ),
-            ),
-            child: Text(
-              member.isAvailable ? 'Available' : 'Away',
-              style: TailboardTheme.labelSmall.copyWith(
-                color: member.isAvailable
-                    ? TailboardTheme.success
-                    : TailboardTheme.textTertiary,
-              ),
             ),
           ),
           const SizedBox(width: TailboardTheme.spacingS),
@@ -805,7 +801,7 @@ class MembersTab extends ConsumerWidget {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(
-                      'Start chat with User ${member.userId.substring(0, 8)} (Coming Soon)'),
+                      'Start chat with ${member.displayName} (Coming Soon)'),
                   backgroundColor: TailboardTheme.info,
                 ),
               );
@@ -820,3 +816,4 @@ class MembersTab extends ConsumerWidget {
         );
   }
 }
+

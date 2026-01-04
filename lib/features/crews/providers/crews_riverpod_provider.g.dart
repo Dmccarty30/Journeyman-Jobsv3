@@ -419,6 +419,91 @@ final class IsUserInCrewFamily extends $Family
   String toString() => r'isUserInCrewProvider';
 }
 
+/// Provider to get user's crew member data
+
+@ProviderFor(userCrewMemberStream)
+final userCrewMemberStreamProvider = UserCrewMemberStreamFamily._();
+
+/// Provider to get user's crew member data
+
+final class UserCrewMemberStreamProvider extends $FunctionalProvider<
+        AsyncValue<CrewMember?>, CrewMember?, Stream<CrewMember?>>
+    with $FutureModifier<CrewMember?>, $StreamProvider<CrewMember?> {
+  /// Provider to get user's crew member data
+  UserCrewMemberStreamProvider._(
+      {required UserCrewMemberStreamFamily super.from,
+      required String super.argument})
+      : super(
+          retry: null,
+          name: r'userCrewMemberStreamProvider',
+          isAutoDispose: true,
+          dependencies: null,
+          $allTransitiveDependencies: null,
+        );
+
+  @override
+  String debugGetCreateSourceHash() => _$userCrewMemberStreamHash();
+
+  @override
+  String toString() {
+    return r'userCrewMemberStreamProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $StreamProviderElement<CrewMember?> $createElement(
+          $ProviderPointer pointer) =>
+      $StreamProviderElement(pointer);
+
+  @override
+  Stream<CrewMember?> create(Ref ref) {
+    final argument = this.argument as String;
+    return userCrewMemberStream(
+      ref,
+      argument,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is UserCrewMemberStreamProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$userCrewMemberStreamHash() =>
+    r'ee2b52c7bc6bdb8ec609e7d3edf3f49f106d0f77';
+
+/// Provider to get user's crew member data
+
+final class UserCrewMemberStreamFamily extends $Family
+    with $FunctionalFamilyOverride<Stream<CrewMember?>, String> {
+  UserCrewMemberStreamFamily._()
+      : super(
+          retry: null,
+          name: r'userCrewMemberStreamProvider',
+          dependencies: null,
+          $allTransitiveDependencies: null,
+          isAutoDispose: true,
+        );
+
+  /// Provider to get user's crew member data
+
+  UserCrewMemberStreamProvider call(
+    String crewId,
+  ) =>
+      UserCrewMemberStreamProvider._(argument: crewId, from: this);
+
+  @override
+  String toString() => r'userCrewMemberStreamProvider';
+}
+
 /// Provider to get user's role in a specific crew
 
 @ProviderFor(userRoleInCrew)
@@ -427,8 +512,8 @@ final userRoleInCrewProvider = UserRoleInCrewFamily._();
 /// Provider to get user's role in a specific crew
 
 final class UserRoleInCrewProvider
-    extends $FunctionalProvider<MemberRole?, MemberRole?, MemberRole?>
-    with $Provider<MemberRole?> {
+    extends $FunctionalProvider<String?, String?, String?>
+    with $Provider<String?> {
   /// Provider to get user's role in a specific crew
   UserRoleInCrewProvider._(
       {required UserRoleInCrewFamily super.from,
@@ -453,11 +538,11 @@ final class UserRoleInCrewProvider
 
   @$internal
   @override
-  $ProviderElement<MemberRole?> $createElement($ProviderPointer pointer) =>
+  $ProviderElement<String?> $createElement($ProviderPointer pointer) =>
       $ProviderElement(pointer);
 
   @override
-  MemberRole? create(Ref ref) {
+  String? create(Ref ref) {
     final argument = this.argument as String;
     return userRoleInCrew(
       ref,
@@ -466,10 +551,10 @@ final class UserRoleInCrewProvider
   }
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(MemberRole? value) {
+  Override overrideWithValue(String? value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<MemberRole?>(value),
+      providerOverride: $SyncValueProvider<String?>(value),
     );
   }
 
@@ -484,12 +569,12 @@ final class UserRoleInCrewProvider
   }
 }
 
-String _$userRoleInCrewHash() => r'1530eb47af8cf6752a1bc2e81bb15510e471085b';
+String _$userRoleInCrewHash() => r'd0079f16a9cb6be2d2361644abda81d01f0dc8c9';
 
 /// Provider to get user's role in a specific crew
 
 final class UserRoleInCrewFamily extends $Family
-    with $FunctionalFamilyOverride<MemberRole?, String> {
+    with $FunctionalFamilyOverride<String?, String> {
   UserRoleInCrewFamily._()
       : super(
           retry: null,
@@ -524,7 +609,7 @@ final class HasCrewPermissionProvider
       {required HasCrewPermissionFamily super.from,
       required (
         String,
-        String,
+        Permission,
       )
           super.argument})
       : super(
@@ -554,7 +639,7 @@ final class HasCrewPermissionProvider
   bool create(Ref ref) {
     final argument = this.argument as (
       String,
-      String,
+      Permission,
     );
     return hasCrewPermission(
       ref,
@@ -582,7 +667,7 @@ final class HasCrewPermissionProvider
   }
 }
 
-String _$hasCrewPermissionHash() => r'331ba93fa32fe0977fdefee1ad467f9d9b3033e0';
+String _$hasCrewPermissionHash() => r'cb6e4c488ce7b3070b6b86482bba262bca4be4c4';
 
 /// Provider to check if user has a specific permission in a crew
 
@@ -592,7 +677,7 @@ final class HasCrewPermissionFamily extends $Family
             bool,
             (
               String,
-              String,
+              Permission,
             )> {
   HasCrewPermissionFamily._()
       : super(
@@ -607,7 +692,7 @@ final class HasCrewPermissionFamily extends $Family
 
   HasCrewPermissionProvider call(
     String crewId,
-    String permission,
+    Permission permission,
   ) =>
       HasCrewPermissionProvider._(argument: (
         crewId,
@@ -859,7 +944,7 @@ final class CurrentUserCrewMemberProvider
 }
 
 String _$currentUserCrewMemberHash() =>
-    r'9018a173b7ff2c56796809be206e7e5186bf63e4';
+    r'94eae83f107918e51cf5e566edecdab9fdcde3d4';
 
 /// Provider to get current user's crew member data
 
@@ -948,7 +1033,7 @@ final class IsCrewForemanProvider extends $FunctionalProvider<bool, bool, bool>
   }
 }
 
-String _$isCrewForemanHash() => r'70ef9c7fb287fefa817e033cecb943cabd92d8f4';
+String _$isCrewForemanHash() => r'7b383e1c6d16772fbbfed93b311d7e7334901a40';
 
 /// Provider to check if current user is crew foreman
 

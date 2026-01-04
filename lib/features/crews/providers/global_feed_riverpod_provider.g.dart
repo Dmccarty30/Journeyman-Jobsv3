@@ -131,7 +131,7 @@ final class SendGlobalMessageNotifierProvider
 }
 
 String _$sendGlobalMessageNotifierHash() =>
-    r'0992cb5a3cfad925dccb94edc8789e2aa255b0bd';
+    r'b39c56655f029b75b66e9366ea7df0d8be9a51b8';
 
 /// Provider to send a global message
 
@@ -190,4 +190,4 @@ final class UnreadGlobalCountProvider extends $FunctionalProvider<int, int, int>
   }
 }
 
-String _$unreadGlobalCountHash() => r'c9a4816c876d349dd5a7ab0c2e23257ef3a1ed2b';
+String _$unreadGlobalCountHash() => r'd495fed7fa83c5d2e730209537e38aeecbf4e85e';

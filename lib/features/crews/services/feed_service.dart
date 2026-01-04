@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart' show kDebugMode;
 
 import '../../../domain/exceptions/app_exception.dart';
-import '../../../models/post_model.dart';
+import '../models/post.dart';
 
 class FeedService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -11,11 +11,12 @@ class FeedService {
   static const int defaultPageSize = 20;
   static const int maxPageSize = 100;
 
-  // Collections
-  CollectionReference get _postsCollection => _firestore.collection('posts');
-
   // Get Firestore instance
   FirebaseFirestore get firestore => _firestore;
+
+  // Helper to get feed collection
+  CollectionReference _feedCollection(String crewId) =>
+      _firestore.collection('crews').doc(crewId).collection('feed');
 
   // Post CRUD Operations
 
@@ -24,7 +25,9 @@ class FeedService {
     required String crewId,
     required String authorId,
     required String content,
+    Map<String, dynamic> authorSnapshot = const {},
     List<String> mediaUrls = const [],
+    String type = 'text',
   }) async {
     try {
       // Validate input
@@ -34,20 +37,21 @@ class FeedService {
         throw AppException('Post content cannot be empty');
 
       final postData = {
-        'crewId': crewId,
         'authorId': authorId,
+        'authorSnapshot': authorSnapshot,
         'content': content.trim(),
         'mediaUrls': mediaUrls,
-        'likes': <String>[],
-        'reactions': <String, String>{}, // memberId -> reactionType
-        'commentCount': 0,
-        'isPinned': false,
-        'isDeleted': false,
+        'type': type,
         'createdAt': FieldValue.serverTimestamp(),
-        'updatedAt': FieldValue.serverTimestamp(),
+        'stats': {
+          'likeCount': 0,
+          'lolCount': 0,
+          'dislikeCount': 0,
+          'commentCount': 0,
+        },
       };
 
-      final docRef = await _postsCollection.add(postData);
+      final docRef = await _feedCollection(crewId).add(postData);
 
       return docRef.id;
     } catch (e) {
@@ -60,16 +64,13 @@ class FeedService {
     required String crewId,
     int limit = defaultPageSize,
     DocumentSnapshot? startAfter,
-    bool includeDeleted = false,
   }) {
     // Enforce pagination limits for performance
     if (limit > maxPageSize) {
       limit = maxPageSize;
     }
 
-    Query query = _postsCollection
-        .where('crewId', isEqualTo: crewId)
-        .where('isDeleted', isEqualTo: includeDeleted)
+    Query query = _feedCollection(crewId)
         .orderBy('createdAt', descending: true);
 
     // Always enforce pagination
@@ -83,12 +84,12 @@ class FeedService {
   }
 
   /// Get a single post by ID
-  Future<PostModel?> getPost(String postId) async {
+  Future<Post?> getPost(String crewId, String postId) async {
     try {
-      final doc = await _postsCollection.doc(postId).get();
+      final doc = await _feedCollection(crewId).doc(postId).get();
       if (!doc.exists) return null;
 
-      return PostModel.fromFirestore(doc);
+      return Post.fromFirestore(doc);
     } catch (e) {
       throw AppException('Failed to get post: $e');
     }
@@ -96,13 +97,12 @@ class FeedService {
 
   /// Update a post's content
   Future<void> updatePost({
+    required String crewId,
     required String postId,
-    required String authorId,
     required String content,
     List<String>? mediaUrls,
   }) async {
     try {
-      // Validate input
       if (content.trim().isEmpty)
         throw AppException('Post content cannot be empty');
 
@@ -115,109 +115,69 @@ class FeedService {
         updateData['mediaUrls'] = mediaUrls;
       }
 
-      await _postsCollection.doc(postId).update(updateData);
-
-      if (kDebugMode) {
-        print('✏️ Updated post $postId');
-      }
+      await _feedCollection(crewId).doc(postId).update(updateData);
     } catch (e) {
       throw AppException('Failed to update post: $e');
     }
   }
 
-  /// Soft delete a post
-  Future<void> deletePost(String postId) async {
+  /// Delete a post
+  Future<void> deletePost(String crewId, String postId) async {
     try {
-      await _postsCollection.doc(postId).update({
-        'isDeleted': true,
-        'updatedAt': FieldValue.serverTimestamp(),
-      });
-
-      if (kDebugMode) {
-        print('🗑️ Soft deleted post $postId');
-      }
+      await _feedCollection(crewId).doc(postId).delete();
     } catch (e) {
       throw AppException('Failed to delete post: $e');
     }
   }
 
-  /// Hard delete a post (permanent deletion)
-  Future<void> hardDeletePost(String postId) async {
-    try {
-      await _postsCollection.doc(postId).delete();
-
-      if (kDebugMode) {
-        print('💥 Hard deleted post $postId');
-      }
-    } catch (e) {
-      throw AppException('Failed to hard delete post: $e');
-    }
-  }
-
-  /// Pin/unpin a post
-  Future<void> togglePinPost(String postId, bool isPinned) async {
-    try {
-      await _postsCollection.doc(postId).update({
-        'isPinned': isPinned,
-        'updatedAt': FieldValue.serverTimestamp(),
-      });
-
-      if (kDebugMode) {
-        print('📌 ${isPinned ? 'Pinned' : 'Unpinned'} post $postId');
-      }
-    } catch (e) {
-      throw AppException('Failed to toggle pin status: $e');
-    }
-  }
-
-  // Likes and Reactions
+  // Reactions
 
   /// Add or update a reaction to a post
   Future<void> addReaction({
+    required String crewId,
     required String postId,
-    required String memberId,
-    required String emoji,
+    required String userId,
+    required String type,
+    Map<String, dynamic> userSnapshot = const {},
   }) async {
     try {
-      final postRef = _postsCollection.doc(postId);
+      final postRef = _feedCollection(crewId).doc(postId);
+      final reactionRef = postRef.collection('reactions').doc(userId);
 
       await _firestore.runTransaction((transaction) async {
+        final reactionDoc = await transaction.get(reactionRef);
         final postDoc = await transaction.get(postRef);
+        
         if (!postDoc.exists) throw AppException('Post not found');
-
-        final data = postDoc.data() as Map<String, dynamic>;
-        final reactions = Map<String, int>.from(data['reactions'] ?? {});
-        final userReactions =
-            Map<String, String>.from(data['userReactions'] ?? {});
-        final likes = List<String>.from(data['likes'] ?? []);
-
-        // Update user reactions map
-        userReactions[memberId] = emoji;
-
-        // Update reactions count
-        reactions[emoji] = (reactions[emoji] ?? 0) + 1;
-
-        // Update likes list based on emoji
-        if (emoji == '👍') {
-          if (!likes.contains(memberId)) {
-            likes.add(memberId);
-          }
-        } else {
-          // For other emojis, remove from likes if present
-          likes.remove(memberId);
+        
+        String? oldType;
+        if (reactionDoc.exists) {
+          final data = reactionDoc.data() as Map<String, dynamic>?;
+          oldType = data?['type'] as String?;
         }
-
-        transaction.update(postRef, {
-          'reactions': reactions,
-          'userReactions': userReactions,
-          'likes': likes,
-          'updatedAt': FieldValue.serverTimestamp(),
+        
+        // Update reaction document
+        transaction.set(reactionRef, {
+          'type': type,
+          'createdAt': FieldValue.serverTimestamp(),
+          'userSnapshot': userSnapshot,
         });
-      });
 
-      if (kDebugMode) {
-        print('👍 Added $emoji reaction to post $postId by $memberId');
-      }
+        // Update post stats
+        final stats = Map<String, int>.from(
+          (postDoc.data() as Map<String, dynamic>?)?['stats'] as Map<dynamic, dynamic>? ?? {}
+        );
+        
+        if (oldType != null) {
+          final oldKey = '${oldType}Count';
+          stats[oldKey] = (stats[oldKey] ?? 1) - 1;
+        }
+        
+        final newKey = '${type}Count';
+        stats[newKey] = (stats[newKey] ?? 0) + 1;
+
+        transaction.update(postRef, {'stats': stats});
+      });
     } catch (e) {
       throw AppException('Failed to add reaction: $e');
     }
@@ -225,81 +185,34 @@ class FeedService {
 
   /// Remove a reaction from a post
   Future<void> removeReaction({
+    required String crewId,
     required String postId,
-    required String memberId,
+    required String userId,
   }) async {
     try {
-      final postRef = _postsCollection.doc(postId);
+      final postRef = _feedCollection(crewId).doc(postId);
+      final reactionRef = postRef.collection('reactions').doc(userId);
 
       await _firestore.runTransaction((transaction) async {
+        final reactionDoc = await transaction.get(reactionRef);
         final postDoc = await transaction.get(postRef);
-        if (!postDoc.exists) throw AppException('Post not found');
+        
+        if (!reactionDoc.exists || !postDoc.exists) return;
+        
+        final type = (reactionDoc.data() as Map<String, dynamic>?)?['type'] as String;
+        
+        transaction.delete(reactionRef);
 
-        final data = postDoc.data() as Map<String, dynamic>;
-        final reactions = Map<String, int>.from(data['reactions'] ?? {});
-        final userReactions =
-            Map<String, String>.from(data['userReactions'] ?? {});
-        final likes = List<String>.from(data['likes'] ?? []);
+        final stats = Map<String, int>.from(
+          (postDoc.data() as Map<String, dynamic>?)?['stats'] as Map<dynamic, dynamic>? ?? {}
+        );
+        final key = '${type}Count';
+        stats[key] = (stats[key] ?? 1) - 1;
 
-        // Get the emoji that was removed
-        final removedEmoji = userReactions[memberId];
-
-        // Remove user reaction
-        userReactions.remove(memberId);
-
-        // Decrement reaction count if exists
-        if (removedEmoji != null) {
-          reactions[removedEmoji] = (reactions[removedEmoji] ?? 1) - 1;
-          if (reactions[removedEmoji]! <= 0) {
-            reactions.remove(removedEmoji);
-          }
-        }
-
-        // Remove from likes if present
-        likes.remove(memberId);
-
-        transaction.update(postRef, {
-          'reactions': reactions,
-          'userReactions': userReactions,
-          'likes': likes,
-          'updatedAt': FieldValue.serverTimestamp(),
-        });
+        transaction.update(postRef, {'stats': stats});
       });
-
-      if (kDebugMode) {
-        print('👎 Removed reaction from post $postId by $memberId');
-      }
     } catch (e) {
       throw AppException('Failed to remove reaction: $e');
-    }
-  }
-
-  /// Get reaction counts for a post from Firestore
-  Future<Map<String, int>> getPostReactionCounts(String postId) async {
-    try {
-      final doc = await _postsCollection.doc(postId).get();
-      if (!doc.exists) return {};
-
-      final data = doc.data() as Map<String, dynamic>;
-      return Map<String, int>.from(data['reactions'] ?? {});
-    } catch (e) {
-      throw AppException('Failed to get reaction counts: $e');
-    }
-  }
-
-  /// Check if a user has reacted to a post with a specific emoji
-  Future<bool> hasUserReacted(
-      String postId, String userId, String emoji) async {
-    try {
-      final doc = await _postsCollection.doc(postId).get();
-      if (!doc.exists) return false;
-
-      final data = doc.data() as Map<String, dynamic>;
-      final userReactions =
-          Map<String, String>.from(data['userReactions'] ?? {});
-      return userReactions[userId] == emoji;
-    } catch (e) {
-      throw AppException('Failed to check user reaction: $e');
     }
   }
 
@@ -307,38 +220,31 @@ class FeedService {
 
   /// Add a comment to a post
   Future<String> addComment({
+    required String crewId,
     required String postId,
     required String authorId,
     required String content,
+    Map<String, dynamic> authorSnapshot = const {},
   }) async {
     try {
-      // Validate input
       if (content.trim().isEmpty)
         throw AppException('Comment content cannot be empty');
 
+      final postRef = _feedCollection(crewId).doc(postId);
+      
       final commentData = {
-        'postId': postId,
         'authorId': authorId,
+        'authorSnapshot': authorSnapshot,
         'content': content.trim(),
-        'isDeleted': false,
         'createdAt': FieldValue.serverTimestamp(),
-        'updatedAt': FieldValue.serverTimestamp(),
       };
 
-      final commentRef = await _postsCollection
-          .doc(postId)
-          .collection('comments')
-          .add(commentData);
+      final commentRef = await postRef.collection('comments').add(commentData);
 
       // Update comment count on post
-      await _postsCollection.doc(postId).update({
-        'commentCount': FieldValue.increment(1),
-        'updatedAt': FieldValue.serverTimestamp(),
+      await postRef.update({
+        'stats.commentCount': FieldValue.increment(1),
       });
-
-      if (kDebugMode) {
-        print('💬 Added comment ${commentRef.id} to post $postId');
-      }
 
       return commentRef.id;
     } catch (e) {
@@ -348,172 +254,42 @@ class FeedService {
 
   /// Get comments for a post
   Stream<QuerySnapshot> getPostComments({
+    required String crewId,
     required String postId,
     int limit = defaultPageSize,
-    DocumentSnapshot? startAfter,
   }) {
-    // Enforce pagination limits for performance
-    if (limit > maxPageSize) {
-      limit = maxPageSize;
-    }
-
-    Query query = _postsCollection
+    return _feedCollection(crewId)
         .doc(postId)
         .collection('comments')
-        .where('isDeleted', isEqualTo: false)
-        .orderBy('createdAt', descending: false); // Oldest first for threads
-
-    query = query.limit(limit);
-
-    if (startAfter != null) {
-      query = query.startAfterDocument(startAfter);
-    }
-
-    return query.snapshots();
+        .orderBy('createdAt', descending: false)
+        .limit(limit)
+        .snapshots();
   }
 
-  /// Update a comment
-  Future<void> updateComment({
-    required String postId,
-    required String commentId,
-    required String authorId,
-    required String content,
-  }) async {
+  /// Get reaction counts for a post from Firestore
+  Future<Map<String, int>> getPostReactionCounts(String crewId, String postId) async {
     try {
-      // Validate input
-      if (content.trim().isEmpty)
-        throw AppException('Comment content cannot be empty');
+      final doc = await _feedCollection(crewId).doc(postId).get();
+      if (!doc.exists) return {};
 
-      await _postsCollection
-          .doc(postId)
-          .collection('comments')
-          .doc(commentId)
-          .update({
-        'content': content.trim(),
-        'updatedAt': FieldValue.serverTimestamp(),
-      });
-
-      if (kDebugMode) {
-        print('✏️ Updated comment $commentId on post $postId');
-      }
+      final data = doc.data() as Map<String, dynamic>;
+      return Map<String, int>.from(data['stats'] ?? {});
     } catch (e) {
-      throw AppException('Failed to update comment: $e');
+      throw AppException('Failed to get reaction counts: $e');
     }
   }
 
-  /// Delete a comment
-  Future<void> deleteComment({
-    required String postId,
-    required String commentId,
-  }) async {
+  /// Check if a user has reacted to a post with a specific type
+  Future<bool> hasUserReacted(
+      String crewId, String postId, String userId, String type) async {
     try {
-      await _postsCollection
-          .doc(postId)
-          .collection('comments')
-          .doc(commentId)
-          .update({
-        'isDeleted': true,
-        'updatedAt': FieldValue.serverTimestamp(),
-      });
+      final doc = await _feedCollection(crewId).doc(postId).collection('reactions').doc(userId).get();
+      if (!doc.exists) return false;
 
-      // Update comment count on post
-      await _postsCollection.doc(postId).update({
-        'commentCount': FieldValue.increment(-1),
-        'updatedAt': FieldValue.serverTimestamp(),
-      });
-
-      if (kDebugMode) {
-        print('🗑️ Soft deleted comment $commentId from post $postId');
-      }
+      final data = doc.data();
+      return data?['type'] == type;
     } catch (e) {
-      throw AppException('Failed to delete comment: $e');
+      throw AppException('Failed to check user reaction: $e');
     }
   }
-
-  // Real-time Updates
-
-  /// Get real-time stream of posts for a crew
-  Stream<QuerySnapshot> getCrewPostsStream({
-    required String crewId,
-    int limit = defaultPageSize,
-  }) {
-    return getCrewPosts(crewId: crewId, limit: limit);
-  }
-
-  /// Get real-time stream of comments for a post
-  Stream<QuerySnapshot> getPostCommentsStream({
-    required String postId,
-    int limit = defaultPageSize,
-  }) {
-    return getPostComments(postId: postId, limit: limit);
-  }
-
-  /// Get real-time stream of a single post
-  Stream<DocumentSnapshot> getPostStream(String postId) {
-    return _postsCollection.doc(postId).snapshots();
-  }
-
-  // Analytics and Statistics
-
-  /// Get post statistics for a crew
-  Future<Map<String, dynamic>> getCrewPostStats(String crewId) async {
-    try {
-      final querySnapshot = await _postsCollection
-          .where('crewId', isEqualTo: crewId)
-          .where('isDeleted', isEqualTo: false)
-          .get();
-
-      int totalPosts = 0;
-      int totalLikes = 0;
-      int totalComments = 0;
-      int totalReactions = 0;
-
-      for (final doc in querySnapshot.docs) {
-        final data = doc.data() as Map<String, dynamic>;
-        totalPosts++;
-        totalLikes += (data['likes'] as List<dynamic>?)?.length ?? 0;
-        totalComments += (data['commentCount'] as int?) ?? 0;
-        totalReactions +=
-            (data['reactions'] as Map<String, dynamic>?)?.length ?? 0;
-      }
-
-      return {
-        'totalPosts': totalPosts,
-        'totalLikes': totalLikes,
-        'totalComments': totalComments,
-        'totalReactions': totalReactions,
-        'averageLikesPerPost': totalPosts > 0 ? totalLikes / totalPosts : 0.0,
-        'averageCommentsPerPost':
-            totalPosts > 0 ? totalComments / totalPosts : 0.0,
-      };
-    } catch (e) {
-      throw AppException('Failed to get crew post stats: $e');
-    }
-  }
-
-  // Batch Operations
-
-  /// Batch delete multiple posts
-  Future<void> batchDeletePosts(List<String> postIds) async {
-    final batch = _firestore.batch();
-
-    for (final postId in postIds) {
-      batch.update(_postsCollection.doc(postId), {
-        'isDeleted': true,
-        'updatedAt': FieldValue.serverTimestamp(),
-      });
-    }
-
-    try {
-      await batch.commit();
-
-      if (kDebugMode) {
-        print('🗑️ Batch deleted ${postIds.length} posts');
-      }
-    } catch (e) {
-      throw AppException('Failed to batch delete posts: $e');
-    }
-  }
-
-  // Validation Helpers
 }

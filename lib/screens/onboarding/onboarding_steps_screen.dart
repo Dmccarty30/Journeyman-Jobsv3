@@ -13,9 +13,7 @@ import '../../models/user_model.dart';
 import '../../navigation/app_router.dart';
 import '../../services/onboarding_service.dart';
 import '../../services/firestore_service.dart';
-import '../../electrical_components/jj_circuit_breaker_switch_list_tile.dart';
-import '../../electrical_components/jj_circuit_breaker_switch.dart';
-import '../../electrical_components/modern_svg_circuit_background.dart';
+import '../../electrical_components/electrical_components.dart';
 
 class OnboardingStepsScreen extends StatefulWidget {
   const OnboardingStepsScreen({super.key});

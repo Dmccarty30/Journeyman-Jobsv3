@@ -10,6 +10,8 @@ import '../../../providers/riverpod/auth_riverpod_provider.dart';
 import '../models/models.dart';
 import '../services/crew_service.dart';
 
+import '../../../domain/enums/permission.dart';
+
 part 'crews_riverpod_provider.g.dart';
 
 /// JobSharingService provider
@@ -103,59 +105,39 @@ bool isUserInCrew(Ref ref, String crewId) {
   return crews.any((crew) => crew.id == crewId);
 }
 
+/// Provider to get user's crew member data
+@riverpod
+Stream<CrewMember?> userCrewMemberStream(Ref ref, String crewId) {
+  final userId = ref.watch(currentUserIdProvider);
+  final crewService = ref.watch(crewServiceProvider);
+
+  if (userId == null) return Stream.value(null);
+  
+  return crewService.getUserCrewMembersStream(crewId, userId).map((snapshot) {
+    if (snapshot.docs.isEmpty) return null;
+    return CrewMember.fromFirestore(snapshot.docs.first);
+  });
+}
+
 /// Provider to get user's role in a specific crew
 @riverpod
-MemberRole? userRoleInCrew(Ref ref, String crewId) {
-  final userId = ref.watch(currentUserIdProvider);
-  final crews = ref.watch(userCrewsProvider);
+String? userRoleInCrew(Ref ref, String crewId) {
+  final memberAsync = ref.watch(userCrewMemberStreamProvider(crewId));
 
-  if (userId == null) return null;
-
-  final crew = crews.firstWhere(
-    (crew) => crew.id == crewId,
-    orElse: () => Crew(
-      id: '',
-      name: '',
-      foremanId: '',
-      memberIds: [],
-      preferences: CrewPreferences.empty(),
-      createdAt: DateTime.now(),
-      roles: {},
-      stats: CrewStats.empty(),
-      lastActivityAt: DateTime.now(),
-      // Added missing required parameter
-      isActive: true,
-    ),
+  return memberAsync.when(
+    data: (member) => member?.role,
+    loading: () => null,
+    error: (_, __) => null,
   );
-
-  if (crew.id.isEmpty) return null;
-
-  return crew.roles[userId];
 }
 
 /// Provider to check if user has a specific permission in a crew
 @riverpod
-bool hasCrewPermission(Ref ref, String crewId, String permission) {
+bool hasCrewPermission(Ref ref, String crewId, Permission permission) {
   final role = ref.watch(userRoleInCrewProvider(crewId));
   if (role == null) return false;
 
-  final permissions = MemberPermissions.fromRole(role);
-  switch (permission) {
-    case 'canInviteMembers':
-      return permissions.canInviteMembers;
-    case 'canRemoveMembers':
-      return permissions.canRemoveMembers;
-    case 'canShareJobs':
-      return permissions.canShareJobs;
-    case 'canPostAnnouncements':
-      return permissions.canPostAnnouncements;
-    case 'canEditCrewInfo':
-      return permissions.canEditCrewInfo;
-    case 'canViewAnalytics':
-      return permissions.canViewAnalytics;
-    default:
-      return false;
-  }
+  return RolePermissions.hasPermission(role, permission);
 }
 
 /// Provider to get crew members stream
@@ -182,23 +164,12 @@ List<CrewMember> crewMembers(Ref ref, String crewId) {
 /// Provider to get current user's crew member data
 @riverpod
 CrewMember? currentUserCrewMember(Ref ref, String crewId) {
-  final userId = ref.watch(currentUserIdProvider);
-  final members = ref.watch(crewMembersProvider(crewId));
+  final memberAsync = ref.watch(userCrewMemberStreamProvider(crewId));
 
-  if (userId == null) return null;
-
-  return members.firstWhere(
-    (member) => member.userId == userId,
-    orElse: () => CrewMember(
-      userId: '',
-      crewId: '',
-      role: MemberRole.member,
-      joinedAt: DateTime.now(),
-      permissions: MemberPermissions.fromRole(MemberRole.member),
-      isAvailable: false,
-      lastActive: DateTime.now(),
-      isActive: false,
-    ),
+  return memberAsync.when(
+    data: (member) => member,
+    loading: () => null,
+    error: (_, __) => null,
   );
 }
 
@@ -206,7 +177,7 @@ CrewMember? currentUserCrewMember(Ref ref, String crewId) {
 @riverpod
 bool isCrewForeman(Ref ref, String crewId) {
   final role = ref.watch(userRoleInCrewProvider(crewId));
-  return role == MemberRole.foreman;
+  return role == 'Foreman';
 }
 
 /// Provider to get crew by ID

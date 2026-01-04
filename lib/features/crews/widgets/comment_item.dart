@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../../design_system/app_theme.dart';
-import '../models/tailboard.dart';
+import '../models/post.dart';
 
 class CommentItem extends StatefulWidget {
-  final Comment comment;
+  final PostComment comment;
   final bool canEdit;
   final bool canDelete;
   final bool canLike;
@@ -40,27 +40,32 @@ class _CommentItemState extends State<CommentItem> {
 
   @override
   Widget build(BuildContext context) {
-    final isEdited = widget.comment.editedAt != null;
-    final formattedDate = DateFormat('MMM d, yyyy h:mm a').format(widget.comment.postedAt);
+    final formattedDate = DateFormat('MMM d, yyyy h:mm a').format(widget.comment.createdAt);
+    final displayName = widget.comment.authorSnapshot['displayName'] ?? 'User ${widget.comment.authorId.substring(0, 6)}...';
+    final avatarUrl = widget.comment.authorSnapshot['avatarUrl'];
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // User avatar placeholder
+          // User avatar
           Container(
             width: 36,
             height: 36,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: AppTheme.accentCopper.withValues(alpha: 0.2),
+              color: AppTheme.accentCopper.withOpacity(0.2),
+              image: avatarUrl != null ? DecorationImage(
+                image: NetworkImage(avatarUrl),
+                fit: BoxFit.cover,
+              ) : null,
             ),
-            child: const Icon(
+            child: avatarUrl == null ? const Icon(
               Icons.person,
               size: 20,
               color: AppTheme.accentCopper,
-            ),
+            ) : null,
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -71,7 +76,7 @@ class _CommentItemState extends State<CommentItem> {
                 Row(
                   children: [
                     Text(
-                      'User ${widget.comment.authorId.substring(0, 6)}...', // Show first 6 chars of ID
+                      displayName,
                       style: AppTheme.bodyMedium.copyWith(
                         fontWeight: FontWeight.w600,
                         color: AppTheme.textPrimary,
@@ -84,14 +89,6 @@ class _CommentItemState extends State<CommentItem> {
                         color: AppTheme.textSecondary,
                       ),
                     ),
-                    if (isEdited) ...[
-                      const SizedBox(width: 4),
-                      const Icon(
-                        Icons.edit,
-                        size: 14,
-                        color: AppTheme.textSecondary,
-                      ),
-                    ],
                     const Spacer(),
                     // Like button
                     if (widget.canLike)
@@ -137,54 +134,43 @@ class _CommentItemState extends State<CommentItem> {
                 ),
                 // Action menu popup
                 if (_showActionMenu && (widget.canEdit || widget.canDelete))
-                  Positioned(
-                    right: 0,
-                    top: 30,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(AppTheme.radiusSm),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.1),
-                            blurRadius: 8,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        children: [
-                          if (widget.canEdit)
-                            ListTile(
-                              title: const Text('Edit'),
-                              onTap: () {
-                                setState(() {
-                                  _showActionMenu = false;
-                                });
-                                widget.onEdit?.call();
-                              },
-                            ),
-                          if (widget.canDelete)
-                            ListTile(
-                              title: const Text('Delete'),
-                              onTap: () {
-                                setState(() {
-                                  _showActionMenu = false;
-                                });
-                                widget.onDelete?.call();
-                              },
-                            ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(AppTheme.radiusSm),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          blurRadius: 8,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      children: [
+                        if (widget.canEdit)
                           ListTile(
-                            title: const Text('Report'),
+                            dense: true,
+                            title: const Text('Edit'),
                             onTap: () {
                               setState(() {
                                 _showActionMenu = false;
                               });
-                              // TODO: Implement report functionality
+                              widget.onEdit?.call();
                             },
                           ),
-                        ],
-                      ),
+                        if (widget.canDelete)
+                          ListTile(
+                            dense: true,
+                            title: const Text('Delete'),
+                            onTap: () {
+                              setState(() {
+                                _showActionMenu = false;
+                              });
+                              widget.onDelete?.call();
+                            },
+                          ),
+                      ],
                     ),
                   ),
                 // Reply button

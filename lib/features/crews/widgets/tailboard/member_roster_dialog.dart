@@ -93,13 +93,14 @@ class _MemberRosterItem extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 24,
-              backgroundColor: TailboardTheme.copper.withValues(alpha: 0.2),
-              child: Text(
-                      (member.displayName ?? 'U')[0].toUpperCase(),
+              backgroundColor: TailboardTheme.copper.withOpacity(0.2),
+              backgroundImage: member.avatarUrl.isNotEmpty ? NetworkImage(member.avatarUrl) : null,
+              child: member.avatarUrl.isEmpty ? Text(
+                      member.displayName.isNotEmpty ? member.displayName[0].toUpperCase() : '?',
                       style: TailboardTheme.headingSmall.copyWith(
                         color: TailboardTheme.copper,
                       ),
-                    ),
+                    ) : null,
             ),
             const SizedBox(width: TailboardTheme.spacingM),
             Expanded(
@@ -107,7 +108,7 @@ class _MemberRosterItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    member.displayName ?? 'Unknown',
+                    member.displayName,
                     style: TailboardTheme.bodyMedium.copyWith(
                       fontWeight: FontWeight.w600,
                     ),
@@ -117,10 +118,10 @@ class _MemberRosterItem extends StatelessWidget {
                     'Joined $joinedDate',
                     style: TailboardTheme.bodySmall,
                   ),
-                  if (member.classification != null) ...[
+                  if (member.jobTitle.isNotEmpty) ...[
                     const SizedBox(height: 2),
                     Text(
-                      member.classification!,
+                      member.jobTitle,
                       style: TailboardTheme.bodySmall,
                     ),
                   ],
@@ -133,7 +134,7 @@ class _MemberRosterItem extends StatelessWidget {
                   width: 10,
                   height: 10,
                   decoration: BoxDecoration(
-                    color: member.isActive
+                    color: member.status == 'active'
                         ? TailboardTheme.success
                         : TailboardTheme.textTertiary,
                     shape: BoxShape.circle,
@@ -141,7 +142,7 @@ class _MemberRosterItem extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  member.isActive ? 'Active' : 'Inactive',
+                  member.status.toUpperCase(),
                   style: TailboardTheme.labelSmall,
                 ),
               ],
@@ -159,3 +160,4 @@ class _MemberRosterItem extends StatelessWidget {
     );
   }
 }
+

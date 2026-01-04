@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:journeyman_jobs/design_system/components/reusable_components.dart';
-import 'package:journeyman_jobs/electrical_components/circuit_board_background.dart';
+import 'package:journeyman_jobs/electrical_components/electrical_components.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:go_router/go_router.dart';
 import 'package:journeyman_jobs/design_system/popup_theme.dart';

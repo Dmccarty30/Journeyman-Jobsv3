@@ -72,18 +72,25 @@ class JobMatchingService {
         final crewId = sortedCrews[i].key;
         final score = sortedCrews[i].value.toStringAsFixed(1);
 
+        final jobRef = _firestore.collection('jobs').doc(jobId);
+        final jobSnapshot = {
+          'title': job['title'] ?? job['jobTitle'] ?? 'Electrical Position',
+          'location': job['cityState'] ?? 'Multiple Locations',
+          'rate': '\$${job['hourlyRate']}/hr',
+        };
+
         await _jobSharingService.shareToCrews(
-          jobId: jobId,
+          jobReference: jobRef,
           crewIds: [crewId],
-          sharedByUserId: 'system',
-          comment: 'Auto-shared: This job matches your crew preferences (Match Score: $score%)',
+          sharedBy: 'system',
+          crewNotes: 'Auto-shared: This job matches your crew preferences (Match Score: $score%)',
+          jobSnapshot: jobSnapshot,
         );
       }
     } catch (e) {
       if (kDebugMode) {
         print('Error in job matching: $e');
       }
-      // TODO: Implement proper error handling
     }
   }
 
@@ -101,9 +108,9 @@ class JobMatchingService {
     }
     
     // Pay rate match (30%)
-    final jobRate = (job['hourlyRate'] as num).toDouble();
+    final jobRate = (job['hourlyRate'] as num?)?.toDouble() ?? 0.0;
     final prefRate = preferences.minHourlyRate ?? 0.0;
-    if (jobRate >= prefRate) {
+    if (jobRate >= prefRate && prefRate > 0) {
       // Score based on how much above minimum rate (up to 30%)
       final rateScore = ((jobRate - prefRate) / prefRate).clamp(0.0, 1.0) * 30.0;
       score += rateScore;
@@ -112,22 +119,24 @@ class JobMatchingService {
     // Location proximity (20%)
     final jobLocation = job['location'] as GeoPoint?;
     if (jobLocation != null && crew.location != null) {
-      final distance = _calculateDistance(
-        jobLocation.latitude,
-        jobLocation.longitude,
-        crew.location!.latitude,
-        crew.location!.longitude
-      );
-      // Score inversely proportional to distance (up to 20%)
-      final maxDistance = 100.0; // km
-      final locationScore = ((maxDistance - distance) / maxDistance).clamp(0.0, 1.0) * 20.0;
-      score += locationScore;
+      final crewLat = (crew.location!['latitude'] as num?)?.toDouble();
+      final crewLon = (crew.location!['longitude'] as num?)?.toDouble();
+      
+      if (crewLat != null && crewLon != null) {
+        final distance = _calculateDistance(
+          jobLocation.latitude,
+          jobLocation.longitude,
+          crewLat,
+          crewLon
+        );
+        // Score inversely proportional to distance (up to 20%)
+        final maxDistance = 100.0; // km
+        final locationScore = ((maxDistance - distance) / maxDistance).clamp(0.0, 1.0) * 20.0;
+        score += locationScore;
+      }
     }
     
-    // Crew performance history (10%)
-    final successRate = crew.stats.successfulPlacements / 
-                       (crew.stats.totalApplications > 0 ? crew.stats.totalApplications : 1);
-    score += successRate * 10.0;
+    // Performance scoring disabled for now as stats moved out of root
     
     return score;
   }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:journeyman_jobs/electrical_components/circuit_board_background.dart';
+import 'package:journeyman_jobs/electrical_components/electrical_components.dart';
 import 'package:journeyman_jobs/design_system/popup_theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -8,7 +8,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:go_router/go_router.dart';
 import '../../../design_system/app_theme.dart';
 import '../../../design_system/widgets/design_system_widgets.dart';
-import '../../../electrical_components/jj_circuit_breaker_switch.dart';
 import '../../../services/avatar_service.dart';
 
 class ProfileScreen extends StatefulWidget {

@@ -21,7 +21,7 @@ class MemberRolesDialog extends ConsumerStatefulWidget {
 }
 
 class _MemberRolesDialogState extends ConsumerState<MemberRolesDialog> {
-  final Map<String, domain.MemberRole> _roleChanges = {};
+  final Map<String, String> _roleChanges = {};
 
   @override
   Widget build(BuildContext context) {
@@ -82,15 +82,15 @@ class _MemberRolesDialogState extends ConsumerState<MemberRolesDialog> {
                     itemCount: members.length,
                     itemBuilder: (context, index) {
                       final member = members[index];
-                      final currentRole = selectedCrew.roles[member.userId] ?? domain.MemberRole.member;
-                      final newRole = _roleChanges[member.userId] ?? currentRole;
+                      final currentRole = member.role;
+                      final newRole = _roleChanges[member.uid] ?? currentRole;
 
                       return _MemberRoleItem(
                         member: member,
                         currentRole: newRole,
                         onRoleChanged: (role) {
                           setState(() {
-                            _roleChanges[member.userId] = role;
+                            _roleChanges[member.uid] = role;
                           });
                         },
                       );
@@ -145,8 +145,8 @@ class _MemberRolesDialogState extends ConsumerState<MemberRolesDialog> {
 
 class _MemberRoleItem extends StatelessWidget {
   final CrewMember member;
-  final domain.MemberRole currentRole;
-  final ValueChanged<domain.MemberRole> onRoleChanged;
+  final String currentRole;
+  final ValueChanged<String> onRoleChanged;
 
   const _MemberRoleItem({
     required this.member,
@@ -165,9 +165,9 @@ class _MemberRoleItem extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 20,
-              backgroundColor: TailboardTheme.copper.withValues(alpha: 0.2),
+              backgroundColor: TailboardTheme.copper.withOpacity(0.2),
               child: Text(
-                      member.displayName![0].toUpperCase(),
+                      member.displayName.isNotEmpty ? member.displayName[0].toUpperCase() : '?',
                       style: TailboardTheme.bodyMedium.copyWith(
                         color: TailboardTheme.copper,
                       ),
@@ -179,7 +179,7 @@ class _MemberRoleItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    member.displayName ?? 'Unknown',
+                    member.displayName,
                     style: TailboardTheme.bodyMedium.copyWith(
                       fontWeight: FontWeight.w600,
                     ),
@@ -187,13 +187,13 @@ class _MemberRoleItem extends StatelessWidget {
                 ],
               ),
             ),
-            DropdownButton<domain.MemberRole>(
+            DropdownButton<String>(
               value: currentRole,
               dropdownColor: TailboardTheme.backgroundCard,
               style: TailboardTheme.bodyMedium,
               underline: Container(),
               icon: const Icon(Icons.arrow_drop_down, color: TailboardTheme.copper),
-              items: domain.MemberRole.values.map((role) {
+              items: ['Foreman', 'Member'].map((role) {
                 return DropdownMenuItem(
                   value: role,
                   child: Row(
@@ -205,7 +205,7 @@ class _MemberRoleItem extends StatelessWidget {
                       ),
                       const SizedBox(width: TailboardTheme.spacingS),
                       Text(
-                        _getRoleDisplayName(role),
+                        role,
                         style: TailboardTheme.bodyMedium.copyWith(
                           color: _getRoleColor(role),
                         ),
@@ -226,30 +226,24 @@ class _MemberRoleItem extends StatelessWidget {
     );
   }
 
-  IconData _getRoleIcon(domain.MemberRole role) {
+  IconData _getRoleIcon(String role) {
     switch (role) {
-      case domain.MemberRole.foreman:
+      case 'Foreman':
         return Icons.engineering;
-      case domain.MemberRole.member:
+      case 'Member':
+      default:
         return Icons.person;
     }
   }
 
-  Color _getRoleColor(domain.MemberRole role) {
+  Color _getRoleColor(String role) {
     switch (role) {
-      case domain.MemberRole.foreman:
+      case 'Foreman':
         return TailboardTheme.copper;
-      case domain.MemberRole.member:
+      case 'Member':
+      default:
         return TailboardTheme.textSecondary;
     }
   }
-
-  String _getRoleDisplayName(domain.MemberRole role) {
-    switch (role) {
-      case domain.MemberRole.foreman:
-        return 'Foreman';
-      case domain.MemberRole.member:
-        return 'Member';
-    }
-  }
 }
+

@@ -308,7 +308,7 @@ class OfflineDataService {
   /// Store crew members for offline access
   Future<void> storeCrewMembersOffline(List<CrewMember> members, {SyncPriority priority = SyncPriority.medium}) async {
     final entries = members.map((member) => OfflineDataEntry(
-      key: 'member_${member.userId}_${member.crewId}',
+      key: 'member_${member.uid}_${member.crewId}',
       data: member.toFirestore(), // Assuming toFirestore() returns Map<String, dynamic>
       cachedAt: DateTime.now(),
       expiresAt: DateTime.now().add(kOfflineDataRetention),

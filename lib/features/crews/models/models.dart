@@ -7,3 +7,4 @@ export 'crew_member.dart';
 export 'tailboard.dart';
 export 'message.dart';
 export 'shared_job.dart';
+export 'post.dart';

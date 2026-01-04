@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../models/tailboard.dart';
+import '../models/post.dart';
 import '../../../design_system/app_theme.dart';
 
 class AnnouncementCard extends ConsumerWidget {
-  final TailboardPost post;
+  final Post post;
   final String currentUserId;
 
   const AnnouncementCard({
@@ -15,9 +15,8 @@ class AnnouncementCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isPinned = post.isPinned;
-    final hasReacted = post.reactions.containsKey(currentUserId);
-    final currentReaction = post.reactions[currentUserId];
+    const isPinned = false; // Post model doesn't have isPinned yet
+    final hasReacted = false; // Need to check reactions subcollection
 
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -90,7 +89,7 @@ class AnnouncementCard extends ConsumerWidget {
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      _formatTimeAgo(post.postedAt),
+                      _formatTimeAgo(post.createdAt),
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: AppTheme.textLight,
                       ),
@@ -107,7 +106,7 @@ class AnnouncementCard extends ConsumerWidget {
                 ),
                 const SizedBox(height: 16),
                 // Attachments (if any)
-                if (post.attachmentUrls.isNotEmpty)
+                if (post.mediaUrls.isNotEmpty)
                   _buildAttachments(context),
                 // Reactions and actions
                 Row(
@@ -116,31 +115,20 @@ class AnnouncementCard extends ConsumerWidget {
                     Row(
                       children: [
                         IconButton(
-                          onPressed: () => _handleReaction(context, ReactionType.like),
-                          icon: Icon(
-                            hasReacted && currentReaction == ReactionType.like
-                                ? Icons.thumb_up
-                                : Icons.thumb_up_outlined,
+                          onPressed: () => _handleReaction(context),
+                          icon: const Icon(
+                            Icons.thumb_up_outlined,
                             size: 20,
-                            color: hasReacted && currentReaction == ReactionType.like
-                                ? AppTheme.accentCopper
-                                : AppTheme.textLight,
+                            color: AppTheme.textLight,
                           ),
                         ),
-                        if (post.reactions.isNotEmpty)
-                          Text(
-                            post.reactions.length.toString(),
-                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: AppTheme.textLight,
-                            ),
-                          ),
                       ],
                     ),
                     const Spacer(),
                     // Actions
                     IconButton(
                       onPressed: () => _showMoreOptions(context),
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.more_vert,
                         size: 20,
                         color: AppTheme.textLight,
@@ -157,7 +145,7 @@ class AnnouncementCard extends ConsumerWidget {
   }
 
   Widget _buildAttachments(BuildContext context) {
-    if (post.attachmentUrls.isEmpty) return const SizedBox.shrink();
+    if (post.mediaUrls.isEmpty) return const SizedBox.shrink();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -174,7 +162,7 @@ class AnnouncementCard extends ConsumerWidget {
         Wrap(
           spacing: 8,
           runSpacing: 8,
-          children: post.attachmentUrls.map((url) {
+          children: post.mediaUrls.map((url) {
             return Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
@@ -237,51 +225,84 @@ class AnnouncementCard extends ConsumerWidget {
     }
   }
 
-  void _handleReaction(BuildContext context, ReactionType reaction) {
-    // This would typically call a provider method to add/remove reaction
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(post.reactions.containsKey(currentUserId) ? 'Reaction removed' : 'Reaction added'),
-        duration: const Duration(seconds: 2),
-      ),
-    );
+    void _handleReaction(BuildContext context) {
+
+      // This would typically call a provider method to add/remove reaction
+
+      ScaffoldMessenger.of(context).showSnackBar(
+
+        const SnackBar(
+
+          content: Text('Reaction functionality coming soon'),
+
+          duration: Duration(seconds: 2),
+
+        ),
+
+      );
+
+    }
+
+  
+
+    void _showMoreOptions(BuildContext context) {
+
+      showModalBottomSheet(
+
+        context: context,
+
+        builder: (context) => Container(
+
+          padding: const EdgeInsets.all(16),
+
+          child: Column(
+
+            mainAxisSize: MainAxisSize.min,
+
+            children: [
+
+              ListTile(
+
+                leading: const Icon(Icons.edit),
+
+                title: const Text('Edit announcement'),
+
+                onTap: () {
+
+                  Navigator.pop(context);
+
+                  // Navigate to edit screen
+
+                },
+
+              ),
+
+              ListTile(
+
+                leading: const Icon(Icons.delete),
+
+                title: const Text('Delete announcement'),
+
+                onTap: () {
+
+                  Navigator.pop(context);
+
+                  // Show delete confirmation
+
+                },
+
+              ),
+
+            ],
+
+          ),
+
+        ),
+
+      );
+
+    }
+
   }
 
-  void _showMoreOptions(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      builder: (context) => Container(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ListTile(
-              leading: const Icon(Icons.push_pin),
-              title: Text(post.isPinned ? 'Unpin announcement' : 'Pin announcement'),
-              onTap: () {
-                Navigator.pop(context);
-                // Toggle pin status
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.edit),
-              title: const Text('Edit announcement'),
-              onTap: () {
-                Navigator.pop(context);
-                // Navigate to edit screen
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.delete),
-              title: const Text('Delete announcement'),
-              onTap: () {
-                Navigator.pop(context);
-                // Show delete confirmation
-              },
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
+  

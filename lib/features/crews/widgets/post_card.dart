@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../../../models/post_model.dart';
+import '../models/post.dart';
 import '../../../design_system/app_theme.dart';
 import 'reaction_animation.dart';
 import 'like_animation.dart';
@@ -10,17 +10,16 @@ import 'comment_animation.dart';
 import 'crew_member_avatar.dart';
 import 'comment_input.dart';
 import 'comment_thread.dart';
-import '../models/tailboard.dart';
 
 class PostCard extends StatefulWidget {
-  final PostModel post;
+  final Post post;
   final String currentUserId;
-  final Function(String, PostModel)? onLike;
-  final Function(String, PostModel)? onComment;
-  final Function(String, PostModel)? onShare;
-  final Function(String, PostModel)? onDelete;
-  final Function(String, PostModel)? onEdit;
-  final Function(String, String, PostModel)? onReaction;
+  final Function(String, Post)? onLike;
+  final Function(String, Post)? onComment;
+  final Function(String, Post)? onShare;
+  final Function(String, Post)? onDelete;
+  final Function(String, Post)? onEdit;
+  final Function(String, String, Post)? onReaction;
   final Function(String, String)? onAddComment;
   final Function(String, String)? onLikeComment;
   final Function(String, String)? onUnlikeComment;
@@ -29,7 +28,7 @@ class PostCard extends StatefulWidget {
   final Function(String, String)? onReplyToComment;
   final String commentUserId;
   final String? currentUserName;
-  final List<Comment>? comments;
+  final List<PostComment>? comments;
   final bool showCommentInput;
 
   const PostCard({
@@ -59,23 +58,10 @@ class PostCard extends StatefulWidget {
 }
 
 class _PostCardState extends State<PostCard> {
-  bool _isLiked = false;
   bool _isBookmarked = false;
-  int _likeCount = 0;
   bool _showComments = false;
   bool _showReactionPicker = false;
-  String? _userReaction;
-  Map<String, int> _reactions = {};
   bool _isAddingComment = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _isLiked = widget.post.likes.contains(widget.currentUserId);
-    _likeCount = widget.post.likes.length;
-    _reactions = widget.post.reactions;
-    _userReaction = widget.post.userReactions[widget.currentUserId];
-  }
 
   void _showReactionAnimation(String emoji) {
     final overlay = Overlay.of(context);
@@ -102,11 +88,6 @@ class _PostCardState extends State<PostCard> {
   }
 
   void _toggleLike() {
-    setState(() {
-      _isLiked = !_isLiked;
-      _likeCount += _isLiked ? 1 : -1;
-    });
-
     if (widget.onLike != null) {
       widget.onLike!(widget.currentUserId, widget.post);
     }
@@ -121,34 +102,10 @@ class _PostCardState extends State<PostCard> {
   void _handleReactionSelected(String emoji) {
     setState(() {
       _showReactionPicker = false;
-
-      // Update local state
-      if (_userReaction == emoji) {
-        // Remove reaction if same emoji selected again
-        _reactions[emoji] = (_reactions[emoji] ?? 1) - 1;
-        if (_reactions[emoji]! <= 0) {
-          _reactions.remove(emoji);
-        }
-        _userReaction = null;
-      } else {
-        // Remove previous reaction if exists
-        if (_userReaction != null) {
-          _reactions[_userReaction!] = (_reactions[_userReaction!] ?? 1) - 1;
-          if (_reactions[_userReaction!]! <= 0) {
-            _reactions.remove(_userReaction!);
-          }
-        }
-
-        // Add new reaction
-        _reactions[emoji] = (_reactions[emoji] ?? 0) + 1;
-        _userReaction = emoji;
-      }
     });
 
     // Trigger animation
-    if (_userReaction == null || _userReaction != emoji) {
-      _showReactionAnimation(emoji);
-    }
+    _showReactionAnimation(emoji);
 
     // Notify parent
     if (widget.onReaction != null) {
@@ -165,22 +122,6 @@ class _PostCardState extends State<PostCard> {
     });
   }
 
-  void _handleCommentAdded() {
-    setState(() {
-      _isAddingComment = true;
-    });
-
-    // In a real implementation, this would trigger a refresh of comments
-    // For now, we'll just simulate the action
-    Future.delayed(const Duration(milliseconds: 500), () {
-      if (mounted) {
-        setState(() {
-          _isAddingComment = false;
-        });
-      }
-    });
-  }
-
   void _sharePost() {
     if (widget.onShare != null) {
       widget.onShare!(widget.currentUserId, widget.post);
@@ -188,7 +129,7 @@ class _PostCardState extends State<PostCard> {
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('Post shared!'),
+        content: const Text('Post shared!'),
         backgroundColor: AppTheme.electricalSuccess,
       ),
     );
@@ -198,12 +139,12 @@ class _PostCardState extends State<PostCard> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Delete Post'),
-        content: Text('Are you sure you want to delete this post?'),
+        title: const Text('Delete Post'),
+        content: const Text('Are you sure you want to delete this post?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('Cancel'),
+            child: const Text('Cancel'),
           ),
           TextButton(
             onPressed: () {
@@ -213,7 +154,7 @@ class _PostCardState extends State<PostCard> {
               Navigator.pop(context);
             },
             style: TextButton.styleFrom(foregroundColor: AppTheme.errorRed),
-            child: Text('Delete'),
+            child: const Text('Delete'),
           ),
         ],
       ),
@@ -226,8 +167,7 @@ class _PostCardState extends State<PostCard> {
     }
   }
 
-  String _formatTimestamp(Timestamp timestamp) {
-    final DateTime dateTime = timestamp.toDate();
+  String _formatTimestamp(DateTime dateTime) {
     final now = DateTime.now();
     final difference = now.difference(dateTime);
 
@@ -243,12 +183,13 @@ class _PostCardState extends State<PostCard> {
   }
 
   Widget _buildPostHeader() {
+    final displayName = widget.post.authorSnapshot['displayName'] ?? 'Unknown User';
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Row(
         children: [
           CrewMemberAvatar(
-            memberName: widget.post.authorName ?? 'Unknown User',
+            memberName: displayName,
             size: 40,
             showStatus: false,
           ),
@@ -258,7 +199,7 @@ class _PostCardState extends State<PostCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  widget.post.authorName ?? 'Unknown User',
+                  displayName,
                   style: AppTheme.titleMedium.copyWith(
                     color: AppTheme.textPrimary,
                     fontWeight: FontWeight.w600,
@@ -266,7 +207,7 @@ class _PostCardState extends State<PostCard> {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  _formatTimestamp(widget.post.timestamp),
+                  _formatTimestamp(widget.post.createdAt),
                   style: AppTheme.bodySmall.copyWith(
                     color: AppTheme.textLight,
                   ),
@@ -290,7 +231,7 @@ class _PostCardState extends State<PostCard> {
             },
             itemBuilder: (context) => [
               if (widget.post.authorId == widget.currentUserId)
-                PopupMenuItem(
+                const PopupMenuItem(
                   value: 'edit',
                   child: Row(
                     children: [
@@ -301,7 +242,7 @@ class _PostCardState extends State<PostCard> {
                   ),
                 ),
               if (widget.post.authorId == widget.currentUserId)
-                PopupMenuItem(
+                const PopupMenuItem(
                   value: 'delete',
                   child: Row(
                     children: [
@@ -311,7 +252,7 @@ class _PostCardState extends State<PostCard> {
                     ],
                   ),
                 ),
-              PopupMenuItem(
+              const PopupMenuItem(
                 value: 'report',
                 child: Row(
                   children: [
@@ -322,7 +263,7 @@ class _PostCardState extends State<PostCard> {
                 ),
               ),
             ],
-            icon: Icon(
+            icon: const Icon(
               Icons.more_vert,
               color: AppTheme.textSecondary,
             ),
@@ -348,7 +289,7 @@ class _PostCardState extends State<PostCard> {
           if (widget.post.mediaUrls.isNotEmpty) ...[
             const SizedBox(height: 16),
             SizedBox(
-              height: 200, // Constrain height to prevent overflow
+              height: 200, 
               child: _buildMediaGrid(),
             ),
           ],
@@ -378,7 +319,7 @@ class _PostCardState extends State<PostCard> {
             errorBuilder: (context, error, stackTrace) {
               return Container(
                 color: AppTheme.lightGray,
-                child: Icon(
+                child: const Icon(
                   Icons.broken_image,
                   size: 48,
                   color: AppTheme.mediumGray,
@@ -417,7 +358,7 @@ class _PostCardState extends State<PostCard> {
                 errorBuilder: (context, error, stackTrace) {
                   return Container(
                     color: AppTheme.lightGray,
-                    child: Icon(
+                    child: const Icon(
                       Icons.broken_image,
                       size: 32,
                       color: AppTheme.mediumGray,
@@ -433,19 +374,22 @@ class _PostCardState extends State<PostCard> {
   }
 
   Widget _buildPostActions() {
+    final likeCount = widget.post.stats['likeCount'] ?? 0;
+    final commentCount = widget.post.stats['commentCount'] ?? 0;
+    
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Row(
         children: [
           LikeAnimation(
-            isLiked: _isLiked,
+            isLiked: false, // In production, check if user reacted with 'like'
             onLike: _toggleLike,
             size: 24,
             likedColor: AppTheme.errorRed,
             unlikedColor: AppTheme.textSecondary,
           ),
           Text(
-            '$_likeCount',
+            '$likeCount',
             style: AppTheme.bodySmall.copyWith(
               color: AppTheme.textSecondary,
             ),
@@ -453,14 +397,14 @@ class _PostCardState extends State<PostCard> {
           const SizedBox(width: 24),
           IconButton(
             onPressed: _toggleComments,
-            icon: Icon(
+            icon: const Icon(
               Icons.comment,
               color: AppTheme.textSecondary,
               size: 24,
             ),
           ),
           Text(
-            '${widget.post.commentCount ?? widget.post.comments.length}',
+            '$commentCount',
             style: AppTheme.bodySmall.copyWith(
               color: AppTheme.textSecondary,
             ),
@@ -468,7 +412,7 @@ class _PostCardState extends State<PostCard> {
           const SizedBox(width: 24),
           IconButton(
             onPressed: _sharePost,
-            icon: Icon(
+            icon: const Icon(
               Icons.share,
               color: AppTheme.textSecondary,
               size: 24,
@@ -593,3 +537,4 @@ class _PostCardState extends State<PostCard> {
     );
   }
 }
+

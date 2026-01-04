@@ -71,8 +71,8 @@ class MemberAvailabilityDialog extends ConsumerWidget {
                   );
                 }
 
-                final availableMembers = members.where((m) => m.isActive).toList();
-                final unavailableMembers = members.where((m) => !m.isActive).toList();
+                final availableMembers = members.where((m) => m.status == 'active').toList();
+                final unavailableMembers = members.where((m) => m.status != 'active').toList();
 
                 return ListView(
                   padding: const EdgeInsets.all(TailboardTheme.spacingM),
@@ -171,13 +171,14 @@ class _AvailabilityItem extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 20,
-                  backgroundColor: TailboardTheme.copper.withValues(alpha: 0.2),
-                  child: Text(
-                          (member.displayName ?? 'U')[0].toUpperCase(),
+                  backgroundColor: TailboardTheme.copper.withOpacity(0.2),
+                  backgroundImage: member.avatarUrl.isNotEmpty ? NetworkImage(member.avatarUrl) : null,
+                  child: member.avatarUrl.isEmpty ? Text(
+                          member.displayName.isNotEmpty ? member.displayName[0].toUpperCase() : '?',
                           style: TailboardTheme.bodyMedium.copyWith(
                             color: TailboardTheme.copper,
                           ),
-                        ),
+                        ) : null,
                 ),
                 Positioned(
                   right: 0,
@@ -205,15 +206,15 @@ class _AvailabilityItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    member.displayName ?? 'Unknown',
+                    member.displayName,
                     style: TailboardTheme.bodyMedium.copyWith(
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  if (member.classification != null) ...[
+                  if (member.jobTitle.isNotEmpty) ...[
                     const SizedBox(height: 2),
                     Text(
-                      member.classification!,
+                      member.jobTitle,
                       style: TailboardTheme.bodySmall,
                     ),
                   ],
@@ -227,7 +228,7 @@ class _AvailabilityItem extends StatelessWidget {
               ),
               decoration: BoxDecoration(
                 color: isAvailable
-                    ? TailboardTheme.success.withValues(alpha: 0.1)
+                    ? TailboardTheme.success.withOpacity(0.1)
                     : TailboardTheme.backgroundLight,
                 borderRadius: BorderRadius.circular(TailboardTheme.radiusL),
                 border: Border.all(
@@ -251,3 +252,4 @@ class _AvailabilityItem extends StatelessWidget {
     );
   }
 }
+

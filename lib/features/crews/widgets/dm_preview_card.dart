@@ -145,18 +145,12 @@ class DMPreviewCard extends StatelessWidget {
   }
 
   String _getMessagePreview(Message message) {
-    if (message.type == MessageType.text) {
+    if (message.type == 'text') {
       return message.content;
-    } else if (message.type == MessageType.image) {
+    } else if (message.type == 'image') {
       return '📷 Photo';
-    } else if (message.type == MessageType.voice) {
-      return '🎤 Voice message';
-    } else if (message.type == MessageType.document) {
-      return '📄 Document';
-    } else if (message.type == MessageType.jobShare) {
-      return '🔗 Shared a job';
-    } else if (message.type == MessageType.systemNotification) {
-      return '📢 ${message.content}';
+    } else if (message.type == 'location') {
+      return '📍 Shared location';
     }
     return message.content;
   }

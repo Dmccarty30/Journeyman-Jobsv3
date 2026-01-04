@@ -6,7 +6,7 @@ import 'package:journeyman_jobs/services/connectivity_service.dart';
 import 'package:journeyman_jobs/services/firestore_service.dart' as real_firestore;
 import 'package:journeyman_jobs/models/user_model.dart';
 import 'package:journeyman_jobs/features/crews/models/crew.dart';
-import 'package:journeyman_jobs/features/crews/models/tailboard.dart';
+import 'package:journeyman_jobs/features/crews/models/post.dart';
 import 'package:journeyman_jobs/models/job_model.dart';
 
 part 'core_providers.g.dart';
@@ -68,7 +68,7 @@ final currentUserProvider = Provider<UserModel?>((ref) => null);
 @riverpod
 class FeedPostsNotifier extends _$FeedPostsNotifier {
   @override
-  Future<List<TailboardPost>> build(String crewId) async {
+  Future<List<Post>> build(String crewId) async {
     // Load initial posts
     return [];
   }

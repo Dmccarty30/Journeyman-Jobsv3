@@ -57,7 +57,7 @@ String _$connectivityServiceHash() =>
 final feedPostsProvider = FeedPostsNotifierFamily._();
 
 final class FeedPostsNotifierProvider
-    extends $AsyncNotifierProvider<FeedPostsNotifier, List<TailboardPost>> {
+    extends $AsyncNotifierProvider<FeedPostsNotifier, List<Post>> {
   FeedPostsNotifierProvider._(
       {required FeedPostsNotifierFamily super.from,
       required String super.argument})
@@ -94,12 +94,12 @@ final class FeedPostsNotifierProvider
   }
 }
 
-String _$feedPostsNotifierHash() => r'c28ccdb46569c46d1177d5733299f6ae3673d39f';
+String _$feedPostsNotifierHash() => r'b573787ecc42db1a865b5d676b04f5446178a1d7';
 
 final class FeedPostsNotifierFamily extends $Family
     with
-        $ClassFamilyOverride<FeedPostsNotifier, AsyncValue<List<TailboardPost>>,
-            List<TailboardPost>, FutureOr<List<TailboardPost>>, String> {
+        $ClassFamilyOverride<FeedPostsNotifier, AsyncValue<List<Post>>,
+            List<Post>, FutureOr<List<Post>>, String> {
   FeedPostsNotifierFamily._()
       : super(
           retry: null,
@@ -118,21 +118,20 @@ final class FeedPostsNotifierFamily extends $Family
   String toString() => r'feedPostsProvider';
 }
 
-abstract class _$FeedPostsNotifier extends $AsyncNotifier<List<TailboardPost>> {
+abstract class _$FeedPostsNotifier extends $AsyncNotifier<List<Post>> {
   late final _$args = ref.$arg as String;
   String get crewId => _$args;
 
-  FutureOr<List<TailboardPost>> build(
+  FutureOr<List<Post>> build(
     String crewId,
   );
   @$mustCallSuper
   @override
   void runBuild() {
-    final ref =
-        this.ref as $Ref<AsyncValue<List<TailboardPost>>, List<TailboardPost>>;
+    final ref = this.ref as $Ref<AsyncValue<List<Post>>, List<Post>>;
     final element = ref.element as $ClassProviderElement<
-        AnyNotifier<AsyncValue<List<TailboardPost>>, List<TailboardPost>>,
-        AsyncValue<List<TailboardPost>>,
+        AnyNotifier<AsyncValue<List<Post>>, List<Post>>,
+        AsyncValue<List<Post>>,
         Object?,
         Object?>;
     element.handleCreate(

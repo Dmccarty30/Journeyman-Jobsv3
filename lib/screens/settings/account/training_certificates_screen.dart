@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:journeyman_jobs/design_system/widgets/design_system_widgets.dart';
+import 'package:journeyman_jobs/electrical_components/electrical_components.dart';
 import '../../../design_system/app_theme.dart';
 
 

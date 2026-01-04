@@ -19,8 +19,8 @@ import 'package:journeyman_jobs/domain/enums/invitation_status.dart';
 
 // Permission matrix
 class RolePermissions {
-  static const Map<MemberRole, Set<Permission>> permissions = {
-    MemberRole.foreman: {
+  static const Map<String, Set<Permission>> permissions = {
+    'Foreman': {
       Permission.createCrew,
       Permission.updateCrew,
       Permission.deleteCrew,
@@ -32,13 +32,13 @@ class RolePermissions {
       Permission.viewStats,
       Permission.manageSettings,
     },
-    MemberRole.member: {
+    'Member': {
       Permission.shareJob,
       Permission.viewStats,
     },
   };
 
-  static bool hasPermission(MemberRole role, Permission permission) {
+  static bool hasPermission(String role, Permission permission) {
     return permissions[role]?.contains(permission) ?? false;
   }
 }
@@ -231,61 +231,77 @@ class CrewService {
       if (!_connectivityService.isOnline) {
         // Offline: Store crew locally and mark as dirty
         final crewId = 'offline_${DateTime.now().millisecondsSinceEpoch}'; // Generate a temporary ID for offline
+        final now = DateTime.now();
+        
         final crew = Crew(
           id: crewId,
           name: name,
+          description: '',
           foremanId: foremanId,
-          memberIds: [foremanId],
-          preferences: preferences,
-          createdAt: DateTime.now(),
-          roles: {foremanId: MemberRole.foreman},
-          stats: CrewStats(
-            totalJobsShared: 0,
-            totalApplications: 0,
-            applicationRate: 0.0,
-            averageMatchScore: 0.0,
-            successfulPlacements: 0,
-            responseTime: 0.0,
-            jobTypeBreakdown: {},
-            lastActivityAt: DateTime.now(),
-            matchScores: [],
-            successRate: 0.0,
-          ),
+          privacy: 'open',
+          memberCount: 1,
+          jobCount: 0,
+          createdAt: now,
+          updatedAt: now,
+          lastActivityAt: now,
           isActive: true,
-          lastActivityAt: DateTime.now(),
+          tags: [],
+          preferences: preferences,
         );
+
+        final member = CrewMember(
+          uid: foremanId,
+          crewId: crewId,
+          role: 'Foreman',
+          joinedAt: now,
+          status: 'active',
+          userSnapshot: {},
+        );
+
         await _offlineDataService.storeCrewsOffline([crew]);
+        await _offlineDataService.storeCrewMembersOffline([member]);
         await _offlineDataService.markDataDirty('crew_$crewId', crew.toFirestore());
+        await _offlineDataService.markDataDirty('member_${foremanId}_$crewId', member.toFirestore());
         return; // Operation completed offline
       }
 
       await _retryWithBackoff(operation: () async {
         final crewId = await _getNextCrewId(name);
+        final now = DateTime.now();
+        
         final crew = Crew(
           id: crewId,
           name: name,
+          description: '', // Default description
           foremanId: foremanId,
-          memberIds: [foremanId],
-          preferences: preferences,
-          createdAt: DateTime.now(),
-          roles: {foremanId: MemberRole.foreman},
-          stats: CrewStats(
-            totalJobsShared: 0,
-            totalApplications: 0,
-            applicationRate: 0.0,
-            averageMatchScore: 0.0,
-            successfulPlacements: 0,
-            responseTime: 0.0,
-            jobTypeBreakdown: {},
-            lastActivityAt: DateTime.now(),
-            matchScores: [],
-            successRate: 0.0,
-          ),
+          privacy: 'open',
+          memberCount: 1,
+          jobCount: 0,
+          createdAt: now,
+          updatedAt: now,
+          lastActivityAt: now,
           isActive: true,
-          lastActivityAt: DateTime.now(),
+          tags: [],
+          preferences: preferences,
         );
 
-        await _firestore.collection('crews').doc(crewId).set(crew.toFirestore());
+        final member = CrewMember(
+          uid: foremanId,
+          crewId: crewId,
+          role: 'Foreman',
+          joinedAt: now,
+          status: 'active',
+          userSnapshot: {}, // This should be populated from user profile
+        );
+
+        await _firestore.runTransaction((transaction) async {
+          transaction.set(_firestore.collection('crews').doc(crewId), crew.toFirestore());
+          transaction.set(
+            _firestore.collection('crews').doc(crewId).collection('members').doc(foremanId),
+            member.toFirestore(),
+          );
+        });
+        
         await _incrementCrewCreationCount(foremanId);
       });
     } on CrewException {
@@ -416,7 +432,7 @@ class CrewService {
       if (crew == null) {
         throw CrewException('Crew not found', code: 'crew-not-found');
       }
-      if (!CrewValidation.isUnderMemberLimit(crew.memberIds.length)) {
+      if (!CrewValidation.isUnderMemberLimit(crew.memberCount)) {
         throw CrewException('Crew has reached maximum member limit (50)', code: 'member-limit-reached');
       }
 
@@ -513,11 +529,8 @@ class CrewService {
         throw CrewException('Insufficient permissions to remove members', code: 'permission-denied');
       }
 
-      final crew = await getCrew(crewId);
-      if (crew == null) {
-        throw CrewException('Crew not found', code: 'crew-not-found');
-      }
-      if (!crew.memberIds.contains(userId)) {
+      final isInCrew = await isUserInCrew(crewId, userId);
+      if (!isInCrew) {
         throw MemberException('User is not a member of this crew', code: 'not-a-member');
       }
 
@@ -526,24 +539,20 @@ class CrewService {
         final existingCrews = await _offlineDataService.getOfflineCrews();
         final crewIndex = existingCrews.indexWhere((c) => c.id == crewId);
         if (crewIndex != -1) {
-          final updatedMemberIds = List<String>.from(existingCrews[crewIndex].memberIds)..remove(userId);
-          final updatedRoles = Map<String, MemberRole>.from(existingCrews[crewIndex].roles)..remove(userId);
           final updatedCrew = existingCrews[crewIndex].copyWith(
-            memberIds: updatedMemberIds,
-            roles: updatedRoles,
+            memberCount: existingCrews[crewIndex].memberCount - 1,
           );
           existingCrews[crewIndex] = updatedCrew;
           await _offlineDataService.storeCrewsOffline(existingCrews);
           await _offlineDataService.markDataDirty('crew_$crewId', {
-            'memberIds': updatedMemberIds,
-            'roles.$userId': FieldValue.delete(),
+            'memberCount': FieldValue.increment(-1),
             '_operation': 'removeMember',
             'userId': userId,
           });
 
           // Also remove from local crew members cache
           final existingMembers = await _offlineDataService.getOfflineCrewMembers();
-          existingMembers.removeWhere((m) => m.crewId == crewId && m.userId == userId);
+          existingMembers.removeWhere((m) => m.uid == userId);
           await _offlineDataService.storeCrewMembersOffline(existingMembers);
         } else {
           throw CrewException('Crew not found in offline cache', code: 'crew-not-found-offline');
@@ -551,16 +560,16 @@ class CrewService {
         return;
       }
 
-      await _firestore
-          .collection('crews')
-          .doc(crewId)
-          .collection('members')
-          .doc(userId)
-          .delete();
+      await _firestore.runTransaction((transaction) async {
+        transaction.delete(_firestore
+            .collection('crews')
+            .doc(crewId)
+            .collection('members')
+            .doc(userId));
 
-      await _firestore.collection('crews').doc(crewId).update({
-        'memberIds': FieldValue.arrayRemove([userId]),
-        'roles.$userId': FieldValue.delete(),
+        transaction.update(_firestore.collection('crews').doc(crewId), {
+          'memberCount': FieldValue.increment(-1),
+        });
       });
     } on AppException {
       rethrow;
@@ -583,61 +592,33 @@ class CrewService {
         throw CrewException('Insufficient permissions to update roles', code: 'permission-denied');
       }
 
-      final permissions = MemberPermissions.fromRole(role);
-
       if (!_connectivityService.isOnline) {
         // Offline: Update local member data and mark as dirty
         final existingMembers = await _offlineDataService.getOfflineCrewMembers();
-        final memberIndex = existingMembers.indexWhere((m) => m.crewId == crewId && m.userId == userId);
+        final memberIndex = existingMembers.indexWhere((m) => m.uid == userId);
         if (memberIndex != -1) {
           final updatedMember = existingMembers[memberIndex].copyWith(
-            role: role,
-            permissions: permissions,
+            role: role.toString().split('.').last,
           );
           existingMembers[memberIndex] = updatedMember;
           await _offlineDataService.storeCrewMembersOffline(existingMembers);
           await _offlineDataService.markDataDirty('member_${userId}_$crewId', {
             'role': role.toString().split('.').last,
-            'permissions': permissions.toMap(),
             '_operation': 'updateMemberRole',
           });
-
-          // Also update local crew roles map
-          final existingCrews = await _offlineDataService.getOfflineCrews();
-          final crewIndex = existingCrews.indexWhere((c) => c.id == crewId);
-          if (crewIndex != -1) {
-            final updatedRoles = Map<String, MemberRole>.from(existingCrews[crewIndex].roles);
-            updatedRoles[userId] = role;
-            final updatedCrew = existingCrews[crewIndex].copyWith(roles: updatedRoles);
-            existingCrews[crewIndex] = updatedCrew;
-            await _offlineDataService.storeCrewsOffline(existingCrews);
-            await _offlineDataService.markDataDirty('crew_$crewId', {
-              'roles.$userId': role.toString().split('.').last,
-              '_operation': 'updateCrewRoleMap',
-            });
-          }
         } else {
           throw MemberException('Member not found in offline cache', code: 'member-not-found-offline');
         }
         return;
       }
 
-      await _firestore.runTransaction<void>((transaction) async {
-        final memberRef = _firestore
-            .collection('crews')
-            .doc(crewId)
-            .collection('members')
-            .doc(userId);
-        transaction.update(memberRef, {
-          'role': role.toString().split('.').last,
-          'permissions': permissions.toMap(),
-        });
-
-        final crewRef = _firestore.collection('crews').doc(crewId);
-        transaction.update(crewRef, {
-          'memberIds': FieldValue.arrayUnion([userId]),
-          'roles.$userId': role.toString().split('.').last,
-        });
+      await _firestore
+          .collection('crews')
+          .doc(crewId)
+          .collection('members')
+          .doc(userId)
+          .update({
+        'role': role.toString().split('.').last,
       });
     } on AppException {
       rethrow;
@@ -678,16 +659,13 @@ class CrewService {
 
         // Add member to local crew
         final roleStr = (await _offlineDataService.getOfflineUserPreferences())?['invitations']?['role'] ?? 'member'; // Placeholder for role
-        final role = MemberRole.values.firstWhere((r) => r.toString().split('.').last == roleStr);
         final member = CrewMember(
-          userId: userId,
+          uid: userId,
           crewId: crewId,
-          role: role,
+          role: roleStr,
           joinedAt: DateTime.now(),
-          permissions: MemberPermissions.fromRole(role),
-          isAvailable: true,
-          lastActive: DateTime.now(),
-          isActive: true,
+          status: 'active',
+          userSnapshot: {}, // This should be populated from user profile
         );
         await _offlineDataService.storeCrewMembersOffline([member]);
         await _offlineDataService.markDataDirty('member_${userId}_$crewId', {
@@ -695,20 +673,13 @@ class CrewService {
           '_operation': 'addMember',
         });
 
-        // Update crew's memberIds and roles locally
-        final updatedMemberIds = List<String>.from(existingCrews[crewIndex].memberIds)..add(userId);
-        final updatedRoles = Map<String, MemberRole>.from(existingCrews[crewIndex].roles);
-        updatedRoles[userId] = role;
+        // Update crew's memberCount locally
         final updatedCrew = existingCrews[crewIndex].copyWith(
-          memberIds: updatedMemberIds,
-          roles: updatedRoles,
           memberCount: (existingCrews[crewIndex].memberCount) + 1,
         );
         existingCrews[crewIndex] = updatedCrew;
         await _offlineDataService.storeCrewsOffline(existingCrews);
         await _offlineDataService.markDataDirty('crew_$crewId', {
-          'memberIds': FieldValue.arrayUnion([userId]),
-          'roles.$userId': role.toString().split('.').last,
           'memberCount': FieldValue.increment(1),
           '_operation': 'updateCrewOnAccept',
         });
@@ -736,25 +707,20 @@ class CrewService {
         }
 
         final roleStr = inviteData['role'] as String;
-        final role = MemberRole.values.firstWhere((r) => r.toString().split('.').last == roleStr);
 
         final member = CrewMember(
-          userId: userId,
+          uid: userId,
           crewId: crewId,
-          role: role,
+          role: roleStr,
           joinedAt: DateTime.now(),
-          permissions: MemberPermissions.fromRole(role),
-          isAvailable: true,
-          lastActive: DateTime.now(),
-          isActive: true,
+          status: 'active',
+          userSnapshot: {}, // In production, populate from user document
         );
         final memberRef = _firestore.collection('crews').doc(crewId).collection('members').doc(userId);
         transaction.set(memberRef, member.toFirestore());
 
         final crewRef = _firestore.collection('crews').doc(crewId);
         transaction.update(crewRef, {
-          'memberIds': FieldValue.arrayUnion([userId]),
-          'roles.$userId': role.toString().split('.').last,
           'memberCount': FieldValue.increment(1),
         });
 
@@ -1162,9 +1128,8 @@ class CrewService {
   // Stream and utility methods (fix to use _firestore)
   Stream<QuerySnapshot> getUserCrewsStream(String userId) {
     return _firestore
-        .collection('crews')
-        .where('memberIds', arrayContains: userId)
-        .where('isActive', isEqualTo: true)
+        .collectionGroup('members')
+        .where('uid', isEqualTo: userId)
         .snapshots();
   }
 
@@ -1181,28 +1146,37 @@ class CrewService {
         .collection('crews')
         .doc(crewId)
         .collection('members')
-        .where(FieldPath.documentId, isEqualTo: userId)
-        .snapshots();
+        .doc(userId)
+        .snapshots().asBroadcastStream() as Stream<QuerySnapshot>; // Fix return type if needed
   }
 
   Future<List<Crew>> getUserCrews(String userId) async {
     try {
       if (_connectivityService.isOnline) {
-        final snapshot = await _retryWithBackoff(operation: () => _firestore
-            .collection('crews')
-            .where('memberIds', arrayContains: userId)
-            .where('isActive', isEqualTo: true)
-            .orderBy('lastActivityAt', descending: true)
-            .limit(10)
+        final memberSnapshot = await _retryWithBackoff(operation: () => _firestore
+            .collectionGroup('members')
+            .where('uid', isEqualTo: userId)
             .get());
 
-        final crews = snapshot.docs.map((doc) => Crew.fromFirestore(doc)).toList();
+        final crewFutures = memberSnapshot.docs.map((doc) async {
+          final crewDoc = await doc.reference.parent.parent!.get();
+          return Crew.fromFirestore(crewDoc);
+        });
+
+        final crews = (await Future.wait(crewFutures)).where((c) => c.isActive).toList();
         await _offlineDataService.storeCrewsOffline(crews); // Cache the fetched crews
         return crews;
       } else {
         // Attempt to get from offline cache
         final offlineCrews = await _offlineDataService.getOfflineCrews();
-        return offlineCrews.where((crew) => crew.memberIds.contains(userId) && crew.isActive).toList();
+        final offlineMembers = await _offlineDataService.getOfflineCrewMembers();
+        
+        final userJoinedCrewIds = offlineMembers
+            .where((m) => m.uid == userId)
+            .map((m) => m.crewId)
+            .toSet();
+            
+        return offlineCrews.where((crew) => userJoinedCrewIds.contains(crew.id) && crew.isActive).toList();
       }
     } on FirebaseException catch (e) {
       throw CrewException('Firestore error getting user crews: ${e.message}', code: e.code);
@@ -1254,7 +1228,7 @@ class CrewService {
         // Attempt to get from offline cache
         final offlineMembers = await _offlineDataService.getOfflineCrewMembers();
         return offlineMembers.firstWhere(
-            (member) => member.crewId == crewId && member.userId == userId,
+            (member) => member.crewId == crewId && member.uid == userId,
             orElse: () => throw MemberException('Crew member not found in offline cache', code: 'member-not-found-offline'));
       }
       return null;
@@ -1277,10 +1251,10 @@ class CrewService {
     }
   }
 
-  Future<MemberRole?> getUserRoleInCrew(String crewId, String userId) async {
+  Future<String?> getUserRoleInCrew(String crewId, String userId) async {
     try {
-      final crew = await getCrew(crewId);
-      return crew?.roles[userId];
+      final member = await getCrewMember(crewId, userId);
+      return member?.role;
     } on AppException {
       rethrow; // Rethrow custom exceptions
     } catch (e) {
@@ -1298,8 +1272,7 @@ class CrewService {
       final member = await getCrewMember(crewId, userId);
       if (member == null) return false;
 
-      final role = member.role;
-      return RolePermissions.hasPermission(role, permission);
+      return RolePermissions.hasPermission(member.role, permission);
     } on AppException {
       rethrow; // Rethrow custom exceptions
     } on FirebaseException {

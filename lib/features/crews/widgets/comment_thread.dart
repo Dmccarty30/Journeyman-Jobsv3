@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import '../../../design_system/app_theme.dart';
-import '../models/tailboard.dart';
+import '../models/post.dart';
 import 'comment_item.dart';
 
 class CommentThread extends StatefulWidget {
-  final List<Comment> comments;
+  final List<PostComment> comments;
   final String postId;
   final String? currentUserId;
   final bool isLoading;

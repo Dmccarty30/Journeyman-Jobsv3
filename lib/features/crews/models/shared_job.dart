@@ -1,63 +1,71 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:journeyman_jobs/features/jobs/models/job.dart';
 
 /// Represents a job that has been shared with a crew
 class SharedJob {
   final String id;
-  final Job job;
-  final String sharedByUserId;
-  final DateTime sharedAt;
-  final String? comment;
-  final double matchScore;
-  final String source; // 'shared', 'auto', etc.
+  final DocumentReference jobReference; // Points to global /jobs/{jobId}
+  final String sharedBy; // UID of the member who added it
+  final DateTime addedAt;
+  final String status; // 'new', 'bidding', 'in_progress', 'completed'
+  final String crewNotes;
+  final Map<String, dynamic> jobSnapshot; // { title, location, rate }
 
   const SharedJob({
     required this.id,
-    required this.job,
-    required this.sharedByUserId,
-    required this.sharedAt,
-    this.comment,
-    required this.matchScore,
-    required this.source,
+    required this.jobReference,
+    required this.sharedBy,
+    required this.addedAt,
+    required this.status,
+    required this.crewNotes,
+    required this.jobSnapshot,
   });
 
-  /// Create from Firestore document
-  factory SharedJob.fromFirestore(Map<String, dynamic> data, String id) {
+  factory SharedJob.fromFirestore(DocumentSnapshot doc) {
+    final data = doc.data() as Map<String, dynamic>;
     return SharedJob(
-      id: id,
-      job: Job.fromFirestore(data['job']),
-      sharedByUserId: data['sharedByUserId'],
-      sharedAt: (data['sharedAt'] as Timestamp).toDate(),
-      comment: data['comment'],
-      matchScore: (data['matchScore'] ?? 0.0).toDouble(),
-      source: data['source'] ?? 'shared',
+      id: doc.id,
+      jobReference: data['jobReference'] as DocumentReference,
+      sharedBy: data['sharedBy'] ?? '',
+      addedAt: (data['addedAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
+      status: data['status'] ?? 'new',
+      crewNotes: data['crewNotes'] ?? '',
+      jobSnapshot: data['jobSnapshot'] as Map<String, dynamic>? ?? {},
     );
   }
 
-  /// Convert to Firestore document
   Map<String, dynamic> toFirestore() {
     return {
-      'job': job.toFirestore(),
-      'sharedByUserId': sharedByUserId,
-      'sharedAt': sharedAt,
-      'comment': comment,
-      'matchScore': matchScore,
-      'source': source,
+      'jobReference': jobReference,
+      'sharedBy': sharedBy,
+      'addedAt': Timestamp.fromDate(addedAt),
+      'status': status,
+      'crewNotes': crewNotes,
+      'jobSnapshot': jobSnapshot,
     };
   }
 
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is SharedJob &&
-          runtimeType == other.runtimeType &&
-          id == other.id;
-
-  @override
-  int get hashCode => id.hashCode;
-
-  @override
-  String toString() {
-    return 'SharedJob{id: $id, job: ${job.title}, sharedBy: $sharedByUserId, source: $source}';
+  SharedJob copyWith({
+    String? id,
+    DocumentReference? jobReference,
+    String? sharedBy,
+    DateTime? addedAt,
+    String? status,
+    String? crewNotes,
+    Map<String, dynamic>? jobSnapshot,
+  }) {
+    return SharedJob(
+      id: id ?? this.id,
+      jobReference: jobReference ?? this.jobReference,
+      sharedBy: sharedBy ?? this.sharedBy,
+      addedAt: addedAt ?? this.addedAt,
+      status: status ?? this.status,
+      crewNotes: crewNotes ?? this.crewNotes,
+      jobSnapshot: jobSnapshot ?? this.jobSnapshot,
+    );
   }
+
+  // Getters for convenience
+  String get title => jobSnapshot['title'] ?? '';
+  String get location => jobSnapshot['location'] ?? '';
+  String get rate => jobSnapshot['rate'] ?? '';
 }

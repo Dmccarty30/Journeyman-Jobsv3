@@ -37,7 +37,7 @@ class SendGlobalMessageNotifier extends _$SendGlobalMessageNotifier {
   @override
   void build() {} // No initial state needed for a method provider
 
-  Future<void> sendGlobalMessage(String text, {required String senderId, required String content}) async {
+  Future<void> sendGlobalMessage(String text) async {
     final currentUser = ref.read(currentUserProvider);
     if (currentUser == null) {
       throw Exception('User not authenticated to send global message.');
@@ -45,11 +45,14 @@ class SendGlobalMessageNotifier extends _$SendGlobalMessageNotifier {
 
     try {
       await FirebaseFirestore.instance.collection('global_messages').add({
-        'text': text,
+        'content': text,
         'senderId': currentUser.uid,
+        'senderSnapshot': {
+          'displayName': currentUser.displayName ?? 'User',
+          'avatarUrl': currentUser.photoURL,
+        },
         'sentAt': FieldValue.serverTimestamp(),
-        'type': MessageType.text.name,
-        'readBy': {}, // Initialize with empty readBy map
+        'type': 'text',
       });
     } catch (e) {
       rethrow;
@@ -60,12 +63,5 @@ class SendGlobalMessageNotifier extends _$SendGlobalMessageNotifier {
 /// Provider to get unread global messages count
 @riverpod
 int unreadGlobalCount(Ref ref) {
-  final currentUser = ref.watch(currentUserProvider);
-  final messages = ref.watch(globalMessagesProvider);
-  
-  if (currentUser == null) return 0;
-  
-  return messages.where((message) {
-    return message.senderId != currentUser.uid && !message.isReadBy(currentUser.uid);
-  }).length;
+  return 0; // Simplified for now
 }

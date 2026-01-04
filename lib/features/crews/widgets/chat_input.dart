@@ -46,24 +46,12 @@ class _ChatInputState extends ConsumerState<ChatInput> {
 
   void _startTypingTimer() {
     _typingTimer?.cancel();
-    _typingTimer = Timer(const Duration(milliseconds: 400), () {
-      final dbService = ref.read(databaseServiceProvider);
-      final currentUserAsync = ref.read(currentUserProvider);
-      final userId = currentUserAsync?.uid ?? '';
-      if (userId.isNotEmpty) {
-        dbService.updateTyping(widget.crewId, widget.convId, userId, true);
-      }
-    });
+    // Typing indicator logic temporarily disabled during refactor
   }
 
   void _stopTyping() {
     _typingTimer?.cancel();
-    final dbService = ref.read(databaseServiceProvider);
-    final currentUserAsync = ref.read(currentUserProvider);
-    final userId = currentUserAsync?.uid ?? '';
-    if (userId.isNotEmpty) {
-      dbService.updateTyping(widget.crewId, widget.convId, userId, false);
-    }
+    // Typing indicator logic temporarily disabled during refactor
   }
 
   void _sendMessage() {

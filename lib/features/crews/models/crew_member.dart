@@ -1,244 +1,76 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:journeyman_jobs/domain/enums/member_role.dart';
-
-class MemberPermissions {
-  final bool canInviteMembers;
-  final bool canRemoveMembers;
-  final bool canShareJobs;
-  final bool canPostAnnouncements;
-  final bool canEditCrewInfo;
-  final bool canViewAnalytics;
-
-  MemberPermissions({
-    required this.canInviteMembers,
-    required this.canRemoveMembers,
-    required this.canShareJobs,
-    required this.canPostAnnouncements,
-    required this.canEditCrewInfo,
-    required this.canViewAnalytics,
-  });
-
-  factory MemberPermissions.fromRole(MemberRole role) {
-    switch (role) {
-      case MemberRole.foreman:
-        return MemberPermissions(
-          canInviteMembers: true,
-          canRemoveMembers: true,
-          canShareJobs: true,
-          canPostAnnouncements: true,
-          canEditCrewInfo: true,
-          canViewAnalytics: true,
-        );
-      case MemberRole.member:
-        return MemberPermissions(
-          canInviteMembers: false,
-          canRemoveMembers: false,
-          canShareJobs: true,
-          canPostAnnouncements: false,
-          canEditCrewInfo: false,
-          canViewAnalytics: true,
-        );
-    }
-  }
-
-  factory MemberPermissions.fromMap(Map<String, dynamic> map) {
-    return MemberPermissions(
-      canInviteMembers: map['canInviteMembers'] ?? false,
-      canRemoveMembers: map['canRemoveMembers'] ?? false,
-      canShareJobs: map['canShareJobs'] ?? false,
-      canPostAnnouncements: map['canPostAnnouncements'] ?? false,
-      canEditCrewInfo: map['canEditCrewInfo'] ?? false,
-      canViewAnalytics: map['canViewAnalytics'] ?? false,
-    );
-  }
-
-  Map<String, dynamic> toMap() {
-    return {
-      'canInviteMembers': canInviteMembers,
-      'canRemoveMembers': canRemoveMembers,
-      'canShareJobs': canShareJobs,
-      'canPostAnnouncements': canPostAnnouncements,
-      'canEditCrewInfo': canEditCrewInfo,
-      'canViewAnalytics': canViewAnalytics,
-    };
-  }
-
-  MemberPermissions copyWith({
-    bool? canInviteMembers,
-    bool? canRemoveMembers,
-    bool? canShareJobs,
-    bool? canPostAnnouncements,
-    bool? canEditCrewInfo,
-    bool? canViewAnalytics,
-  }) {
-    return MemberPermissions(
-      canInviteMembers: canInviteMembers ?? this.canInviteMembers,
-      canRemoveMembers: canRemoveMembers ?? this.canRemoveMembers,
-      canShareJobs: canShareJobs ?? this.canShareJobs,
-      canPostAnnouncements: canPostAnnouncements ?? this.canPostAnnouncements,
-      canEditCrewInfo: canEditCrewInfo ?? this.canEditCrewInfo,
-      canViewAnalytics: canViewAnalytics ?? this.canViewAnalytics,
-    );
-  }
-}
 
 class CrewMember {
-  final String userId;                 // Reference to User
-  final String crewId;                 // Reference to Crew
-  final MemberRole role;               // Member's role in crew
-  final DateTime joinedAt;             // When member joined
-  final MemberPermissions permissions; // Granular permissions
-  final bool isAvailable;              // Current availability status
-  final String? customTitle;           // Optional role title
-  final DateTime lastActive;           // Last interaction timestamp
-  final bool isActive;                 // Member active status
-  final String? displayName;
-  final String? avatarUrl;
-  final String? classification;
+  final String uid; // Document ID and User Auth UID
+  final String crewId; // Reference to Crew
+  final String role; // Strictly 'Foreman' or 'Member'
+  final DateTime joinedAt;
+  final String status; // 'active', 'suspended'
+  final Map<String, dynamic> userSnapshot; // { displayName, avatarUrl, jobTitle }
 
   CrewMember({
-    required this.userId,
+    required this.uid,
     required this.crewId,
     required this.role,
     required this.joinedAt,
-    required this.permissions,
-    required this.isAvailable,
-    this.customTitle,
-    required this.lastActive,
-    required this.isActive,
-    this.displayName,
-    this.avatarUrl,
-    this.classification,
+    required this.status,
+    required this.userSnapshot,
   });
 
   factory CrewMember.fromFirestore(DocumentSnapshot doc) {
     final data = doc.data() as Map<String, dynamic>;
     return CrewMember(
-      userId: doc.id, // Document ID is the userId
+      uid: doc.id,
       crewId: data['crewId'] ?? '',
-      role: MemberRole.values.firstWhere(
-        (r) => r.toString().split('.').last == (data['role'] ?? 'member'),
-        orElse: () => MemberRole.member,
-      ),
+      role: data['role'] ?? 'Member',
       joinedAt: (data['joinedAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
-      permissions: MemberPermissions.fromMap(data['permissions'] ?? {}),
-      isAvailable: data['isAvailable'] ?? true,
-      customTitle: data['customTitle'],
-      lastActive: (data['lastActive'] as Timestamp?)?.toDate() ?? DateTime.now(),
-      isActive: data['isActive'] ?? true,
-      displayName: data['displayName'],
-      avatarUrl: data['avatarUrl'],
-      classification: data['classification'],
+      status: data['status'] ?? 'active',
+      userSnapshot: data['userSnapshot'] as Map<String, dynamic>? ?? {},
     );
   }
 
   Map<String, dynamic> toFirestore() {
     return {
       'crewId': crewId,
-      'role': role.toString().split('.').last,
+      'role': role,
       'joinedAt': Timestamp.fromDate(joinedAt),
-      'permissions': permissions.toMap(),
-      'isAvailable': isAvailable,
-      'customTitle': customTitle,
-      'lastActive': Timestamp.fromDate(lastActive),
-      'isActive': isActive,
-      'displayName': displayName,
-      'avatarUrl': avatarUrl,
-      'classification': classification,
+      'status': status,
+      'userSnapshot': userSnapshot,
     };
   }
 
-  // fromMap alias
   factory CrewMember.fromMap(Map<String, dynamic> map) {
     return CrewMember(
-      userId: map['userId'] ?? '',
+      uid: map['uid'] ?? '',
       crewId: map['crewId'] ?? '',
-      role: MemberRole.values.firstWhere(
-        (r) => r.toString().split('.').last == (map['role'] ?? 'member'),
-        orElse: () => MemberRole.member,
-      ),
+      role: map['role'] ?? 'Member',
       joinedAt: (map['joinedAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
-      permissions: MemberPermissions.fromMap(map['permissions'] ?? {}),
-      isAvailable: map['isAvailable'] ?? true,
-      customTitle: map['customTitle'],
-      lastActive: (map['lastActive'] as Timestamp?)?.toDate() ?? DateTime.now(),
-      isActive: map['isActive'] ?? true,
-      displayName: map['displayName'],
-      avatarUrl: map['avatarUrl'],
-      classification: map['classification'],
+      status: map['status'] ?? 'active',
+      userSnapshot: map['userSnapshot'] as Map<String, dynamic>? ?? {},
     );
   }
 
   CrewMember copyWith({
-    String? userId,
+    String? uid,
     String? crewId,
-    MemberRole? role,
+    String? role,
     DateTime? joinedAt,
-    MemberPermissions? permissions,
-    bool? isAvailable,
-    String? customTitle,
-    DateTime? lastActive,
-    bool? isActive,
-    String? displayName,
-    String? avatarUrl,
-    String? classification,
+    String? status,
+    Map<String, dynamic>? userSnapshot,
   }) {
     return CrewMember(
-      userId: userId ?? this.userId,
+      uid: uid ?? this.uid,
       crewId: crewId ?? this.crewId,
       role: role ?? this.role,
       joinedAt: joinedAt ?? this.joinedAt,
-      permissions: permissions ?? this.permissions,
-      isAvailable: isAvailable ?? this.isAvailable,
-      customTitle: customTitle ?? this.customTitle,
-      lastActive: lastActive ?? this.lastActive,
-      isActive: isActive ?? this.isActive,
-      displayName: displayName ?? this.displayName,
-      avatarUrl: avatarUrl ?? this.avatarUrl,
-      classification: classification ?? this.classification,
+      status: status ?? this.status,
+      userSnapshot: userSnapshot ?? this.userSnapshot,
     );
   }
 
-  // Helper method to check if member has a specific permission
-  bool hasPermission(String permission) {
-    switch (permission) {
-      case 'canInviteMembers':
-        return permissions.canInviteMembers;
-      case 'canRemoveMembers':
-        return permissions.canRemoveMembers;
-      case 'canShareJobs':
-        return permissions.canShareJobs;
-      case 'canPostAnnouncements':
-        return permissions.canPostAnnouncements;
-      case 'canEditCrewInfo':
-        return permissions.canEditCrewInfo;
-      case 'canViewAnalytics':
-        return permissions.canViewAnalytics;
-      default:
-        return false;
-    }
-  }
-
-  // Helper method to update role and permissions together
-  CrewMember updateRole(MemberRole newRole) {
-    return copyWith(
-      role: newRole,
-      permissions: MemberPermissions.fromRole(newRole),
-    );
-  }
-
-  // Helper method to mark member as active
-  CrewMember markActive() {
-    return copyWith(
-      lastActive: DateTime.now(),
-      isAvailable: true,
-    );
-  }
-
-  // Helper method to mark member as inactive
-  CrewMember markInactive() {
-    return copyWith(
-      isAvailable: false,
-    );
-  }
+  // Getters for convenience
+  String get displayName => userSnapshot['displayName'] ?? '';
+  String get avatarUrl => userSnapshot['avatarUrl'] ?? '';
+  String get jobTitle => userSnapshot['jobTitle'] ?? '';
 }
+

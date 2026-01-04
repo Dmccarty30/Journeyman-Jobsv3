@@ -25,7 +25,7 @@ class MessageBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isSystemNotification = message.type == MessageType.systemNotification;
+    final bool isImage = message.type == 'image';
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AppTheme.spacingMd, vertical: AppTheme.spacingXs),
@@ -33,10 +33,10 @@ class MessageBubble extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisAlignment: isCurrentUser ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: [
-          if (!isCurrentUser && showAvatar && !isSystemNotification) ...[
+          if (!isCurrentUser && showAvatar) ...[
             CircleAvatar(
               radius: AppTheme.radiusLg,
-              backgroundColor: AppTheme.accentCopper.withValues(alpha: AppTheme.opacityElectricalCircuitTrace),
+              backgroundColor: AppTheme.accentCopper.withOpacity(0.2),
               child: Text(
                 _getInitials(senderName),
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -54,94 +54,39 @@ class MessageBubble extends StatelessWidget {
             child: Column(
               crossAxisAlignment: isCurrentUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
               children: [
-                if (!isCurrentUser && showAvatar && !isSystemNotification)
+                if (!isCurrentUser && showAvatar)
                   Padding(
                     padding: const EdgeInsets.only(left: AppTheme.spacingSm, bottom: AppTheme.spacingXs),
-                    child: Row(
-                      children: [
-                        Text(
-                          senderName,
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: AppTheme.textLight,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        if (message.type != MessageType.text) ...[
-                          const SizedBox(width: AppTheme.spacingXs),
-                          _buildMessageTypeIcon(context),
-                        ],
-                      ],
+                    child: Text(
+                      senderName,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: AppTheme.textLight,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
                 Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: isSystemNotification ? AppTheme.spacingMd : AppTheme.spacingLg,
-                    vertical: isSystemNotification ? AppTheme.spacingSm : AppTheme.spacingMd,
-                  ),
+                  padding: const EdgeInsets.all(AppTheme.spacingMd),
                   decoration: BoxDecoration(
-                    color: _getBubbleColor(),
+                    color: isCurrentUser ? AppTheme.primaryNavy : AppTheme.electricalSurface,
                     borderRadius: BorderRadius.circular(AppTheme.radiusLg),
                     border: Border.all(color: AppTheme.accentCopper, width: AppTheme.borderWidthCopperThin),
-                    boxShadow: isCurrentUser
-                        ? [
-                            BoxShadow(
-                              color: AppTheme.accentCopper.withValues(alpha: AppTheme.opacityElectricalGlow),
-                              blurRadius: AppTheme.spacingMd,
-                              offset: const Offset(0, AppTheme.spacingXs),
-                            ),
-                          ]
-                        : null,
                   ),
-                  child: Stack(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Positioned.fill(
-                        child: CustomPaint(
-                          painter: CircuitPatternPainter(
-                            primaryColor: AppTheme.electricalCircuitTrace.withValues(alpha: AppTheme.opacityElectricalCircuitTrace),
-                            secondaryColor: AppTheme.electricalCircuitTraceLight.withValues(alpha: AppTheme.opacityElectricalCircuitTraceLight),
-                            animate: false, // No animation for static background
-                          ),
+                      Text(
+                        message.content,
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: isCurrentUser ? AppTheme.white : AppTheme.textOnDark,
                         ),
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          if (isSystemNotification) ...[
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.notifications_active,
-                                  size: AppTheme.iconSm,
-                                  color: AppTheme.accentCopper,
-                                ),
-                                const SizedBox(width: AppTheme.spacingSm),
-                                Expanded(
-                                  child: Text(
-                                    message.content,
-                                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                      color: AppTheme.textPrimary,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ] else ...[
-                            Text(
-                              message.content,
-                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                color: _getTextColor(),
-                                fontWeight: message.type == MessageType.jobShare ? FontWeight.w600 : FontWeight.normal,
-                              ),
-                            ),
-                            if (message.hasAttachments) ...[
-                              const SizedBox(height: AppTheme.spacingSm),
-                              _buildAttachments(context),
-                            ],
-                          ],
-                          const SizedBox(height: AppTheme.spacingXs),
-                          _buildMessageMetadata(context),
-                        ],
+                      const SizedBox(height: AppTheme.spacingXs),
+                      Text(
+                        _formatTime(message.sentAt),
+                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                          color: AppTheme.textLight,
+                        ),
                       ),
                     ],
                   ),
@@ -149,14 +94,14 @@ class MessageBubble extends StatelessWidget {
               ],
             ),
           ),
-          if (isCurrentUser && showAvatar && !isSystemNotification) ...[
+          if (isCurrentUser && showAvatar) ...[
             const SizedBox(width: AppTheme.spacingSm),
-            CircleAvatar(
+            const CircleAvatar(
               radius: AppTheme.radiusLg,
               backgroundColor: AppTheme.accentCopper,
               child: Icon(
                 Icons.person,
-                size: AppTheme.iconSm,
+                size: 16,
                 color: AppTheme.white,
               ),
             ),
@@ -166,184 +111,30 @@ class MessageBubble extends StatelessWidget {
     );
   }
 
-  Widget _buildMessageMetadata(BuildContext context) {
-    final isGroupChat = message.isCrewMessage && (totalMembers != null && totalMembers! > 2);
-    final readCount = message.readByList.length - (isCurrentUser ? 1 : 0); // Exclude self if current user
-    
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(
-          _formatTime(message.sentAt),
-          style: Theme.of(context).textTheme.labelSmall?.copyWith(
-            color: AppTheme.textLight,
-          ),
-        ),
-        if (isCurrentUser) ...[
-          const SizedBox(width: AppTheme.spacingXs),
-          EnhancedMessageStatusIndicator(
-            status: message.status,
-            readCount: readCount,
-            isGroupChat: isGroupChat,
-            totalMembers: totalMembers ?? 1,
-            onTap: onStatusTap,
-          ),
-        ],
-      ],
-    );
-  }
+    String _getInitials(String name) {
 
-  Widget _buildAttachments(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const SizedBox(height: AppTheme.spacingSm),
-        Container(
-          height: AppTheme.borderWidthThin,
-          color: _getTextColor().withValues(alpha: AppTheme.opacityElectricalCircuitTrace),
-          margin: const EdgeInsets.symmetric(vertical: AppTheme.spacingSm),
-        ),
-        Wrap(
-          spacing: AppTheme.spacingSm,
-          runSpacing: AppTheme.spacingXs,
-          children: message.attachments!.map((attachment) {
-            return Container(
-              padding: const EdgeInsets.symmetric(horizontal: AppTheme.spacingSm, vertical: AppTheme.spacingXs),
-              decoration: BoxDecoration(
-                color: _getBubbleColor(),
-                borderRadius: BorderRadius.circular(AppTheme.radiusSm),
-                border: Border.all(
-                  color: _getTextColor().withValues(alpha: AppTheme.opacityElectricalCircuitTraceLight),
-                  width: AppTheme.borderWidthThin,
-                ),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    _getAttachmentIcon(attachment.type),
-                    size: AppTheme.iconXs,
-                    color: _getTextColor(),
-                  ),
-                  const SizedBox(width: AppTheme.spacingXs),
-                  Flexible(
-                    child: Text(
-                      attachment.filename,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: _getTextColor(),
-                        fontSize: 10,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ],
-              ),
-            );
-          }).toList(),
-        ),
-      ],
-    );
-  }
+      if (name.isEmpty) return '?';
 
-  IconData _getAttachmentIcon(AttachmentType type) {
-    switch (type) {
-      case AttachmentType.image:
-        return Icons.image;
-      case AttachmentType.document:
-        return Icons.description;
-      case AttachmentType.video:
-        return Icons.videocam;
-      case AttachmentType.voiceNote:
-        return Icons.audiotrack;
-      case AttachmentType.certification:
-        return Icons.verified;
-      case AttachmentType.file:
-        return Icons.insert_drive_file;
-      case AttachmentType.audio:
-        return Icons.audiotrack;
+      final parts = name.split(' ');
+
+      if (parts.length >= 2) {
+
+        return '${parts[0][0]}${parts[1][0]}'.toUpperCase();
+
+      }
+
+      return name.substring(0, 1).toUpperCase();
+
     }
-  }
 
-  String _getInitials(String name) {
-    final parts = name.split(' ');
-    if (parts.length >= 2) {
-      return '${parts[0][0]}${parts[1][0]}'.toUpperCase();
-    }
-    return name.substring(0, 2).toUpperCase();
-  }
+  
 
-  String _formatTime(DateTime timestamp) {
-    final now = DateTime.now();
-    final today = DateTime(now.year, now.month, now.day);
-    final yesterday = DateTime(now.year, now.month, now.day - 1);
-    final messageDate = DateTime(timestamp.year, timestamp.month, timestamp.day);
+    String _formatTime(DateTime timestamp) {
 
-    if (messageDate.isAtSameMomentAs(today)) {
       return DateFormat('h:mm a').format(timestamp);
-    } else if (messageDate.isAtSameMomentAs(yesterday)) {
-      return 'Yesterday, ${DateFormat('h:mm a').format(timestamp)}';
-    } else {
-      return DateFormat('MMM d, h:mm a').format(timestamp);
+
     }
+
   }
 
-  Color _getBubbleColor() {
-    switch (message.type) {
-      case MessageType.systemNotification:
-        return AppTheme.electricalSurface;
-      case MessageType.jobShare:
-        return AppTheme.accentCopper.withValues(alpha: AppTheme.opacityElectricalCircuitTrace);
-      case MessageType.text:
-      default:
-        return isCurrentUser ? AppTheme.primaryNavy : AppTheme.electricalSurface;
-    }
-  }
-
-  Color _getTextColor() {
-    switch (message.type) {
-      case MessageType.systemNotification:
-        return AppTheme.accentCopper;
-      case MessageType.jobShare:
-        return AppTheme.accentCopper;
-      case MessageType.text:
-      default:
-        return isCurrentUser ? AppTheme.white : AppTheme.textOnDark;
-    }
-  }
-
-  Widget _buildMessageTypeIcon(BuildContext context) {
-    IconData iconData;
-    Color iconColor;
-    
-    switch (message.type) {
-      case MessageType.image:
-        iconData = Icons.image;
-        iconColor = AppTheme.infoBlue;
-        break;
-      case MessageType.voice:
-        iconData = Icons.mic;
-        iconColor = AppTheme.successGreen;
-        break;
-      case MessageType.document:
-        iconData = Icons.description;
-        iconColor = AppTheme.warningYellow;
-        break;
-      case MessageType.jobShare:
-        iconData = Icons.work;
-        iconColor = AppTheme.accentCopper;
-        break;
-      case MessageType.systemNotification:
-        iconData = Icons.notifications_active;
-        iconColor = AppTheme.accentCopper;
-        break;
-      case MessageType.text:
-      return const SizedBox.shrink();
-    }
-    
-    return Icon(
-      iconData,
-      size: AppTheme.iconXs,
-      color: iconColor,
-    );
-  }
-}
+  

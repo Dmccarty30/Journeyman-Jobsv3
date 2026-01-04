@@ -7,138 +7,46 @@ class MessageService {
   // Initialization
   MessageService();
 
-  // Get Firestore collections
-  CollectionReference get crewsCollection => _firestore.collection('crews');
-  CollectionReference get messagesCollection => _firestore.collection('messages');
+  // Helper to get chat collection
+  CollectionReference _chatCollection(String crewId, String channelId) =>
+      _firestore.collection('crews').doc(crewId).collection('chat').doc(channelId).collection('messages');
 
   // Send a crew message
   Future<void> sendCrewMessage({
     required String crewId,
+    required String channelId,
     required String senderId,
     required String content,
-    MessageType type = MessageType.text,
-    List<Attachment>? attachments,
+    Map<String, dynamic> senderSnapshot = const {},
+    String type = 'text',
   }) async {
     try {
-      final message = Message(
-        id: '', // Will be set by Firestore
-        senderId: senderId,
-        crewId: crewId,
-        content: content,
-        type: type,
-        attachments: attachments,
-        sentAt: DateTime.now(),
-        readBy: {},
-        isEdited: false,
-      );
+      final messageData = {
+        'senderId': senderId,
+        'senderSnapshot': senderSnapshot,
+        'content': content,
+        'type': type,
+        'sentAt': FieldValue.serverTimestamp(),
+      };
 
-      await crewsCollection
-          .doc(crewId)
-          .collection('messages')
-          .add(message.toFirestore());
+      await _chatCollection(crewId, channelId).add(messageData);
+      
+      // Update last message in channel
+      await _firestore.collection('crews').doc(crewId).collection('chat').doc(channelId).set({
+        'lastMessage': {
+          'text': content,
+          'author': senderSnapshot['displayName'] ?? senderId,
+          'time': FieldValue.serverTimestamp(),
+        }
+      }, SetOptions(merge: true));
     } catch (e) {
       throw Exception('Error sending crew message: $e');
     }
   }
 
-  // Send a direct message
-  Future<void> sendDirectMessage({
-    required String senderId,
-    required String recipientId,
-    required String content,
-    MessageType type = MessageType.text,
-    List<Attachment>? attachments,
-  }) async {
-    try {
-      final message = Message(
-        id: '', // Will be set by Firestore
-        senderId: senderId,
-        recipientId: recipientId,
-        content: content,
-        type: type,
-        attachments: attachments,
-        sentAt: DateTime.now(),
-        readBy: {},
-        isEdited: false,
-      );
-
-      // Create a conversation ID that is consistent regardless of who sends first
-      final conversationId = _getConversationId(senderId, recipientId);
-      
-      await messagesCollection
-          .doc(conversationId)
-          .collection('messages')
-          .add(message.toFirestore());
-    } catch (e) {
-      throw Exception('Error sending direct message: $e');
-    }
-  }
-
   // Get crew messages stream
-  Stream<List<Message>> getCrewMessagesStream(String crewId, String uid) {
-    return crewsCollection
-        .doc(crewId)
-        .collection('messages')
-        .orderBy('sentAt', descending: true)
-        .limit(100) // Limit to recent messages
-        .snapshots()
-        .map((snapshot) {
-      return snapshot.docs.map((doc) => Message.fromFirestore(doc)).toList();
-    });
-  }
-
-  // Get direct messages stream for a conversation
-  Stream<List<Message>> getDirectMessagesStream(String userId1, String userId2, String uid) {
-    final conversationId = _getConversationId(userId1, userId2);
-    
-    return messagesCollection
-        .doc(conversationId)
-        .collection('messages')
-        .orderBy('sentAt', descending: true)
-        .limit(100) // Limit to recent messages
-        .snapshots()
-        .map((snapshot) {
-      return snapshot.docs.map((doc) => Message.fromFirestore(doc)).toList();
-    });
-  }
-
-  // Get all conversations for a user
-  Stream<List<Map<String, dynamic>>> getUserConversationsStream(String userId) {
-    return messagesCollection
-        .where('participants', arrayContains: userId)
-        .snapshots()
-        .map((snapshot) {
-      return snapshot.docs.map((doc) {
-        final data = doc.data() as Map<String, dynamic>;
-        return {
-          'conversationId': doc.id,
-          'participants': data['participants'] ?? [],
-          'lastMessage': data['lastMessage'] ?? {},
-          'updatedAt': data['updatedAt'],
-        };
-      }).toList();
-    });
-  }
-
-  // Get stream of user IDs for direct message conversations
-  Stream<List<String>> getDirectMessageConversationsStream(String currentUserId) {
-    return messagesCollection
-        .where('participants', arrayContains: currentUserId)
-        .snapshots()
-        .map((snapshot) {
-      return snapshot.docs.map((doc) {
-        final data = doc.data() as Map<String, dynamic>;
-        final participants = List<String>.from(data['participants'] ?? []);
-        // Return the other participant's ID
-        return participants.firstWhere((id) => id != currentUserId, orElse: () => '');
-      }).where((id) => id.isNotEmpty).toList();
-    });
-  }
-
-  // Get global messages stream
-  Stream<List<Message>> getGlobalMessagesStream() {
-    return _firestore
-        .collection('global_messages')
+  Stream<List<Message>> getCrewMessagesStream(String crewId, String channelId) {
+    return _chatCollection(crewId, channelId)
         .orderBy('sentAt', descending: true)
         .limit(100)
         .snapshots()
@@ -147,298 +55,43 @@ class MessageService {
     });
   }
 
-  // Mark message as read
-  Future<void> markAsRead({
-    required String messageId,
+  // Get chat channels for a crew
+  Stream<List<ChatChannel>> getCrewChannelsStream(String crewId) {
+    return _firestore
+        .collection('crews')
+        .doc(crewId)
+        .collection('chat')
+        .snapshots()
+        .map((snapshot) {
+      return snapshot.docs.map((doc) => ChatChannel.fromFirestore(doc)).toList();
+    });
+  }
+
+  // Get recent messages for a user across all their crews
+  Future<List<Message>> getRecentMessagesAcrossCrews({
     required String userId,
-    bool isCrewMessage = false,
-    String? crewId,
-    String? conversationId,
-  }) async {
-    try {
-      if (isCrewMessage && crewId != null) {
-        // Mark crew message as read
-        final messageDoc = await crewsCollection
-            .doc(crewId)
-            .collection('messages')
-            .doc(messageId)
-            .get();
-
-        if (messageDoc.exists) {
-          final message = Message.fromFirestore(messageDoc);
-          final updatedMessage = message.markAsRead(userId);
-          
-          await messageDoc.reference.update({
-            'readBy': updatedMessage.readBy.map((key, value) => 
-                MapEntry(key, Timestamp.fromDate(value))),
-          });
-        }
-      } else if (conversationId != null) {
-        // Mark direct message as read
-        final messageDoc = await messagesCollection
-            .doc(conversationId)
-            .collection('messages')
-            .doc(messageId)
-            .get();
-
-        if (messageDoc.exists) {
-          final message = Message.fromFirestore(messageDoc);
-          final updatedMessage = message.markAsRead(userId);
-          
-          await messageDoc.reference.update({
-            'readBy': updatedMessage.readBy.map((key, value) => 
-                MapEntry(key, Timestamp.fromDate(value))),
-          });
-        }
-      }
-    } catch (e) {
-      throw Exception('Error marking message as read: $e');
-    }
-  }
-
-  // Edit a message
-  Future<void> editMessage({
-    required String messageId,
-    required String newContent,
-    bool isCrewMessage = false,
-    String? crewId,
-    String? conversationId,
-  }) async {
-    try {
-      final updateData = {
-        'content': newContent,
-        'isEdited': true,
-        'editedAt': Timestamp.fromDate(DateTime.now()),
-      };
-
-      if (isCrewMessage && crewId != null) {
-        await crewsCollection
-            .doc(crewId)
-            .collection('messages')
-            .doc(messageId)
-            .update(updateData);
-      } else if (conversationId != null) {
-        await messagesCollection
-            .doc(conversationId)
-            .collection('messages')
-            .doc(messageId)
-            .update(updateData);
-      }
-    } catch (e) {
-      throw Exception('Error editing message: $e');
-    }
-  }
-
-  // Delete a message (soft delete)
-  Future<void> deleteMessage({
-    required String messageId,
-    bool isCrewMessage = false,
-    String? crewId,
-    String? conversationId,
-  }) async {
-    try {
-      final updateData = {
-        'content': '[Message deleted]',
-        'type': 'systemNotification',
-        'attachments': null,
-        'isEdited': false,
-        'editedAt': null,
-      };
-
-      if (isCrewMessage && crewId != null) {
-        await crewsCollection
-            .doc(crewId)
-            .collection('messages')
-            .doc(messageId)
-            .update(updateData);
-      } else if (conversationId != null) {
-        await messagesCollection
-            .doc(conversationId)
-            .collection('messages')
-            .doc(messageId)
-            .update(updateData);
-      }
-    } catch (e) {
-      throw Exception('Error deleting message: $e');
-    }
-  }
-
-  // Get unread message count for a user
-  Future<int> getUnreadMessageCount({
-    required String userId,
-    bool isCrewMessage = false,
-    String? crewId,
-    String? conversationId,
-  }) async {
-    try {
-      if (isCrewMessage && crewId != null) {
-        final snapshot = await crewsCollection
-            .doc(crewId)
-            .collection('messages')
-            .get();
-
-        int unreadCount = 0;
-        for (final doc in snapshot.docs) {
-          final message = Message.fromFirestore(doc);
-          if (!message.isReadBy(userId)) {
-            unreadCount++;
-          }
-        }
-        return unreadCount;
-      } else if (conversationId != null) {
-        final snapshot = await messagesCollection
-            .doc(conversationId)
-            .collection('messages')
-            .get();
-
-        int unreadCount = 0;
-        for (final doc in snapshot.docs) {
-          final message = Message.fromFirestore(doc);
-          if (!message.isReadBy(userId)) {
-            unreadCount++;
-          }
-        }
-        return unreadCount;
-      }
-      return 0;
-    } catch (e) {
-      return 0;
-    }
-  }
-
-  // Get recent messages for a user
-  Future<List<Message>> getRecentMessages({
-    required String userId,
+    required List<String> crewIds,
     int limit = 20,
   }) async {
     try {
       final List<Message> recentMessages = [];
 
-      // Get recent crew messages
-      final crewSnapshot = await crewsCollection
-          .where('memberIds', arrayContains: userId)
-          .get();
-
-      for (final crewDoc in crewSnapshot.docs) {
-        final messagesSnapshot = await crewsCollection
-            .doc(crewDoc.id)
-            .collection('messages')
+      for (final crewId in crewIds) {
+        // Assume 'general' channel for now
+        final messagesSnapshot = await _chatCollection(crewId, 'general')
             .orderBy('sentAt', descending: true)
-            .limit(5) // Get few messages from each crew
+            .limit(5)
             .get();
 
         for (final messageDoc in messagesSnapshot.docs) {
-          final message = Message.fromFirestore(messageDoc);
-          recentMessages.add(message);
+          recentMessages.add(Message.fromFirestore(messageDoc));
         }
       }
 
-      // Get recent direct messages
-      final conversationsSnapshot = await messagesCollection
-          .where('participants', arrayContains: userId)
-          .get();
-
-      for (final conversationDoc in conversationsSnapshot.docs) {
-        final messagesSnapshot = await messagesCollection
-            .doc(conversationDoc.id)
-            .collection('messages')
-            .orderBy('sentAt', descending: true)
-            .limit(5) // Get few messages from each conversation
-            .get();
-
-        for (final messageDoc in messagesSnapshot.docs) {
-          final message = Message.fromFirestore(messageDoc);
-          recentMessages.add(message);
-        }
-      }
-
-      // Sort by sent time and limit
       recentMessages.sort((a, b) => b.sentAt.compareTo(a.sentAt));
       return recentMessages.take(limit).toList();
     } catch (e) {
       return [];
-    }
-  }
-
-  // Search messages
-  Future<List<Message>> searchMessages({
-    required String query,
-    String? userId,
-    String? crewId,
-    String? conversationId,
-    int limit = 50,
-  }) async {
-    try {
-      final List<Message> results = [];
-
-      // Search in crew messages
-      if (crewId != null) {
-        final snapshot = await crewsCollection
-            .doc(crewId)
-            .collection('messages')
-            .where('content', isGreaterThanOrEqualTo: query.toLowerCase())
-            .where('content', isLessThanOrEqualTo: '${query.toLowerCase()}\uf8ff')
-            .limit(limit)
-            .get();
-
-        for (final doc in snapshot.docs) {
-          results.add(Message.fromFirestore(doc));
-        }
-      }
-
-      // Search in direct messages
-      if (conversationId != null) {
-        final snapshot = await messagesCollection
-            .doc(conversationId)
-            .collection('messages')
-            .where('content', isGreaterThanOrEqualTo: query.toLowerCase())
-            .where('content', isLessThanOrEqualTo: '${query.toLowerCase()}\uf8ff')
-            .limit(limit)
-            .get();
-
-        for (final doc in snapshot.docs) {
-          results.add(Message.fromFirestore(doc));
-        }
-      }
-
-      return results;
-    } catch (e) {
-      return [];
-    }
-  }
-
-  // Helper method to get conversation ID
-  String _getConversationId(String userId1, String userId2) {
-    // Sort user IDs to ensure consistent conversation ID regardless of who sends first
-    final sortedIds = [userId1, userId2]..sort();
-    return '${sortedIds[0]}_${sortedIds[1]}';
-  }
-
-  // Create or update conversation metadata
-  Future<void> sendGlobalMessage({
-    required String senderId,
-    required String content,
-    MessageType type = MessageType.text,
-    List<Attachment>? attachments,
-  }) async {
-    try {
-      final message = Message(
-        id: '', // Will be set by Firestore
-        senderId: senderId,
-        crewId: 'global', // A special ID for global chat
-        content: content,
-        type: type,
-        attachments: attachments,
-        sentAt: DateTime.now(),
-        readBy: {},
-        isEdited: false,
-      );
-
-      await _firestore
-          .collection('global_messages')
-          .add(message.toFirestore());
-    } catch (e) {
-      throw Exception('Error sending global message: $e');
     }
   }
 }
