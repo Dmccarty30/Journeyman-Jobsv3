@@ -9,7 +9,7 @@ import 'package:journeyman_jobs/domain/enums/enums.dart';
 import 'package:journeyman_jobs/domain/enums/onboarding_status.dart';
 import '../../design_system/app_theme.dart';
 import '../../design_system/widgets/design_system_widgets.dart';
-import '../../models/user_model.dart';
+import '../../features/profile/profile.dart';
 import '../../navigation/app_router.dart';
 import '../../services/onboarding_service.dart';
 import '../../services/firestore_service.dart';
@@ -1182,3 +1182,4 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
   }
 
 }
+

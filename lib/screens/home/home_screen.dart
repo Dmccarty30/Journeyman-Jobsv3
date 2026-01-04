@@ -5,7 +5,7 @@ import 'package:journeyman_jobs/design_system/app_theme.dart';
 import 'package:journeyman_jobs/electrical_components/circuit_board_background.dart';
 import 'package:journeyman_jobs/features/crews/providers/crews_riverpod_provider.dart';
 import 'package:journeyman_jobs/features/jobs/jobs.dart';
-import 'package:journeyman_jobs/models/user_model.dart';
+import 'package:journeyman_jobs/features/profile/profile.dart';
 import 'package:journeyman_jobs/navigation/app_router.dart';
 import 'package:journeyman_jobs/providers/riverpod/auth_riverpod_provider.dart';
 import 'package:journeyman_jobs/utils/text_formatting_wrapper.dart';
@@ -111,7 +111,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     }
 
     return userModelAsync.when(
-      data: (userModel) => _buildUserWelcome(userModel),
+      data: (userModel) => _buildUserWelcome(userModel!),
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (err, stack) => _buildErrorWelcome(),
     );
@@ -447,6 +447,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     );
   }
 }
+
+
 
 
 

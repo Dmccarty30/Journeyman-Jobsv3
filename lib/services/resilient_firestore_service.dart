@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'firestore_service.dart';
 import 'cache_service.dart';
 import '../features/jobs/jobs.dart';
-import '../models/user_model.dart';
+import '../features/profile/profile.dart';
 
 /// A resilient wrapper around FirestoreService that provides:
 /// - Automatic retry logic for transient failures
@@ -593,4 +593,5 @@ extension FirestoreServiceResilience on FirestoreService {
     return ResilientFirestoreService();
   }
 }
+
 

@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:crypto/crypto.dart';
 import '../features/jobs/jobs.dart';
-import '../models/user_model.dart';
+import '../features/profile/profile.dart';
 
 /// Manages compressed and encrypted state persistence with versioning support
 ///
@@ -494,3 +494,4 @@ extension CompressedStateExtensions on SharedPreferences {
     return await CompressedStateManager.loadState<T>(key);
   }
 }
+

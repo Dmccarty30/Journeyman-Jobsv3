@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../features/jobs/jobs.dart';
-import '../models/users_record.dart';
+import '../features/profile/profile.dart';
 
 enum AnimationTrigger { onPageLoad, onPageEnd, inherited }
 
@@ -220,4 +220,5 @@ Future<List<UsersRecord>> queryUsersRecord({DocumentReference? Function(Document
   // Stub: return empty list; implement actual Firestore query
   return [];
 }
+
 

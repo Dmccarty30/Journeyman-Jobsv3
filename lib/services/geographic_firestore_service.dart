@@ -484,3 +484,4 @@ class GeographicFirestoreService extends ResilientFirestoreService {
     };
   }
 }
+

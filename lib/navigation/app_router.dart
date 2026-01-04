@@ -20,7 +20,7 @@ import '../features/jobs/jobs.dart';
 import '../features/storm/storm.dart';
 import '../features/unions/unions.dart';
 import '../screens/settings/settings_screen.dart';
-import '../screens/settings/account/profile_screen.dart';
+import '../features/profile/profile.dart';
 import '../screens/settings/support/help_support_screen.dart';
 import '../screens/settings/support/resources_screen.dart';
 import '../screens/settings/account/training_certificates_screen.dart';
@@ -386,6 +386,7 @@ class AppRouter {
     }
   }
 }
+
 
 
 

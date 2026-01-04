@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../models/user_model.dart';
+import '../../features/profile/profile.dart';
 import '../../services/auth_service.dart';
 import '../../utils/concurrent_operations.dart';
 import '../core_providers.dart' hide AuthService;
@@ -225,3 +225,4 @@ bool isRouteProtected(Ref ref, String routePath) {
 
   return protectedRoutes.any((String route) => routePath.startsWith(route));
 }
+
