@@ -8,7 +8,7 @@
 
 ## Phase 2: Core Features Migration
 
-- [ ] Task: Move `Jobs` feature components and create `lib/features/jobs/jobs.dart`.
+- [x] Task: Move `Jobs` feature components and create `lib/features/jobs/jobs.dart`. (f5983c1)
 - [ ] Task: Move `Storm` feature components and create `lib/features/storm/storm.dart`.
 - [ ] Task: Move `Unions` feature components and create `lib/features/unions/unions.dart`.
 - [ ] Task: Move `Profile` feature components and create `lib/features/profile/profile.dart`.
