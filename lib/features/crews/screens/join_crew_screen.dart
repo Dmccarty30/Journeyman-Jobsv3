@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart'; // Add for context.go
 
 import '../../../design_system/app_theme.dart';
-import '../../../navigation/app_router.dart'; // Add for AppRouter
+import '../../../features/navigation/navigation.dart'; // Add for AppRouter
 
 class JoinCrewScreen extends ConsumerStatefulWidget {
   const JoinCrewScreen({super.key});

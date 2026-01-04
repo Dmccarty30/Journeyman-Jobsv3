@@ -6,7 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import '../navigation/app_router.dart';
+import '../features/navigation/navigation.dart';
 
 /// Top-level function to handle background messages
 @pragma('vm:entry-point')

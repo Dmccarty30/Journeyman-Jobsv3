@@ -9,7 +9,7 @@ import 'package:journeyman_jobs/design_system/popup_theme.dart';
 import '../../../design_system/app_theme.dart';
 import '../../../design_system/widgets/design_system_widgets.dart';
 import '../../../services/notification_permission_service.dart';
-import '../../../navigation/app_router.dart';
+import '../../../features/navigation/navigation.dart';
 
 class NotificationsScreen extends StatefulWidget {
   const NotificationsScreen({super.key});
@@ -1107,3 +1107,4 @@ class _NotificationsScreenState extends State<NotificationsScreen>
     );
   }
 }
+

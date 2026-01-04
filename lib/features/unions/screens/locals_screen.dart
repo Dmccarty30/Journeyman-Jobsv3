@@ -7,7 +7,7 @@ import '../providers/locals_riverpod_provider.dart';
 import 'dart:io' show Platform;
 import '../../../../widgets/notification_badge.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../navigation/app_router.dart';
+import '../../../../features/navigation/navigation.dart';
 import '../../../../utils/text_formatting_wrapper.dart';
 import '../../../../electrical_components/circuit_board_background.dart';
 

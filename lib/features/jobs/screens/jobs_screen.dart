@@ -9,7 +9,7 @@ import '../widgets/job_card_skeleton.dart';
 import '../widgets/job_details_dialog.dart';
 import '../../../electrical_components/circuit_board_background.dart';
 import '../../../electrical_components/jj_electrical_toast.dart';
-import '../../../navigation/app_router.dart';
+import '../../../features/navigation/navigation.dart';
 
 class JobsScreen extends ConsumerStatefulWidget {
   const JobsScreen({super.key});
@@ -437,3 +437,4 @@ class _JobsScreenState extends ConsumerState<JobsScreen> {
     );
   }
 }
+

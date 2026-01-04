@@ -9,7 +9,7 @@ import '../../../design_system/tailboard_theme.dart';
 import '../../../design_system/tailboard_components.dart';
 
 // Navigation
-import '../../../navigation/app_router.dart';
+import '../../../features/navigation/navigation.dart';
 
 // Providers
 import '../providers/crews_riverpod_provider.dart';
@@ -1224,4 +1224,5 @@ class _TailboardScreenState extends ConsumerState<TailboardScreen>
     );
   }
 }
+
 

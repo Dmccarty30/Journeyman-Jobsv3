@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../design_system/app_theme.dart';
 import '../../design_system/components/reusable_components.dart';
-import '../../navigation/app_router.dart';
+import '../../features/navigation/navigation.dart';
 import '../../services/onboarding_service.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -440,4 +440,5 @@ class CircuitPatternPainter extends CustomPainter {
   @override
   bool shouldRepaint(CustomPainter oldDelegate) => false;
 }
+
 

@@ -8,7 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'firebase_options.dart';
 import 'design_system/app_theme.dart';
-import 'navigation/app_router.dart';
+import 'features/navigation/navigation.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

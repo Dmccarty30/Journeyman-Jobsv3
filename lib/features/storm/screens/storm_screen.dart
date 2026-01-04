@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../navigation/app_router.dart';
+import '../../../../features/navigation/navigation.dart';
 import '../../../../design_system/app_theme.dart';
 import '../../../../design_system/widgets/design_system_widgets.dart';
 import '../models/storm_event.dart';
@@ -1039,3 +1039,4 @@ class StormDetailsSheet extends StatelessWidget {
     );
   }
 }
+
