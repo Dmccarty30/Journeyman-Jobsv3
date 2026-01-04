@@ -83,4 +83,4 @@ final class ModelInitializerProvider
   }
 }
 
-String _$modelInitializerHash() => r'f442dd7a5b2fde2c5b9c25cedc1253db6aa814dc';
+String _$modelInitializerHash() => r'4828a5c919b4d1cab9f9c9e3b2bcf16962bcd33c';

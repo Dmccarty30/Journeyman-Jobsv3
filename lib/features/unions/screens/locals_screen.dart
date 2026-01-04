@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../unions.dart';
 import 'dart:io' show Platform;
-import '../../../../widgets/notification_badge.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../features/navigation/navigation.dart';
 import '../../../../utils/text_formatting_wrapper.dart';

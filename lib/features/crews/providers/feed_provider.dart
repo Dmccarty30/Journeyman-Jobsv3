@@ -2,8 +2,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:state_notifier/state_notifier.dart';
 
 import 'package:journeyman_jobs/core/core.dart' as core_providers;
-import '../../auth/auth.dart'
-    as auth_providers;
+import '../../auth/auth.dart' as auth_providers;
 import '../crews.dart';
 
 part 'feed_provider.g.dart';
@@ -45,16 +44,20 @@ AsyncValue<List<Post>> crewPosts(Ref ref, String crewId) {
 
 /// Stream of comments for a specific post
 @riverpod
-Stream<List<PostComment>> postCommentsStream(Ref ref, String crewId, String postId) {
+Stream<List<PostComment>> postCommentsStream(
+    Ref ref, String crewId, String postId) {
   final feedService = ref.watch(feedServiceProvider);
-  return feedService.getPostComments(crewId: crewId, postId: postId).map((snapshot) {
+  return feedService
+      .getPostComments(crewId: crewId, postId: postId)
+      .map((snapshot) {
     return snapshot.docs.map((doc) => PostComment.fromFirestore(doc)).toList();
   });
 }
 
 /// Comments for a specific post
 @riverpod
-AsyncValue<List<PostComment>> postComments(Ref ref, String crewId, String postId) {
+AsyncValue<List<PostComment>> postComments(
+    Ref ref, String crewId, String postId) {
   final commentsAsync = ref.watch(postCommentsStreamProvider(crewId, postId));
 
   return commentsAsync.when(
@@ -116,7 +119,8 @@ class PostCreationNotifier extends StateNotifier<AsyncValue<String?>> {
   }) async {
     final currentUser = _ref.read(auth_providers.currentUserProvider);
     if (currentUser == null) {
-      state = const AsyncValue.error('User not authenticated', StackTrace.empty);
+      state =
+          const AsyncValue.error('User not authenticated', StackTrace.empty);
       return;
     }
 
@@ -125,7 +129,11 @@ class PostCreationNotifier extends StateNotifier<AsyncValue<String?>> {
       final feedService = _ref.read(feedServiceProvider);
       // Construct author snapshot
       final authorSnapshot = {
-        'displayName': currentUser.displayName ?? currentUser.email?.split('@')[0] ?? 'User',
+        'displayName': currentUser.displayName ??
+            currentUser.email?.split('@')[0] ??
+            'User',
+        // `currentUser` here comes from `auth_providers.currentUserProvider` and
+        // is a FirebaseAuth `User`, so its photo field is `photoURL`.
         'avatarUrl': currentUser.photoURL,
         'role': 'Member', // This should be fetched from crew member doc
       };
@@ -175,7 +183,8 @@ class PostUpdateNotifier extends StateNotifier<AsyncValue<void>> {
   }) async {
     final currentUser = _ref.read(auth_providers.currentUserProvider);
     if (currentUser == null) {
-      state = const AsyncValue.error('User not authenticated', StackTrace.empty);
+      state =
+          const AsyncValue.error('User not authenticated', StackTrace.empty);
       return;
     }
 
@@ -194,7 +203,8 @@ class PostUpdateNotifier extends StateNotifier<AsyncValue<void>> {
     }
   }
 
-  Future<void> deletePost({required String crewId, required String postId}) async {
+  Future<void> deletePost(
+      {required String crewId, required String postId}) async {
     state = const AsyncValue.loading();
     try {
       final feedService = _ref.read(feedServiceProvider);
@@ -235,7 +245,8 @@ class ReactionNotifier extends StateNotifier<AsyncValue<void>> {
   }) async {
     final currentUser = _ref.read(auth_providers.currentUserProvider);
     if (currentUser == null) {
-      state = const AsyncValue.error('User not authenticated', StackTrace.empty);
+      state =
+          const AsyncValue.error('User not authenticated', StackTrace.empty);
       return;
     }
 
@@ -260,10 +271,12 @@ class ReactionNotifier extends StateNotifier<AsyncValue<void>> {
     }
   }
 
-  Future<void> removeReaction({required String crewId, required String postId}) async {
+  Future<void> removeReaction(
+      {required String crewId, required String postId}) async {
     final currentUser = _ref.read(auth_providers.currentUserProvider);
     if (currentUser == null) {
-      state = const AsyncValue.error('User not authenticated', StackTrace.empty);
+      state =
+          const AsyncValue.error('User not authenticated', StackTrace.empty);
       return;
     }
 
@@ -311,7 +324,8 @@ class CommentNotifier extends StateNotifier<AsyncValue<String?>> {
   }) async {
     final currentUser = _ref.read(auth_providers.currentUserProvider);
     if (currentUser == null) {
-      state = const AsyncValue.error('User not authenticated', StackTrace.empty);
+      state =
+          const AsyncValue.error('User not authenticated', StackTrace.empty);
       return;
     }
 
@@ -356,10 +370,10 @@ AsyncValue<String?> commentState(Ref ref) {
 /// Provider to get crew post statistics
 @riverpod
 Future<Map<String, dynamic>> crewPostStats(Ref ref, String crewId) async {
-  final feedService = ref.watch(feedServiceProvider);
-  // Note: This method needs to be refactored in FeedService if needed, 
+  ref.watch(feedServiceProvider);
+  // Note: This method needs to be refactored in FeedService if needed,
   // for now returning empty map to avoid build errors if not yet implemented.
-  return {}; 
+  return {};
 }
 
 /// Provider to get reaction counts for a post
@@ -367,7 +381,9 @@ Future<Map<String, dynamic>> crewPostStats(Ref ref, String crewId) async {
 Future<Map<String, int>> postReactionCounts(
     Ref ref, String crewId, String postId) async {
   try {
-    return await ref.watch(feedServiceProvider).getPostReactionCounts(crewId, postId);
+    return await ref
+        .watch(feedServiceProvider)
+        .getPostReactionCounts(crewId, postId);
   } catch (e, stack) {
     ref
         .read(core_providers.coreErrorReporterProvider)
@@ -391,14 +407,9 @@ Future<bool> userReactionToPost(
           type,
         );
   } catch (e, stack) {
-    ref.read(core_providers.coreErrorReporterProvider).report(
-        'userReactionToPost',
-        e,
-        stack,
-        'postId: $postId, type: $type');
+    ref
+        .read(core_providers.coreErrorReporterProvider)
+        .report('userReactionToPost', e, stack, 'postId: $postId, type: $type');
     rethrow;
   }
 }
-
-
-

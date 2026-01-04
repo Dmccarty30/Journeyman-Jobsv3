@@ -25,7 +25,6 @@ class JJElectricalScaffold extends StatelessWidget {
       backgroundColor: backgroundColor ?? Colors.transparent,
       appBar: appBar,
       body: ElectricalCircuitBackground(
-        density: 'high',
         opacity: backgroundOpacity,
         child: body,
       ),

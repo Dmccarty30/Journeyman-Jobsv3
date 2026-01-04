@@ -1,4 +1,3 @@
-import 'package:journeyman_jobs/features/jobs/jobs.dart';
 
 import 'package:journeyman_jobs/core/core.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

@@ -1120,7 +1120,7 @@ final class CrewPostStatsProvider extends $FunctionalProvider<
   }
 }
 
-String _$crewPostStatsHash() => r'a7b55a55eb4b5e09ebbe4446f1b8c2b8c0c28662';
+String _$crewPostStatsHash() => r'e0eca5d1d626d8278825a464a603ad48d8491f48';
 
 /// Provider to get crew post statistics
 

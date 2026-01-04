@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:journeyman_jobs/features/jobs/models/job_model.dart';
 import 'package:journeyman_jobs/features/unions/providers/locals_riverpod_provider.dart';
-import 'package:journeyman_jobs/features/jobs/jobs.dart';
-import 'package:journeyman_jobs/features/auth/auth.dart';
+import 'package:journeyman_jobs/features/jobs/providers/jobs_riverpod_provider.dart';
+import 'package:journeyman_jobs/features/auth/providers/auth_riverpod_provider.dart';
 
 /// State class for jobs list to optimize rebuilds
 class JobsListState {
@@ -38,7 +39,8 @@ class JobsListState {
 
 /// Optimized selector widget for jobs list state
 class JobsListStateSelector extends ConsumerWidget {
-  final Widget Function(BuildContext context, JobsListState jobsState, Widget? child) builder;
+  final Widget Function(
+      BuildContext context, JobsListState jobsState, Widget? child) builder;
   final Widget? child;
 
   const JobsListStateSelector({
@@ -94,7 +96,8 @@ class LocalsListState {
 
 /// Optimized selector widget for locals list state
 class LocalsListStateSelector extends ConsumerWidget {
-  final Widget Function(BuildContext context, LocalsListState localsState, Widget? child) builder;
+  final Widget Function(
+      BuildContext context, LocalsListState localsState, Widget? child) builder;
   final Widget? child;
 
   const LocalsListStateSelector({
@@ -150,7 +153,8 @@ class AuthState {
 
 /// Optimized selector widget for auth state
 class AuthStateSelector extends ConsumerWidget {
-  final Widget Function(BuildContext context, AuthState authState, Widget? child) builder;
+  final Widget Function(
+      BuildContext context, AuthState authState, Widget? child) builder;
   final Widget? child;
 
   const AuthStateSelector({
@@ -195,14 +199,13 @@ class CombinedAppState {
 
   @override
   int get hashCode =>
-      authState.hashCode ^
-      jobsState.hashCode ^
-      localsState.hashCode;
+      authState.hashCode ^ jobsState.hashCode ^ localsState.hashCode;
 }
 
 /// Optimized selector widget for combined app state
 class CombinedAppStateSelector extends ConsumerWidget {
-  final Widget Function(BuildContext context, CombinedAppState appState, Widget? child) builder;
+  final Widget Function(
+      BuildContext context, CombinedAppState appState, Widget? child) builder;
   final Widget? child;
 
   const CombinedAppStateSelector({
@@ -216,7 +219,7 @@ class CombinedAppStateSelector extends ConsumerWidget {
     final authProviderState = ref.watch(authProvider);
     final jobsProviderState = ref.watch(jobsProvider);
     final localsProviderState = ref.watch(localsProvider);
-    
+
     final combinedState = CombinedAppState(
       authState: AuthState(
         isAuthenticated: authProviderState.isAuthenticated,
@@ -240,8 +243,3 @@ class CombinedAppStateSelector extends ConsumerWidget {
     return builder(context, combinedState, child);
   }
 }
-
-
-
-
-

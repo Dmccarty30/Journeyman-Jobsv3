@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
-import 'cache_service.dart';
 import 'package:journeyman_jobs/features/jobs/profile/profile.dart';
-import '../models/contractor_model.dart';
 import 'package:journeyman_jobs/features/crews/crews.dart';
 import 'package:journeyman_jobs/core/core.dart';
 import 'package:journeyman_jobs/domain/exceptions/app_exception.dart';

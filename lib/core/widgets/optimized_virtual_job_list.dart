@@ -8,7 +8,6 @@ import 'package:journeyman_jobs/features/jobs/jobs.dart';
 import 'package:riverpod/src/providers/stream_provider.dart';
 import 'dart:math'; // Required for max/min
 import 'package:journeyman_jobs/design_system/design_system.dart';
-import 'package:journeyman_jobs/core/core.dart';
 
 /// High-performance virtual scrolling job list with mobile optimizations
 ///

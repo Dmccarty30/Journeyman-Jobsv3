@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:journeyman_jobs/core/services/location_service.dart';
 import 'package:latlong2/latlong.dart';
 import '../storm.dart';
-import '../../../../services/location_service.dart';
 import '../../../../design_system/app_theme.dart';
 import 'package:journeyman_jobs/design_system/design_system.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

@@ -90,4 +90,4 @@ final class JobRecommendationsProvider extends $FunctionalProvider<
 }
 
 String _$jobRecommendationsHash() =>
-    r'ab772d6821e02bd06014ba5eda5c92f0f906e381';
+    r'3179931b34988bf6d76df3632d717af64033db5d';

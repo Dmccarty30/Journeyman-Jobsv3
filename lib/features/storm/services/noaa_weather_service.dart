@@ -5,8 +5,8 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:journeyman_jobs/core/services/cache_service.dart';
 import 'package:latlong2/latlong.dart';
-import '../../../../services/cache_service.dart';
 
 /// NOAA Weather Service for authoritative US weather data
 /// 
@@ -73,10 +73,6 @@ class NoaaWeatherService {
       if (pointResponse.statusCode != 200) {
         throw Exception('Failed to get point data');
       }
-      
-      final gridId = pointResponse.data['properties']['gridId'];
-      final gridX = pointResponse.data['properties']['gridX'];
-      final gridY = pointResponse.data['properties']['gridY'];
       
       // Get active alerts
       final alertsResponse = await _dio.get(

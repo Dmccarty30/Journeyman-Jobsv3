@@ -4,8 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:journeyman_jobs/features/jobs/jobs.dart';
 import 'dart:math'; // Required for max/min
 import 'package:journeyman_jobs/design_system/design_system.dart';
-import '../../../design_system/components/job_card.dart';
-import '../jobs.dart';
 import 'package:journeyman_jobs/core/core.dart';
 
 /// High-performance virtual scrolling job list with infinite loading

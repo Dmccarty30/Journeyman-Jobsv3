@@ -4,9 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'package:journeyman_jobs/core/core.dart';
-import 'package:journeyman_jobs/features/auth/auth.dart';
-import 'package:journeyman_jobs/features/jobs/jobs.dart';
-import 'package:journeyman_jobs/features/unions/unions.dart';
+import 'package:journeyman_jobs/features/auth/providers/auth_riverpod_provider.dart';
+import 'package:journeyman_jobs/features/jobs/providers/jobs_riverpod_provider.dart';
+import 'package:journeyman_jobs/features/unions/providers/locals_riverpod_provider.dart';
 
 part 'app_state_riverpod_provider.g.dart';
 
@@ -174,7 +174,7 @@ class AppStateNotifier extends _$AppStateNotifier {
   Future<void> _loadInitialData() async {
     try {
       await Future.wait(<Future<void>>[
-        ref.read(jobsNotifierProvider.notifier).loadJobs(),
+        ref.read(jobsProvider.notifier).loadJobs(),
         ref.read(localsProvider.notifier).loadLocals(),
       ]);
     } catch (e) {
@@ -190,7 +190,7 @@ class AppStateNotifier extends _$AppStateNotifier {
 
       if (isAuthenticated) {
         await Future.wait<void>(<Future<void>>[
-          ref.read(jobsNotifierProvider.notifier).refreshJobs(),
+          ref.read(jobsProvider.notifier).refreshJobs(),
           ref.read(localsProvider.notifier).loadLocals(forceRefresh: true),
         ]);
       }
@@ -198,7 +198,8 @@ class AppStateNotifier extends _$AppStateNotifier {
       // Update performance metrics
       final Map<String, Object> performanceMetrics = <String, Object>{
         'last_refresh': DateTime.now().toIso8601String(),
-        'jobs_metrics': ref.read(jobsNotifierProvider.notifier).getPerformanceMetrics(),
+        'jobs_metrics':
+            ref.read(jobsProvider.notifier).getPerformanceMetrics(),
       };
 
       state = state.copyWith(performanceMetrics: performanceMetrics);
@@ -228,7 +229,7 @@ class AppStateNotifier extends _$AppStateNotifier {
   Future<void> handleUserSignOut() async {
     try {
       // Clear all provider states
-      ref.invalidate(jobsNotifierProvider);
+      ref.invalidate(jobsProvider);
       ref.invalidate(localsProvider);
 
       // Track sign out event
@@ -256,7 +257,7 @@ class AppStateNotifier extends _$AppStateNotifier {
 Map<String, dynamic> appStatus(Ref ref) {
   final appState = ref.watch(appStateProvider);
   final authState = ref.watch(authProvider);
-  final jobsState = ref.watch(jobsNotifierProvider);
+  final jobsState = ref.watch(jobsProvider);
   final localsState = ref.watch(localsProvider);
 
   return <String, dynamic>{
@@ -280,7 +281,7 @@ List<String> allErrors(Ref ref) {
 
   final appState = ref.watch(appStateProvider);
   final authState = ref.watch(authProvider);
-  final jobsState = ref.watch(jobsNotifierProvider);
+  final jobsState = ref.watch(jobsProvider);
   final localsState = ref.watch(localsProvider);
 
   if (appState.globalError != null) {
@@ -304,7 +305,7 @@ List<String> allErrors(Ref ref) {
 bool isAnyLoading(Ref ref) {
   final appState = ref.watch(appStateProvider);
   final authState = ref.watch(authProvider);
-  final jobsState = ref.watch(jobsNotifierProvider);
+  final jobsState = ref.watch(jobsProvider);
   final localsState = ref.watch(localsProvider);
 
   return !appState.isInitialized ||

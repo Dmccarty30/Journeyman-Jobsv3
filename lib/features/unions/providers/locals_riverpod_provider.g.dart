@@ -44,7 +44,7 @@ final class LocalsNotifierProvider
   }
 }
 
-String _$localsNotifierHash() => r'a2bdb5c7d6f400fc50377d9b6cd30ff1c97a59d8';
+String _$localsNotifierHash() => r'c134e373fd6e213562b49b491ed2d58b3f22b12b';
 
 /// Riverpod notifier that manages loading and searching of locals.
 
@@ -117,7 +117,7 @@ final class LocalByIdProvider extends $FunctionalProvider<
   }
 }
 
-String _$localByIdHash() => r'88f2d158c643afb9ad2a961579c6fb1160605970';
+String _$localByIdHash() => r'abd59ae22f9f21774c94962fb7310236beffc3e2';
 
 /// Riverpod provider that fetches a single local by ID.
 

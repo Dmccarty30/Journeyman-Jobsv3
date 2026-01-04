@@ -1,10 +1,11 @@
+import 'package:journeyman_jobs/features/jobs/providers/jobs_riverpod_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:firebase_auth/firebase_auth.dart'; // To get current user ID
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../jobs.dart';
 import '../profile/profile.dart';
-import 'package:journeyman_jobs/core/core.dart'; // Assuming this is where job fetching logic resides
+import 'package:journeyman_jobs/core/core.dart' hide firestoreServiceProvider; // Assuming this is where job fetching logic resides
 
 part 'user_job_preference_query_provider.g.dart';
 
@@ -58,6 +59,3 @@ Future<List<Job>> userPreferredJobs(Ref ref) async {
     return [];
   }
 }
-
-
-

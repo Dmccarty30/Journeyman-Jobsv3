@@ -1,90 +1,127 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart'; // For date formatting
-import '../crews.dart';
-import 'package:journeyman_jobs/design_system/design_system.dart';
-// For circuit background
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:intl/intl.dart';
+import '../../../design_system/tailboard_theme.dart';
 
+/// Message bubble widget for chat
 class MessageBubble extends StatelessWidget {
-  final Message message;
-  final bool isCurrentUser;
-  final bool showAvatar;
+  final String message;
+  final String senderId;
   final String senderName;
-  final int? totalMembers; // For group chat member count
-  final VoidCallback? onStatusTap;
+  final DateTime timestamp;
+  final bool isCurrentUser;
+  final String? avatarUrl;
 
   const MessageBubble({
     super.key,
     required this.message,
-    required this.isCurrentUser,
+    required this.senderId,
     required this.senderName,
-    this.showAvatar = true,
-    this.totalMembers,
-    this.onStatusTap,
+    required this.timestamp,
+    required this.isCurrentUser,
+    this.avatarUrl,
   });
 
   @override
   Widget build(BuildContext context) {
-    final bool isImage = message.type == 'image';
+    final timeStr = DateFormat('h:mm a').format(timestamp);
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AppTheme.spacingMd, vertical: AppTheme.spacingXs),
+      padding: const EdgeInsets.symmetric(
+        horizontal: TailboardTheme.spacingM,
+        vertical: TailboardTheme.spacingXS,
+      ),
       child: Row(
+        mainAxisAlignment:
+            isCurrentUser ? MainAxisAlignment.end : MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisAlignment: isCurrentUser ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: [
-          if (!isCurrentUser && showAvatar) ...[
+          if (!isCurrentUser) ...[
             CircleAvatar(
-              radius: AppTheme.radiusLg,
-              backgroundColor: AppTheme.accentCopper.withValues(alpha:0.2),
-              child: Text(
-                _getInitials(senderName),
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: AppTheme.accentCopper,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
+              radius: 16,
+              backgroundColor: TailboardTheme.copper.withValues(alpha: 0.2),
+              child: avatarUrl != null
+                  ? ClipOval(
+                      child: Image.network(
+                        avatarUrl!,
+                        width: 32,
+                        height: 32,
+                        fit: BoxFit.cover,
+                      ),
+                    )
+                  : Text(
+                      senderName.isNotEmpty ? senderName[0].toUpperCase() : '?',
+                      style: TailboardTheme.labelSmall.copyWith(
+                        color: TailboardTheme.copper,
+                      ),
+                    ),
             ),
-            const SizedBox(width: AppTheme.spacingSm),
+            const SizedBox(width: TailboardTheme.spacingS),
           ],
-          ConstrainedBox(
-            constraints: BoxConstraints(
-              maxWidth: MediaQuery.of(context).size.width * 0.7,
-            ),
+          Flexible(
             child: Column(
-              crossAxisAlignment: isCurrentUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+              crossAxisAlignment: isCurrentUser
+                  ? CrossAxisAlignment.end
+                  : CrossAxisAlignment.start,
               children: [
-                if (!isCurrentUser && showAvatar)
+                if (!isCurrentUser)
                   Padding(
-                    padding: const EdgeInsets.only(left: AppTheme.spacingSm, bottom: AppTheme.spacingXs),
+                    padding: const EdgeInsets.only(
+                      left: TailboardTheme.spacingS,
+                      bottom: 2,
+                    ),
                     child: Text(
                       senderName,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: AppTheme.textLight,
-                        fontWeight: FontWeight.w500,
+                      style: TailboardTheme.labelSmall.copyWith(
+                        color: TailboardTheme.copper,
                       ),
                     ),
                   ),
                 Container(
-                  padding: const EdgeInsets.all(AppTheme.spacingMd),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: TailboardTheme.spacingM,
+                    vertical: TailboardTheme.spacingS,
+                  ),
                   decoration: BoxDecoration(
-                    color: isCurrentUser ? AppTheme.primaryNavy : AppTheme.electricalSurface,
-                    borderRadius: BorderRadius.circular(AppTheme.radiusLg),
-                    border: Border.all(color: AppTheme.accentCopper, width: AppTheme.borderWidthCopperThin),
+                    color: isCurrentUser
+                        ? TailboardTheme.copper
+                        : TailboardTheme.backgroundCard,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(
+                        isCurrentUser
+                            ? TailboardTheme.radiusL
+                            : TailboardTheme.radiusS,
+                      ),
+                      topRight: Radius.circular(
+                        isCurrentUser
+                            ? TailboardTheme.radiusS
+                            : TailboardTheme.radiusL,
+                      ),
+                      bottomLeft: const Radius.circular(TailboardTheme.radiusL),
+                      bottomRight:
+                          const Radius.circular(TailboardTheme.radiusL),
+                    ),
+                    boxShadow: TailboardTheme.shadowSmall,
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        message.content,
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: isCurrentUser ? AppTheme.white : AppTheme.textOnDark,
+                        message,
+                        style: TailboardTheme.bodyMedium.copyWith(
+                          color: isCurrentUser
+                              ? TailboardTheme.textPrimary
+                              : TailboardTheme.textPrimary,
                         ),
                       ),
-                      const SizedBox(height: AppTheme.spacingXs),
+                      const SizedBox(height: 2),
                       Text(
-                        _formatTime(message.sentAt),
-                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                          color: AppTheme.textLight,
+                        timeStr,
+                        style: TailboardTheme.labelSmall.copyWith(
+                          color: isCurrentUser
+                              ? TailboardTheme.textPrimary
+                                  .withValues(alpha: 0.7)
+                              : TailboardTheme.textTertiary,
                         ),
                       ),
                     ],
@@ -93,49 +130,12 @@ class MessageBubble extends StatelessWidget {
               ],
             ),
           ),
-          if (isCurrentUser && showAvatar) ...[
-            const SizedBox(width: AppTheme.spacingSm),
-            const CircleAvatar(
-              radius: AppTheme.radiusLg,
-              backgroundColor: AppTheme.accentCopper,
-              child: Icon(
-                Icons.person,
-                size: 16,
-                color: AppTheme.white,
-              ),
-            ),
-          ],
         ],
       ),
-    );
+    ).animate().fadeIn(duration: 200.ms).slideX(
+          begin: isCurrentUser ? 0.1 : -0.1,
+          end: 0,
+          duration: 200.ms,
+        );
   }
-
-    String _getInitials(String name) {
-
-      if (name.isEmpty) return '?';
-
-      final parts = name.split(' ');
-
-      if (parts.length >= 2) {
-
-        return '${parts[0][0]}${parts[1][0]}'.toUpperCase();
-
-      }
-
-      return name.substring(0, 1).toUpperCase();
-
-    }
-
-  
-
-    String _formatTime(DateTime timestamp) {
-
-      return DateFormat('h:mm a').format(timestamp);
-
-    }
-
-  }
-
-  
-
-
+}

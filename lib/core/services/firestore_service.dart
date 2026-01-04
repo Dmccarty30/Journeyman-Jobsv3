@@ -233,6 +233,9 @@ class FirestoreService {
         case OperationType.delete:
           batch.delete(operation.reference);
           break;
+        case OperationType.loadJobs:
+          // TODO: Handle this case.
+          throw UnimplementedError();
       }
     }
 

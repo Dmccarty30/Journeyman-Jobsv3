@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:journeyman_jobs/core/services/onboarding_service.dart';
 import 'package:journeyman_jobs/design_system/design_system.dart';
-import '../../design_system/components/reusable_components.dart';
-import '../../features/navigation/navigation.dart';
-import '../../navigation.dart';
+import 'package:journeyman_jobs/features/navigation/services/app_router.dart';
+
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

@@ -1,103 +1,108 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'dart:async';
+import '../../../design_system/tailboard_theme.dart';
 
-
-class ChatInput extends ConsumerStatefulWidget {
-  final String crewId;
-  final String convId;
-  final Function(String) onSendMessage;
+/// Chat input widget with send button
+class ChatInput extends StatefulWidget {
+  final ValueChanged<String> onSendMessage;
+  final bool enabled;
+  final String? placeholder;
 
   const ChatInput({
     super.key,
-    required this.crewId,
-    required this.convId,
     required this.onSendMessage,
+    this.enabled = true,
+    this.placeholder,
   });
 
   @override
-  ConsumerState<ChatInput> createState() => _ChatInputState();
+  State<ChatInput> createState() => _ChatInputState();
 }
 
-class _ChatInputState extends ConsumerState<ChatInput> {
+class _ChatInputState extends State<ChatInput> {
   final TextEditingController _controller = TextEditingController();
-  Timer? _typingTimer;
-  bool _isTyping = false;
+  bool _hasText = false;
 
   @override
-  void initState() {
-    super.initState();
-    _controller.addListener(_handleTextChange);
-  }
-
-  void _handleTextChange() {
-    final text = _controller.text.trim();
-    final typing = text.isNotEmpty;
-    if (typing != _isTyping) {
-      _isTyping = typing;
-      if (typing) {
-        _startTypingTimer();
-      } else {
-        _stopTyping();
-      }
-    }
-  }
-
-  void _startTypingTimer() {
-    _typingTimer?.cancel();
-    // Typing indicator logic temporarily disabled during refactor
-  }
-
-  void _stopTyping() {
-    _typingTimer?.cancel();
-    // Typing indicator logic temporarily disabled during refactor
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   void _sendMessage() {
-    if (_controller.text.trim().isNotEmpty) {
-      final msg = _controller.text.trim();
-      widget.onSendMessage(msg);
+    final text = _controller.text.trim();
+    if (text.isNotEmpty) {
+      widget.onSendMessage(text);
       _controller.clear();
-      _stopTyping();
+      setState(() {
+        _hasText = false;
+      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Row(
-        children: [
-          Expanded(
-            child: TextField(
-              controller: _controller,
-              decoration: InputDecoration(
-                hintText: 'Send a message...',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20.0),
+    return Container(
+      padding: const EdgeInsets.all(TailboardTheme.spacingM),
+      decoration: BoxDecoration(
+        color: TailboardTheme.backgroundCard,
+        border: Border(
+          top: BorderSide(
+            color: TailboardTheme.divider,
+            width: 1,
+          ),
+        ),
+      ),
+      child: SafeArea(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Expanded(
+              child: Container(
+                constraints: const BoxConstraints(maxHeight: 120),
+                child: TextField(
+                  controller: _controller,
+                  enabled: widget.enabled,
+                  maxLines: null,
+                  textInputAction: TextInputAction.newline,
+                  decoration: TailboardTheme.inputDecoration(
+                    hintText: widget.placeholder ?? 'Type a message...',
+                    prefixIcon:
+                        const Icon(Icons.message, color: TailboardTheme.copper),
+                  ),
+                  style: TailboardTheme.bodyMedium,
+                  onChanged: (text) {
+                    setState(() {
+                      _hasText = text.trim().isNotEmpty;
+                    });
+                  },
+                  onSubmitted: (_) {
+                    if (_hasText) _sendMessage();
+                  },
                 ),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
               ),
-              onSubmitted: (_) => _sendMessage(),
             ),
-          ),
-          const SizedBox(width: 8.0),
-          FloatingActionButton(
-            onPressed: _sendMessage,
-            mini: true,
-            child: const Icon(Icons.send),
-          ),
-        ],
+            const SizedBox(width: TailboardTheme.spacingS),
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              child: IconButton(
+                onPressed: _hasText && widget.enabled ? _sendMessage : null,
+                icon: Icon(
+                  Icons.send,
+                  color: _hasText && widget.enabled
+                      ? TailboardTheme.copper
+                      : TailboardTheme.textTertiary,
+                ),
+                style: IconButton.styleFrom(
+                  backgroundColor: _hasText && widget.enabled
+                      ? TailboardTheme.copper.withValues(alpha: 0.1)
+                      : TailboardTheme.backgroundDark,
+                  padding: const EdgeInsets.all(TailboardTheme.spacingM),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
-
-  @override
-  void dispose() {
-    _controller.removeListener(_handleTextChange);
-    _typingTimer?.cancel();
-    _controller.dispose();
-    super.dispose();
-  }
 }
-

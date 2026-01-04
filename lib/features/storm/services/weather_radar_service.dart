@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import '../../../../services/cache_service.dart';
+import 'package:journeyman_jobs/core/services/cache_service.dart';
 
 /// Weather radar data service using RainViewer API
 /// 
@@ -29,7 +29,6 @@ class WeatherRadarService {
   
   // Cache configuration
   static const Duration _radarCacheDuration = Duration(minutes: 5);
-  static const Duration _satelliteCacheDuration = Duration(minutes: 15);
   
   // Current radar data
   RadarData? _currentRadarData;

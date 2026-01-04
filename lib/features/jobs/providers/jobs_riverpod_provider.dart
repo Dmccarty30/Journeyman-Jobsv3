@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
+import 'package:journeyman_jobs/utils/concurrent_operations.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../jobs.dart';
 import 'package:journeyman_jobs/core/core.dart';
 import '../profile/profile.dart';
-import '../../../utils/concurrent_operations.dart';
+import '../../../utils/concurrent_operations.dart' hide OperationType;
 // TODO: Add back when utility classes are implemented
 // import '../../utils/filter_performance.dart';
 // import '../../utils/memory_management.dart';
@@ -229,7 +230,7 @@ class JobsNotifier extends _$JobsNotifier {
 
   /// Apply filter to jobs
   Future<void> applyFilter(JobFilterCriteria filter) async {
-    if (_operationManager.isOperationInProgress(OperationType.loadJobs)) {
+    if (_operationManager.isOperationInProgress(OperationType.loadJobs as OperationType)) {
       return;
     }
 

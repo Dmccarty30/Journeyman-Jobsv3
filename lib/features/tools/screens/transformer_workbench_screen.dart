@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:journeyman_jobs/core/widgets/generic_connection_point.dart';
 import '../../../../design_system/app_theme.dart';
 import '../models/transformer_models.dart';
-import '../../../../widgets/generic_connection_point.dart';
 
 /// Interactive transformer workbench screen for hands-on training
 class TransformerWorkbenchScreen extends StatefulWidget {

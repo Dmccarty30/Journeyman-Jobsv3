@@ -6,7 +6,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:journeyman_jobs/core/services/firestore_service.dart';
 import 'package:journeyman_jobs/core/services/onboarding_service.dart';
-import 'package:journeyman_jobs/design_system/components/reusable_components.dart';
 import 'package:journeyman_jobs/domain/enums/enums.dart';
 import 'package:journeyman_jobs/domain/enums/onboarding_status.dart';
 import 'package:journeyman_jobs/design_system/design_system.dart';

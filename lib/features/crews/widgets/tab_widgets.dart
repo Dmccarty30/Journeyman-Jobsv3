@@ -2,22 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:intl/intl.dart';
-import '../providers/tailboard_riverpod_provider.dart';
-import 'crews_widgets.dart';
+import 'package:journeyman_jobs/features/crews/models/crew_member.dart';
+import 'package:journeyman_jobs/features/crews/models/message.dart';
+import 'package:journeyman_jobs/features/crews/models/post.dart';
+import 'package:journeyman_jobs/features/crews/models/shared_job.dart';
 import 'tailboard/job_preferences_dialog.dart';
 // Design system
 import '../../../design_system/tailboard_theme.dart';
 import '../../../design_system/tailboard_components.dart';
+import 'package:journeyman_jobs/features/crews/widgets/crews_widgets.dart';
 
 // Providers
-import '../../auth/auth.dart' hide currentUserProvider;
-import '../../../features/jobs/jobs.dart';
-import '../crews.dart' hide selectedCrewProvider;
+import '../../crews/providers/crews_riverpod_provider.dart';
+import 'package:journeyman_jobs/features/crews/models/crew.dart';
+import 'package:journeyman_jobs/features/crews/providers/crews_providers.dart';
 
 // Models
 
 // Widgets
-import 'package:journeyman_jobs/core/core.dart';
+import 'package:journeyman_jobs/core/core.dart' hide selectedCrewProvider, MessageBubble;
 
 // Services
 
@@ -521,7 +524,7 @@ class _ChatTabState extends ConsumerState<ChatTab> {
     }
 
     // Get messages stream
-    final messageService = MessageService();
+    final messageService = ref.watch(messageServiceProvider);
     return StreamBuilder<List<Message>>(
       stream: messageService.getCrewMessagesStream(selectedCrew.id, 'general'),
       builder: (context, snapshot) {
@@ -615,12 +618,14 @@ class _ChatTabState extends ConsumerState<ChatTab> {
     String content,
   ) async {
     try {
-      final messageService = MessageService();
+      final messageService = ref.watch(messageServiceProvider);
       final currentUser = ref.read(currentUserProvider);
 
       final senderSnapshot = {
         'displayName': currentUser?.displayName ?? senderName,
-        'avatarUrl': currentUser?.photoURL,
+        // `currentUser` here is our app-level `UserModel` (not FirebaseAuth `User`).
+        // UserModel stores avatar photo as `avatarUrl`.
+        'avatarUrl': currentUser?.avatarUrl,
         'role': 'Member',
       };
 

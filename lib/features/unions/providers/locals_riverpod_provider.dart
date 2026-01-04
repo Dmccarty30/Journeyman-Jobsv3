@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:journeyman_jobs/core/providers/core_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../unions.dart';
 import '../../../utils/concurrent_operations.dart';
-import '../../jobs/providers/jobs_riverpod_provider.dart' show firestoreServiceProvider;
 
 part 'locals_riverpod_provider.g.dart';
 
@@ -102,7 +102,7 @@ class LocalsNotifier extends _$LocalsNotifier {
           await _operationManager.queueOperation<QuerySnapshot<Object?>>(
         type: OperationType.loadLocals,
         operation: () async {
-          final stream = ref.read(firestoreServiceProvider).getLocals(
+          final stream = ref.read(realFirestoreServiceProvider).getLocals(
                 startAfter: loadMore ? state.lastDocument : null,
                 limit: _pageSize,
               );
@@ -224,7 +224,7 @@ class LocalsNotifier extends _$LocalsNotifier {
 
 /// Riverpod provider that fetches a single local by ID.
 Future<LocalsRecord?> localById(Ref ref, String localId) async {
-  final service = ref.watch(firestoreServiceProvider);
+  final service = ref.watch(realFirestoreServiceProvider);
   try {
     final doc = await service.getLocal(localId);
     if (doc.exists) {

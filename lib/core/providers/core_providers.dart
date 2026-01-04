@@ -5,7 +5,6 @@ import 'package:journeyman_jobs/core/core.dart';
 import 'package:journeyman_jobs/core/core.dart' as real_firestore;
 import 'package:journeyman_jobs/features/jobs/profile/profile.dart';
 import 'package:journeyman_jobs/features/crews/crews.dart';
-import 'package:journeyman_jobs/features/jobs/jobs.dart';
 
 part 'core_providers.g.dart';
 
