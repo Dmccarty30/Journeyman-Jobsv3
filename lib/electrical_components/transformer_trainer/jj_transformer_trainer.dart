@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../design_system/app_theme.dart';
-import 'models/transformer_models_export.dart';
+import '../../features/tools/tools.dart';
 import 'modes/guided_mode.dart';
 import 'modes/quiz_mode.dart';
 import 'state/transformer_state.dart';
@@ -537,3 +537,4 @@ class JJTransformerTrainer extends StatelessWidget {
     }
   }
 }
+

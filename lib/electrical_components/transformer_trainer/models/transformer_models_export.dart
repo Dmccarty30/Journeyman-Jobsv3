@@ -6,9 +6,10 @@
 /// Migration example:
 /// ```dart
 /// // Old: import '../models/transformer_models_export.dart';
-/// // New: import '../../../models/transformer_models.dart';
+/// // New: import '../../../features/tools/tools.dart';
 /// ```
 library;
 
 // Re-export all transformer models from the main models directory
 export '../../../models/transformer_models.dart';
+

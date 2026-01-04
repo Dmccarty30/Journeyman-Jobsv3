@@ -5,10 +5,10 @@ import 'package:journeyman_jobs/design_system/widgets/design_system_widgets.dart
 import 'package:journeyman_jobs/electrical_components/electrical_components.dart';
 import '../../../design_system/app_theme.dart';
 import '../../../design_system/components/reusable_components.dart';
-import 'calculators/voltage_drop_calculator.dart';
-import 'calculators/conduit_fill_calculator.dart';
-import 'calculators/load_calculator.dart';
-import 'calculators/wire_size_chart.dart';
+import '../../../features/tools/tools.dart';
+import '../../../features/tools/tools.dart';
+import '../../../features/tools/tools.dart';
+import '../../../features/tools/tools.dart';
 
 
 class ResourcesScreen extends StatefulWidget {
@@ -595,3 +595,7 @@ class ResourceCard extends StatelessWidget {
     );
   }
 }
+
+
+
+

@@ -25,12 +25,12 @@ import '../../../screens/settings/support/help_support_screen.dart';
 import '../../../screens/settings/support/resources_screen.dart';
 import '../../../screens/settings/account/training_certificates_screen.dart';
 import '../../../screens/settings/support/feedback_screen.dart';
-import '../../../screens/tools/electrical_calculators_screen.dart';
-import '../../../screens/tools/transformer_reference_screen.dart';
-import '../../../screens/tools/transformer_workbench_screen.dart';
-import '../../../screens/tools/transformer_bank_screen.dart';
+import '../../tools/tools.dart';
+import '../../tools/tools.dart';
+import '../../tools/tools.dart';
+import '../../tools/tools.dart';
 
-import '../../../models/transformer_models.dart';
+import '../../tools/tools.dart';
 import '../../../screens/settings/app/notifications_settings_screen.dart';
 import '../../../screens/settings/app/app_settings_screen.dart';
 import '../../../screens/settings/privacy_security_screen.dart'; // New import
@@ -385,6 +385,8 @@ class AppRouter {
     }
   }
 }
+
+
 
 
 
