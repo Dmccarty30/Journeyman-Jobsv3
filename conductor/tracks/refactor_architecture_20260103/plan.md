@@ -16,7 +16,7 @@
 
 ## Phase 3: Auth and Navigation Migration
 
-- [ ] Task: Move `Authentication` components and create `lib/features/auth/auth.dart`.
+- [x] Task: Move `Authentication` components and create `lib/features/auth/auth.dart`. (f6bb3e7)
 - [ ] Task: Move `Navigation` (go_router setup) to `lib/features/navigation/`.
 - [ ] Task: Conductor - User Manual Verification 'Auth and Navigation Migration' (Protocol in workflow.md)
 
