@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../design_system/tailboard_theme.dart';
-import '../../providers/feed_filter_provider.dart';
-
-class FeedSortOptionsDialog extends ConsumerWidget {
+import '../../crews.dart';class FeedSortOptionsDialog extends ConsumerWidget {
   const FeedSortOptionsDialog({super.key});
 
   @override
@@ -165,3 +163,4 @@ class _SortOption extends StatelessWidget {
     );
   }
 }
+

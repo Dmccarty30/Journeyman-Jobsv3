@@ -6,7 +6,7 @@ import '../models/job_model.dart';
 import '../models/filter_criteria.dart';
 import '../../../models/user_feedback_model.dart';
 import '../../../services/feedback_service.dart';
-import '../../../services/user_preference_service.dart';
+import '../../profile/profile.dart';
 import '../../../services/local_model_service.dart';
 import '../../../services/resilient_firestore_service.dart';
 import '../../../utils/concurrent_operations.dart';
@@ -542,3 +542,4 @@ Future<List<Job>> stormJobs(Ref ref) async {
     return Job.fromJson(data);
   }).toList();
 }
+

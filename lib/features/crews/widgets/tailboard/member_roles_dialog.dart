@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../design_system/tailboard_theme.dart';
 import '../../../../design_system/tailboard_components.dart';
-import '../../providers/crews_riverpod_provider.dart';
-import '../../models/crew_member.dart';
-import '../../../../domain/enums/member_role.dart' as domain;
+import '../../crews.dart';import '../../../../domain/enums/member_role.dart' as domain;
 
 class MemberRolesDialog extends ConsumerStatefulWidget {
   const MemberRolesDialog({super.key});
@@ -246,4 +244,5 @@ class _MemberRoleItem extends StatelessWidget {
     }
   }
 }
+
 

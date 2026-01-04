@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../design_system/tailboard_theme.dart';
-import '../../../../models/job_model.dart';
+import '../../../../features/jobs/jobs.dart';
 
 class ApplyJobDialog extends ConsumerStatefulWidget {
   const ApplyJobDialog({
@@ -159,3 +159,4 @@ class _ApplyJobDialogState extends ConsumerState<ApplyJobDialog> {
     );
   }
 }
+

@@ -3,10 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import '../../../../design_system/tailboard_theme.dart';
 import '../../../../design_system/tailboard_components.dart';
-import '../../providers/crews_riverpod_provider.dart';
-import '../../models/crew_member.dart';
-
-class MemberRosterDialog extends ConsumerWidget {
+import '../../crews.dart';class MemberRosterDialog extends ConsumerWidget {
   const MemberRosterDialog({super.key});
 
   @override
@@ -160,4 +157,5 @@ class _MemberRosterItem extends StatelessWidget {
     );
   }
 }
+
 

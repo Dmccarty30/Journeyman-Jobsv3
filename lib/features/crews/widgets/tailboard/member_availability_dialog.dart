@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../design_system/tailboard_theme.dart';
 import '../../../../design_system/tailboard_components.dart';
-import '../../providers/crews_riverpod_provider.dart';
-import '../../models/crew_member.dart';
-
-class MemberAvailabilityDialog extends ConsumerWidget {
+import '../../crews.dart';class MemberAvailabilityDialog extends ConsumerWidget {
   const MemberAvailabilityDialog({super.key});
 
   @override
@@ -252,4 +249,5 @@ class _AvailabilityItem extends StatelessWidget {
     );
   }
 }
+
 
