@@ -22,7 +22,7 @@
 
 ## Phase 4: Final Cleanup and Global Verification
 
-- [ ] Task: Update all project imports to use barrel files.
-- [ ] Task: Remove empty legacy directories (`lib/screens`, `lib/models`, `lib/widgets`, `lib/services`, `lib/providers`).
+- [x] Task: Update all project imports to use barrel files. (9db86ba)
+- [x] Task: Remove empty legacy directories (`lib/screens`, `lib/models`, `lib/widgets`, `lib/services`, `lib/providers`). (ca2afd8)
 - [ ] Task: Execute full test suite and verify >80% coverage.
 - [ ] Task: Conductor - User Manual Verification 'Final Cleanup and Global Verification' (Protocol in workflow.md)
