@@ -29,7 +29,8 @@ class LocalModelService {
   }
 
   /// Correlates user feedback with user preferences.
-  Future<List<String>> matchUserExperienceToPreferences(String feedback, Map<String, dynamic> userPreferences) async {
+  Future<List<String>> matchUserFeedbackToPreferences(
+      String feedback, Map<String, dynamic> userPreferences) async {
     // Placeholder for AI-powered user experience matching.
     await Future.delayed(const Duration(milliseconds: 300));
     // In a real implementation, this would involve NLP on feedback
@@ -38,14 +39,43 @@ class LocalModelService {
     if (feedback.toLowerCase().contains('per diem')) {
       matchedPreferences.add('high_per_diem');
     }
-    if (userPreferences.containsKey('location_preference') && feedback.toLowerCase().contains(userPreferences['location_preference'].toLowerCase())) {
+    if (userPreferences.containsKey('location_preference') &&
+        feedback
+            .toLowerCase()
+            .contains(userPreferences['location_preference'].toLowerCase())) {
       matchedPreferences.add('location_match');
     }
     return matchedPreferences;
   }
 
+  /// Match user experience to job preferences using AI
+  Future<double> matchUserExperienceToPreferences({
+    required String jobDescription,
+    required Map<String, dynamic> userPreferences,
+    required List<String> userSkills,
+  }) async {
+    // Simulate AI matching logic
+    await Future.delayed(const Duration(milliseconds: 100));
+
+    // Simple keyword matching simulation
+    int matchCount = 0;
+    final descriptionLower = jobDescription.toLowerCase();
+
+    for (final skill in userSkills) {
+      if (descriptionLower.contains(skill.toLowerCase())) {
+        matchCount++;
+      }
+    }
+
+    if (userSkills.isEmpty) return 0.5; // neutral if no skills listed
+
+    // Normalize score 0.0 to 1.0
+    return (matchCount / userSkills.length).clamp(0.0, 1.0);
+  }
+
   /// Generates job recommendations based on user preferences.
-  Future<List<JobSuggestion>> getJobRecommendations(Map<String, dynamic> userPreferences) async {
+  Future<List<JobSuggestion>> getJobRecommendations(
+      Map<String, dynamic> userPreferences) async {
     // Placeholder for AI-powered job recommendation engine.
     await Future.delayed(const Duration(seconds: 1));
 
@@ -55,7 +85,8 @@ class LocalModelService {
         id: 'sugg_001',
         originalJobId: 'job_xyz', // Assuming some context job
         suggestedJobId: 'job_abc',
-        reason: 'Matches your preference for high per diem and specific location.',
+        reason:
+            'Matches your preference for high per diem and specific location.',
         relevanceScore: 0.92,
         createdAt: Timestamp.now(),
       ),
@@ -70,5 +101,3 @@ class LocalModelService {
     ];
   }
 }
-
-

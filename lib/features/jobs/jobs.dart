@@ -10,17 +10,7 @@ export 'models/filter_preset.dart';
 export 'models/jobs_record.dart';
 
 // Providers
-export 'providers/jobs_riverpod_provider.dart'
-    hide
-        firestoreService,
-        firestoreServiceProvider,
-        FirestoreServiceProvider,
-        feedbackService,
-        feedbackServiceProvider,
-        FeedbackServiceProvider,
-        userPreferenceService,
-        userPreferenceServiceProvider,
-        UserPreferenceServiceProvider;
+export 'providers/jobs_riverpod_provider.dart';
 export 'providers/job_filter_riverpod_provider.dart';
 export 'providers/job_recommendation_provider.dart';
 export 'providers/user_job_preference_query_provider.dart'

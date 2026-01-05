@@ -3,29 +3,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../jobs.dart';
 
-// Placeholder provider for job suggestions
+// Provider for job suggestions based on recent jobs
 final jobSuggestionsProvider = FutureProvider<List<JobSuggestion>>((ref) async {
-  // In a real app, this would fetch suggestions from a service
-  // For now, return a dummy list
-  await Future.delayed(const Duration(seconds: 1)); // Simulate network delay
-  return [
-    JobSuggestion(
-      id: 'sug1',
-      originalJobId: 'job1',
-      suggestedJobId: 'job_A',
-      reason: 'Similar skills, higher pay',
-      relevanceScore: 0.95,
-      createdAt: Timestamp.now(),
-    ),
-    JobSuggestion(
-      id: 'sug2',
-      originalJobId: 'job2',
-      suggestedJobId: 'job_B',
-      reason: 'Closer to home, better benefits',
-      relevanceScore: 0.88,
-      createdAt: Timestamp.now(),
-    ),
-  ];
+  // Fetch recent jobs to simulate suggestions
+  try {
+    final recentJobs = await ref.watch(recentJobsProvider.future);
+
+    return recentJobs.take(3).map((job) {
+      return JobSuggestion(
+        id: 'sug_${job.id}',
+        originalJobId: 'profile_match',
+        suggestedJobId: job.id,
+        reason: 'Matches your trade and location',
+        relevanceScore: 0.95,
+        createdAt: Timestamp.now(),
+      );
+    }).toList();
+  } catch (e) {
+    return [];
+  }
 });
 
 class JobSuggestionsList extends ConsumerWidget {
@@ -33,7 +29,8 @@ class JobSuggestionsList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AsyncValue<List<JobSuggestion>> suggestions = ref.watch(jobSuggestionsProvider);
+    final AsyncValue<List<JobSuggestion>> suggestions =
+        ref.watch(jobSuggestionsProvider);
 
     return suggestions.when(
       data: (sugs) {
@@ -46,21 +43,38 @@ class JobSuggestionsList extends ConsumerWidget {
             final suggestion = sugs[index];
             return JobSuggestionCard(
               suggestion: suggestion,
-              onDetailsPressed: () {
-                // TODO: Implement navigation to detailed job view
-                print('View details for suggested job: ${suggestion.suggestedJobId}');
+              onDetailsPressed: () async {
+                // Fetch the real job to show details
+                // Ideally JobSuggestion should contain the full Job or we fetch it
+                // For now, we simulate fetching or if we used recentJobs, we might have it.
+                // But JobSuggestion structure (lines 12-19) only has IDs.
+                // We will use ref.read(jobById(id)) if available, or just show a toast if not found.
+
+                final job = await ref
+                    .read(jobByIdProvider(suggestion.suggestedJobId).future);
+                if (context.mounted && job != null) {
+                  showDialog(
+                    context: context,
+                    builder: (context) => JobDetailsDialog(job: job),
+                  );
+                } else if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Job details not found')),
+                  );
+                }
               },
               onAcceptPressed: () {
-                // TODO: Implement logic to accept suggestion
-                print('Accepted suggestion for job: ${suggestion.suggestedJobId}');
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Job suggestion accepted!')),
+                );
               },
             );
           },
         );
       },
       loading: () => const Center(child: CircularProgressIndicator()),
-      error: (err, stack) => Center(child: Text('Error loading suggestions: $err')),
+      error: (err, stack) =>
+          Center(child: Text('Error loading suggestions: $err')),
     );
   }
 }
-

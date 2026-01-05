@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:journeyman_jobs/design_system/design_system.dart';
+import 'package:journeyman_jobs/features/jobs/providers/jobs_riverpod_provider.dart';
 import '../jobs.dart';
 import '../../../features/navigation/navigation.dart';
+import '../providers/jobs_riverpod_provider.dart';
 
 class JobsScreen extends ConsumerStatefulWidget {
   const JobsScreen({super.key});
@@ -34,7 +36,6 @@ class _JobsScreenState extends ConsumerState<JobsScreen> {
     'Storm Work',
   ];
 
-
   @override
   void initState() {
     super.initState();
@@ -56,12 +57,12 @@ class _JobsScreenState extends ConsumerState<JobsScreen> {
   }
 
   void _onScroll() {
-    if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
+    if (_scrollController.position.pixels ==
+        _scrollController.position.maxScrollExtent) {
       // Load more jobs when reaching the bottom
       ref.read(jobsProvider.notifier).loadMoreJobs();
     }
   }
-
 
   void _applyFilters() {
     // Trigger a new search with current filters
@@ -76,8 +77,10 @@ class _JobsScreenState extends ConsumerState<JobsScreen> {
   }
 
   void _handleBidAction(Job job) {
-    // TODO: Handle bid action
-    JJElectricalToast.showInfo(context: context, message: 'Bidding on job at ${job.company}');
+    showDialog(
+      context: context,
+      builder: (context) => JobDetailsDialog(job: job),
+    );
   }
 
   List<Job> _getFilteredJobs(List<Job> jobs) {
@@ -93,9 +96,9 @@ class _JobsScreenState extends ConsumerState<JobsScreen> {
         final String? jobTitle = job.jobTitle;
 
         return (company?.toLowerCase().contains(query) ?? false) ||
-               (location?.toLowerCase().contains(query) ?? false) ||
-               (classification?.toLowerCase().contains(query) ?? false) ||
-               (jobTitle?.toLowerCase().contains(query) ?? false);
+            (location?.toLowerCase().contains(query) ?? false) ||
+            (classification?.toLowerCase().contains(query) ?? false) ||
+            (jobTitle?.toLowerCase().contains(query) ?? false);
       }).toList();
     }
 
@@ -109,8 +112,8 @@ class _JobsScreenState extends ConsumerState<JobsScreen> {
         final filterLower = _selectedFilter.toLowerCase();
 
         return (classification?.toLowerCase().contains(filterLower) ?? false) ||
-               (jobTitle?.toLowerCase().contains(filterLower) ?? false) ||
-               (typeOfWork?.toLowerCase().contains(filterLower) ?? false);
+            (jobTitle?.toLowerCase().contains(filterLower) ?? false) ||
+            (typeOfWork?.toLowerCase().contains(filterLower) ?? false);
       }).toList();
     }
 
@@ -127,9 +130,9 @@ class _JobsScreenState extends ConsumerState<JobsScreen> {
         itemBuilder: (context, index) {
           final category = _filterCategories[index];
           final isSelected = _selectedFilter == category;
-          
-              return Padding(
-                padding: const EdgeInsets.only(right: 8),
+
+          return Padding(
+            padding: const EdgeInsets.only(right: 8),
             child: FilterChip(
               label: Text(category),
               selected: isSelected,
@@ -142,7 +145,8 @@ class _JobsScreenState extends ConsumerState<JobsScreen> {
               selectedColor: AppTheme.accentCopper.withValues(alpha: 0.2),
               checkmarkColor: AppTheme.accentCopper,
               labelStyle: TextStyle(
-                color: isSelected ? AppTheme.accentCopper : AppTheme.textSecondary,
+                color:
+                    isSelected ? AppTheme.accentCopper : AppTheme.textSecondary,
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
               ),
             ),
@@ -154,7 +158,7 @@ class _JobsScreenState extends ConsumerState<JobsScreen> {
 
   Widget _buildAdvancedFilters() {
     if (!_showAdvancedFilters) return const SizedBox.shrink();
-    
+
     return Container(
       margin: const EdgeInsets.all(16),
       padding: const EdgeInsets.all(16),
@@ -322,7 +326,7 @@ class _JobsScreenState extends ConsumerState<JobsScreen> {
   @override
   Widget build(BuildContext context) {
     final jobsState = ref.watch(jobsProvider);
-    
+
     return Scaffold(
       backgroundColor: AppTheme.offWhite,
       appBar: AppBar(
@@ -333,7 +337,10 @@ class _JobsScreenState extends ConsumerState<JobsScreen> {
               height: 32,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [AppTheme.accentCopper, AppTheme.accentCopper.withValues(alpha: 0.8)],
+                  colors: [
+                    AppTheme.accentCopper,
+                    AppTheme.accentCopper.withValues(alpha: 0.8)
+                  ],
                 ),
                 shape: BoxShape.circle,
               ),
@@ -383,47 +390,47 @@ class _JobsScreenState extends ConsumerState<JobsScreen> {
               const SizedBox(height: 16),
               _buildFilterChips(),
               const SizedBox(height: 8),
-              
+
               // Advanced filters
               _buildAdvancedFilters(),
-              
+
               // Jobs list
-          Expanded(
-            child: () {
-              if (jobsState.error != null) {
-                return _buildErrorState(jobsState.error!);
-              }
-              
-              if (jobsState.isLoading && jobsState.jobs.isEmpty) {
-                return _buildLoadingIndicator();
-              }
-              
-              final filteredJobs = _getFilteredJobs(jobsState.jobs);
-              
-              if (filteredJobs.isEmpty) {
-                return _buildEmptyState();
-              }
-              
-              return RefreshIndicator(
-                onRefresh: () async {
-                  ref.invalidate(jobsProvider);
-                },
-                child: ListView.builder(
-                  controller: _scrollController,
-                  padding: const EdgeInsets.all(16),
-                  itemCount: filteredJobs.length,
-                  itemBuilder: (context, index) {
-                    final job = filteredJobs[index];
-                    return RichTextJobCard(
-                      job: job,
-                      onDetails: () => _showJobDetails(job),
-                      onBid: () => _handleBidAction(job),
-                    );
-                  },
-                ),
-              );
-            }(),
-          ),
+              Expanded(
+                child: () {
+                  if (jobsState.error != null) {
+                    return _buildErrorState(jobsState.error!);
+                  }
+
+                  if (jobsState.isLoading && jobsState.jobs.isEmpty) {
+                    return _buildLoadingIndicator();
+                  }
+
+                  final filteredJobs = _getFilteredJobs(jobsState.jobs);
+
+                  if (filteredJobs.isEmpty) {
+                    return _buildEmptyState();
+                  }
+
+                  return RefreshIndicator(
+                    onRefresh: () async {
+                      ref.invalidate(jobsProvider);
+                    },
+                    child: ListView.builder(
+                      controller: _scrollController,
+                      padding: const EdgeInsets.all(16),
+                      itemCount: filteredJobs.length,
+                      itemBuilder: (context, index) {
+                        final job = filteredJobs[index];
+                        return RichTextJobCard(
+                          job: job,
+                          onDetails: () => _showJobDetails(job),
+                          onBid: () => _handleBidAction(job),
+                        );
+                      },
+                    ),
+                  );
+                }(),
+              ),
             ],
           ),
         ],
@@ -431,7 +438,3 @@ class _JobsScreenState extends ConsumerState<JobsScreen> {
     );
   }
 }
-
-
-
-

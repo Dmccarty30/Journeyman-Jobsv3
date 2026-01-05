@@ -150,55 +150,6 @@ final class UserPreferenceServiceProvider extends $FunctionalProvider<
 String _$userPreferenceServiceHash() =>
     r'1cd146953c28b40960faa768664c813321f0f342';
 
-/// Local AI Model Service provider
-
-@ProviderFor(localModelServicePod)
-final localModelServicePodProvider = LocalModelServicePodProvider._();
-
-/// Local AI Model Service provider
-
-final class LocalModelServicePodProvider extends $FunctionalProvider<
-    LocalModelService,
-    LocalModelService,
-    LocalModelService> with $Provider<LocalModelService> {
-  /// Local AI Model Service provider
-  LocalModelServicePodProvider._()
-      : super(
-          from: null,
-          argument: null,
-          retry: null,
-          name: r'localModelServicePodProvider',
-          isAutoDispose: true,
-          dependencies: null,
-          $allTransitiveDependencies: null,
-        );
-
-  @override
-  String debugGetCreateSourceHash() => _$localModelServicePodHash();
-
-  @$internal
-  @override
-  $ProviderElement<LocalModelService> $createElement(
-          $ProviderPointer pointer) =>
-      $ProviderElement(pointer);
-
-  @override
-  LocalModelService create(Ref ref) {
-    return localModelServicePod(ref);
-  }
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(LocalModelService value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<LocalModelService>(value),
-    );
-  }
-}
-
-String _$localModelServicePodHash() =>
-    r'3e81c0dbab2f0c8336d4275401721ea63283bbe3';
-
 /// Jobs notifier for managing job data and operations
 
 @ProviderFor(JobsNotifier)
@@ -235,7 +186,7 @@ final class JobsNotifierProvider
   }
 }
 
-String _$jobsNotifierHash() => r'5e79f13224209ac8297c9611a0ebbf05a2ebfe42';
+String _$jobsNotifierHash() => r'4b45d8efe4a6762a2f9b798f70d38ad6e923aeb6';
 
 /// Jobs notifier for managing job data and operations
 

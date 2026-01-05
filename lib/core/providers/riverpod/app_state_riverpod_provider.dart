@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:journeyman_jobs/features/jobs/providers/jobs_riverpod_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'package:journeyman_jobs/core/core.dart';
 import 'package:journeyman_jobs/features/auth/providers/auth_riverpod_provider.dart';
-import 'package:journeyman_jobs/features/jobs/providers/jobs_riverpod_provider.dart';
 import 'package:journeyman_jobs/features/unions/providers/locals_riverpod_provider.dart';
 
 part 'app_state_riverpod_provider.g.dart';

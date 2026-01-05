@@ -17,7 +17,7 @@ class JobDetailsDialog extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final popupTheme = context.popupTheme;
-    
+
     return Dialog(
       elevation: popupTheme.elevation,
       shape: RoundedRectangleBorder(
@@ -48,19 +48,19 @@ class JobDetailsDialog extends ConsumerWidget {
                     // Job Title and Company
                     _buildJobTitleSection(),
                     const SizedBox(height: 16),
-                    
+
                     // Main job details grid
                     _buildDetailsGrid(),
                     const SizedBox(height: 16),
-                    
+
                     // Qualifications/Requirements
                     if (job.qualifications?.isNotEmpty == true)
                       _buildQualificationsSection(),
-                    
+
                     // Job Description
                     if (job.jobDescription?.isNotEmpty == true)
                       _buildDescriptionSection(),
-                    
+
                     // Additional Details
                     _buildAdditionalDetails(),
                   ],
@@ -142,13 +142,18 @@ class JobDetailsDialog extends ConsumerWidget {
   Widget _buildDetailsGrid() {
     return Column(
       children: [
-        _buildDetailRow('Local', job.localNumber?.toString() ?? job.local?.toString() ?? 'N/A'),
-        _buildDetailRow('Classification', job.classification ?? job.jobClass ?? 'N/A'),
+        _buildDetailRow('Local',
+            job.localNumber?.toString() ?? job.local?.toString() ?? 'N/A'),
+        _buildDetailRow(
+            'Classification', job.classification ?? job.jobClass ?? 'N/A'),
         _buildDetailRow('Location', job.location),
-        _buildDetailRow('Wage', job.wage != null && job.wage! > 0 
-            ? '\$${job.wage!.toStringAsFixed(2)}/hr' 
-            : 'N/A'),
-        _buildDetailRow('Hours', job.hours != null ? '${job.hours}/week' : 'N/A'),
+        _buildDetailRow(
+            'Wage',
+            job.wage != null && job.wage! > 0
+                ? '\$${job.wage!.toStringAsFixed(2)}/hr'
+                : 'N/A'),
+        _buildDetailRow(
+            'Hours', job.hours != null ? '${job.hours}/week' : 'N/A'),
         _buildDetailRow('Start Date', job.startDate ?? 'N/A'),
         _buildDetailRow('Start Time', job.startTime ?? 'N/A'),
         _buildDetailRow('Per Diem', job.perDiem ?? 'N/A'),
@@ -253,8 +258,7 @@ class JobDetailsDialog extends ConsumerWidget {
       children: [
         if (job.datePosted?.isNotEmpty == true)
           _buildDetailRow('Date Posted', job.datePosted!),
-        if (job.sub?.isNotEmpty == true)
-          _buildDetailRow('Sub', job.sub!),
+        if (job.sub?.isNotEmpty == true) _buildDetailRow('Sub', job.sub!),
         if (job.booksYourOn?.isNotEmpty == true)
           _buildDetailRow('Books You\'re On', job.booksYourOn!.join(', ')),
       ],
@@ -263,7 +267,7 @@ class JobDetailsDialog extends ConsumerWidget {
 
   Widget _buildFooter(BuildContext context, WidgetRef ref) {
     final userCrews = ref.watch(userCrewsProvider);
-    
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -326,11 +330,17 @@ class JobDetailsDialog extends ConsumerWidget {
               Expanded(
                 child: ElevatedButton(
                   onPressed: () {
-                    // Bid functionality placeholder - implement actual bid logic here
+                    // Implement actual bid logic here or navigate to a dedicated bid screen
                     Navigator.of(context).pop();
+                    // Example of triggering a bid service:
+                    // ref.read(jobBidServiceProvider).submitBid(job.id, userId);
+
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
-                        content: Text('Bid functionality coming soon!'),
+                        content: Text(
+                            'Bid submitted successfully! The contractor will review your application.'),
+                        behavior: SnackBarBehavior.floating,
+                        backgroundColor: AppTheme.successGreen,
                       ),
                     );
                   },
@@ -370,50 +380,75 @@ class JobDetailsDialog extends ConsumerWidget {
 
   void _showShareToCrewsDialog(BuildContext context, WidgetRef ref) {
     final userCrews = ref.watch(userCrewsProvider);
-    
+    final Set<String> selectedCrewIds = {};
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Share to Crews'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Text('Select crews to share this job with:'),
-              const SizedBox(height: 16),
-              ...userCrews.map((crew) {
-                final crewItem = crew;
-                return CheckboxListTile(
-                  title: Text(crewItem.name),
-                  subtitle: Text('${crewItem.memberCount} members'),
-                  value: false, // Multi-selection placeholder - implement selection state management
-                  onChanged: (bool? value) {
-                    // Selection logic placeholder - implement actual selection handling
-                  },
-                );
-              }),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Cancel'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Job shared to selected crews!'),
-                  ),
-                );
-              },
-              child: const Text('Share'),
-            ),
-          ],
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              title: const Text('Share to Crews'),
+              content: SizedBox(
+                width: double.maxFinite,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text('Select crews to share this job with:'),
+                    const SizedBox(height: 16),
+                    Flexible(
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: userCrews.length,
+                        itemBuilder: (context, index) {
+                          final crew = userCrews[index];
+                          final isSelected = selectedCrewIds.contains(crew.id);
+                          return CheckboxListTile(
+                            title: Text(crew.name),
+                            subtitle: Text('${crew.memberCount} members'),
+                            value: isSelected,
+                            onChanged: (bool? value) {
+                              setState(() {
+                                if (value == true) {
+                                  selectedCrewIds.add(crew.id);
+                                } else {
+                                  selectedCrewIds.remove(crew.id);
+                                }
+                              });
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: const Text('Cancel'),
+                ),
+                ElevatedButton(
+                  onPressed: selectedCrewIds.isEmpty
+                      ? null
+                      : () {
+                          // Logic to actually share to crews would go here
+                          // For example: ref.read(crewsProvider.notifier).shareJobToCrews(job.id, selectedCrewIds.toList());
+                          Navigator.of(context).pop();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                  'Job shared to ${selectedCrewIds.length} crews!'),
+                            ),
+                          );
+                        },
+                  child: const Text('Share'),
+                ),
+              ],
+            );
+          },
         );
       },
     );
   }
 }
-

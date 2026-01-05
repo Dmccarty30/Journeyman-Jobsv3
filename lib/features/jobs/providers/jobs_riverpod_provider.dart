@@ -2,14 +2,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:journeyman_jobs/utils/concurrent_operations.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../jobs.dart';
 import 'package:journeyman_jobs/core/core.dart' hide OperationType;
 import '../profile/profile.dart';
 import '../../../utils/concurrent_operations.dart' hide OperationType;
-// TODO: Add back when utility classes are implemented
-// import '../../utils/filter_performance.dart';
-// import '../../utils/memory_management.dart';
+import '../../auth/providers/auth_riverpod_provider.dart';
+
+import '../utils/filter_performance.dart';
+import '../utils/memory_management.dart';
+import '../../../core/providers/riverpod/local_ai_model_provider.dart';
 
 part 'jobs_riverpod_provider.g.dart';
 
@@ -75,30 +78,18 @@ FeedbackService feedbackService(Ref ref) => FeedbackService();
 @riverpod
 UserPreferenceService userPreferenceService(Ref ref) => UserPreferenceService();
 
-/// Local AI Model Service provider
-@riverpod
-LocalModelService localModelServicePod(Ref ref) => LocalModelService();
-
-/// Backwards compatibility alias for code using `localModelServiceProvider`
-// ignore: non_constant_identifier_names
-final localModelServiceProvider = localModelServicePodProvider;
-
 /// Jobs notifier for managing job data and operations
 @riverpod
 class JobsNotifier extends _$JobsNotifier {
   late final ConcurrentOperationManager _operationManager;
-  // TODO: Implement these utility classes when ready
-  // late final FilterPerformanceEngine _filterEngine;
-  // late final BoundedJobList _boundedJobList;
-  // late final VirtualJobListState _virtualJobList;
+  late final FilterPerformanceEngine _filterEngine;
+  late final BoundedJobList _boundedJobList;
 
   @override
   JobsState build() {
     _operationManager = ConcurrentOperationManager();
-    // TODO: Implement these utility classes
-    // _filterEngine = FilterPerformanceEngine();
-    // _boundedJobList = BoundedJobList();
-    // _virtualJobList = VirtualJobListState();
+    _filterEngine = FilterPerformanceEngine();
+    _boundedJobList = BoundedJobList(maxSize: 1000);
 
     return const JobsState();
   }
@@ -201,6 +192,12 @@ class JobsNotifier extends _$JobsNotifier {
         newLoadTimes.removeAt(0); // Keep only last 50 measurements
       }
 
+      // Update bounded list
+      if (isRefresh) {
+        _boundedJobList.clear();
+      }
+      _boundedJobList.addAll(updatedJobs);
+
       state = state.copyWith(
         jobs: updatedJobs,
         visibleJobs: updatedJobs, // For now, all jobs are visible
@@ -234,17 +231,18 @@ class JobsNotifier extends _$JobsNotifier {
       return;
     }
 
-    final Stopwatch stopwatch = Stopwatch()..start();
     try {
       // Store the filter and reload jobs
       state = state.copyWith(activeFilter: filter);
+
+      final Stopwatch filterTimer = _filterEngine.startMeasure();
 
       await _operationManager.executeOperation(
         type: OperationType.loadJobs,
         operation: () => loadJobs(filter: filter, isRefresh: true),
       );
 
-      stopwatch.stop();
+      _filterEngine.stopMeasure('applyFilter', filterTimer);
     } catch (e) {
       state = state.copyWith(error: e.toString());
       rethrow;
@@ -298,57 +296,62 @@ class JobsNotifier extends _$JobsNotifier {
     if (kDebugMode) {
       debugPrint('[DEBUG] Checking ${newJobs.length} new jobs for matches...');
     }
-    // Placeholder for userId - in a real app, this would come from an auth provider.
-    final String userId = 'dummy_user_id';
+
+    final String? userId = ref.read(currentUserIdProvider);
+    if (userId == null) {
+      if (kDebugMode) debugPrint('[DEBUG] No user ID found for matching.');
+      return;
+    }
+
     final UserPreferenceService preferenceService =
         ref.read(userPreferenceServiceProvider);
     final LocalModelService localModelService =
         ref.read(localModelServiceProvider);
 
-    // Placeholder: Get user preferences.
-    // In a real app, this would fetch actual user preferences from Firestore via preferenceService.
     final Map<String, dynamic> userPreferences =
-        await preferenceService.getUserPreferences(userId) ??
-            {
-              'preferredLocation': 'Florida',
-              'minWage': 30.0,
-              'hasPerDiem': true,
-            };
+        await preferenceService.getUserPreferences(userId) ?? {};
+
     if (kDebugMode) {
       debugPrint('[DEBUG] User preferences for matching: $userPreferences');
     }
 
     for (final job in newJobs) {
-      // Placeholder for actual matching logic with AI model.
-      // Here, we simulate a match based on simple criteria.
-      bool isMatch = false;
+      // Basic preference check
+      bool fitsBasicCriteria = true;
       if (userPreferences.containsKey('minWage') &&
           job.wage != null &&
-          job.wage! >= userPreferences['minWage']) {
-        isMatch = true;
+          job.wage! < (userPreferences['minWage'] as num)) {
+        fitsBasicCriteria = false;
       }
-      if (userPreferences.containsKey('hasPerDiem') &&
-          userPreferences['hasPerDiem'] == true &&
-          job.perDiem != null &&
-          job.perDiem!.isNotEmpty) {
-        isMatch = true;
-      }
-      // Simulate calling a local AI model for a more sophisticated match
-      // For now, localModelService.matchUserExperienceToPreferences is used as a generic AI check
-      // In a real scenario, a dedicated matching method might be more appropriate.
-      // For simplicity, we'll just check if the model would "process" it.
-      await localModelService
-          .summarizeJob(job.jobTitle ?? job.company); // Simulate processing
 
-      if (isMatch) {
-        if (kDebugMode) {
-          debugPrint(
-              '[DEBUG] Job match found: ${job.jobTitle} at ${job.company}');
+      if (fitsBasicCriteria) {
+        // AI match
+        // Assuming user has 'skills' in shared preferences or part of user model usually.
+        // For now, passing empty skills list as placeholder if not in preferences.
+        final List<String> userSkills =
+            (userPreferences['skills'] as List<dynamic>?)?.cast<String>() ?? [];
+
+        final double matchScore =
+            await localModelService.matchUserExperienceToPreferences(
+          jobDescription: job.jobDescription ?? job.jobTitle ?? '',
+          userPreferences: userPreferences,
+          userSkills: userSkills,
+        );
+
+        if (matchScore > 0.7) {
+          // Threshold for notification
+          if (kDebugMode) {
+            debugPrint(
+                '[DEBUG] Job match found: ${job.jobTitle} at ${job.company}');
+          }
+
+          await _triggerNotification(
+            job.id,
+            'New Job Match!',
+            '${job.jobTitle} at ${job.company} matches your profile.',
+            job,
+          );
         }
-        // Placeholder for triggering a notification.
-        // In a real app, this would use flutter_local_notifications or FCM.
-        _triggerNotification('New Job Match!',
-            'A new job matching your preferences has been found: ${job.jobTitle} at ${job.company}.');
       }
     }
     if (kDebugMode) {
@@ -356,10 +359,20 @@ class JobsNotifier extends _$JobsNotifier {
     }
   }
 
-  /// Placeholder for triggering local notifications.
-  void _triggerNotification(String title, String body) {
-    if (kDebugMode) debugPrint('[NOTIFICATION] $title: $body');
-    // TODO: Integrate with flutter_local_notifications package here.
+  /// Triggers a local notification.
+  Future<void> _triggerNotification(
+      String jobId, String title, String body, Job job) async {
+    final String? userId = ref.read(currentUserIdProvider);
+    if (userId == null) return;
+
+    await NotificationService.createJobAlert(
+      userId: userId,
+      jobId: jobId,
+      jobTitle: job.jobTitle ?? 'Job Opportunity',
+      company: job.company,
+      location: job.location,
+      hourlyRate: job.wage,
+    );
   }
 
   /// Collects user feedback for a specific job.
@@ -370,15 +383,20 @@ class JobsNotifier extends _$JobsNotifier {
     }
     final FeedbackService feedbackService = ref.read(feedbackServiceProvider);
 
-    // Placeholder for userId - in a real app, this would come from an auth provider
-    final String userId = 'dummy_user_id';
+    final String? userId = ref.read(currentUserIdProvider);
+    if (userId == null) {
+      if (kDebugMode) {
+        debugPrint('[DEBUG] Cannot submit feedback: No user logged in');
+      }
+      return; // Cannot submit feedback without user
+    }
 
     final UserFeedback feedback = UserFeedback(
       id: '', // Firestore will assign an ID
       userId: userId,
       subjectId: job.id,
       subjectType: 'job',
-      feedbackText: feedbackText ?? 'Job viewed', // Default feedback
+      feedbackText: feedbackText ?? 'Job viewed',
       rating: rating,
       createdAt: Timestamp.now(),
     );
@@ -393,7 +411,6 @@ class JobsNotifier extends _$JobsNotifier {
       if (kDebugMode) {
         debugPrint('[ERROR] Failed to collect feedback for job ${job.id}: $e');
       }
-      // Handle error, e.g., show a toast to the user
     }
   }
 
@@ -413,17 +430,15 @@ class JobsNotifier extends _$JobsNotifier {
                     state.loadTimes.length,
               ),
         'totalJobsLoaded': state.totalJobsLoaded,
-        // TODO: Add back when utility classes are implemented
-        // 'memoryUsage': _boundedJobList.estimatedMemoryUsage,
-        // 'filterPerformance': _filterEngine.getAverageFilterTime(),
+        'memoryUsage': _boundedJobList.estimatedMemoryUsage,
+        'filterPerformance': _filterEngine.getAverageFilterTime(),
       };
 
   /// Dispose resources
   void dispose() {
-    // TODO: Implement dispose when utility classes are ready
-    // _operationManager.dispose();
-    // _boundedJobList.dispose();
-    // _virtualJobList.dispose();
+    _operationManager.dispose();
+    _filterEngine.clearMetrics();
+    _boundedJobList.dispose();
   }
 }
 

@@ -1,3 +1,4 @@
+import 'package:journeyman_jobs/core/providers/riverpod/local_ai_model_provider.dart';
 import 'package:journeyman_jobs/features/jobs/jobs.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:journeyman_jobs/core/core.dart';
