@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:journeyman_jobs/design_system/electrical/transformer_trainer/widgets/transformer_diagram.dart';
 import 'package:provider/provider.dart';
 
 import 'package:journeyman_jobs/design_system/design_system.dart';

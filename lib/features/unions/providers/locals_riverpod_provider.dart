@@ -308,4 +308,4 @@ List<String> allClassifications(Ref ref) {
 /// The @riverpod annotation generates `localsNotifierProvider` from `LocalsNotifier`,
 /// but existing code references `localsProvider`. This alias maintains compatibility.
 // ignore: non_constant_identifier_names
-final localsProvider = localsNotifierProvider;
+final localsNotifierProvider = localsProvider;

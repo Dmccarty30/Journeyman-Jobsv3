@@ -202,7 +202,7 @@ String _$localModelServicePodHash() =>
 /// Jobs notifier for managing job data and operations
 
 @ProviderFor(JobsNotifier)
-final jobsNotifierProvider = JobsNotifierProvider._();
+final jobsProvider = JobsNotifierProvider._();
 
 /// Jobs notifier for managing job data and operations
 final class JobsNotifierProvider

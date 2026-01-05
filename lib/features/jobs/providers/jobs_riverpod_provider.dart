@@ -4,7 +4,7 @@ import 'package:journeyman_jobs/utils/concurrent_operations.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../jobs.dart';
-import 'package:journeyman_jobs/core/core.dart';
+import 'package:journeyman_jobs/core/core.dart' hide OperationType;
 import '../profile/profile.dart';
 import '../../../utils/concurrent_operations.dart' hide OperationType;
 // TODO: Add back when utility classes are implemented
@@ -230,7 +230,7 @@ class JobsNotifier extends _$JobsNotifier {
 
   /// Apply filter to jobs
   Future<void> applyFilter(JobFilterCriteria filter) async {
-    if (_operationManager.isOperationInProgress(OperationType.loadJobs as OperationType)) {
+    if (_operationManager.isOperationInProgress(OperationType.loadJobs)) {
       return;
     }
 
@@ -548,4 +548,4 @@ Future<List<Job>> stormJobs(Ref ref) async {
 /// The @riverpod annotation generates `jobsNotifierProvider` from `JobsNotifier`,
 /// but existing code references `jobsProvider`. This alias maintains compatibility.
 // ignore: non_constant_identifier_names
-final jobsProvider = jobsNotifierProvider;
+final jobsNotifierProvider = jobsProvider;
