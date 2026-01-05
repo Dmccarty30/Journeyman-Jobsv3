@@ -2,12 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:journeyman_jobs/utils/concurrent_operations.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../jobs.dart';
 import 'package:journeyman_jobs/core/core.dart' hide OperationType;
 import '../profile/profile.dart';
-import '../../../utils/concurrent_operations.dart' hide OperationType;
 import '../../auth/providers/auth_riverpod_provider.dart';
 
 import '../utils/filter_performance.dart';

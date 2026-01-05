@@ -48,8 +48,12 @@ Stream<List<Crew>> userCrewsStream(Ref ref) {
   final userId = ref.watch(currentUserIdProvider);
 
   if (userId == null) return Stream.value([]);
-  return crewService.getUserCrewsStream(userId).map((snapshot) {
-    return snapshot.docs.map((doc) => Crew.fromFirestore(doc)).toList();
+  return crewService.getUserCrewsStream(userId).asyncMap((snapshot) async {
+    final crewFutures = snapshot.docs.map((doc) async {
+      final crewDoc = await doc.reference.parent.parent!.get();
+      return Crew.fromFirestore(crewDoc);
+    });
+    return Future.wait(crewFutures);
   });
 }
 

@@ -79,16 +79,10 @@ class JobDetailsDialog extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppTheme.primaryNavy.withValues(alpha: 0.05),
+        color: AppTheme.primaryNavy,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(AppTheme.radiusLg),
           topRight: Radius.circular(AppTheme.radiusLg),
-        ),
-        border: Border(
-          bottom: BorderSide(
-            color: AppTheme.accentCopper.withValues(alpha: 0.3),
-            width: 1,
-          ),
         ),
       ),
       child: Row(
@@ -99,14 +93,17 @@ class JobDetailsDialog extends ConsumerWidget {
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
-                color: AppTheme.primaryNavy,
+                color: AppTheme.white,
               ),
             ),
           ),
           IconButton(
             icon: const Icon(Icons.close),
             onPressed: () => Navigator.of(context).pop(),
-            color: AppTheme.textLight,
+            color: AppTheme.white,
+            style: IconButton.styleFrom(
+              backgroundColor: AppTheme.white.withAlpha(26),
+            ),
           ),
         ],
       ),

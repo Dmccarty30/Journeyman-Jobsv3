@@ -3,8 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../unions.dart';
 import 'dart:io' show Platform;
-import 'package:go_router/go_router.dart';
-import '../../../../features/navigation/navigation.dart';
 import '../../../../utils/text_formatting_wrapper.dart';
 import 'package:journeyman_jobs/design_system/design_system.dart';
 import 'package:journeyman_jobs/core/core.dart';
@@ -19,9 +17,8 @@ class LocalsScreen extends ConsumerStatefulWidget {
 class _LocalsScreenState extends ConsumerState<LocalsScreen> {
   final TextEditingController _searchController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
-  
+
   String _searchQuery = '';
-  String? _selectedState;
 
   @override
   void initState() {
@@ -40,11 +37,11 @@ class _LocalsScreenState extends ConsumerState<LocalsScreen> {
   }
 
   void _onScroll() {
-    if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
+    if (_scrollController.position.pixels ==
+        _scrollController.position.maxScrollExtent) {
       ref.read(localsProvider.notifier).loadLocals(loadMore: true);
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -57,10 +54,7 @@ class _LocalsScreenState extends ConsumerState<LocalsScreen> {
         actions: [
           NotificationBadge(
             iconColor: AppTheme.white,
-            showPopupOnTap: false,
-            onTap: () {
-              context.push(AppRouter.notifications);
-            },
+            showPopupOnTap: true,
           ),
         ],
         bottom: PreferredSize(
@@ -72,9 +66,8 @@ class _LocalsScreenState extends ConsumerState<LocalsScreen> {
               style: AppTheme.bodyMedium.copyWith(color: AppTheme.white),
               decoration: InputDecoration(
                 hintText: 'Search by local number, city, or state...',
-                hintStyle: AppTheme.bodyMedium.copyWith(
-                  color: AppTheme.white.withAlpha(179)
-                ),
+                hintStyle: AppTheme.bodyMedium
+                    .copyWith(color: AppTheme.white.withAlpha(179)),
                 prefixIcon: const Icon(Icons.search, color: AppTheme.white),
                 filled: true,
                 fillColor: AppTheme.white.withAlpha(26),
@@ -88,10 +81,8 @@ class _LocalsScreenState extends ConsumerState<LocalsScreen> {
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(AppTheme.radiusMd),
-                  borderSide: const BorderSide(
-                    color: AppTheme.accentCopper, 
-                    width: 2
-                  ),
+                  borderSide:
+                      const BorderSide(color: AppTheme.accentCopper, width: 2),
                 ),
               ),
               onChanged: (value) {
@@ -115,7 +106,6 @@ class _LocalsScreenState extends ConsumerState<LocalsScreen> {
           ),
           Column(
             children: [
-
               // Locals list
               Expanded(
                 child: Consumer(
@@ -154,16 +144,13 @@ class _LocalsScreenState extends ConsumerState<LocalsScreen> {
             const SizedBox(height: AppTheme.spacingMd),
             Text(
               'Error loading locals',
-              style: AppTheme.headlineSmall.copyWith(
-                color: AppTheme.errorRed
-              ),
+              style: AppTheme.headlineSmall.copyWith(color: AppTheme.errorRed),
             ),
             const SizedBox(height: AppTheme.spacingSm),
             Text(
               localsState.error!,
-              style: AppTheme.bodyMedium.copyWith(
-                color: AppTheme.textSecondary
-              ),
+              style:
+                  AppTheme.bodyMedium.copyWith(color: AppTheme.textSecondary),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: AppTheme.spacingMd),
@@ -181,9 +168,10 @@ class _LocalsScreenState extends ConsumerState<LocalsScreen> {
     if (_searchQuery.isNotEmpty) {
       filteredLocals = localsState.locals.where((local) {
         return local.localUnion.toLowerCase().contains(_searchQuery) ||
-               local.city.toLowerCase().contains(_searchQuery) ||
-               local.state.toLowerCase().contains(_searchQuery) ||
-               (local.classification?.toLowerCase().contains(_searchQuery) ?? false);
+            local.city.toLowerCase().contains(_searchQuery) ||
+            local.state.toLowerCase().contains(_searchQuery) ||
+            (local.classification?.toLowerCase().contains(_searchQuery) ??
+                false);
       }).toList();
     }
 
@@ -199,20 +187,14 @@ class _LocalsScreenState extends ConsumerState<LocalsScreen> {
             ),
             const SizedBox(height: AppTheme.spacingMd),
             Text(
-              _searchQuery.isEmpty 
-                  ? 'No locals found' 
-                  : 'No results found',
-              style: AppTheme.headlineSmall.copyWith(
-                color: AppTheme.textLight
-              ),
+              _searchQuery.isEmpty ? 'No locals found' : 'No results found',
+              style: AppTheme.headlineSmall.copyWith(color: AppTheme.textLight),
             ),
             if (_searchQuery.isNotEmpty) ...[
               const SizedBox(height: AppTheme.spacingSm),
               Text(
                 'Try adjusting your search',
-                style: AppTheme.bodyMedium.copyWith(
-                  color: AppTheme.textLight
-                ),
+                style: AppTheme.bodyMedium.copyWith(color: AppTheme.textLight),
               ),
             ],
           ],
@@ -225,7 +207,6 @@ class _LocalsScreenState extends ConsumerState<LocalsScreen> {
       padding: const EdgeInsets.all(AppTheme.spacingMd),
       itemCount: filteredLocals.length,
       itemBuilder: (context, index) {
-
         final local = filteredLocals[index];
         return LocalCard(
           local: local,
@@ -327,7 +308,8 @@ class LocalCard extends StatelessWidget {
                       local.address!,
                       Icons.location_on_outlined,
                       canTap: true,
-                      onTap: () => _launchMaps(local.address!, local.city, local.state),
+                      onTap: () =>
+                          _launchMaps(local.address!, local.city, local.state),
                     ),
                     const SizedBox(height: AppTheme.spacingSm),
                   ],
@@ -427,7 +409,7 @@ class LocalCard extends StatelessWidget {
   Future<void> _launchPhone(String phone) async {
     final cleanPhone = phone.replaceAll(RegExp(r'[^\d+]'), '');
     final Uri phoneUri = Uri(scheme: 'tel', path: cleanPhone);
-    
+
     if (await canLaunchUrl(phoneUri)) {
       await launchUrl(phoneUri);
     }
@@ -435,7 +417,7 @@ class LocalCard extends StatelessWidget {
 
   Future<void> _launchEmail(String email) async {
     final Uri emailUri = Uri(scheme: 'mailto', path: email);
-    
+
     if (await canLaunchUrl(emailUri)) {
       await launchUrl(emailUri);
     }
@@ -446,9 +428,9 @@ class LocalCard extends StatelessWidget {
     if (!url.startsWith('http://') && !url.startsWith('https://')) {
       url = 'https://$url';
     }
-    
+
     final Uri webUri = Uri.parse(url);
-    
+
     if (await canLaunchUrl(webUri)) {
       await launchUrl(webUri, mode: LaunchMode.externalApplication);
     }
@@ -457,7 +439,7 @@ class LocalCard extends StatelessWidget {
   Future<void> _launchMaps(String address, String city, String state) async {
     final fullAddress = '$address, $city, $state';
     final encodedAddress = Uri.encodeComponent(fullAddress);
-    
+
     Uri mapsUri;
     if (Platform.isIOS) {
       mapsUri = Uri.parse('maps://?q=$encodedAddress');
@@ -466,10 +448,9 @@ class LocalCard extends StatelessWidget {
       }
     } else {
       mapsUri = Uri.parse(
-        'https://www.google.com/maps/search/?api=1&query=$encodedAddress'
-      );
+          'https://www.google.com/maps/search/?api=1&query=$encodedAddress');
     }
-    
+
     if (await canLaunchUrl(mapsUri)) {
       await launchUrl(mapsUri, mode: LaunchMode.externalApplication);
     }
@@ -485,7 +466,7 @@ class LocalDetailsDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     // Check if this local has multiple offices
     final hasMultipleOffices = _hasMultipleOffices();
-    
+
     return Dialog(
       backgroundColor: AppTheme.white,
       shape: RoundedRectangleBorder(
@@ -543,7 +524,8 @@ class LocalDetailsDialog extends StatelessWidget {
                             ),
                             decoration: BoxDecoration(
                               color: AppTheme.accentCopper.withAlpha(51),
-                              borderRadius: BorderRadius.circular(AppTheme.radiusXl),
+                              borderRadius:
+                                  BorderRadius.circular(AppTheme.radiusXl),
                             ),
                             child: Text(
                               toTitleCase(local.classification!),
@@ -591,14 +573,14 @@ class LocalDetailsDialog extends StatelessWidget {
 
   bool _hasMultipleOffices() {
     if (local.data == null) return false;
-    
+
     // Check for patterns indicating multiple offices
     final data = local.data!;
     return data.containsKey('office2_address') ||
-           data.containsKey('office_2_address') ||
-           data.containsKey('second_office') ||
-           data.containsKey('additional_offices') ||
-           (data.containsKey('offices') && data['offices'] is List);
+        data.containsKey('office_2_address') ||
+        data.containsKey('second_office') ||
+        data.containsKey('additional_offices') ||
+        (data.containsKey('offices') && data['offices'] is List);
   }
 
   Widget _buildSingleOffice(BuildContext context) {
@@ -614,8 +596,7 @@ class LocalDetailsDialog extends StatelessWidget {
           email: local.email,
           website: local.website,
         ),
-        if (local.data?.isNotEmpty == true && 
-            !_shouldSkipAdditionalInfo()) ...[
+        if (local.data?.isNotEmpty == true && !_shouldSkipAdditionalInfo()) ...[
           const SizedBox(height: AppTheme.spacingLg),
           _buildSectionHeader('Additional Information'),
           const SizedBox(height: AppTheme.spacingMd),
@@ -627,7 +608,7 @@ class LocalDetailsDialog extends StatelessWidget {
 
   Widget _buildMultipleOffices(BuildContext context) {
     final offices = _extractOffices();
-    
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -648,8 +629,7 @@ class LocalDetailsDialog extends StatelessWidget {
             _buildMeetingInfo(offices[i]['meeting']),
           ],
         ],
-        if (local.data?.isNotEmpty == true && 
-            !_shouldSkipAdditionalInfo()) ...[
+        if (local.data?.isNotEmpty == true && !_shouldSkipAdditionalInfo()) ...[
           const SizedBox(height: AppTheme.spacingLg),
           _buildSectionHeader('Additional Information'),
           const SizedBox(height: AppTheme.spacingMd),
@@ -662,7 +642,7 @@ class LocalDetailsDialog extends StatelessWidget {
   List<Map<String, String?>> _extractOffices() {
     final offices = <Map<String, String?>>[];
     final data = local.data ?? {};
-    
+
     // Check for structured offices list
     if (data['offices'] is List) {
       for (var office in data['offices']) {
@@ -680,7 +660,7 @@ class LocalDetailsDialog extends StatelessWidget {
       }
       return offices;
     }
-    
+
     // Main office
     offices.add({
       'name': 'Main Office',
@@ -689,9 +669,10 @@ class LocalDetailsDialog extends StatelessWidget {
       'fax': data['fax']?.toString(),
       'email': local.email,
       'website': local.website,
-      'meeting': data['meeting']?.toString() ?? data['meeting_time']?.toString(),
+      'meeting':
+          data['meeting']?.toString() ?? data['meeting_time']?.toString(),
     });
-    
+
     // Check for additional offices with various naming patterns
     final officePatterns = [
       ['office2', 'Office 2'],
@@ -699,11 +680,11 @@ class LocalDetailsDialog extends StatelessWidget {
       ['second_office', 'Second Office'],
       ['branch_office', 'Branch Office'],
     ];
-    
+
     for (var pattern in officePatterns) {
       final prefix = pattern[0];
       final name = pattern[1];
-      
+
       if (data['${prefix}_address'] != null ||
           data['${prefix}_phone'] != null) {
         offices.add({
@@ -717,7 +698,7 @@ class LocalDetailsDialog extends StatelessWidget {
         });
       }
     }
-    
+
     return offices;
   }
 
@@ -822,7 +803,7 @@ class LocalDetailsDialog extends StatelessWidget {
     VoidCallback? onTap,
   }) {
     final isClickable = onTap != null;
-    
+
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -857,10 +838,14 @@ class LocalDetailsDialog extends StatelessWidget {
                     Text(
                       value,
                       style: AppTheme.bodyMedium.copyWith(
-                        color: isClickable ? AppTheme.accentCopper : AppTheme.textDark,
-                        decoration: isClickable ? TextDecoration.underline : null,
+                        color: isClickable
+                            ? AppTheme.accentCopper
+                            : AppTheme.textDark,
+                        decoration:
+                            isClickable ? TextDecoration.underline : null,
                         decorationColor: AppTheme.accentCopper,
-                        fontWeight: isClickable ? FontWeight.w500 : FontWeight.normal,
+                        fontWeight:
+                            isClickable ? FontWeight.w500 : FontWeight.normal,
                       ),
                     ),
                   ],
@@ -880,8 +865,10 @@ class LocalDetailsDialog extends StatelessWidget {
   }
 
   Widget _buildMeetingInfo(String? meetingInfo) {
-    if (meetingInfo == null || meetingInfo.isEmpty) return const SizedBox.shrink();
-    
+    if (meetingInfo == null || meetingInfo.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
     return Container(
       padding: const EdgeInsets.all(AppTheme.spacingMd),
       decoration: BoxDecoration(
@@ -929,39 +916,75 @@ class LocalDetailsDialog extends StatelessWidget {
 
   bool _shouldSkipAdditionalInfo() {
     if (local.data == null) return true;
-    
+
     // Keys to skip in additional info (already displayed elsewhere)
     final skipKeys = [
-      'address', 'phone', 'email', 'website', 'fax',
-      'office2_address', 'office2_phone', 'office2_email', 'office2_website', 'office2_fax',
-      'office_2_address', 'office_2_phone', 'office_2_email', 'office_2_website', 'office_2_fax',
-      'offices', 'meeting', 'meeting_time', 'classification',
-      'city', 'state', 'local_union', 'local_name',
+      'address',
+      'phone',
+      'email',
+      'website',
+      'fax',
+      'office2_address',
+      'office2_phone',
+      'office2_email',
+      'office2_website',
+      'office2_fax',
+      'office_2_address',
+      'office_2_phone',
+      'office_2_email',
+      'office_2_website',
+      'office_2_fax',
+      'offices',
+      'meeting',
+      'meeting_time',
+      'classification',
+      'city',
+      'state',
+      'local_union',
+      'local_name',
     ];
-    
-    return !local.data!.entries.any((entry) => 
-      !skipKeys.contains(entry.key.toLowerCase()) && 
-      entry.value != null && 
-      entry.value.toString().isNotEmpty
-    );
+
+    return !local.data!.entries.any((entry) =>
+        !skipKeys.contains(entry.key.toLowerCase()) &&
+        entry.value != null &&
+        entry.value.toString().isNotEmpty);
   }
 
   Widget _buildAdditionalInfo() {
     final skipKeys = [
-      'address', 'phone', 'email', 'website', 'fax',
-      'office2_address', 'office2_phone', 'office2_email', 'office2_website', 'office2_fax',
-      'office_2_address', 'office_2_phone', 'office_2_email', 'office_2_website', 'office_2_fax',
-      'offices', 'meeting', 'meeting_time', 'classification',
-      'city', 'state', 'local_union', 'local_name',
+      'address',
+      'phone',
+      'email',
+      'website',
+      'fax',
+      'office2_address',
+      'office2_phone',
+      'office2_email',
+      'office2_website',
+      'office2_fax',
+      'office_2_address',
+      'office_2_phone',
+      'office_2_email',
+      'office_2_website',
+      'office_2_fax',
+      'offices',
+      'meeting',
+      'meeting_time',
+      'classification',
+      'city',
+      'state',
+      'local_union',
+      'local_name',
     ];
-    
+
     final additionalEntries = local.data!.entries
         .where((entry) => !skipKeys.contains(entry.key.toLowerCase()))
-        .where((entry) => entry.value != null && entry.value.toString().isNotEmpty)
+        .where(
+            (entry) => entry.value != null && entry.value.toString().isNotEmpty)
         .toList();
-    
+
     if (additionalEntries.isEmpty) return const SizedBox.shrink();
-    
+
     return Container(
       padding: const EdgeInsets.all(AppTheme.spacingMd),
       decoration: BoxDecoration(
@@ -1014,7 +1037,7 @@ class LocalDetailsDialog extends StatelessWidget {
     return key
         .replaceAll('_', ' ')
         .split(' ')
-        .map((word) => word.isNotEmpty 
+        .map((word) => word.isNotEmpty
             ? '${word[0].toUpperCase()}${word.substring(1).toLowerCase()}'
             : '')
         .join(' ');
@@ -1023,7 +1046,7 @@ class LocalDetailsDialog extends StatelessWidget {
   Future<void> _launchPhone(String phone) async {
     final cleanPhone = phone.replaceAll(RegExp(r'[^\d+]'), '');
     final Uri phoneUri = Uri(scheme: 'tel', path: cleanPhone);
-    
+
     if (await canLaunchUrl(phoneUri)) {
       await launchUrl(phoneUri);
     }
@@ -1031,7 +1054,7 @@ class LocalDetailsDialog extends StatelessWidget {
 
   Future<void> _launchEmail(String email) async {
     final Uri emailUri = Uri(scheme: 'mailto', path: email);
-    
+
     if (await canLaunchUrl(emailUri)) {
       await launchUrl(emailUri);
     }
@@ -1042,9 +1065,9 @@ class LocalDetailsDialog extends StatelessWidget {
     if (!url.startsWith('http://') && !url.startsWith('https://')) {
       url = 'https://$url';
     }
-    
+
     final Uri webUri = Uri.parse(url);
-    
+
     if (await canLaunchUrl(webUri)) {
       await launchUrl(webUri, mode: LaunchMode.externalApplication);
     }
@@ -1053,7 +1076,7 @@ class LocalDetailsDialog extends StatelessWidget {
   Future<void> _launchMaps(String address, String city, String state) async {
     final fullAddress = '$address, $city, $state';
     final encodedAddress = Uri.encodeComponent(fullAddress);
-    
+
     Uri mapsUri;
     if (Platform.isIOS) {
       mapsUri = Uri.parse('maps://?q=$encodedAddress');
@@ -1062,13 +1085,11 @@ class LocalDetailsDialog extends StatelessWidget {
       }
     } else {
       mapsUri = Uri.parse(
-        'https://www.google.com/maps/search/?api=1&query=$encodedAddress'
-      );
+          'https://www.google.com/maps/search/?api=1&query=$encodedAddress');
     }
-    
+
     if (await canLaunchUrl(mapsUri)) {
       await launchUrl(mapsUri, mode: LaunchMode.externalApplication);
     }
   }
 }
-

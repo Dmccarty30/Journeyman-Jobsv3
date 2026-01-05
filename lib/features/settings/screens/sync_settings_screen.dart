@@ -4,7 +4,6 @@ import 'package:journeyman_jobs/core/services/offline_data_service.dart';
 import 'package:journeyman_jobs/core/widgets/offline_indicators.dart';
 import 'package:provider/provider.dart';
 import 'package:journeyman_jobs/design_system/design_system.dart';
-import '../settings.dart';
 
 /// Screen for managing sync and offline data settings
 class SyncSettingsScreen extends StatefulWidget {

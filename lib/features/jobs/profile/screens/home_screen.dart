@@ -92,10 +92,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       actions: [
         NotificationBadge(
           iconColor: AppTheme.white,
-          showPopupOnTap: false,
-          onTap: () {
-            context.push(AppRouter.notificationSettings);
-          },
+          showPopupOnTap: true,
         ),
       ],
     );

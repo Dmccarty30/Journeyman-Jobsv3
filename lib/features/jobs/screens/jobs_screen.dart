@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:journeyman_jobs/design_system/design_system.dart';
-import 'package:journeyman_jobs/features/jobs/providers/jobs_riverpod_provider.dart';
 import '../jobs.dart';
-import '../../../features/navigation/navigation.dart';
-import '../providers/jobs_riverpod_provider.dart';
+import 'package:journeyman_jobs/core/widgets/notification_badge.dart';
 
 class JobsScreen extends ConsumerStatefulWidget {
   const JobsScreen({super.key});
@@ -365,12 +362,9 @@ class _JobsScreenState extends ConsumerState<JobsScreen> {
         elevation: 0,
         actions: [
           // Notification icon only
-          IconButton(
-            icon: const Icon(Icons.notifications),
-            onPressed: () {
-              context.push(AppRouter.notificationSettings);
-            },
-            tooltip: 'Notifications',
+          NotificationBadge(
+            iconColor: AppTheme.white,
+            showPopupOnTap: true,
           ),
         ],
       ),

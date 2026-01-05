@@ -1,4 +1,3 @@
-import 'package:journeyman_jobs/features/jobs/providers/jobs_riverpod_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:firebase_auth/firebase_auth.dart'; // To get current user ID
 import 'package:cloud_firestore/cloud_firestore.dart';

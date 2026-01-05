@@ -5,7 +5,6 @@ import 'package:journeyman_jobs/core/services/location_service.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../storm.dart';
-import '../../../../design_system/app_theme.dart';
 import 'package:journeyman_jobs/design_system/design_system.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
