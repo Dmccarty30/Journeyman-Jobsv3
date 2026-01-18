@@ -1,0 +1,1233 @@
+INFO         | Android emulator version 36.2.12.0 (build_id 14214601) (CL:N/A)
+INFO         | Graphics backend: gfxstream
+DEBUG   | Current emulator version 36.2.12 is the same as the required version 36.2.12.
+INFO         | Found AVD name 'flutter_emulator'
+INFO         | Found AVD target architecture: x86_64
+INFO         | argv[0]: 'C:\Users\david\AppData\Local\Android\Sdk\emulator\emulator.exe'; program directory: 'C:\Users\david\AppData\Local\Android\Sdk\emulator'
+INFO         | Found systemPath C:\Users\david\AppData\Local\Android\Sdk\system-images\android-35\google_apis_playstore\x86_64\
+DEBUG   | autoconfig: -skin 1080x1920
+DEBUG   | autoconfig: -skindir (null)
+DEBUG   | init, loading C:\Users\david\AppData\Local\Android\Sdk\emulator\lib\advancedFeatures.ini
+DEBUG   | autoconfig: -kernel C:\Users\david\AppData\Local\Android\Sdk\system-images\android-35\google_apis_playstore\x86_64\\kernel-ranchu
+DEBUG   | Target arch = 'x86_64'
+DEBUG   | Auto-detect: Kernel image requires new device naming scheme.
+DEBUG   | Auto-detect: Kernel does not support YAFFS2 partitions.
+DEBUG   | autoconfig: -ramdisk C:\Users\david\AppData\Local\Android\Sdk\system-images\android-35\google_apis_playstore\x86_64\\ramdisk.img
+DEBUG   | Using initial system image: C:\Users\david\AppData\Local\Android\Sdk\system-images\android-35\google_apis_playstore\x86_64\\system.img
+DEBUG   | Using initial vendor image: C:\Users\david\AppData\Local\Android\Sdk\system-images\android-35\google_apis_playstore\x86_64\\vendor.img
+DEBUG   | autoconfig: -data C:\Users\david\.android\avd\..\avd\flutter_emulator.avd\userdata-qemu.img
+DEBUG   | autoconfig: -initdata (null)
+DEBUG   | autoconfig: -cache C:\Users\david\.android\avd\..\avd\flutter_emulator.avd\cache.img
+INFO         | Increasing RAM size to 2048MB
+DEBUG   | VM heap size 0MB is below hardware specified minimum of 512MB,setting it to that value
+DEBUG   | System image is read only
+INFO         | IPv4 server found: 172.22.232.220
+INFO         | Ignore IPv6 address: 70b2:e305:8301:0:80a7:e305:8301:0
+INFO         | Ignore IPv6 address: 70b2:e305:8301:0:80a7:e305:8301:0
+INFO         | Ignore IPv6 address: 70b2:e305:8301:0:80a7:e305:8301:0
+INFO         | Ignore IPv6 address: 60b8:e305:8301:0:80a7:e305:8301:0
+INFO         | Ignore IPv6 address: 60b8:e305:8301:0:80a7:e305:8301:0
+INFO         | Ignore IPv6 address: 60b8:e305:8301:0:80a7:e305:8301:0
+INFO         | Ignore IPv6 address: 70be:e305:8301:0:80a7:e305:8301:0
+INFO         | Ignore IPv6 address: 70be:e305:8301:0:80a7:e305:8301:0
+INFO         | Ignore IPv6 address: 70be:e305:8301:0:80a7:e305:8301:0
+INFO         | Ignore IPv6 address: 80c4:e305:8301:0:80a7:e305:8301:0
+INFO         | Ignore IPv6 address: 80c4:e305:8301:0:80a7:e305:8301:0
+INFO         | Ignore IPv6 address: 80c4:e305:8301:0:80a7:e305:8301:0
+INFO         | Ignore IPv6 address: a0ca:e305:8301:0:80a7:e305:8301:0
+INFO         | Ignore IPv6 address: a0ca:e305:8301:0:80a7:e305:8301:0
+INFO         | Ignore IPv6 address: a0ca:e305:8301:0:80a7:e305:8301:0
+DEBUG   | IPv6 DNS server found: c0d0:e305:8301:0:80a7:e305:8301:0
+INFO         | Ignore IPv6 address: b0da:e305:8301:0:80a7:e305:8301:0
+INFO         | Ignore IPv6 address: b0da:e305:8301:0:80a7:e305:8301:0
+INFO         | Ignore IPv6 address: b0da:e305:8301:0:80a7:e305:8301:0
+INFO         | Ignore IPv6 address: d8e0:e305:8301:0:80a7:e305:8301:0
+INFO         | Ignore IPv6 address: d8e0:e305:8301:0:80a7:e305:8301:0
+INFO         | Ignore IPv6 address: d8e0:e305:8301:0:80a7:e305:8301:0
+INFO         | Ignore IPv6 address: c0e6:e305:8301:0:80a7:e305:8301:0
+INFO         | Ignore IPv6 address: c0e6:e305:8301:0:80a7:e305:8301:0
+INFO         | Ignore IPv6 address: c0e6:e305:8301:0:80a7:e305:8301:0
+DEBUG   | Found 2 DNS servers:
+DEBUG   | 	172.22.232.220
+DEBUG   | 	2607:fb90:d160:89ce::59
+INFO         | Guest GLES Driver: Auto (ext controls)
+DEBUG   | emuglConfig_init: denylisted=0 has_guest_renderer=1, mode: auto, option: 
+
+DEBUG   | emuglConfig_init: auto-selected host based on conditions and UI preference 0
+
+library_mode host gpu mode host
+DEBUG   | setCurrentRenderer: host Host
+DEBUG   | emuglConfig_get_vulkan_runtime_full_path: Checking for vulkan-1.dll versions
+DEBUG   | querying file version info API...
+DEBUG   | found kernelbase.dll
+DEBUG   | GetFileVersionInfoSizeW found. On Windows 10?
+DEBUG   | GetFileVersionInfoW found. On Windows 10?
+DEBUG   | VerQueryValueW found. Can query file versions
+DEBUG   | querying file version info API...
+DEBUG   | vulkan-1.dll version: 1.4.313.0
+DEBUG   | C:\Users\david\AppData\Local\Android\Sdk\emulator\lib64\vulkan\vulkan-1.dll version: 5.0.0.1
+DEBUG   | emuglConfig_get_vulkan_runtime_full_path: Using vulkan runtime path: vulkan-1.dll
+DEBUG   | emuglConfig_get_vulkan_hardware_gpu_support_info: Successfully created vulkan instance
+
+DEBUG   | emuglConfig_get_vulkan_hardware_gpu_support_info: Physical devices count is 1
+
+INFO         | emuglConfig_get_vulkan_hardware_gpu_support_info: Found physical GPU 'Intel(R) Iris(R) Xe Graphics', type: VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU, apiVersion: 1.4.323, driverVersion: 0.405.2944
+
+DEBUG   | Checking whether Windows Hypervisor Platform (WHPX) is available.
+DEBUG   | WinHvPlatform.dll found. Looking for WHvGetCapability...
+DEBUG   | WHvGetCapability found. Querying WHPX capabilities...
+DEBUG   | WHPX (10.0.26200) is installed and usable.
+DEBUG   | emuglConfig_init: GPU emulation enabled using 'host' mode
+
+INFO         | GPU device local memory = 32632MB
+DEBUG   | GPU emulation enabled using 'host' mode
+INFO         | Checking system compatibility:
+INFO         |   Checking: hasCompatibleHypervisor
+INFO         |      Ok: Hypervisor compatibility to run avd: `flutter_emulator` are met
+INFO         |   Checking: hasSufficientSystem
+INFO         |      Ok: System requirements to run avd: `flutter_emulator` are met
+INFO         |   Checking: hasSufficientHwGpu
+INFO         |      Ok: Hardware GPU requirements to run avd: `flutter_emulator` are passed
+INFO         |   Checking: hasSufficientDiskSpace
+INFO         |      Ok: Disk space requirements to run avd: `flutter_emulator` are met
+DEBUG   | Starting hostapd main loop.
+DEBUG   | found magic skin width=1080 height=1920 bpp=16
+
+DEBUG   | Requested console port 5556: Inferring adb port 5557.
+DEBUG   | CPU Acceleration: working
+DEBUG   | CPU Acceleration status: WHPX(10.0.26200) is installed and usable.
+DEBUG   | handleCpuAcceleration: feature check for hvf
+DEBUG   | Bluetooth requested by guest
+DEBUG   | started modem simulator host server at port: 13245
+INFO         | Critical: Failed to load opengl32sw (The specified module could not be found.) (:0, )
+INFO         | Warning: Software OpenGL failed. Falling back to system OpenGL. (:0, )
+INFO         | Warning: QMetaObject::connectSlotsByName: No matching signal for on_btn_xr_environment_living_room_day_clicked() (:0, )
+INFO         | Warning: QMetaObject::connectSlotsByName: No matching signal for on_btn_xr_environment_living_room_night_clicked() (:0, )
+INFO         | Warning: QMetaObject::connectSlotsByName: No matching signal for on_new_posture_requested(int) (:0, )
+INFO         | Warning: QMetaObject::connectSlotsByName: No matching signal for on_dismiss_posture_selection_dialog() (:0, )
+INFO         | Warning: QMetaObject::connectSlotsByName: No matching signal for on_new_resizable_requested(PresetEmulatorSizeType) (:0, )
+INFO         | Warning: QMetaObject::connectSlotsByName: No matching signal for on_dismiss_resizable_dialog() (:0, )
+INFO         | Warning: QMetaObject::connectSlotsByName: No matching signal for on_xr_environment_mode_changed(int) (:0, )
+INFO         | Warning: QMetaObject::connectSlotsByName: No matching signal for on_dismiss_xr_environment_mode_dialog() (:0, )
+INFO         | Warning: QMetaObject::connectSlotsByName: No matching signal for on_xr_input_mode_changed(int) (:0, )
+INFO         | Warning: QMetaObject::connectSlotsByName: No matching signal for on_dismiss_xr_input_mode_dialog() (:0, )
+INFO         | Warning: QMetaObject::connectSlotsByName: No matching signal for on_sleep_timer_done() (:0, )
+INFO         | Warning: QMetaObject::connectSlotsByName: No matching signal for on_unfold_timer_done() (:0, )
+INFO         | Storing crashdata in: C:\Users\david\AppData\Local\Temp\\AndroidEmulator\emu-crash-36.2.12.db, detection is enabled for process: 26552
+INFO         | Initializing hardware OpenGLES emulation support
+INFO         | android_startOpenglesRenderer: gpu info
+INFO         | GPU #1
+  Make: 8086
+  Model: Intel(R) Iris(R) Xe Graphics
+  Device ID: a7a0
+
+DEBUG   | gfxstreamFeature:GlPipeChecksum = 1
+DEBUG   | gfxstreamFeature:Vulkan = 1
+DEBUG   | gfxstreamFeature:HasSharedSlotsHostMemoryAllocator = 1
+DEBUG   | gfxstreamFeature:VulkanSnapshots = 0
+DEBUG   | gfxstreamFeature:NoDelayCloseColorBuffer = 0
+DEBUG   | gfxstreamFeature:VirtioGpuNativeSync = 0
+DEBUG   | gfxstreamFeature:VulkanShaderFloat16Int8 = 1
+DEBUG   | gfxstreamFeature:NativeTextureDecompression = 0
+DEBUG   | gfxstreamFeature:VulkanNativeSwapchain = 0
+DEBUG   | gfxstreamFeature:VirtioGpuFenceContexts = 0
+DEBUG   | gfxstreamFeature:AsyncComposeSupport = 0
+DEBUG   | gfxstreamFeature:ExternalBlob = 0
+DEBUG   | gfxstreamFeature:SystemBlob = 0
+DEBUG   | gfxstreamFeature:GrallocSync = 0
+DEBUG   | gfxstreamFeature:GlAsyncSwap = 1
+DEBUG   | gfxstreamFeature:GlDma = 1
+DEBUG   | gfxstreamFeature:GlDma2 = 0
+DEBUG   | gfxstreamFeature:GlDirectMem = 1
+DEBUG   | gfxstreamFeature:GlesDynamicVersion = 1
+DEBUG   | gfxstreamFeature:PlayStoreImage = 1
+DEBUG   | gfxstreamFeature:RefCountPipe = 1
+DEBUG   | gfxstreamFeature:HostComposition = 1
+DEBUG   | gfxstreamFeature:VulkanNullOptionalStrings = 1
+DEBUG   | gfxstreamFeature:Yuv420888ToNv21 = 0
+DEBUG   | gfxstreamFeature:YuvCache = 1
+DEBUG   | gfxstreamFeature:VulkanIgnoredHandles = 1
+DEBUG   | gfxstreamFeature:VirtioGpuNext = 0
+DEBUG   | gfxstreamFeature:VulkanQueueSubmitWithCommands = 1
+DEBUG   | gfxstreamFeature:VulkanBatchedDescriptorSetUpdate = 0
+DEBUG   | gfxstreamFeature:Minigbm = 0
+DEBUG   | gfxstreamFeature:HwcMultiConfigs = 1
+DEBUG   | gfxstreamFeature:VulkanAllocateDeviceMemoryOnly = 0
+DEBUG   | gfxstreamFeature:VulkanAllocateHostMemory = 0
+DEBUG   | gfxstreamFeature:GuestVulkanOnly = 0
+DEBUG   | gfxstreamFeature:BypassVulkanDeviceFeatureOverrides = 0
+DEBUG   | gfxstreamFeature:VulkanDebugUtils = 0
+DEBUG   | gfxstreamFeature:VulkanCommandBufferCheckpoints = 0
+DEBUG   | gfxstreamFeature:VulkanVirtualQueue = 1
+DEBUG   | gfxstreamFeature:VulkanRobustness = 0
+DEBUG   | RenderWindow: CMD_INITIALIZE w=1080 h=1920
+DEBUG   | FrameBuffer::initialize()
+DEBUG   | FrameBuffer::Impl::initialize
+INFO         | HealthMonitor disabled.
+DEBUG   | create display 0
+DEBUG   | setDisplayPose 0 x 0 y 0 w 1080 h 1920 dpi 0
+INFO         | SharedLibrary::open for [vulkan-1.dll]
+INFO         | SharedLibrary::open for [vulkan-1.dll]: not found in map, open for the first time
+INFO         | SharedLibrary::open for [vulkan-1.dll] (win32): call LoadLibrary
+INFO         | SharedLibrary::open succeeded for [vulkan-1.dll]. File name: [C:\WINDOWS\SYSTEM32\vulkan-1.dll]
+INFO         | Added library: vulkan-1.dll
+DEBUG   | global loader has vkEnumerateInstanceVersion.
+DEBUG   | global loader has vkEnumerateInstanceVersion returning >= 1.1.
+DEBUG   | Creating instance, asking for version 1.1.0 ...
+DEBUG   | Found 1 Vulkan physical devices.
+DEBUG   | Considering Vulkan physical device 0 : Intel(R) Iris(R) Xe Graphics
+DEBUG   | VK_EXT_external_memory_dma_buf not found, bailing.
+DEBUG   | Graphics queue family index: 0
+DEBUG   | Compute queue family index: 0
+DEBUG   | Supported: VK_FORMAT_R8G8B8A8_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R8G8B8A8_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R8G8B8A8_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_SAMPLED_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R8G8B8A8_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_TRANSFER_SRC_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R8G8B8A8_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_TRANSFER_DST_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R8G8B8A8_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R8G8B8A8_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R8G8B8A8_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_SAMPLED_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R8G8B8A8_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_SRC_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R8G8B8A8_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_DST_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R8G8B8_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R8G8B8_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R8G8B8_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_SAMPLED_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R8G8B8_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_TRANSFER_SRC_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R8G8B8_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_TRANSFER_DST_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R8G8B8_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R8G8B8_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R8G8B8_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_SAMPLED_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R8G8B8_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_SRC_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R8G8B8_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_DST_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R5G6B5_UNORM_PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R5G6B5_UNORM_PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R5G6B5_UNORM_PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_SAMPLED_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R5G6B5_UNORM_PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_TRANSFER_SRC_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R5G6B5_UNORM_PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_TRANSFER_DST_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R5G6B5_UNORM_PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R5G6B5_UNORM_PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R5G6B5_UNORM_PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_SAMPLED_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R5G6B5_UNORM_PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_SRC_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R5G6B5_UNORM_PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_DST_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_A1R5G5B5_UNORM_PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_A1R5G5B5_UNORM_PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_A1R5G5B5_UNORM_PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_SAMPLED_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_A1R5G5B5_UNORM_PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_TRANSFER_SRC_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_A1R5G5B5_UNORM_PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_TRANSFER_DST_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_A1R5G5B5_UNORM_PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_A1R5G5B5_UNORM_PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_A1R5G5B5_UNORM_PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_SAMPLED_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_A1R5G5B5_UNORM_PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_SRC_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_A1R5G5B5_UNORM_PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_DST_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R16G16B16A16_SFLOAT VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R16G16B16A16_SFLOAT VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R16G16B16A16_SFLOAT VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_SAMPLED_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R16G16B16A16_SFLOAT VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_TRANSFER_SRC_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R16G16B16A16_SFLOAT VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_TRANSFER_DST_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R16G16B16A16_SFLOAT VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R16G16B16A16_SFLOAT VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R16G16B16A16_SFLOAT VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_SAMPLED_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R16G16B16A16_SFLOAT VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_SRC_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R16G16B16A16_SFLOAT VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_DST_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Not Supported: VK_FORMAT_R16G16B16_SFLOAT VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT
+DEBUG   | Not Supported: VK_FORMAT_R16G16B16_SFLOAT VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT
+DEBUG   | Supported: VK_FORMAT_R16G16B16_SFLOAT VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_SAMPLED_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R16G16B16_SFLOAT VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_TRANSFER_SRC_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R16G16B16_SFLOAT VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_TRANSFER_DST_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Not Supported: VK_FORMAT_R16G16B16_SFLOAT VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT
+DEBUG   | Not Supported: VK_FORMAT_R16G16B16_SFLOAT VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT
+DEBUG   | Supported: VK_FORMAT_R16G16B16_SFLOAT VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_SAMPLED_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R16G16B16_SFLOAT VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_SRC_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R16G16B16_SFLOAT VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_DST_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_B8G8R8A8_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_B8G8R8A8_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_B8G8R8A8_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_SAMPLED_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_B8G8R8A8_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_TRANSFER_SRC_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_B8G8R8A8_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_TRANSFER_DST_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_B8G8R8A8_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_B8G8R8A8_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_B8G8R8A8_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_SAMPLED_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_B8G8R8A8_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_SRC_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_B8G8R8A8_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_DST_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_B4G4R4A4_UNORM_PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_B4G4R4A4_UNORM_PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_B4G4R4A4_UNORM_PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_SAMPLED_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_B4G4R4A4_UNORM_PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_TRANSFER_SRC_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_B4G4R4A4_UNORM_PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_TRANSFER_DST_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_B4G4R4A4_UNORM_PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_B4G4R4A4_UNORM_PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_B4G4R4A4_UNORM_PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_SAMPLED_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_B4G4R4A4_UNORM_PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_SRC_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_B4G4R4A4_UNORM_PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_DST_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R4G4B4A4_UNORM_PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R4G4B4A4_UNORM_PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R4G4B4A4_UNORM_PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_SAMPLED_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R4G4B4A4_UNORM_PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_TRANSFER_SRC_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R4G4B4A4_UNORM_PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_TRANSFER_DST_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R4G4B4A4_UNORM_PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R4G4B4A4_UNORM_PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R4G4B4A4_UNORM_PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_SAMPLED_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R4G4B4A4_UNORM_PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_SRC_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R4G4B4A4_UNORM_PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_DST_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R8_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R8_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R8_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_SAMPLED_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R8_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_TRANSFER_SRC_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R8_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_TRANSFER_DST_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R8_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R8_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R8_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_SAMPLED_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R8_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_SRC_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R8_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_DST_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R16_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R16_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R16_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_SAMPLED_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R16_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_TRANSFER_SRC_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R16_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_TRANSFER_DST_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R16_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R16_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R16_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_SAMPLED_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R16_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_SRC_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_R16_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_DST_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Not Supported: VK_FORMAT_A2R10G10B10_UINT_PACK32 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT
+DEBUG   | Not Supported: VK_FORMAT_A2R10G10B10_UINT_PACK32 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT
+DEBUG   | Not Supported: VK_FORMAT_A2R10G10B10_UINT_PACK32 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_SAMPLED_BIT
+DEBUG   | Not Supported: VK_FORMAT_A2R10G10B10_UINT_PACK32 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_TRANSFER_SRC_BIT
+DEBUG   | Not Supported: VK_FORMAT_A2R10G10B10_UINT_PACK32 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_TRANSFER_DST_BIT
+DEBUG   | Not Supported: VK_FORMAT_A2R10G10B10_UINT_PACK32 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT
+DEBUG   | Not Supported: VK_FORMAT_A2R10G10B10_UINT_PACK32 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT
+DEBUG   | Not Supported: VK_FORMAT_A2R10G10B10_UINT_PACK32 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_SAMPLED_BIT
+DEBUG   | Not Supported: VK_FORMAT_A2R10G10B10_UINT_PACK32 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_SRC_BIT
+DEBUG   | Not Supported: VK_FORMAT_A2R10G10B10_UINT_PACK32 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_DST_BIT
+DEBUG   | Supported: VK_FORMAT_A2R10G10B10_UNORM_PACK32 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_A2R10G10B10_UNORM_PACK32 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_A2R10G10B10_UNORM_PACK32 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_SAMPLED_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_A2R10G10B10_UNORM_PACK32 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_TRANSFER_SRC_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_A2R10G10B10_UNORM_PACK32 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_TRANSFER_DST_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_A2R10G10B10_UNORM_PACK32 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_A2R10G10B10_UNORM_PACK32 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_A2R10G10B10_UNORM_PACK32 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_SAMPLED_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_A2R10G10B10_UNORM_PACK32 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_SRC_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_A2R10G10B10_UNORM_PACK32 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_DST_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_A2B10G10R10_UNORM_PACK32 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_A2B10G10R10_UNORM_PACK32 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_A2B10G10R10_UNORM_PACK32 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_SAMPLED_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_A2B10G10R10_UNORM_PACK32 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_TRANSFER_SRC_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_A2B10G10R10_UNORM_PACK32 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_TRANSFER_DST_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_A2B10G10R10_UNORM_PACK32 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_A2B10G10R10_UNORM_PACK32 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_A2B10G10R10_UNORM_PACK32 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_SAMPLED_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_A2B10G10R10_UNORM_PACK32 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_SRC_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_A2B10G10R10_UNORM_PACK32 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_DST_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Not Supported: VK_FORMAT_ETC2_R8G8B8A8_UNORM_BLOCK VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT
+DEBUG   | Not Supported: VK_FORMAT_ETC2_R8G8B8A8_UNORM_BLOCK VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT
+DEBUG   | Not Supported: VK_FORMAT_ETC2_R8G8B8A8_UNORM_BLOCK VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_SAMPLED_BIT
+DEBUG   | Supported: VK_FORMAT_ETC2_R8G8B8A8_UNORM_BLOCK VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_TRANSFER_SRC_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_ETC2_R8G8B8A8_UNORM_BLOCK VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_TRANSFER_DST_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Not Supported: VK_FORMAT_ETC2_R8G8B8A8_UNORM_BLOCK VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT
+DEBUG   | Not Supported: VK_FORMAT_ETC2_R8G8B8A8_UNORM_BLOCK VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT
+DEBUG   | Supported: VK_FORMAT_ETC2_R8G8B8A8_UNORM_BLOCK VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_SAMPLED_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_ETC2_R8G8B8A8_UNORM_BLOCK VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_SRC_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_ETC2_R8G8B8A8_UNORM_BLOCK VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_DST_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Not Supported: VK_FORMAT_ASTC_4x4_UNORM_BLOCK VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT
+DEBUG   | Not Supported: VK_FORMAT_ASTC_4x4_UNORM_BLOCK VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT
+DEBUG   | Not Supported: VK_FORMAT_ASTC_4x4_UNORM_BLOCK VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_SAMPLED_BIT
+DEBUG   | Supported: VK_FORMAT_ASTC_4x4_UNORM_BLOCK VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_TRANSFER_SRC_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_ASTC_4x4_UNORM_BLOCK VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_TRANSFER_DST_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Not Supported: VK_FORMAT_ASTC_4x4_UNORM_BLOCK VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT
+DEBUG   | Not Supported: VK_FORMAT_ASTC_4x4_UNORM_BLOCK VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT
+DEBUG   | Supported: VK_FORMAT_ASTC_4x4_UNORM_BLOCK VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_SAMPLED_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_ASTC_4x4_UNORM_BLOCK VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_SRC_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_ASTC_4x4_UNORM_BLOCK VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_DST_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Not Supported: VK_FORMAT_G8_B8R8_2PLANE_420_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT
+DEBUG   | Not Supported: VK_FORMAT_G8_B8R8_2PLANE_420_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT
+DEBUG   | Supported: VK_FORMAT_G8_B8R8_2PLANE_420_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_SAMPLED_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_G8_B8R8_2PLANE_420_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_TRANSFER_SRC_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_G8_B8R8_2PLANE_420_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_TRANSFER_DST_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Not Supported: VK_FORMAT_G8_B8R8_2PLANE_420_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT
+DEBUG   | Not Supported: VK_FORMAT_G8_B8R8_2PLANE_420_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT
+DEBUG   | Supported: VK_FORMAT_G8_B8R8_2PLANE_420_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_SAMPLED_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_G8_B8R8_2PLANE_420_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_SRC_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_G8_B8R8_2PLANE_420_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_DST_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Not Supported: VK_FORMAT_G8_B8R8_2PLANE_422_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT
+DEBUG   | Not Supported: VK_FORMAT_G8_B8R8_2PLANE_422_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT
+DEBUG   | Supported: VK_FORMAT_G8_B8R8_2PLANE_422_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_SAMPLED_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_G8_B8R8_2PLANE_422_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_TRANSFER_SRC_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_G8_B8R8_2PLANE_422_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_TRANSFER_DST_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Not Supported: VK_FORMAT_G8_B8R8_2PLANE_422_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT
+DEBUG   | Not Supported: VK_FORMAT_G8_B8R8_2PLANE_422_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT
+DEBUG   | Supported: VK_FORMAT_G8_B8R8_2PLANE_422_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_SAMPLED_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_G8_B8R8_2PLANE_422_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_SRC_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_G8_B8R8_2PLANE_422_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_DST_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Not Supported: VK_FORMAT_G8_B8_R8_3PLANE_420_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT
+DEBUG   | Not Supported: VK_FORMAT_G8_B8_R8_3PLANE_420_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT
+DEBUG   | Supported: VK_FORMAT_G8_B8_R8_3PLANE_420_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_SAMPLED_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_G8_B8_R8_3PLANE_420_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_TRANSFER_SRC_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_G8_B8_R8_3PLANE_420_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_TRANSFER_DST_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Not Supported: VK_FORMAT_G8_B8_R8_3PLANE_420_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT
+DEBUG   | Not Supported: VK_FORMAT_G8_B8_R8_3PLANE_420_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT
+DEBUG   | Supported: VK_FORMAT_G8_B8_R8_3PLANE_420_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_SAMPLED_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_G8_B8_R8_3PLANE_420_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_SRC_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_G8_B8_R8_3PLANE_420_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_DST_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Not Supported: VK_FORMAT_G8_B8_R8_3PLANE_422_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT
+DEBUG   | Not Supported: VK_FORMAT_G8_B8_R8_3PLANE_422_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT
+DEBUG   | Supported: VK_FORMAT_G8_B8_R8_3PLANE_422_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_SAMPLED_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_G8_B8_R8_3PLANE_422_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_TRANSFER_SRC_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_G8_B8_R8_3PLANE_422_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_TRANSFER_DST_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Not Supported: VK_FORMAT_G8_B8_R8_3PLANE_422_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT
+DEBUG   | Not Supported: VK_FORMAT_G8_B8_R8_3PLANE_422_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT
+DEBUG   | Supported: VK_FORMAT_G8_B8_R8_3PLANE_422_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_SAMPLED_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_G8_B8_R8_3PLANE_422_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_SRC_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_G8_B8_R8_3PLANE_422_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_DST_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Not Supported: VK_FORMAT_G10X6_B10X6R10X6_2PLANE_420_UNORM_3PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT
+DEBUG   | Not Supported: VK_FORMAT_G10X6_B10X6R10X6_2PLANE_420_UNORM_3PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT
+DEBUG   | Supported: VK_FORMAT_G10X6_B10X6R10X6_2PLANE_420_UNORM_3PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_SAMPLED_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_G10X6_B10X6R10X6_2PLANE_420_UNORM_3PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_TRANSFER_SRC_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_G10X6_B10X6R10X6_2PLANE_420_UNORM_3PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_LINEAR VK_IMAGE_USAGE_TRANSFER_DST_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Not Supported: VK_FORMAT_G10X6_B10X6R10X6_2PLANE_420_UNORM_3PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT
+DEBUG   | Not Supported: VK_FORMAT_G10X6_B10X6R10X6_2PLANE_420_UNORM_3PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT
+DEBUG   | Supported: VK_FORMAT_G10X6_B10X6R10X6_2PLANE_420_UNORM_3PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_SAMPLED_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_G10X6_B10X6R10X6_2PLANE_420_UNORM_3PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_SRC_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_G10X6_B10X6R10X6_2PLANE_420_UNORM_3PACK16 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_DST_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_D16_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_D16_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_D16_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_SAMPLED_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_D16_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_SRC_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_D16_UNORM VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_DST_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_X8_D24_UNORM_PACK32 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_X8_D24_UNORM_PACK32 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_X8_D24_UNORM_PACK32 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_SAMPLED_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_X8_D24_UNORM_PACK32 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_SRC_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_X8_D24_UNORM_PACK32 VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_DST_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_D24_UNORM_S8_UINT VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_D24_UNORM_S8_UINT VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_D24_UNORM_S8_UINT VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_SAMPLED_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_D24_UNORM_S8_UINT VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_SRC_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_D24_UNORM_S8_UINT VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_DST_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_D32_SFLOAT VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_D32_SFLOAT VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_D32_SFLOAT VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_SAMPLED_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_D32_SFLOAT VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_SRC_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_D32_SFLOAT VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_DST_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_D32_SFLOAT_S8_UINT VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_D32_SFLOAT_S8_UINT VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_D32_SFLOAT_S8_UINT VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_SAMPLED_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_D32_SFLOAT_S8_UINT VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_SRC_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+DEBUG   | Supported: VK_FORMAT_D32_SFLOAT_S8_UINT VK_IMAGE_TYPE_2D VK_IMAGE_TILING_OPTIMAL VK_IMAGE_USAGE_TRANSFER_DST_BIT, supportsExternalMemory? 1, requiresDedicated? 0
+INFO         | Selecting Vulkan device: Intel(R) Iris(R) Xe Graphics, Version: 1.4.323
+DEBUG   | deviceInfo: 
+hasGraphicsQueueFamily = 1
+hasComputeQueueFamily = 1
+supportsExternalMemoryImport = 1
+supportsExternalMemoryExport = 1
+supportsDriverProperties = 1
+hasSamplerYcbcrConversionExtension = 1
+supportsSamplerYcbcrConversion = 1
+glInteropSupported = 0
+DEBUG   | Vulkan logical device created and extension functions obtained.
+DEBUG   | Vulkan device queue obtained.
+VERBOSE | create: selected memory type index = 2, propertyFlags = 15, heapIndex = 0
+VERBOSE | Vulkan global emulation state successfully initialized.
+INFO         | Disabling sparse binding feature support
+DEBUG   | WinEngine: Trying to load opengl32.dll
+
+INFO         | SharedLibrary::open for [opengl32.dll]: not found in map, open for the first time
+INFO         | SharedLibrary::open for [opengl32.dll] (win32): call LoadLibrary
+INFO         | SharedLibrary::open succeeded for [opengl32.dll]. File name: [C:\WINDOWS\SYSTEM32\opengl32.DLL]
+DEBUG   | WinEngine: Library loaded at 00000183083AAB20
+
+DEBUG   | WinEngine: Dispatch initialized
+
+DEBUG   | call eglInitialize
+INFO         | SharedLibrary::open for [libshadertranslator.dll]: not found in map, open for the first time
+INFO         | SharedLibrary::open for [libshadertranslator.dll] (win32): call LoadLibrary
+INFO         | SharedLibrary::open succeeded for [libshadertranslator.dll]. File name: [C:\Users\david\AppData\Local\Android\Sdk\emulator\lib64\libshadertranslator.dll]
+DEBUG   | glvk interop final: 0
+INFO         | Initializing VkEmulation features:
+INFO         |     glInteropSupported: false
+INFO         |     useDeferredCommands: true
+INFO         |     createResourceWithRequirements: true
+INFO         |     useVulkanComposition: false
+INFO         |     useVulkanNativeSwapchain: false
+INFO         |     enable guestRenderDoc: false
+INFO         |     ASTC LDR emulation mode: Gpu
+INFO         |     enable ETC2 emulation: true
+INFO         |     enable Ycbcr emulation: false
+INFO         |     guestVulkanOnly: false
+INFO         |     useDedicatedAllocations: false
+DEBUG   | ColorBuffer 4294967295, 64x64, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 16384, type: 0, props: 1 / 1]
+DEBUG   | Representative ColorBuffer memory type using host memory type index 0 and guest memory type index :0
+DEBUG   | Performing composition using CompositorGl.
+INFO         | Graphics Adapter Vendor Google (Intel)
+INFO         | Graphics Adapter Android Emulator OpenGL ES Translator (Intel(R) Iris(R) Xe Graphics)
+INFO         | Graphics API Version OpenGL ES 3.0 (4.5.0 - Build 32.0.101.7040)
+INFO         | Graphics API Extensions GL_OES_EGL_sync GL_OES_EGL_image GL_OES_EGL_image_external GL_OES_depth24 GL_OES_depth32 GL_OES_element_index_uint GL_OES_texture_float GL_OES_texture_float_linear GL_OES_compressed_paletted_texture GL_OES_compressed_ETC1_RGB8_texture GL_OES_depth_texture GL_OES_texture_half_float GL_OES_texture_half_float_linear GL_OES_packed_depth_stencil GL_OES_vertex_half_float GL_OES_texture_npot GL_OES_rgb8_rgba8 GL_EXT_color_buffer_float GL_EXT_color_buffer_half_float GL_EXT_texture_format_BGRA8888 GL_APPLE_texture_format_BGRA8888 
+INFO         | Graphics Device Extensions N/A
+DEBUG   | OpenGL renderer initialized successfully
+INFO         | Setting vsync to 60 hz
+DEBUG   | CMD_SET_VSYNC_HZ
+DEBUG   | Exited a loader RenderThread @0000018319FDF820
+INFO         | Sending adb public key [QAAAAIXcDeazQ7g0mb33Rve4q8GyrK0ahHUSf7WWNHxtvruMKwfsWTZlQK8ab9DFY0yB4SZWAnNbn6dFAvNoT7uqNyUrtHmIz05lul1zqU/tMxR+Dhm98LzjL1i3kAAcoxg6Nriku1RygTqn0iVcUMFacZ7KqWS47PEcGFGap4meGuvowb90SawCfoWxBWwMbMScV/TAcNCEPIMHNcqAWffKSnrd1d3SkapFxEyqTn+BmjyZ/HkPITbKcOjgIN/vRBjqQ7g2X9kVz37ikv/XFhPPEdcw4JfiBU98Ckbn1Ey6Cy/vU7vapjO3bZchJ44LT05gw0Y/kaJ+PBVgmqWw/FGzPNrPoy/NHTj/0V34TX3/77B4ZVxJ/JmUlwtaeHgNdL3FuWFHZap0sSe9iViu/FSkXCulevg05ZpU9PAMAr/pLUdM1MQvGFCPEcngaMqH9a0LP5y2DpJPZtzgVOpPXzJ/4JXnqIEUg0x7/NeLSKm01dcHHPqimLjJ+mIAPo8Bh0NQSmmtYpU9XTNB0nW7iYa35DTXvVGItz2Bt1ET8tLnrMJhIh4ntrOQJ+F2wzALbacHY2DnG56fw14iTm7blix6wajDSZiKC/tmFizxGvmAgyXQ43Ixj9VGSxj/vtOY8VbCkAyD5U2TbwC/XozSGJ/x2xu7SNqyQudpMDw0RYCc13Wtk30XeAEAAQA= @unknown]
+INFO         | Userspace boot properties:
+INFO         |   androidboot.boot_devices=pci0000:00/0000:00:03.0 pci0000:00/0000:00:06.0
+INFO         |   androidboot.dalvik.vm.heapsize=512m
+INFO         |   androidboot.debug.hwui.renderer=skiagl
+INFO         |   androidboot.hardware=ranchu
+INFO         |   androidboot.hardware.gltransport=pipe
+INFO         |   androidboot.hardware.vulkan=ranchu
+INFO         |   androidboot.logcat=*:V
+INFO         |   androidboot.opengles.version=196608
+INFO         |   androidboot.qemu=1
+INFO         |   androidboot.qemu.adb.pubkey=QAAAAIXcDeazQ7g0mb33Rve4q8GyrK0ahHUSf7WWNHxtvruMKwfsWTZlQK8ab9DFY0yB4SZWAnNbn6dFAvNoT7uqNyUrtHmIz05lul1zqU/tMxR+Dhm98LzjL1i3kAAcoxg6Nriku1RygTqn0iVcUMFacZ7KqWS47PEcGFGap4meGuvowb90SawCfoWxBWwMbMScV/TAcNCEPIMHNcqAWffKSnrd1d3SkapFxEyqTn+BmjyZ/HkPITbKcOjgIN/vRBjqQ7g2X9kVz37ikv/XFhPPEdcw4JfiBU98Ckbn1Ey6Cy/vU7vapjO3bZchJ44LT05gw0Y/kaJ+PBVgmqWw/FGzPNrPoy/NHTj/0V34TX3/77B4ZVxJ/JmUlwtaeHgNdL3FuWFHZap0sSe9iViu/FSkXCulevg05ZpU9PAMAr/pLUdM1MQvGFCPEcngaMqH9a0LP5y2DpJPZtzgVOpPXzJ/4JXnqIEUg0x7/NeLSKm01dcHHPqimLjJ+mIAPo8Bh0NQSmmtYpU9XTNB0nW7iYa35DTXvVGItz2Bt1ET8tLnrMJhIh4ntrOQJ+F2wzALbacHY2DnG56fw14iTm7blix6wajDSZiKC/tmFizxGvmAgyXQ43Ixj9VGSxj/vtOY8VbCkAyD5U2TbwC/XozSGJ/x2xu7SNqyQudpMDw0RYCc13Wtk30XeAEAAQA= @unknown
+INFO         |   androidboot.qemu.avd_name=flutter_emulator
+INFO         |   androidboot.qemu.camera_hq_edge_processing=0
+INFO         |   androidboot.qemu.camera_protocol_ver=1
+INFO         |   androidboot.qemu.cpuvulkan.version=4202496
+INFO         |   androidboot.qemu.gltransport.drawFlushInterval=800
+INFO         |   androidboot.qemu.gltransport.name=pipe
+INFO         |   androidboot.qemu.hwcodec.avcdec=2
+INFO         |   androidboot.qemu.hwcodec.hevcdec=2
+INFO         |   androidboot.qemu.hwcodec.vpxdec=2
+INFO         |   androidboot.qemu.settings.system.screen_off_timeout=2147483647
+INFO         |   androidboot.qemu.virtiowifi=1
+INFO         |   androidboot.qemu.vsync=60
+INFO         |   androidboot.serialno=EMULATOR36X2X12X0
+INFO         |   androidboot.vbmeta.digest=4728a4b21576b57281f7d7a58384ef98c53956002c1c3a96d639872d53e1d700
+INFO         |   androidboot.vbmeta.hash_alg=sha256
+INFO         |   androidboot.vbmeta.size=6720
+INFO         |   androidboot.veritymode=enforcing
+INFO         | Android bootconfig:
+INFO         |   androidboot.boot_devices="pci0000:00/0000:00:03.0 pci0000:00/0000:00:06.0"
+INFO         |   androidboot.dalvik.vm.heapsize="512m"
+INFO         |   androidboot.debug.hwui.renderer="skiagl"
+INFO         |   androidboot.hardware="ranchu"
+INFO         |   androidboot.hardware.gltransport="pipe"
+INFO         |   androidboot.hardware.vulkan="ranchu"
+INFO         |   androidboot.logcat="*:V"
+INFO         |   androidboot.opengles.version="196608"
+INFO         |   androidboot.qemu="1"
+INFO         |   androidboot.qemu.adb.pubkey="QAAAAIXcDeazQ7g0mb33Rve4q8GyrK0ahHUSf7WWNHxtvruMKwfsWTZlQK8ab9DFY0yB4SZWAnNbn6dFAvNoT7uqNyUrtHmIz05lul1zqU/tMxR+Dhm98LzjL1i3kAAcoxg6Nriku1RygTqn0iVcUMFacZ7KqWS47PEcGFGap4meGuvowb90SawCfoWxBWwMbMScV/TAcNCEPIMHNcqAWffKSnrd1d3SkapFxEyqTn+BmjyZ/HkPITbKcOjgIN/vRBjqQ7g2X9kVz37ikv/XFhPPEdcw4JfiBU98Ckbn1Ey6Cy/vU7vapjO3bZchJ44LT05gw0Y/kaJ+PBVgmqWw/FGzPNrPoy/NHTj/0V34TX3/77B4ZVxJ/JmUlwtaeHgNdL3FuWFHZap0sSe9iViu/FSkXCulevg05ZpU9PAMAr/pLUdM1MQvGFCPEcngaMqH9a0LP5y2DpJPZtzgVOpPXzJ/4JXnqIEUg0x7/NeLSKm01dcHHPqimLjJ+mIAPo8Bh0NQSmmtYpU9XTNB0nW7iYa35DTXvVGItz2Bt1ET8tLnrMJhIh4ntrOQJ+F2wzALbacHY2DnG56fw14iTm7blix6wajDSZiKC/tmFizxGvmAgyXQ43Ixj9VGSxj/vtOY8VbCkAyD5U2TbwC/XozSGJ/x2xu7SNqyQudpMDw0RYCc13Wtk30XeAEAAQA= @unknown"
+INFO         |   androidboot.qemu.avd_name="flutter_emulator"
+INFO         |   androidboot.qemu.camera_hq_edge_processing="0"
+INFO         |   androidboot.qemu.camera_protocol_ver="1"
+INFO         |   androidboot.qemu.cpuvulkan.version="4202496"
+INFO         |   androidboot.qemu.gltransport.drawFlushInterval="800"
+INFO         |   androidboot.qemu.gltransport.name="pipe"
+INFO         |   androidboot.qemu.hwcodec.avcdec="2"
+INFO         |   androidboot.qemu.hwcodec.hevcdec="2"
+INFO         |   androidboot.qemu.hwcodec.vpxdec="2"
+INFO         |   androidboot.qemu.settings.system.screen_off_timeout="2147483647"
+INFO         |   androidboot.qemu.virtiowifi="1"
+INFO         |   androidboot.qemu.vsync="60"
+INFO         |   androidboot.serialno="EMULATOR36X2X12X0"
+INFO         |   androidboot.vbmeta.digest="4728a4b21576b57281f7d7a58384ef98c53956002c1c3a96d639872d53e1d700"
+INFO         |   androidboot.vbmeta.hash_alg="sha256"
+INFO         |   androidboot.vbmeta.size="6720"
+INFO         |   androidboot.veritymode="enforcing"
+DEBUG   | Found 2 DNS servers:
+DEBUG   | 	172.22.232.220
+DEBUG   | 	2607:fb90:d160:89ce::59
+INFO         | Content of hardware configuration file:
+INFO         | 	hw.cpu.arch = x86_64
+INFO         | 	hw.cpu.ncore = 4
+INFO         | 	hw.ramSize = 2048
+INFO         | 	hw.screen = multi-touch
+INFO         | 	hw.mainKeys = false
+INFO         | 	hw.touchpad0 = false
+INFO         | 	hw.touchpad0.width = 600
+INFO         | 	hw.touchpad0.height = 400
+INFO         | 	hw.trackBall = false
+INFO         | 	hw.keyboard = false
+INFO         | 	hw.keyboard.lid = true
+INFO         | 	hw.keyboard.charmap = qwerty2
+INFO         | 	hw.dPad = false
+INFO         | 	hw.rotaryInput = false
+INFO         | 	hw.gsmModem = true
+INFO         | 	hw.gps = true
+INFO         | 	hw.battery = true
+INFO         | 	hw.accelerometer = true
+INFO         | 	hw.accelerometer_uncalibrated = true
+INFO         | 	hw.gyroscope = true
+INFO         | 	hw.audioInput = true
+INFO         | 	hw.audioOutput = true
+INFO         | 	hw.sdCard = true
+INFO         | 	disk.cachePartition = true
+INFO         | 	disk.cachePartition.path = C:\Users\david\.android\avd\..\avd\flutter_emulator.avd\cache.img
+INFO         | 	disk.cachePartition.size = 66m
+INFO         | 	test.quitAfterBootTimeOut = -1
+INFO         | 	test.delayAdbTillBootComplete = 0
+INFO         | 	test.monitorAdb = 0
+INFO         | 	hw.lcd.width = 1080
+INFO         | 	hw.lcd.height = 1920
+INFO         | 	hw.lcd.depth = 16
+INFO         | 	hw.lcd.circular = false
+INFO         | 	hw.lcd.density = 420
+INFO         | 	hw.lcd.backlight = true
+INFO         | 	hw.lcd.vsync = 60
+INFO         | 	hw.gltransport = pipe
+INFO         | 	hw.gltransport.asg.writeBufferSize = 1048576
+INFO         | 	hw.gltransport.asg.writeStepSize = 4096
+INFO         | 	hw.gltransport.asg.dataRingSize = 32768
+INFO         | 	hw.gltransport.drawFlushInterval = 800
+INFO         | 	hw.displayRegion.0.1.xOffset = -1
+INFO         | 	hw.displayRegion.0.1.yOffset = -1
+INFO         | 	hw.displayRegion.0.1.width = 0
+INFO         | 	hw.displayRegion.0.1.height = 0
+INFO         | 	hw.displayRegion.0.2.xOffset = -1
+INFO         | 	hw.displayRegion.0.2.yOffset = -1
+INFO         | 	hw.displayRegion.0.2.width = 0
+INFO         | 	hw.displayRegion.0.2.height = 0
+INFO         | 	hw.displayRegion.0.3.xOffset = -1
+INFO         | 	hw.displayRegion.0.3.yOffset = -1
+INFO         | 	hw.displayRegion.0.3.width = 0
+INFO         | 	hw.displayRegion.0.3.height = 0
+INFO         | 	hw.display1.width = 0
+INFO         | 	hw.display1.height = 0
+INFO         | 	hw.display1.density = 0
+INFO         | 	hw.display1.xOffset = -1
+INFO         | 	hw.display1.yOffset = -1
+INFO         | 	hw.display1.flag = 0
+INFO         | 	hw.display2.width = 0
+INFO         | 	hw.display2.height = 0
+INFO         | 	hw.display2.density = 0
+INFO         | 	hw.display2.xOffset = -1
+INFO         | 	hw.display2.yOffset = -1
+INFO         | 	hw.display2.flag = 0
+INFO         | 	hw.display3.width = 0
+INFO         | 	hw.display3.height = 0
+INFO         | 	hw.display3.density = 0
+INFO         | 	hw.display3.xOffset = -1
+INFO         | 	hw.display3.yOffset = -1
+INFO         | 	hw.display3.flag = 0
+INFO         | 	hw.multi_display_window = false
+INFO         | 	hw.hotplug_multi_display = false
+INFO         | 	hw.gpu.enabled = true
+INFO         | 	hw.gpu.mode = host
+INFO         | 	hw.initialOrientation = portrait
+INFO         | 	hw.camera.back = emulated
+INFO         | 	hw.camera.front = none
+INFO         | 	vm.heapSize = 512
+INFO         | 	hw.sensors.light = true
+INFO         | 	hw.sensors.pressure = true
+INFO         | 	hw.sensors.humidity = true
+INFO         | 	hw.sensors.proximity = true
+INFO         | 	hw.sensors.magnetic_field = true
+INFO         | 	hw.sensors.magnetic_field_uncalibrated = true
+INFO         | 	hw.sensors.gyroscope_uncalibrated = true
+INFO         | 	hw.sensors.orientation = true
+INFO         | 	hw.sensors.temperature = true
+INFO         | 	hw.sensors.rgbclight = false
+INFO         | 	hw.sensor.hinge = false
+INFO         | 	hw.sensor.hinge.count = 0
+INFO         | 	hw.sensor.hinge.type = 0
+INFO         | 	hw.sensor.hinge.sub_type = 0
+INFO         | 	hw.sensor.hinge.resizable.config = 1
+INFO         | 	hw.sensor.hinge.fold_to_displayRegion.0.1_at_posture = 1
+INFO         | 	hw.sensor.roll = false
+INFO         | 	hw.sensor.roll.count = 0
+INFO         | 	hw.sensor.roll.resize_to_displayRegion.0.1_at_posture = 6
+INFO         | 	hw.sensor.roll.resize_to_displayRegion.0.2_at_posture = 6
+INFO         | 	hw.sensor.roll.resize_to_displayRegion.0.3_at_posture = 6
+INFO         | 	hw.sensors.heart_rate = false
+INFO         | 	hw.sensors.wrist_tilt = false
+INFO         | 	hw.sensors.heading = false
+INFO         | 	hw.useext4 = true
+INFO         | 	hw.arc = false
+INFO         | 	hw.arc.autologin = false
+INFO         | 	hw.device.name = pixel
+INFO         | 	kernel.path = C:\Users\david\AppData\Local\Android\Sdk\system-images\android-35\google_apis_playstore\x86_64\\kernel-ranchu
+INFO         | 	kernel.newDeviceNaming = yes
+INFO         | 	kernel.supportsYaffs2 = no
+INFO         | 	disk.ramdisk.path = C:\Users\david\AppData\Local\Android\Sdk\system-images\android-35\google_apis_playstore\x86_64\\ramdisk.img
+INFO         | 	disk.systemPartition.initPath = C:\Users\david\AppData\Local\Android\Sdk\system-images\android-35\google_apis_playstore\x86_64\\system.img
+INFO         | 	disk.systemPartition.size = 2054m
+INFO         | 	disk.vendorPartition.initPath = C:\Users\david\AppData\Local\Android\Sdk\system-images\android-35\google_apis_playstore\x86_64\\vendor.img
+INFO         | 	disk.vendorPartition.size = 800m
+INFO         | 	disk.dataPartition.path = C:\Users\david\.android\avd\..\avd\flutter_emulator.avd\userdata-qemu.img
+INFO         | 	disk.dataPartition.size = 6g
+INFO         | 	disk.encryptionKeyPartition.path = C:\Users\david\.android\avd\..\avd\flutter_emulator.avd\encryptionkey.img
+INFO         | 	PlayStore.enabled = false
+INFO         | 	avd.name = flutter_emulator
+INFO         | 	avd.id = flutter_emulator
+INFO         | 	fastboot.forceColdBoot = false
+INFO         | 	userdata.useQcow2 = true
+INFO         | 	firstboot.bootFromDownloadableSnapshot = true
+INFO         | 	firstboot.bootFromLocalSnapshot = true
+INFO         | 	firstboot.saveToLocalSnapshot = true
+INFO         | 	android.sdk.root = C:\Users\david\AppData\Local\Android\Sdk
+INFO         | 	android.avd.home = C:\Users\david\.android\avd
+INFO         | .
+INFO         | QEMU options list:
+INFO         | 	 argv[00] = "C:\Users\david\AppData\Local\Android\Sdk\emulator\qemu\windows-x86_64\qemu-system-x86_64.exe"
+INFO         | 	 argv[01] = "-dns-server"
+INFO         | 	 argv[02] = "172.22.232.220,2607:fb90:d160:89ce::59"
+INFO         | 	 argv[03] = "-mem-path"
+INFO         | 	 argv[04] = "C:\Users\david\.android\avd\flutter_emulator.avd\snapshots\default_boot\ram.img"
+INFO         | 	 argv[05] = "-serial"
+INFO         | 	 argv[06] = "null"
+INFO         | 	 argv[07] = "-android-ports"
+INFO         | 	 argv[08] = "5556,5557"
+INFO         | 	 argv[09] = "-device"
+INFO         | 	 argv[10] = "goldfish_pstore,addr=0xff018000,size=0x10000,file=C:\Users\david\.android\avd\..\avd\flutter_emulator.avd\data\misc\pstore\pstore.bin"
+INFO         | 	 argv[11] = "-cpu"
+INFO         | 	 argv[12] = "android64"
+INFO         | 	 argv[13] = "-enable-whpx"
+INFO         | 	 argv[14] = "-smp"
+INFO         | 	 argv[15] = "cores=4"
+INFO         | 	 argv[16] = "-m"
+INFO         | 	 argv[17] = "2048"
+INFO         | 	 argv[18] = "-lcd-density"
+INFO         | 	 argv[19] = "420"
+INFO         | 	 argv[20] = "-nodefaults"
+INFO         | 	 argv[21] = "-kernel"
+INFO         | 	 argv[22] = "C:\Users\david\AppData\Local\Android\Sdk\system-images\android-35\google_apis_playstore\x86_64\\kernel-ranchu"
+INFO         | 	 argv[23] = "-initrd"
+INFO         | 	 argv[24] = "C:\Users\david\.android\avd\..\avd\flutter_emulator.avd\initrd"
+INFO         | 	 argv[25] = "-drive"
+INFO         | 	 argv[26] = "if=none,index=0,id=system,if=none,file=C:\Users\david\AppData\Local\Android\Sdk\system-images\android-35\google_apis_playstore\x86_64\\system.img,read-only"
+INFO         | 	 argv[27] = "-device"
+INFO         | 	 argv[28] = "virtio-blk-pci,drive=system,modern-pio-notify"
+INFO         | 	 argv[29] = "-drive"
+INFO         | 	 argv[30] = "if=none,index=1,id=cache,if=none,file=C:\Users\david\.android\avd\..\avd\flutter_emulator.avd\cache.img.qcow2,overlap-check=none,cache=unsafe,l2-cache-size=1048576"
+INFO         | 	 argv[31] = "-device"
+INFO         | 	 argv[32] = "virtio-blk-pci,drive=cache,modern-pio-notify"
+INFO         | 	 argv[33] = "-drive"
+INFO         | 	 argv[34] = "if=none,index=2,id=userdata,if=none,file=C:\Users\david\.android\avd\..\avd\flutter_emulator.avd\userdata-qemu.img.qcow2,overlap-check=none,cache=unsafe,l2-cache-size=1048576"
+INFO         | 	 argv[35] = "-device"
+INFO         | 	 argv[36] = "virtio-blk-pci,drive=userdata,modern-pio-notify"
+INFO         | 	 argv[37] = "-drive"
+INFO         | 	 argv[38] = "if=none,index=3,id=encrypt,if=none,file=C:\Users\david\.android\avd\..\avd\flutter_emulator.avd\encryptionkey.img.qcow2,overlap-check=none,cache=unsafe,l2-cache-size=1048576"
+INFO         | 	 argv[39] = "-device"
+INFO         | 	 argv[40] = "virtio-blk-pci,drive=encrypt,modern-pio-notify"
+INFO         | 	 argv[41] = "-drive"
+INFO         | 	 argv[42] = "if=none,index=4,id=vendor,if=none,file=C:\Users\david\AppData\Local\Android\Sdk\system-images\android-35\google_apis_playstore\x86_64\\vendor.img,read-only"
+INFO         | 	 argv[43] = "-device"
+INFO         | 	 argv[44] = "virtio-blk-pci,drive=vendor,modern-pio-notify"
+INFO         | 	 argv[45] = "-netdev"
+INFO         | 	 argv[46] = "user,id=mynet"
+INFO         | 	 argv[47] = "-device"
+INFO         | 	 argv[48] = "virtio-net-pci,netdev=mynet"
+INFO         | 	 argv[49] = "-chardev"
+INFO         | 	 argv[50] = "null,id=forhvc0"
+INFO         | 	 argv[51] = "-chardev"
+INFO         | 	 argv[52] = "null,id=forhvc1"
+INFO         | 	 argv[53] = "-device"
+INFO         | 	 argv[54] = "virtio-serial-pci,ioeventfd=off"
+INFO         | 	 argv[55] = "-device"
+INFO         | 	 argv[56] = "virtconsole,chardev=forhvc0"
+INFO         | 	 argv[57] = "-device"
+INFO         | 	 argv[58] = "virtconsole,chardev=forhvc1"
+INFO         | 	 argv[59] = "-chardev"
+INFO         | 	 argv[60] = "netsim,id=bluetooth"
+INFO         | 	 argv[61] = "-device"
+INFO         | 	 argv[62] = "virtserialport,chardev=bluetooth,name=bluetooth"
+INFO         | 	 argv[63] = "-device"
+INFO         | 	 argv[64] = "virtio-serial,ioeventfd=off"
+INFO         | 	 argv[65] = "-chardev"
+INFO         | 	 argv[66] = "socket,port=13242,host=::1,nowait,nodelay,reconnect=10,ipv6,id=modem"
+INFO         | 	 argv[67] = "-device"
+INFO         | 	 argv[68] = "virtserialport,chardev=modem,name=modem"
+INFO         | 	 argv[69] = "-device"
+INFO         | 	 argv[70] = "virtio-rng-pci"
+INFO         | 	 argv[71] = "-show-cursor"
+INFO         | 	 argv[72] = "-device"
+INFO         | 	 argv[73] = "virtio_input_multi_touch_pci_1"
+INFO         | 	 argv[74] = "-device"
+INFO         | 	 argv[75] = "virtio_input_multi_touch_pci_2"
+INFO         | 	 argv[76] = "-device"
+INFO         | 	 argv[77] = "virtio_input_multi_touch_pci_3"
+INFO         | 	 argv[78] = "-device"
+INFO         | 	 argv[79] = "virtio_input_multi_touch_pci_4"
+INFO         | 	 argv[80] = "-device"
+INFO         | 	 argv[81] = "virtio_input_multi_touch_pci_5"
+INFO         | 	 argv[82] = "-device"
+INFO         | 	 argv[83] = "virtio_input_multi_touch_pci_6"
+INFO         | 	 argv[84] = "-device"
+INFO         | 	 argv[85] = "virtio_input_multi_touch_pci_7"
+INFO         | 	 argv[86] = "-device"
+INFO         | 	 argv[87] = "virtio_input_multi_touch_pci_8"
+INFO         | 	 argv[88] = "-device"
+INFO         | 	 argv[89] = "virtio_input_multi_touch_pci_9"
+INFO         | 	 argv[90] = "-device"
+INFO         | 	 argv[91] = "virtio_input_multi_touch_pci_10"
+INFO         | 	 argv[92] = "-device"
+INFO         | 	 argv[93] = "virtio_input_multi_touch_pci_11"
+INFO         | 	 argv[94] = "-netdev"
+INFO         | 	 argv[95] = "user,id=virtio-wifi,dhcpstart=10.0.2.16"
+INFO         | 	 argv[96] = "-device"
+INFO         | 	 argv[97] = "virtio-wifi-pci,netdev=virtio-wifi"
+INFO         | 	 argv[98] = "-device"
+INFO         | 	 argv[99] = "virtio-vsock-pci,guest-cid=77"
+INFO         | 	 argv[100] = "-L"
+INFO         | 	 argv[101] = "C:\Users\david\AppData\Local\Android\Sdk\emulator/lib/pc-bios"
+INFO         | 	 argv[102] = "-soundhw"
+INFO         | 	 argv[103] = "virtio-snd-pci"
+INFO         | 	 argv[104] = "-vga"
+INFO         | 	 argv[105] = "none"
+INFO         | 	 argv[106] = "-append"
+INFO         | 	 argv[107] = "8250.nr_uarts=1 clocksource=pit no_timer_check console=0 ndns=2 loop.max_part=7 ramoops.mem_address=0xff018000 ramoops.mem_size=0x10000 memmap=0x10000$0xff018000 printk.devkmsg=on bootconfig"
+INFO         | 	 argv[108] = "-android-hw"
+INFO         | 	 argv[109] = "C:\Users\david\.android\avd\..\avd\flutter_emulator.avd\hardware-qemu.ini"
+INFO         | Concatenated QEMU options: C:\Users\david\AppData\Local\Android\Sdk\emulator\qemu\windows-x86_64\qemu-system-x86_64.exe -dns-server 172.22.232.220,2607:fb90:d160:89ce::59 -mem-path C:\Users\david\.android\avd\flutter_emulator.avd\snapshots\default_boot\ram.img -serial null -android-ports 5556,5557 -device goldfish_pstore,addr=0xff018000,size=0x10000,file=C:\Users\david\.android\avd\..\avd\flutter_emulator.avd\data\misc\pstore\pstore.bin -cpu android64 -enable-whpx -smp cores=4 -m 2048 -lcd-density 420 -nodefaults -kernel C:\Users\david\AppData\Local\Android\Sdk\system-images\android-35\google_apis_playstore\x86_64\\kernel-ranchu -initrd C:\Users\david\.android\avd\..\avd\flutter_emulator.avd\initrd -drive if=none,index=0,id=system,if=none,file=C:\Users\david\AppData\Local\Android\Sdk\system-images\android-35\google_apis_playstore\x86_64\\system.img,read-only -device virtio-blk-pci,drive=system,modern-pio-notify -drive if=none,index=1,id=cache,if=none,file=C:\Users\david\.android\avd\..\avd\flutter_emulator.avd\cache.img.qcow2,overlap-check=none,cache=unsafe,l2-cache-size=1048576 -device virtio-blk-pci,drive=cache,modern-pio-notify -drive if=none,index=2,id=userdata,if=none,file=C:\Users\david\.android\avd\..\avd\flutter_emulator.avd\userdata-qemu.img.qcow2,overlap-check=none,cache=unsafe,l2-cache-size=1048576 -device virtio-blk-pci,drive=userdata,modern-pio-notify -drive if=none,index=3,id=encrypt,if=none,file=C:\Users\david\.android\avd\..\avd\flutter_emulator.avd\encryptionkey.img.qcow2,overlap-check=none,cache=unsafe,l2-cache-size=1048576 -device virtio-blk-pci,drive=encrypt,modern-pio-notify -drive if=none,index=4,id=vendor,if=none,file=C:\Users\david\AppData\Local\Android\Sdk\system-images\android-35\google_apis_playstore\x86_64\\vendor.img,read-only -device virtio-blk-pci,drive=vendor,modern-pio-notify -netdev user,id=mynet -device virtio-net-pci,netdev=mynet -chardev null,id=forhvc0 -chardev null,id=forhvc1 -device virtio-serial-pci,ioeventfd=off -device virtconsole,chardev=forhvc0 -device virtconsole,chardev=forhvc1 -chardev netsim,id=bluetooth -device virtserialport,chardev=bluetooth,name=bluetooth -device virtio-serial,ioeventfd=off -chardev socket,port=13242,host=::1,nowait,nodelay,reconnect=10,ipv6,id=modem -device virtserialport,chardev=modem,name=modem -device virtio-rng-pci -show-cursor -device virtio_input_multi_touch_pci_1 -device virtio_input_multi_touch_pci_2 -device virtio_input_multi_touch_pci_3 -device virtio_input_multi_touch_pci_4 -device virtio_input_multi_touch_pci_5 -device virtio_input_multi_touch_pci_6 -device virtio_input_multi_touch_pci_7 -device virtio_input_multi_touch_pci_8 -device virtio_input_multi_touch_pci_9 -device virtio_input_multi_touch_pci_10 -device virtio_input_multi_touch_pci_11 -netdev user,id=virtio-wifi,dhcpstart=10.0.2.16 -device virtio-wifi-pci,netdev=virtio-wifi -device virtio-vsock-pci,guest-cid=77 -L C:\Users\david\AppData\Local\Android\Sdk\emulator/lib/pc-bios -soundhw virtio-snd-pci -vga none -append "8250.nr_uarts=1 clocksource=pit no_timer_check console=0 ndns=2 loop.max_part=7 ramoops.mem_address=0xff018000 ramoops.mem_size=0x10000 memmap=0x10000$0xff018000 printk.devkmsg=on bootconfig" -android-hw C:\Users\david\.android\avd\..\avd\flutter_emulator.avd\hardware-qemu.ini
+DEBUG   | Android qemu version 36.2.12.0 (build_id 14214601) (CL:N/A)
+DEBUG   | Starting QEMU main loop
+DEBUG   | android_fopen: Failed to open /qemu.conf, err: 2
+DEBUG   | registered 'boot-properties' qemud service
+DEBUG   | Adding boot property: 'ro.opengles.version' = '196608'
+DEBUG   | Adding boot property: 'qemu.sf.fake_camera' = 'back'
+DEBUG   | Adding boot property: 'qemu.adb.secure' = '1'
+DEBUG   | Adding boot property: 'dalvik.vm.heapsize' = '512m'
+DEBUG   | Adding boot property: 'qemu.hw.mainkeys' = '0'
+DEBUG   | Adding boot property: 'qemu.sf.lcd_density' = '420'
+WHPX on Windows 10.0.26200 detected.
+Windows Hypervisor Platform accelerator is operational
+DEBUG   | goldfish_events.have-dpad: false
+DEBUG   | goldfish_events.have-trackball: false
+DEBUG   | goldfish_events.have-camera: true
+DEBUG   | goldfish_events.have-keyboard: false
+DEBUG   | goldfish_events.have-lidswitch: true
+DEBUG   | goldfish_events.have-tabletmode: false
+DEBUG   | goldfish_events.have-touch: false
+DEBUG   | goldfish_events.have-multitouch: false
+DEBUG   | Adding boot property: 'net.wifi_mac_prefix' = '5556'
+INFO         | Monitoring duration of emulator setup.
+DEBUG   | Adding boot property: 'qemu.timezone' = 'America/New_York'
+DEBUG   | android_hw_fingerprint_init: fingerprint qemud listen service initialized
+DEBUG   | Successfully initialized Wi-Fi
+DEBUG   | emulator_window_fb_rotate
+DEBUG   | CMD_SET_DISPLAY_CONFIGS
+INFO         | Setting display: 0 configuration to: 1080x1920, dpi: 420x420 
+DEBUG   | CMD_SET_DISPLAY_ACTIVE_CONFIG
+DEBUG   | setDisplayPose 0 x 0 y 0 w 1080 h 1920 dpi 0
+INFO         | setDisplayActiveConfig 0
+DEBUG   | Adjusting window size by 0.38x for hw_lcd_density
+DEBUG   |  no root specified: 
+DEBUG   | Path:C:\Users\david\AppData\Local\Android\Sdk\platform-tools\adb.exe protocol version: 41
+DEBUG   | Path:X:\platform-tools-latest-windows\platform-tools\adb.exe protocol version: 41
+DEBUG   | Found: 2 adb executables
+DEBUG   | Adb: C:\Users\david\AppData\Local\Android\Sdk\platform-tools\adb.exe
+DEBUG   | Adb: X:\platform-tools-latest-windows\platform-tools\adb.exe
+DEBUG   | Path:C:\Users\david\AppData\Local\Android\Sdk\platform-tools\adb.exe protocol version: 41
+DEBUG   | Path:X:\platform-tools-latest-windows\platform-tools\adb.exe protocol version: 41
+INFO         | Checking system compatibility:
+INFO         |   Checking: hasCompatibleHypervisor
+INFO         |      Ok: Hypervisor compatibility to run avd: `flutter_emulator` are met
+INFO         |   Checking: hasSufficientSystem
+INFO         |      Ok: System requirements to run avd: `flutter_emulator` are met
+INFO         |   Checking: hasSufficientHwGpu
+INFO         |      Ok: Hardware GPU requirements to run avd: `flutter_emulator` are passed
+INFO         |   Checking: hasSufficientDiskSpace
+INFO         |      Ok: Disk space requirements to run avd: `flutter_emulator` are met
+DEBUG   | Sending CMD_REPAINT to reposting thread
+DEBUG   | Reposting thread dequeueing a CMD_REPAINT
+DEBUG   | Sending CMD_REPAINT to reposting thread
+DEBUG   | Reposting framebuffer.
+DEBUG   | No repost: no last posted color buffer
+DEBUG   | Reposting thread dequeueing a CMD_REPAINT
+DEBUG   | Reposting framebuffer.
+DEBUG   | No repost: no last posted color buffer
+DEBUG   | config multidisplay with config.ini 0x0 0x0 0x0
+DEBUG   | Begin setupSubWindow
+DEBUG   | No acpi ini file provided, using default
+DEBUG   | added one RIL client
+INFO         | OpenGL Vendor=[Google (Intel)]
+INFO         | OpenGL Renderer=[Android Emulator OpenGL ES Translator (Intel(R) Iris(R) Xe Graphics)]
+INFO         | OpenGL Version=[OpenGL ES 3.0 (4.5.0 - Build 32.0.101.7040)]
+DEBUG   | Exit setupSubWindow (successful setup)
+DEBUG   | Crash info: hw.gpu.enabled=no
+DEBUG   | Crash info: hw.cpu.ncore=4
+DEBUG   | Crash info: avd_space=0
+DEBUG   | Crash info: disk.dataPartition.size=6442450944
+DEBUG   | Crash info: hw.sensor.hinge=no
+DEBUG   | Crash info: hw.gpu.mode=auto
+DEBUG   | Begin setupSubWindow
+DEBUG   | Exit setupSubWindow (nothing to do)
+DEBUG   | Crash info: hw.lcd.height=1920
+DEBUG   | Crash info: hw.ramSize=2G
+DEBUG   | Crash info: hw.lcd.width=1080
+DEBUG   | Crash info: PlayStore.enabled=no
+DEBUG   | Crash info: cpu_cores=20
+DEBUG   | call repost from subWindowRepaint callback
+DEBUG   | Crash info: free_ram=37419
+DEBUG   | Reposting framebuffer.
+DEBUG   | No repost: no last posted color buffer
+DEBUG   | Crash info: ro.build.fingerprint=??
+DEBUG   | Crash info: sessionId=da7e884c-5460-4c55-ba5f-62bcd9ad1790
+USER_INFO    | Emulator is performing a full startup. This may take upto two minutes, or more.
+DEBUG   | Begin setupSubWindow
+DEBUG   | Exit setupSubWindow (successful setup)
+DEBUG   | call repost from subWindowRepaint callback
+DEBUG   | Reposting framebuffer.
+DEBUG   | No repost: no last posted color buffer
+DEBUG   | Begin setupSubWindow
+DEBUG   | Exit setupSubWindow (successful setup)
+DEBUG   | call repost from subWindowRepaint callback
+DEBUG   | Reposting framebuffer.
+DEBUG   | No repost: no last posted color buffer
+DEBUG   | Begin setupSubWindow
+DEBUG   | Exit setupSubWindow (successful setup)
+DEBUG   | call repost from subWindowRepaint callback
+DEBUG   | Reposting framebuffer.
+DEBUG   | No repost: no last posted color buffer
+DEBUG   | Begin setupSubWindow
+DEBUG   | Exit setupSubWindow (successful setup)
+DEBUG   | call repost from subWindowRepaint callback
+DEBUG   | Reposting framebuffer.
+DEBUG   | No repost: no last posted color buffer
+DEBUG   | Begin setupSubWindow
+DEBUG   | Exit setupSubWindow (successful setup)
+DEBUG   | Begin setupSubWindow
+DEBUG   | Exit setupSubWindow (nothing to do)
+DEBUG   | call repost from subWindowRepaint callback
+DEBUG   | Reposting framebuffer.
+DEBUG   | No repost: no last posted color buffer
+WARNING      | adb command 'C:\Users\david\AppData\Local\Android\Sdk\platform-tools\adb.exe -s emulator-5556 shell am start-foreground-service -e meter on com.android.emulator.radio.config/.MeterService ' failed: 'adb.exe: device 'emulator-5556' not found'
+DEBUG   | Sending CMD_REPAINT to reposting thread
+DEBUG   | call repost from subWindowRepaint callback
+DEBUG   | Reposting framebuffer.
+DEBUG   | Reposting thread dequeueing a CMD_REPAINT
+DEBUG   | No repost: no last posted color buffer
+DEBUG   | Reposting framebuffer.
+DEBUG   | Begin setupSubWindow
+DEBUG   | No repost: no last posted color buffer
+DEBUG   | Exit setupSubWindow (successful setup)
+DEBUG   | Begin setupSubWindow
+DEBUG   | Exit setupSubWindow (nothing to do)
+DEBUG   | Begin setupSubWindow
+DEBUG   | Exit setupSubWindow (nothing to do)
+DEBUG   | call repost from subWindowRepaint callback
+DEBUG   | Reposting framebuffer.
+DEBUG   | No repost: no last posted color buffer
+DEBUG   | No acpi ini file provided, using default
+DEBUG   | Sending CMD_REPAINT to reposting thread
+DEBUG   | Reposting thread dequeueing a CMD_REPAINT
+DEBUG   | Reposting framebuffer.
+DEBUG   | Begin setupSubWindow
+DEBUG   | No repost: no last posted color buffer
+DEBUG   | Exit setupSubWindow (nothing to do)
+DEBUG   | Begin setupSubWindow
+DEBUG   | Exit setupSubWindow (nothing to do)
+INFO         | Activated packet streamer for bluetooth emulation
+DEBUG   | Started new RenderThread (total 1) @000001839C6322F0
+DEBUG   | Started new RenderThread (total 2) @000001839C631F70
+DEBUG   | ColorBuffer 3, 1x1, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 4096, type: 0, props: 1 / 1]
+DEBUG   | Started new RenderThread (total 3) @00000183000ED190
+DEBUG   | Started new RenderThread (total 4) @00000183000EDB30
+DEBUG   | setDisplayPose 0 x -1 y -1 w 1080 h 1920 dpi 420
+DEBUG   | ColorBuffer 4, 1080x1920, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 8355840, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 5, 1080x1920, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 8355840, type: 0, props: 1 / 1]
+INFO         | Critical: UpdateLayeredWindowIndirect failed for ptDst=(155, 131), size=(300x21), dirty=(300x21 0, 0) (A device attached to the system is not functioning.) (:0, )
+DEBUG   | ColorBuffer 6, 1080x1920, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 8355840, type: 0, props: 1 / 1]
+DEBUG   | Started new RenderThread (total 5) @00000183000EE690
+DEBUG   | ColorBuffer 7, 1080x1920, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 8355840, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 8, 1080x1920, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 8355840, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 9, 128x128, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 65536, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 10, 128x128, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 65536, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 11, 128x128, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 65536, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 12, 128x128, VK_FORMAT_R16G16B16A16_SFLOAT, Memory [size: 139392, type: 0, props: 1 / 1]
+DEBUG   | Started new RenderThread (total 6) @000001839CD45B40
+DEBUG   | Started new RenderThread (total 7) @000001839D603D10
+DEBUG   | ColorBuffer 13, 1080x1920, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 8355840, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 16, 1080x1920, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 8355840, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 19, 1080x1920, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 8355840, type: 0, props: 1 / 1]
+DEBUG   | _hwFingerprint_connect: connect finger print listen is called
+DEBUG   | got message from guest system fingerprint HAL
+DEBUG   | Started new RenderThread (total 8) @00000183B36399B0
+DEBUG   | Started new RenderThread (total 9) @00000183000ED270
+DEBUG   | ColorBuffer 22, 1x1, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 4096, type: 0, props: 1 / 1]
+DEBUG   | Started new RenderThread (total 10) @00000183000EC010
+DEBUG   | ColorBuffer 23, 1080x1920, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 8355840, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 25, 1080x1920, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 8355840, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 26, 1080x1920, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 8355840, type: 0, props: 1 / 1]
+DEBUG   | Started new RenderThread (total 11) @00000183B3639D30
+DEBUG   | ColorBuffer 29, 1x1, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 4096, type: 0, props: 1 / 1]
+DEBUG   | Started new RenderThread (total 12) @00000183B3639A90
+DEBUG   | ColorBuffer 30, 922x1024, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 3801088, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 32, 922x1024, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 3801088, type: 0, props: 1 / 1]
+DEBUG   | Waiting for exit signal RenderThread @000001839CD45B40
+DEBUG   | Waiting for exit signal RenderThread @000001839D603D10
+DEBUG   | ColorBuffer 33, 1080x1920, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 8355840, type: 0, props: 1 / 1]
+DEBUG   | Exited a RenderThread @000001839CD45B40
+DEBUG   | Exited a RenderThread @000001839D603D10
+DEBUG   | Started new RenderThread (total 11) @00000183B3639B70
+DEBUG   | ColorBuffer 34, 1080x1920, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 8355840, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 36, 1080x1920, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 8355840, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 37, 1080x1920, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 8355840, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 38, 1080x63, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 278528, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 40, 1080x63, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 278528, type: 0, props: 1 / 1]
+INFO         | Boot completed in 27823 ms
+DEBUG   | ColorBuffer 41, 1080x63, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 278528, type: 0, props: 1 / 1]
+INFO         | Increasing screen off timeout, logcat buffer size to 2M.
+WARNING      | adb command 'X:\platform-tools-latest-windows\platform-tools\adb.exe -s emulator-5556 shell settings put system screen_off_timeout 2147483647 ' failed: 'adb.exe: device 'emulator-5556' not found'
+DEBUG   | calling ctec from remote
+DEBUG   | added one remote client
+WARNING      | adb command 'C:\Users\david\AppData\Local\Android\Sdk\platform-tools\adb.exe -s emulator-5556 shell settings put system screen_off_timeout 2147483647 ' failed: 'adb.exe: device 'emulator-5556' not found'
+DEBUG   | Started new RenderThread (total 12) @00000183B33798E0
+DEBUG   | ColorBuffer 44, 1x1, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 4096, type: 0, props: 1 / 1]
+DEBUG   | Started new RenderThread (total 13) @00000183B3639C50
+DEBUG   | ColorBuffer 45, 38x38, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 16384, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 47, 38x38, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 16384, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 48, 42x42, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 16384, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 50, 42x42, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 16384, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 51, 2x2, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 4096, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 53, 2x2, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 4096, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 54, 155x155, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 102400, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 56, 155x155, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 102400, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 57, 1x1, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 4096, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 59, 1x1, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 4096, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 60, 1080x1920, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 8355840, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 61, 1080x252, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 1114112, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 63, 1080x252, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 1114112, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 64, 1080x252, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 1114112, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 65, 284x10, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 36864, type: 0, props: 1 / 1]
+VERBOSE | glReadPixels seems OK for tex(internal:0x1908 fmt:0x1908 type:0x1401) read(fmt:0x1908 type:0x1401).
+DEBUG   | ColorBuffer 66, 1x1, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 4096, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 68, 1x1, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 4096, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 69, 2x2, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 4096, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 71, 2x2, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 4096, type: 0, props: 1 / 1]
+WARNING      | adb command 'X:\platform-tools-latest-windows\platform-tools\adb.exe -s emulator-5556 shell settings put system screen_off_timeout 2147483647 ' failed: 'adb.exe: device 'emulator-5556' not found'
+WARNING      | adb command 'C:\Users\david\AppData\Local\Android\Sdk\platform-tools\adb.exe -s emulator-5556 shell settings put system screen_off_timeout 2147483647 ' failed: 'adb.exe: device 'emulator-5556' not found'
+WARNING      | adb command 'X:\platform-tools-latest-windows\platform-tools\adb.exe -s emulator-5556 shell settings put system screen_off_timeout 2147483647 ' failed: 'adb.exe: device 'emulator-5556' not found'
+WARNING      | adb command 'C:\Users\david\AppData\Local\Android\Sdk\platform-tools\adb.exe -s emulator-5556 shell settings put system screen_off_timeout 2147483647 ' failed: 'adb.exe: device 'emulator-5556' not found'
+DEBUG   | Waiting for exit signal RenderThread @00000183000EC010
+DEBUG   | Waiting for exit signal RenderThread @00000183000ED270
+DEBUG   | Exited a RenderThread @00000183000ED270
+DEBUG   | Exited a RenderThread @00000183000EC010
+DEBUG   | Started new RenderThread (total 12) @00000183B363A0E0
+DEBUG   | ColorBuffer 74, 1x1, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 4096, type: 0, props: 1 / 1]
+WARNING      | adb command 'X:\platform-tools-latest-windows\platform-tools\adb.exe -s emulator-5556 shell settings put system screen_off_timeout 2147483647 ' failed: 'adb.exe: device 'emulator-5556' not found'
+DEBUG   | ColorBuffer 75, 1080x1920, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 8355840, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 77, 1080x1920, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 8355840, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 78, 1080x1920, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 8355840, type: 0, props: 1 / 1]
+DEBUG   | call repost from subWindowRepaint callback
+DEBUG   | Reposting framebuffer.
+DEBUG   | Has last posted colorbuffer and is initialized; post.
+DEBUG   | ColorBuffer 79, 2x2, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 4096, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 81, 2x2, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 4096, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 82, 155x155, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 102400, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 84, 155x155, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 102400, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 85, 1080x63, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 278528, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 87, 1080x63, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 278528, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 88, 1080x63, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 278528, type: 0, props: 1 / 1]
+WARNING      | adb command 'C:\Users\david\AppData\Local\Android\Sdk\platform-tools\adb.exe -s emulator-5556 shell settings put system screen_off_timeout 2147483647 ' failed: 'adb.exe: device 'emulator-5556' not found'
+WARNING      | adb command 'X:\platform-tools-latest-windows\platform-tools\adb.exe -s emulator-5556 shell settings put system screen_off_timeout 2147483647 ' failed: 'adb.exe: device 'emulator-5556' not found'
+DEBUG   | Started new RenderThread (total 13) @0000018300FB24C0
+DEBUG   | ColorBuffer 89, 63x63, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 16384, type: 0, props: 1 / 1]
+DEBUG   | Started new RenderThread (total 14) @0000018300FB2840
+DEBUG   | ColorBuffer 92, 1x1, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 4096, type: 0, props: 1 / 1]
+DEBUG   | Started new RenderThread (total 15) @00000183B3379F00
+WARNING      | adb command 'C:\Users\david\AppData\Local\Android\Sdk\platform-tools\adb.exe -s emulator-5556 shell settings put system screen_off_timeout 2147483647 ' failed: 'adb.exe: device 'emulator-5556' not found'
+DEBUG   | ColorBuffer 97, 1x1, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 4096, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 100, 1x1, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 4096, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 103, 1x1, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 4096, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 106, 1x1, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 4096, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 109, 1x1, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 4096, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 112, 1x1, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 4096, type: 0, props: 1 / 1]
+DEBUG   | Started new RenderThread (total 16) @00000183B363A540
+DEBUG   | ColorBuffer 115, 1x1, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 4096, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 118, 1x1, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 4096, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 119, 155x155, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 102400, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 121, 155x155, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 102400, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 124, 1x1, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 4096, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 127, 1x1, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 4096, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 130, 1x1, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 4096, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 133, 1x1, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 4096, type: 0, props: 1 / 1]
+WARNING      | adb command 'X:\platform-tools-latest-windows\platform-tools\adb.exe -s emulator-5556 shell settings put system screen_off_timeout 2147483647 ' failed: 'adb.exe: device 'emulator-5556' not found'
+DEBUG   | ColorBuffer 134, 63x63, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 16384, type: 0, props: 1 / 1]
+WARNING      | adb command 'C:\Users\david\AppData\Local\Android\Sdk\platform-tools\adb.exe -s emulator-5556 shell settings put system screen_off_timeout 2147483647 ' failed: 'adb.exe: device 'emulator-5556' not found'
+DEBUG   | ColorBuffer 135, 155x155, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 102400, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 137, 155x155, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 102400, type: 0, props: 1 / 1]
+WARNING      | adb command 'X:\platform-tools-latest-windows\platform-tools\adb.exe -s emulator-5556 shell settings put system screen_off_timeout 2147483647 ' failed: 'adb.exe: device 'emulator-5556' not found'
+DEBUG   | Started new RenderThread (total 17) @000001839D603D10
+DEBUG   | ColorBuffer 140, 1x1, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 4096, type: 0, props: 1 / 1]
+DEBUG   | ColorBuffer 143, 1x1, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 4096, type: 0, props: 1 / 1]
+WARNING      | adb command 'C:\Users\david\AppData\Local\Android\Sdk\platform-tools\adb.exe -s emulator-5556 shell settings put system screen_off_timeout 2147483647 ' failed: 'adb.exe: device 'emulator-5556' not found'
+WARNING      | adb command 'X:\platform-tools-latest-windows\platform-tools\adb.exe -s emulator-5556 shell settings put system screen_off_timeout 2147483647 ' failed: 'adb.exe: device 'emulator-5556' not found'
+WARNING      | adb command 'C:\Users\david\AppData\Local\Android\Sdk\platform-tools\adb.exe -s emulator-5556 shell settings put system screen_off_timeout 2147483647 ' failed: 'adb.exe: device 'emulator-5556' not found'
+DEBUG   | Started new RenderThread (total 18) @00000183B363A1C0
+DEBUG   | ColorBuffer 146, 2x2, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 4096, type: 0, props: 1 / 1]
+WARNING      | adb command 'X:\platform-tools-latest-windows\platform-tools\adb.exe -s emulator-5556 shell settings put system screen_off_timeout 2147483647 ' failed: 'adb.exe: device 'emulator-5556' not found'
+INFO         | IPv4 server found: 172.22.232.220
+INFO         | Ignore IPv6 address: 60d9:37c1:8301:0:70ce:37c1:8301:0
+INFO         | Ignore IPv6 address: 60d9:37c1:8301:0:70ce:37c1:8301:0
+INFO         | Ignore IPv6 address: 60d9:37c1:8301:0:70ce:37c1:8301:0
+INFO         | Ignore IPv6 address: 50df:37c1:8301:0:70ce:37c1:8301:0
+INFO         | Ignore IPv6 address: 50df:37c1:8301:0:70ce:37c1:8301:0
+INFO         | Ignore IPv6 address: 50df:37c1:8301:0:70ce:37c1:8301:0
+INFO         | Ignore IPv6 address: 60e5:37c1:8301:0:70ce:37c1:8301:0
+INFO         | Ignore IPv6 address: 60e5:37c1:8301:0:70ce:37c1:8301:0
+INFO         | Ignore IPv6 address: 60e5:37c1:8301:0:70ce:37c1:8301:0
+INFO         | Ignore IPv6 address: 70eb:37c1:8301:0:70ce:37c1:8301:0
+INFO         | Ignore IPv6 address: 70eb:37c1:8301:0:70ce:37c1:8301:0
+INFO         | Ignore IPv6 address: 70eb:37c1:8301:0:70ce:37c1:8301:0
+INFO         | Ignore IPv6 address: 90f1:37c1:8301:0:70ce:37c1:8301:0
+INFO         | Ignore IPv6 address: 90f1:37c1:8301:0:70ce:37c1:8301:0
+INFO         | Ignore IPv6 address: 90f1:37c1:8301:0:70ce:37c1:8301:0
+DEBUG   | IPv6 DNS server found: b0f7:37c1:8301:0:70ce:37c1:8301:0
+INFO         | Ignore IPv6 address: a001:38c1:8301:0:70ce:37c1:8301:0
+INFO         | Ignore IPv6 address: a001:38c1:8301:0:70ce:37c1:8301:0
+INFO         | Ignore IPv6 address: a001:38c1:8301:0:70ce:37c1:8301:0
+INFO         | Ignore IPv6 address: c807:38c1:8301:0:70ce:37c1:8301:0
+INFO         | Ignore IPv6 address: c807:38c1:8301:0:70ce:37c1:8301:0
+INFO         | Ignore IPv6 address: c807:38c1:8301:0:70ce:37c1:8301:0
+INFO         | Ignore IPv6 address: b00d:38c1:8301:0:70ce:37c1:8301:0
+INFO         | Ignore IPv6 address: b00d:38c1:8301:0:70ce:37c1:8301:0
+INFO         | Ignore IPv6 address: b00d:38c1:8301:0:70ce:37c1:8301:0
+INFO         | IPv4 server found: 172.22.232.220
+INFO         | Ignore IPv6 address: 60d9:37c1:8301:0:70ce:37c1:8301:0
+INFO         | Ignore IPv6 address: 60d9:37c1:8301:0:70ce:37c1:8301:0
+INFO         | Ignore IPv6 address: 60d9:37c1:8301:0:70ce:37c1:8301:0
+INFO         | Ignore IPv6 address: 50df:37c1:8301:0:70ce:37c1:8301:0
+INFO         | Ignore IPv6 address: 50df:37c1:8301:0:70ce:37c1:8301:0
+INFO         | Ignore IPv6 address: 50df:37c1:8301:0:70ce:37c1:8301:0
+INFO         | Ignore IPv6 address: 60e5:37c1:8301:0:70ce:37c1:8301:0
+INFO         | Ignore IPv6 address: 60e5:37c1:8301:0:70ce:37c1:8301:0
+INFO         | Ignore IPv6 address: 60e5:37c1:8301:0:70ce:37c1:8301:0
+INFO         | Ignore IPv6 address: 70eb:37c1:8301:0:70ce:37c1:8301:0
+INFO         | Ignore IPv6 address: 70eb:37c1:8301:0:70ce:37c1:8301:0
+INFO         | Ignore IPv6 address: 70eb:37c1:8301:0:70ce:37c1:8301:0
+INFO         | Ignore IPv6 address: 90f1:37c1:8301:0:70ce:37c1:8301:0
+INFO         | Ignore IPv6 address: 90f1:37c1:8301:0:70ce:37c1:8301:0
+INFO         | Ignore IPv6 address: 90f1:37c1:8301:0:70ce:37c1:8301:0
+DEBUG   | IPv6 DNS server found: b0f7:37c1:8301:0:70ce:37c1:8301:0
+INFO         | Ignore IPv6 address: a001:38c1:8301:0:70ce:37c1:8301:0
+INFO         | Ignore IPv6 address: a001:38c1:8301:0:70ce:37c1:8301:0
+INFO         | Ignore IPv6 address: a001:38c1:8301:0:70ce:37c1:8301:0
+INFO         | Ignore IPv6 address: c807:38c1:8301:0:70ce:37c1:8301:0
+INFO         | Ignore IPv6 address: c807:38c1:8301:0:70ce:37c1:8301:0
+INFO         | Ignore IPv6 address: c807:38c1:8301:0:70ce:37c1:8301:0
+INFO         | Ignore IPv6 address: b00d:38c1:8301:0:70ce:37c1:8301:0
+INFO         | Ignore IPv6 address: b00d:38c1:8301:0:70ce:37c1:8301:0
+INFO         | Ignore IPv6 address: b00d:38c1:8301:0:70ce:37c1:8301:0
+INFO         | IPv4 server found: 172.22.232.220
+INFO         | Ignore IPv6 address: e0a8:35c1:8301:0:f09d:35c1:8301:0
+INFO         | Ignore IPv6 address: e0a8:35c1:8301:0:f09d:35c1:8301:0
+INFO         | Ignore IPv6 address: e0a8:35c1:8301:0:f09d:35c1:8301:0
+INFO         | Ignore IPv6 address: d0ae:35c1:8301:0:f09d:35c1:8301:0
+INFO         | Ignore IPv6 address: d0ae:35c1:8301:0:f09d:35c1:8301:0
+INFO         | Ignore IPv6 address: d0ae:35c1:8301:0:f09d:35c1:8301:0
+INFO         | Ignore IPv6 address: e0b4:35c1:8301:0:f09d:35c1:8301:0
+INFO         | Ignore IPv6 address: e0b4:35c1:8301:0:f09d:35c1:8301:0
+INFO         | Ignore IPv6 address: e0b4:35c1:8301:0:f09d:35c1:8301:0
+INFO         | Ignore IPv6 address: f0ba:35c1:8301:0:f09d:35c1:8301:0
+INFO         | Ignore IPv6 address: f0ba:35c1:8301:0:f09d:35c1:8301:0
+INFO         | Ignore IPv6 address: f0ba:35c1:8301:0:f09d:35c1:8301:0
+INFO         | Ignore IPv6 address: 10c1:35c1:8301:0:f09d:35c1:8301:0
+INFO         | Ignore IPv6 address: 10c1:35c1:8301:0:f09d:35c1:8301:0
+INFO         | Ignore IPv6 address: 10c1:35c1:8301:0:f09d:35c1:8301:0
+DEBUG   | IPv6 DNS server found: 30c7:35c1:8301:0:f09d:35c1:8301:0
+INFO         | Ignore IPv6 address: 20d1:35c1:8301:0:f09d:35c1:8301:0
+INFO         | Ignore IPv6 address: 20d1:35c1:8301:0:f09d:35c1:8301:0
+INFO         | Ignore IPv6 address: 20d1:35c1:8301:0:f09d:35c1:8301:0
+INFO         | Ignore IPv6 address: 48d7:35c1:8301:0:f09d:35c1:8301:0
+INFO         | Ignore IPv6 address: 48d7:35c1:8301:0:f09d:35c1:8301:0
+INFO         | Ignore IPv6 address: 48d7:35c1:8301:0:f09d:35c1:8301:0
+INFO         | Ignore IPv6 address: 30dd:35c1:8301:0:f09d:35c1:8301:0
+INFO         | Ignore IPv6 address: 30dd:35c1:8301:0:f09d:35c1:8301:0
+INFO         | Ignore IPv6 address: 30dd:35c1:8301:0:f09d:35c1:8301:0
+WARNING      | adb command 'C:\Users\david\AppData\Local\Android\Sdk\platform-tools\adb.exe -s emulator-5556 shell settings put system screen_off_timeout 2147483647 ' failed: 'adb.exe: device 'emulator-5556' not found'
+WARNING      | adb command 'X:\platform-tools-latest-windows\platform-tools\adb.exe -s emulator-5556 shell settings put system screen_off_timeout 2147483647 ' failed: 'adb.exe: device 'emulator-5556' not found'
+WARNING      | adb command 'C:\Users\david\AppData\Local\Android\Sdk\platform-tools\adb.exe -s emulator-5556 shell settings put system screen_off_timeout 2147483647 ' failed: 'adb.exe: device 'emulator-5556' not found'
+DEBUG   | Started new RenderThread (total 19) @000001839D603ED0
+WARNING      | adb command 'X:\platform-tools-latest-windows\platform-tools\adb.exe -s emulator-5556 shell settings put system screen_off_timeout 2147483647 ' failed: 'adb.exe: device 'emulator-5556' not found'
+DEBUG   | ColorBuffer 149, 32x32, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 4096, type: 0, props: 1 / 1]
+WARNING      | adb command 'C:\Users\david\AppData\Local\Android\Sdk\platform-tools\adb.exe -s emulator-5556 shell settings put system screen_off_timeout 2147483647 ' failed: 'adb.exe: device 'emulator-5556' not found'
+WARNING      | adb command 'X:\platform-tools-latest-windows\platform-tools\adb.exe -s emulator-5556 shell settings put system screen_off_timeout 2147483647 ' failed: 'adb.exe: device 'emulator-5556' not found'
+WARNING      | adb command 'C:\Users\david\AppData\Local\Android\Sdk\platform-tools\adb.exe -s emulator-5556 shell settings put system screen_off_timeout 2147483647 ' failed: 'adb.exe: device 'emulator-5556' not found'
+WARNING      | adb command 'X:\platform-tools-latest-windows\platform-tools\adb.exe -s emulator-5556 shell settings put system screen_off_timeout 2147483647 ' failed: 'adb.exe: device 'emulator-5556' not found'
+WARNING      | adb command 'C:\Users\david\AppData\Local\Android\Sdk\platform-tools\adb.exe -s emulator-5556 shell settings put system screen_off_timeout 2147483647 ' failed: 'adb.exe: device 'emulator-5556' not found'
+WARNING      | adb command 'X:\platform-tools-latest-windows\platform-tools\adb.exe -s emulator-5556 shell settings put system screen_off_timeout 2147483647 ' failed: 'adb.exe: device 'emulator-5556' not found'
+WARNING      | adb command 'C:\Users\david\AppData\Local\Android\Sdk\platform-tools\adb.exe -s emulator-5556 shell settings put system screen_off_timeout 2147483647 ' failed: 'adb.exe: device 'emulator-5556' not found'
+WARNING      | adb command 'X:\platform-tools-latest-windows\platform-tools\adb.exe -s emulator-5556 shell settings put system screen_off_timeout 2147483647 ' failed: 'adb.exe: device 'emulator-5556' not found'
+WARNING      | adb command 'C:\Users\david\AppData\Local\Android\Sdk\platform-tools\adb.exe -s emulator-5556 shell settings put system screen_off_timeout 2147483647 ' failed: 'adb.exe: device 'emulator-5556' not found'
+DEBUG   | Started new RenderThread (total 20) @00000183C13660F0
+DEBUG   | ColorBuffer 152, 32x32, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 4096, type: 0, props: 1 / 1]
+WARNING      | adb command 'X:\platform-tools-latest-windows\platform-tools\adb.exe -s emulator-5556 shell settings put system screen_off_timeout 2147483647 ' failed: 'adb.exe: device 'emulator-5556' not found'
+DEBUG   | call repost from subWindowRepaint callback
+DEBUG   | Reposting framebuffer.
+DEBUG   | Has last posted colorbuffer and is initialized; post.
+WARNING      | adb command 'C:\Users\david\AppData\Local\Android\Sdk\platform-tools\adb.exe -s emulator-5556 shell settings put system screen_off_timeout 2147483647 ' failed: 'adb.exe: device 'emulator-5556' not found'
+WARNING      | adb command 'C:\Users\david\AppData\Local\Android\Sdk\platform-tools\adb.exe -s emulator-5556 shell input keyevent KEYCODE_WAKEUP ' failed: 'adb.exe: device 'emulator-5556' not found'
+DEBUG   | ColorBuffer 155, 32x32, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 4096, type: 0, props: 1 / 1]
+WARNING      | adb command 'X:\platform-tools-latest-windows\platform-tools\adb.exe -s emulator-5556 shell settings put system screen_off_timeout 2147483647 ' failed: 'adb.exe: device 'emulator-5556' not found'
+WARNING      | adb command 'C:\Users\david\AppData\Local\Android\Sdk\platform-tools\adb.exe -s emulator-5556 shell settings put system screen_off_timeout 2147483647 ' failed: 'adb.exe: device 'emulator-5556' not found'
+WARNING      | adb command 'X:\platform-tools-latest-windows\platform-tools\adb.exe -s emulator-5556 emu avd resume ' failed: 'error: could not connect to TCP port 5556: cannot connect to 127.0.0.1:5556: No connection could be made because the target machine actively refused it. (10061)'
+DEBUG   | ColorBuffer 158, 32x32, VK_FORMAT_R8G8B8A8_UNORM, Memory [size: 4096, type: 0, props: 1 / 1]
+INFO         | Wait for emulator (pid 26552) 20 seconds to shutdown gracefully before kill;you can set environment variable ANDROID_EMULATOR_WAIT_TIME_BEFORE_KILL(in seconds) to change the default value (20 seconds)
+
+WARNING      | Not saving state: RAM not mapped as shared
+INFO         | Saving snapshot 'default_boot' using 3 ms
+DEBUG   | Waiting for exit signal RenderThread @000001839C6322F0
+DEBUG   | Waiting for exit signal RenderThread @00000183B3639B70
+DEBUG   | Waiting for exit signal RenderThread @00000183000ED190
+DEBUG   | Waiting for exit signal RenderThread @00000183B363A540
+DEBUG   | Waiting for exit signal RenderThread @00000183B363A1C0
+DEBUG   | Waiting for exit signal RenderThread @00000183B3639C50
+DEBUG   | Exited a RenderThread @000001839C6322F0
+DEBUG   | Waiting for exit signal RenderThread @00000183B3639A90
+DEBUG   | Waiting for exit signal RenderThread @00000183C13660F0
+DEBUG   | Waiting for exit signal RenderThread @00000183000EDB30
+DEBUG   | Waiting for exit signal RenderThread @00000183B3639D30
+DEBUG   | Waiting for exit signal RenderThread @000001839D603D10
+DEBUG   | Waiting for exit signal RenderThread @000001839C631F70
+DEBUG   | Waiting for exit signal RenderThread @0000018300FB24C0
+DEBUG   | Waiting for exit signal RenderThread @0000018300FB2840
+DEBUG   | Waiting for exit signal RenderThread @00000183000EE690
+DEBUG   | Waiting for exit signal RenderThread @00000183B3379F00
+DEBUG   | Waiting for exit signal RenderThread @00000183B363A0E0
+DEBUG   | Exited a RenderThread @000001839C631F70
+DEBUG   | Waiting for exit signal RenderThread @000001839D603ED0
+DEBUG   | Waiting for exit signal RenderThread @00000183B33798E0
+DEBUG   | Waiting for exit signal RenderThread @00000183B36399B0
+DEBUG   | Exited a RenderThread @00000183000ED190
+DEBUG   | Exited a RenderThread @00000183000EDB30
+DEBUG   | Exited a RenderThread @00000183000EE690
+DEBUG   | Exited a RenderThread @00000183B36399B0
+DEBUG   | Exited a RenderThread @00000183B3639D30
+DEBUG   | Exited a RenderThread @00000183B3639A90
+DEBUG   | Exited a RenderThread @00000183B3639B70
+DEBUG   | Exited a RenderThread @00000183B33798E0
+DEBUG   | Exited a RenderThread @00000183B3639C50
+DEBUG   | Exited a RenderThread @00000183B363A0E0
+DEBUG   | Exited a RenderThread @0000018300FB24C0
+DEBUG   | Exited a RenderThread @0000018300FB2840
+DEBUG   | Exited a RenderThread @00000183B3379F00
+DEBUG   | Exited a RenderThread @00000183B363A540
+DEBUG   | Exited a RenderThread @000001839D603D10
+DEBUG   | Exited a RenderThread @00000183B363A1C0
+DEBUG   | Exited a RenderThread @000001839D603ED0
+DEBUG   | Exited a RenderThread @00000183C13660F0
+WARNING      | adb command 'X:\platform-tools-latest-windows\platform-tools\adb.exe -s emulator-5556 shell settings put system screen_off_timeout 2147483647 ' failed: 'adb.exe: device 'emulator-5556' not found'
+WARNING      | Emulator client has not yet been configured.. Call configure me first!
+DEBUG   | Error reading from client fd: error
+DEBUG   | Done with QEMU main loop
+WARNING      | adb command 'C:\Users\david\AppData\Local\Android\Sdk\platform-tools\adb.exe -s emulator-5556 shell settings put system screen_off_timeout 2147483647 ' failed: 'adb.exe: device 'emulator-5556' not found'
+DEBUG   | User configuration saved to C:\Users\david\.android\avd\..\avd\flutter_emulator.avd\emulator-user.ini
+DEBUG   | sending STOP to modem simulator host server
+DEBUG   | received exit request from parent process
+DEBUG   | Hostapd main loop has stopped.
+DEBUG   | waiting for monitor thread to join
+DEBUG   | requested to exit now
+INFO         | emuDirName: 'C:\Users\david\AppData\Local\Android\Sdk\emulator'
+INFO         | try dir C:\Users\david\AppData\Local\Android\Sdk\emulator
+INFO         | Trying emulator path 'C:\Users\david\AppData\Local\Android\Sdk\emulator\qemu\windows-x86_64\qemu-system-x86_64.exe'
+INFO         | Found target-specific 64-bit emulator binary: C:\Users\david\AppData\Local\Android\Sdk\emulator\qemu\windows-x86_64\qemu-system-x86_64.exe
+INFO         | Adding library search path: 'C:\Users\david\AppData\Local\Android\Sdk\emulator\lib64'
+INFO         | Adding library search path: 'C:\Users\david\AppData\Local\Android\Sdk\emulator\lib64\gles_swiftshader'
+INFO         | Adding library search path: 'C:\Users\david\AppData\Local\Android\Sdk\emulator\lib64\vulkan'
+INFO         | Quoted param: [C:\Users\david\AppData\Local\Android\Sdk\emulator\qemu\windows-x86_64\qemu-system-x86_64.exe]
+INFO         | Quoted param: [-avd]
+INFO         | Quoted param: [flutter_emulator]
+INFO         | Quoted param: [-port]
+INFO         | Quoted param: [5556]
+INFO         | Quoted param: [-no-snapshot]
+INFO         | Quoted param: [-verbose]
+DEBUG   | emulator: Running :C:\Users\david\AppData\Local\Android\Sdk\emulator\qemu\windows-x86_64\qemu-system-x86_64.exe
+DEBUG   | qemu backend: argv[00] = "C:\Users\david\AppData\Local\Android\Sdk\emulator\qemu\windows-x86_64\qemu-system-x86_64.exe"
+DEBUG   | qemu backend: argv[01] = "-avd"
+DEBUG   | qemu backend: argv[02] = "flutter_emulator"
+DEBUG   | qemu backend: argv[03] = "-port"
+DEBUG   | qemu backend: argv[04] = "5556"
+DEBUG   | qemu backend: argv[05] = "-no-snapshot"
+DEBUG   | qemu backend: argv[06] = "-verbose"
+DEBUG   | Concatenated backend parameters:  C:\Users\david\AppData\Local\Android\Sdk\emulator\qemu\windows-x86_64\qemu-system-x86_64.exe -avd flutter_emulator -port 5556 -no-snapshot -verbose

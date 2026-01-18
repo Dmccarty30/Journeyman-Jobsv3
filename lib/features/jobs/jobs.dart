@@ -13,14 +13,8 @@ export 'models/jobs_record.dart';
 export 'providers/jobs_riverpod_provider.dart';
 export 'providers/job_filter_riverpod_provider.dart';
 export 'providers/job_recommendation_provider.dart';
-export 'providers/user_job_preference_query_provider.dart'
-    hide
-        userPreferenceService,
-        userPreferenceServiceProvider,
-        UserPreferenceServiceProvider,
-        firestoreService,
-        firestoreServiceProvider,
-        FirestoreServiceProvider;
+export 'providers/user_job_preference_query_provider.dart';
+
 
 // Screens
 export 'screens/jobs_screen.dart';

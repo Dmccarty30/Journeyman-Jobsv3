@@ -48,7 +48,6 @@ class CondensedJobCard extends StatelessWidget {
                     horizontal: AppTheme.spacingSm,
                     vertical: AppTheme.spacingXs,
                   ),
-
                   child: Text(
                     'Local ${job.localNumber ?? job.local ?? 'N/A'}',
                     style: AppTheme.bodyMedium.copyWith(
@@ -61,7 +60,8 @@ class CondensedJobCard extends StatelessWidget {
                 // Classification
                 Expanded(
                   child: Text(
-                    JobDataFormatter.formatClassification(job.classification ?? job.jobClass),
+                    JobDataFormatter.formatClassification(
+                        job.classification ?? job.jobClass),
                     style: AppTheme.bodyMedium.copyWith(
                       color: AppTheme.textPrimary,
                       fontWeight: FontWeight.w600,
@@ -84,10 +84,15 @@ class CondensedJobCard extends StatelessWidget {
             _buildTwoColumnRow(
               leftLabel: 'Contractor',
               leftValue: JobDataFormatter.formatCompany(job.company),
-              
               rightLabel: 'Wages',
-              rightValue: job.wage != null ? '\$${job.wage!.toStringAsFixed(2)}/hr' : 'N/A',
-              rightValueColor: job.wage != null && job.wage! > 0 ? AppTheme.successGreen : null,
+              rightValue: job.rawWage ??
+                  (job.wage != null
+                      ? '\$${job.wage!.toStringAsFixed(2)}/hr'
+                      : 'N/A'),
+              rightValueColor:
+                  (job.rawWage != null || (job.wage != null && job.wage! > 0))
+                      ? AppTheme.successGreen
+                      : null,
             ),
             const SizedBox(height: 8),
 
@@ -96,7 +101,8 @@ class CondensedJobCard extends StatelessWidget {
               leftLabel: 'Location',
               leftValue: JobDataFormatter.formatLocation(job.location),
               rightLabel: 'Hours',
-              rightValue: job.hours != null ? '${job.hours}/week' : 'N/A',
+              rightValue: job.rawHours ??
+                  (job.hours != null ? '${job.hours}/week' : 'N/A'),
             ),
             const SizedBox(height: 8),
 
@@ -134,7 +140,8 @@ class CondensedJobCard extends StatelessWidget {
     required String rightValue,
     Color? leftValueColor,
     Color? rightValueColor,
-  }) => Row(
+  }) =>
+      Row(
         children: [
           // Left column
           Expanded(
@@ -188,5 +195,3 @@ class CondensedJobCard extends StatelessWidget {
         ],
       );
 }
-
-

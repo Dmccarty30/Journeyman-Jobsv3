@@ -104,9 +104,7 @@ class ActivityCard extends ConsumerWidget {
         return AppTheme.warningYellow;
       case ActivityType.milestoneReached:
         return AppTheme.secondaryCopper;
-      default:
-        return AppTheme.textSecondary;
-    }
+      }
   }
 
   IconData _getActivityIcon() {
@@ -123,9 +121,7 @@ class ActivityCard extends ConsumerWidget {
         return Icons.announcement;
       case ActivityType.milestoneReached:
         return Icons.celebration;
-      default:
-        return Icons.notifications;
-    }
+      }
   }
 
   String _getActivityText() {

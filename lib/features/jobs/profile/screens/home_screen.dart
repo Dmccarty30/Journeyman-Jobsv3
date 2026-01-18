@@ -118,7 +118,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Welcome back!',
+          'Welcome Back!',
           style: AppTheme.headlineMedium.copyWith(
             color: AppTheme.primaryNavy,
             fontWeight: FontWeight.bold,
@@ -137,7 +137,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   Widget _buildUserWelcome(UserModel userModel) {
     final photoUrl = userModel.avatarUrl;
-    final displayName = '${userModel.firstName} ${userModel.lastName}'.trim();
+    final displayName = userModel.displayNameStr;
     final userInitial =
         displayName.isNotEmpty ? displayName[0].toUpperCase() : 'U';
     final ticketNumber = userModel.ticketNumber;
@@ -165,31 +165,29 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Welcome back!',
+                'Welcome Back!',
                 style: AppTheme.headlineMedium.copyWith(
                   color: AppTheme.primaryNavy,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              if (displayName.isNotEmpty) ...[
-                const SizedBox(height: AppTheme.spacingXs),
+              const SizedBox(height: AppTheme.spacingXs),
+              Text(
+                displayName.isNotEmpty ? displayName : 'IBEW Member',
+                style: AppTheme.titleMedium.copyWith(
+                  color: AppTheme.primaryNavy,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              if (ticketNumber.isNotEmpty) ...[
+                const SizedBox(height: AppTheme.spacingSm),
                 Text(
-                  displayName,
-                  style: AppTheme.titleMedium.copyWith(
-                    color: AppTheme.primaryNavy,
-                    fontWeight: FontWeight.w600,
+                  'Ticket #$ticketNumber',
+                  style: AppTheme.bodyMedium.copyWith(
+                    color: AppTheme.textSecondary,
                   ),
                 ),
               ],
-              const SizedBox(height: AppTheme.spacingSm),
-              Text(
-                ticketNumber.isNotEmpty
-                    ? 'Ticket #$ticketNumber'
-                    : 'IBEW Member',
-                style: AppTheme.bodyMedium.copyWith(
-                  color: AppTheme.textSecondary,
-                ),
-              ),
             ],
           ),
         ),
@@ -210,7 +208,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Welcome back!',
+                'Welcome Back!',
                 style: AppTheme.headlineMedium.copyWith(
                   color: AppTheme.primaryNavy,
                   fontWeight: FontWeight.bold,

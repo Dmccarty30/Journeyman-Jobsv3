@@ -146,11 +146,12 @@ class JobDetailsDialog extends ConsumerWidget {
         _buildDetailRow('Location', job.location),
         _buildDetailRow(
             'Wage',
-            job.wage != null && job.wage! > 0
-                ? '\$${job.wage!.toStringAsFixed(2)}/hr'
-                : 'N/A'),
-        _buildDetailRow(
-            'Hours', job.hours != null ? '${job.hours}/week' : 'N/A'),
+            job.rawWage ??
+                (job.wage != null && job.wage! > 0
+                    ? '\$${job.wage!.toStringAsFixed(2)}/hr'
+                    : 'N/A')),
+        _buildDetailRow('Hours',
+            job.rawHours ?? (job.hours != null ? '${job.hours}/week' : 'N/A')),
         _buildDetailRow('Start Date', job.startDate ?? 'N/A'),
         _buildDetailRow('Start Time', job.startTime ?? 'N/A'),
         _buildDetailRow('Per Diem', job.perDiem ?? 'N/A'),

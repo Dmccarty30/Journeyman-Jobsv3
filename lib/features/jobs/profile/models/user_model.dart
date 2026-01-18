@@ -94,7 +94,8 @@ class UserModel {
     this.onboardingStatus,
   });
 
-  String get displayNameStr => displayName.isEmpty ? '$firstName $lastName'.trim() : displayName;
+  String get displayNameStr =>
+      displayName.isEmpty ? '$firstName $lastName'.trim() : displayName;
 
   bool get isActiveGetter => isActive;
 
@@ -104,32 +105,39 @@ class UserModel {
       uid: doc.id,
       username: data['username'] ?? '',
       classification: data['classification'] ?? '',
-      homeLocal: data['homeLocal'] ?? 0,
+      homeLocal: data['homeLocal'] ?? data['home_local'] ?? 0,
       role: data['role'] ?? '',
       crewIds: List<String>.from(data['crewIds'] ?? []),
       email: data['email'] ?? '',
       avatarUrl: data['avatarUrl'],
       onlineStatus: data['onlineStatus'] ?? false,
       lastActive: data['lastActive'] ?? Timestamp.now(),
-      firstName: data['firstName'] ?? '',
-      lastName: data['lastName'] ?? '',
-      phoneNumber: data['phoneNumber'] ?? '',
+      firstName: data['firstName'] ?? data['first_name'] ?? '',
+      lastName: data['lastName'] ?? data['last_name'] ?? '',
+      phoneNumber: data['phoneNumber'] ?? data['phone'] ?? '',
       address1: data['address1'] ?? '',
       address2: data['address2'],
       city: data['city'] ?? '',
       state: data['state'] ?? '',
-      zipcode: data['zipcode'] ?? 0,
-      ticketNumber: data['ticketNumber'] ?? '',
-      isWorking: data['isWorking'] ?? false,
-      booksOn: data['booksOn'],
-      constructionTypes: List<String>.from(data['constructionTypes'] ?? []),
-      hoursPerWeek: data['hoursPerWeek'],
-      perDiemRequirement: data['perDiemRequirement'],
-      preferredLocals: data['preferredLocals'],
+      zipcode: data['zipcode'] is int
+          ? data['zipcode']
+          : int.tryParse(data['zipcode']?.toString() ?? '0') ?? 0,
+      ticketNumber: data['ticketNumber'] ?? data['ticket_number'] ?? '',
+      isWorking: data['isWorking'] ?? data['is_working'] ?? false,
+      booksOn: data['booksOn'] ?? data['books_on'],
+      constructionTypes: List<String>.from(
+          data['constructionTypes'] ?? data['construction_types'] ?? []),
+      hoursPerWeek: data['hoursPerWeek'] ?? data['hours_per_week'],
+      perDiemRequirement: data['perDiemRequirement'] ?? data['per_diem'],
+      preferredLocals: data['preferredLocals'] ?? data['preferred_locals'],
       fcmToken: data['fcmToken'],
       displayName: data['displayName'] ?? '',
       isActive: data['isActive'] ?? true,
-      createdTime: data['createdTime'],
+      createdTime: data['createdTime'] is Timestamp
+          ? (data['createdTime'] as Timestamp).toDate()
+          : (data['createdTime'] is DateTime
+              ? data['createdTime'] as DateTime
+              : null),
       certifications: List<String>.from(data['certifications'] ?? []),
       yearsExperience: data['yearsExperience'] ?? 0,
       preferredDistance: data['preferredDistance'] ?? 0,
@@ -141,10 +149,14 @@ class UserModel {
       learnNewSkill: data['learnNewSkill'] ?? false,
       travelToNewLocation: data['travelToNewLocation'] ?? false,
       findLongTermWork: data['findLongTermWork'] ?? false,
-      careerGoals: data['careerGoals'],
-      howHeardAboutUs: data['howHeardAboutUs'],
+      careerGoals: data['careerGoals'] ?? data['career_goals'],
+      howHeardAboutUs: data['howHeardAboutUs'] ?? data['how_heard_about_us'],
       lookingToAccomplish: data['lookingToAccomplish'],
-      onboardingStatus: data['onboardingStatus'] != null ? OnboardingStatus.values.firstWhere((e) => e.name == data['onboardingStatus']) : null,
+      onboardingStatus: data['onboardingStatus'] != null
+          ? OnboardingStatus.values.firstWhere(
+              (e) => e.name == data['onboardingStatus'],
+              orElse: () => OnboardingStatus.incomplete)
+          : null,
     );
   }
 
@@ -159,7 +171,8 @@ class UserModel {
       email: json['email'] ?? '',
       avatarUrl: json['avatarUrl'],
       onlineStatus: json['onlineStatus'] ?? false,
-      lastActive: Timestamp.fromDate(DateTime.parse(json['lastActive'] ?? DateTime.now().toIso8601String())),
+      lastActive: Timestamp.fromDate(DateTime.parse(
+          json['lastActive'] ?? DateTime.now().toIso8601String())),
       firstName: json['firstName'] ?? '',
       lastName: json['lastName'] ?? '',
       phoneNumber: json['phoneNumber'] ?? '',
@@ -178,7 +191,9 @@ class UserModel {
       fcmToken: json['fcmToken'],
       displayName: json['displayName'] ?? '',
       isActive: json['isActive'] ?? true,
-      createdTime: json['createdTime'] != null ? DateTime.parse(json['createdTime']) : null,
+      createdTime: json['createdTime'] != null
+          ? DateTime.parse(json['createdTime'])
+          : null,
       certifications: List<String>.from(json['certifications'] ?? []),
       yearsExperience: json['yearsExperience'] ?? 0,
       preferredDistance: json['preferredDistance'] ?? 0,
@@ -193,7 +208,10 @@ class UserModel {
       careerGoals: json['careerGoals'],
       howHeardAboutUs: json['howHeardAboutUs'],
       lookingToAccomplish: json['lookingToAccomplish'],
-      onboardingStatus: json['onboardingStatus'] != null ? OnboardingStatus.values.firstWhere((e) => e.name == json['onboardingStatus']) : null,
+      onboardingStatus: json['onboardingStatus'] != null
+          ? OnboardingStatus.values
+              .firstWhere((e) => e.name == json['onboardingStatus'])
+          : null,
     );
   }
 

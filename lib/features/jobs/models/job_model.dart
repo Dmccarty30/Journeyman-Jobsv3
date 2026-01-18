@@ -9,10 +9,11 @@ class Job {
   final String id;
   final DocumentReference? reference;
   final String sharerId;
-  final Map<String, dynamic> jobDetails; // Nested details: hours, payRate, perDiem, contractor, location (GeoPoint)
+  final Map<String, dynamic>
+      jobDetails; // Nested details: hours, payRate, perDiem, contractor, location (GeoPoint)
   final bool matchesCriteria;
   final bool deleted;
-  
+
   // Core job fields (legacy/flat fields for compatibility)
   final int? local;
   final String? classification;
@@ -37,6 +38,10 @@ class Job {
   final String? typeOfWork;
   final String? duration;
   final String? voltageLevel; // New field for voltage categorization
+
+  // Raw string fields to preserve original Firestore values for display
+  final String? rawHours; // Original hours value (e.g., "5-10", "40")
+  final String? rawWage; // Original wage value (e.g., "$125", "$42.50/hr")
 
   /// Constructor with required and optional parameters
   const Job({
@@ -69,6 +74,8 @@ class Job {
     this.typeOfWork,
     this.duration,
     this.voltageLevel,
+    this.rawHours,
+    this.rawWage,
   });
 
   /// Creates a copy of this Job with the given fields replaced with new values
@@ -102,6 +109,8 @@ class Job {
     String? typeOfWork,
     String? duration,
     String? voltageLevel,
+    String? rawHours,
+    String? rawWage,
   }) {
     return Job(
       id: id ?? this.id,
@@ -133,6 +142,8 @@ class Job {
       typeOfWork: typeOfWork ?? this.typeOfWork,
       duration: duration ?? this.duration,
       voltageLevel: voltageLevel ?? this.voltageLevel,
+      rawHours: rawHours ?? this.rawHours,
+      rawWage: rawWage ?? this.rawWage,
     );
   }
 
@@ -160,10 +171,16 @@ class Job {
     }
 
     // Helper function to safely parse integers
+    // Handles range strings like "5-10" by extracting the first number
     int? parseInt(dynamic value) {
       if (value == null) return null;
       if (value is int) return value;
       if (value is String) {
+        // Handle range strings like "5-10" - extract first number
+        if (value.contains('-')) {
+          final firstPart = value.split('-').first.trim();
+          return int.tryParse(firstPart);
+        }
         return int.tryParse(value);
       }
       if (value is double) {
@@ -189,7 +206,6 @@ class Job {
       return null;
     }
 
-
     // Helper function to parse list of integers
     List<int>? parseIntList(dynamic value) {
       if (value == null) return null;
@@ -203,9 +219,13 @@ class Job {
     Map<String, dynamic> buildJobDetails(Map<String, dynamic> json) {
       final details = <String, dynamic>{};
       details['hours'] = parseInt(json['hours']) ?? parseInt(json['Shift']);
-      details['payRate'] = parseDouble(json['wage']) ?? parseDouble(json['hourlyWage']);
-      details['perDiem'] = json['per_diem']?.toString() ?? json['perDiem']?.toString() ?? json['Benefits']?.toString();
-      details['contractor'] = json['company']?.toString() ?? json['employer']?.toString() ?? '';
+      details['payRate'] =
+          parseDouble(json['wage']) ?? parseDouble(json['hourlyWage']);
+      details['perDiem'] = json['per_diem']?.toString() ??
+          json['perDiem']?.toString() ??
+          json['Benefits']?.toString();
+      details['contractor'] =
+          json['company']?.toString() ?? json['employer']?.toString() ?? '';
       // location as GeoPoint if available, else string
       if (json['location'] is GeoPoint) {
         details['location'] = json['location'];
@@ -219,7 +239,7 @@ class Job {
       // Extract job title from ID if needed (format: "1249-Journeyman_Lineman-Company")
       String? extractedJobTitle = json['job_title']?.toString();
       String? extractedClassification = json['classification']?.toString();
-      
+
       if (extractedJobTitle == null && json['id'] != null) {
         // Try to extract from ID
         final idParts = json['id'].toString().split('-');
@@ -227,23 +247,30 @@ class Job {
           extractedJobTitle = idParts[1]; // e.g., "Journeyman_Lineman"
         }
       }
-      
+
       // Handle hours field which might contain certifications
       dynamic hoursValue = json['hours'];
       int? hoursInt;
       String? certifications;
-      
+      // Capture raw hours string for display (e.g., "5-10")
+      String? rawHoursValue = hoursValue?.toString();
+
       if (hoursValue != null) {
         // Check if it's a certification string like "CDL, fa/cpr"
         if (hoursValue is String && hoursValue.contains(',')) {
           certifications = hoursValue;
+          rawHoursValue = null; // Not actually hours data
         } else {
           hoursInt = parseInt(hoursValue);
         }
       }
 
+      // Capture raw wage string for display (e.g., "$125")
+      String? rawWageValue =
+          json['wage']?.toString() ?? json['hourlyWage']?.toString();
+
       final jobDetailsMap = buildJobDetails(json);
-      
+
       return Job(
         id: json['id']?.toString() ?? '',
         reference: json['reference'] as DocumentReference?,
@@ -253,27 +280,47 @@ class Job {
         deleted: json['deleted'] ?? false,
         local: parseInt(json['local']) ?? parseInt(json['localNumber']),
         classification: extractedClassification ?? json['jobClass']?.toString(),
-        company: json['company']?.toString() ?? json['employer']?.toString() ?? '',
-        location: json['location']?.toString() ?? json['Location']?.toString() ?? '',
+        company:
+            json['company']?.toString() ?? json['employer']?.toString() ?? '',
+        location:
+            json['location']?.toString() ?? json['Location']?.toString() ?? '',
         hours: hoursInt ?? parseInt(json['Shift']),
-        wage: jobDetailsMap['payRate'] ?? parseDouble(json['wage']) ?? parseDouble(json['hourlyWage']),
+        wage: jobDetailsMap['payRate'] ??
+            parseDouble(json['wage']) ??
+            parseDouble(json['hourlyWage']),
         sub: json['sub']?.toString(),
         jobClass: json['jobClass']?.toString() ?? certifications,
         localNumber: parseInt(json['localNumber']) ?? parseInt(json['local']),
-        qualifications: json['qualifications']?.toString() ?? json['certifications']?.toString() ?? certifications,
-        datePosted: json['date_posted']?.toString() ?? json['datePosted']?.toString(),
-        jobDescription: json['description']?.toString() ?? json['job_description']?.toString(),
+        qualifications: json['qualifications']?.toString() ??
+            json['certifications']?.toString() ??
+            certifications,
+        datePosted:
+            json['date_posted']?.toString() ?? json['datePosted']?.toString(),
+        jobDescription: json['description']?.toString() ??
+            json['job_description']?.toString(),
         jobTitle: extractedJobTitle ?? json['title']?.toString(),
-        perDiem: jobDetailsMap['perDiem'] ?? json['per_diem']?.toString() ?? json['perDiem']?.toString() ?? json['Benefits']?.toString(),
+        perDiem: jobDetailsMap['perDiem'] ??
+            json['per_diem']?.toString() ??
+            json['perDiem']?.toString() ??
+            json['Benefits']?.toString(),
         agreement: json['agreement']?.toString(),
-        numberOfJobs: json['numberOfJobs']?.toString() ?? json['positionsAvailable']?.toString() ?? json['Men Needed']?.toString(),
-        timestamp: json['timestamp'] != null ? parseDateTime(json['timestamp']) : null,
-        startDate: json['startDate']?.toString() ?? json['requestDate']?.toString(),
+        numberOfJobs: json['numberOfJobs']?.toString() ??
+            json['positionsAvailable']?.toString() ??
+            json['Men Needed']?.toString(),
+        timestamp:
+            json['timestamp'] != null ? parseDateTime(json['timestamp']) : null,
+        startDate:
+            json['startDate']?.toString() ?? json['requestDate']?.toString(),
         startTime: json['startTime']?.toString(),
         booksYourOn: parseIntList(json['booksYourOn']),
-        typeOfWork: json['work_type']?.toString() ?? json['typeOfWork']?.toString() ?? json['Type of Work']?.toString(),
+        typeOfWork: json['work_type']?.toString() ??
+            json['typeOfWork']?.toString() ??
+            json['Type of Work']?.toString(),
         duration: json['duration']?.toString() ?? json['Duration']?.toString(),
-        voltageLevel: json['voltageLevel']?.toString() ?? json['voltage_level']?.toString(),
+        voltageLevel: json['voltageLevel']?.toString() ??
+            json['voltage_level']?.toString(),
+        rawHours: rawHoursValue,
+        rawWage: rawWageValue,
       );
     } catch (e) {
       throw FormatException('Failed to parse Job from JSON: $e');
@@ -303,12 +350,12 @@ class Job {
     data['matchesCriteria'] = matchesCriteria;
     data['company'] = company;
     data['location'] = location;
-    
+
     // Handle reference field
     if (reference != null) {
       data['reference'] = reference;
     }
-    
+
     // Handle DateTime fields based on output format
     if (timestamp != null) {
       if (useFirestoreTypes) {
@@ -359,7 +406,8 @@ class Job {
     return Job.fromJson(data);
   }
 
-  bool isValid() => id.isNotEmpty && sharerId.isNotEmpty && jobDetails.isNotEmpty;
+  bool isValid() =>
+      id.isNotEmpty && sharerId.isNotEmpty && jobDetails.isNotEmpty;
 
   @override
   String toString() {
@@ -377,7 +425,7 @@ class Job {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     final listEquals = const ListEquality().equals;
-    
+
     return other is Job &&
         other.id == id &&
         other.reference == reference &&
