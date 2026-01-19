@@ -166,12 +166,12 @@ class JobsNotifier extends _$JobsNotifier {
         data['id'] = doc.id;
         if (kDebugMode) {
           debugPrint(
-              '[DEBUG] Parsing job ${doc.id}: raw hours=${data['hours']}, wage=${data['wage']}, perDiem=${data['perDiem']}, startDate=${data['startDate']}');
+              '[DEBUG] Parsing job ${doc.id}: raw hours=${data['hours']}, wage=${data['wage']}, per_diem=${data['per_diem']}, perDiem=${data['perDiem']}, start_date=${data['start_date']}, startDate=${data['startDate']}');
         }
         final job = Job.fromJson(data);
         if (kDebugMode) {
           debugPrint(
-              '[DEBUG] Parsed job ${doc.id}: hours=${job.hours}, wage=${job.wage}, perDiem=${job.perDiem}, startDate=${job.startDate}');
+              '[DEBUG] Parsed job ${doc.id}: hours=${job.hours}, wage=${job.wage}, perDiem=${job.perDiem}, startDate=${job.startDate}, rawHours=${job.rawHours}, rawWage=${job.rawWage}');
         }
         return job;
       }).toList();

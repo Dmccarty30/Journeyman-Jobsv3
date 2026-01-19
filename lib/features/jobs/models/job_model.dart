@@ -150,6 +150,13 @@ class Job {
   /// Creates a Job instance from a JSON map
   /// Handles both Firestore documents and standard JSON
   factory Job.fromJson(Map<String, dynamic> json) {
+    // DEBUG: Print all incoming data to understand Firestore field names
+    print('[DEBUG Job.fromJson] Raw JSON keys: ${json.keys.toList()}');
+    print(
+        '[DEBUG Job.fromJson] hours=${json['hours']}, wage=${json['wage']}, per_diem=${json['per_diem']}, perDiem=${json['perDiem']}');
+    print(
+        '[DEBUG Job.fromJson] startDate=${json['startDate']}, start_date=${json['start_date']}');
+
     // Helper function to parse DateTime from various formats
     DateTime parseDateTime(dynamic value) {
       if (value == null) {
