@@ -9,27 +9,32 @@ allowed-tools: Read, Glob, Grep
 > Source: obra/superpowers
 
 ## Overview
+
 This skill provides a framework for breaking down work into clear, actionable tasks with verification criteria.
 
 ## Task Breakdown Principles
 
 ### 1. Small, Focused Tasks
+
 - Each task should take 2-5 minutes
 - One clear outcome per task
 - Independently verifiable
 
 ### 2. Clear Verification
+
 - How do you know it's done?
 - What can you check/test?
 - What's the expected output?
 
 ### 3. Logical Ordering
+
 - Dependencies identified
 - Parallel work where possible
 - Critical path highlighted
 - **Phase X: Verification is always LAST**
 
 ### 4. Dynamic Naming in Project Root
+
 - Plan files are saved as `{task-slug}.md` in the PROJECT ROOT
 - Name derived from task (e.g., "add auth" → `auth-feature.md`)
 - **NEVER** inside `.claude/`, `docs/`, or temp folders
@@ -65,16 +70,19 @@ This skill provides a framework for breaking down work into clear, actionable ta
 ### Principle 3: Dynamic Content Based on Project Type
 
 **For NEW PROJECT:**
+
 - What tech stack? (decide first)
 - What's the MVP? (minimal features)
 - What's the file structure?
 
 **For FEATURE ADDITION:**
+
 - Which files are affected?
 - What dependencies needed?
 - How to verify it works?
 
 **For BUG FIX:**
+
 - What's the root cause?
 - What file/line to change?
 - How to test the fix?
@@ -129,7 +137,9 @@ One sentence: What are we building/fixing?
 > Keep it minimal. Add complexity only when required.
 
 ## Notes
+
 [Any important considerations]
+
 ```
 
 ---

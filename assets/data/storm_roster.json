@@ -2,218 +2,262 @@
     {
         "COMPANY": "ADVENT ",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "Join Advent's Storm Call-Out List (callfire-widgets-prod.s3.amazonaws.com)"
+        "WEBSITE": "Join Advent's Storm Call-Out List (callfire-widgets-prod.s3.amazonaws.com)",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Fadvent.png?alt=media"
     },
     {
         "COMPANY": "AGOSTINO UTILITIES",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "https://agostinoutilities.com/work-with-us/"
+        "WEBSITE": "https://agostinoutilities.com/work-with-us/",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Fagostino_utilities.png?alt=media"
     },
     {
         "COMPANY": "ALLIANCE POWER GROUP",
         "HOW TO SIGNUP": "Text or Online",
         "PHONE NUMBER": "617-293-7905",
-        "WEBSITE": "https://www.alliancepowerllc.com/"
+        "WEBSITE": "https://www.alliancepowerllc.com/",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Falliance_power_group.png?alt=media"
     },
     {
         "COMPANY": "AMPP ",
         "HOW TO SIGNUP": "Text or Email",
         "PHONE NUMBER": "765-305-1988",
-        "EMAIL": " info@amppconstruction.com"
+        "EMAIL": " info@amppconstruction.com",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Fampp.png?alt=media"
     },
     {
         "COMPANY": "APPALACHIAN UTILITY ",
         "HOW TO SIGNUP": "Text \"Join\" ",
-        "PHONE NUMBER": "1-888-685-5746"
+        "PHONE NUMBER": "1-888-685-5746",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Fappalachian_utility.png?alt=media"
     },
     {
         "COMPANY": "ARC",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "https://arcamerican.com/storm-restoration-team/"
+        "WEBSITE": "https://arcamerican.com/storm-restoration-team/",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Farc.png?alt=media"
     },
     {
         "COMPANY": "ATLANTIC POWER CONSTRUCTION",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "https://useapc.com/careers/#storm-signup"
+        "WEBSITE": "https://useapc.com/careers/#storm-signup",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Fatlantic_power_construction.png?alt=media"
     },
     {
         "COMPANY": "AVO ELECTRIC",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "https://www.avoelectricllc.com/storm-list"
-    },    {
+        "WEBSITE": "https://www.avoelectricllc.com/storm-list",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Favo_electric.png?alt=media"
+    },
+    {
         "COMPANY": "CSI Powerline",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "https://csipowerline.com/storm/"
+        "WEBSITE": "https://csipowerline.com/storm/",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Fcsi_powerline.png?alt=media"
     },
     {
         "COMPANY": "D AND T POWER",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "https://www.dandtpower.com/contact-8"
+        "WEBSITE": "https://www.dandtpower.com/contact-8",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Fd_and_t_power.png?alt=media"
     },
     {
         "COMPANY": "DANELLA",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "https://www.danella.com/construction/storm-application/"
+        "WEBSITE": "https://www.danella.com/construction/storm-application/",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Fdanella.png?alt=media"
     },
     {
         "COMPANY": "Delta Line Construction Co.",
         "HOW TO SIGNUP": "Text",
-        "PHONE NUMBER": "609-927-2785"
+        "PHONE NUMBER": "609-927-2785",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Fdelta_line_construction_co.png?alt=media"
     },
     {
         "COMPANY": "DIVERGENT ALLIANCE",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "https://divergentalliance.com/stormroster/"
+        "WEBSITE": "https://divergentalliance.com/stormroster/",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Fdivergent_alliance.png?alt=media"
     },
     {
         "COMPANY": "DYNAMIC UTILITY SOLUTIONS",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "http://www.dynamicusllc.com/contact.html"
+        "WEBSITE": "http://www.dynamicusllc.com/contact.html",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Fdynamic_utility_solutions.png?alt=media"
     },
     {
         "COMPANY": "EAST COAST LINES",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "https://www.eastcoastlines.us/roster"
+        "WEBSITE": "https://www.eastcoastlines.us/roster",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Feast_coast_lines.png?alt=media"
     },
     {
         "COMPANY": "EAST COAST POWERLINE",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "https://www.eastcoastpowerline.com/contact"
+        "WEBSITE": "https://www.eastcoastpowerline.com/contact",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Feast_coast_powerline.png?alt=media"
     },
     {
         "COMPANY": "Ebe Electric ",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "https://ebeelectricllc.com/#Join_Us"
+        "WEBSITE": "https://ebeelectricllc.com/#Join_Us",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Febe_electric.png?alt=media"
     },
     {
         "COMPANY": "EDGAR ELECTRIC",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "https://www.edgarelectricinc.com/contact"
+        "WEBSITE": "https://www.edgarelectricinc.com/contact",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Fedgar_electric.png?alt=media"
     },
     {
         "COMPANY": "FAITH ELECTRIC",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "https://faithelectricllc.com/stormroster/"
+        "WEBSITE": "https://faithelectricllc.com/stormroster/",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Ffaith_electric.png?alt=media"
     },
     {
         "COMPANY": "FERREIRA POWER SOUTH",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "https://www.ferreirapowersouth.com/contact/"
+        "WEBSITE": "https://www.ferreirapowersouth.com/contact/",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Fferreira_power_south.png?alt=media"
     },
     {
         "COMPANY": "FLORY LINE CONSTRUCTION, LLC",
         "HOW TO SIGNUP": "Text \"STORM\"",
-        "PHONE NUMBER": "833-553-8071"
+        "PHONE NUMBER": "833-553-8071",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Fflory_line_construction_llc.png?alt=media"
     },
     {
         "COMPANY": "GMB POWERLINE",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "https://gmbpowerlineservices.com/join-our-team/"
+        "WEBSITE": "https://gmbpowerlineservices.com/join-our-team/",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Fgmb_powerline.png?alt=media"
     },
     {
         "COMPANY": "GPC Corp ",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "https://gpccorp.net/"
+        "WEBSITE": "https://gpccorp.net/",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Fgpc_corp.png?alt=media"
     },
     {
         "COMPANY": "GRATTAN LINE",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "https://grattanline.com/storm-restoration/"
+        "WEBSITE": "https://grattanline.com/storm-restoration/",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Fgrattan_line.png?alt=media"
     },
     {
         "COMPANY": "HAUGLAND",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "https://req.800grace.com/Home"
+        "WEBSITE": "https://req.800grace.com/Home",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Fhaugland.png?alt=media"
     },
     {
         "COMPANY": "HEART UTILITIES",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "http://heartutilities.com/StormRosterSignUp.aspx"
+        "WEBSITE": "http://heartutilities.com/StormRosterSignUp.aspx",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Fheart_utilities.png?alt=media"
     },
     {
         "COMPANY": "HYDAKER-WHEATLAKE",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "https://www.surveymonkey.com/r/PBTZ8JJ"
+        "WEBSITE": "https://www.surveymonkey.com/r/PBTZ8JJ",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Fhydakerwheatlake.png?alt=media"
     },
     {
         "COMPANY": "IB-ABEL",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "https://www.ib-abel.com/contact/storm-restoration-contact/"
+        "WEBSITE": "https://www.ib-abel.com/contact/storm-restoration-contact/",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Fibabel.png?alt=media"
     },
     {
         "COMPANY": "J.W. DIDADO ",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "https://www.jwdidado.com/our-services/emergency-storm-restoration/storm-duty-registration/"
+        "WEBSITE": "https://www.jwdidado.com/our-services/emergency-storm-restoration/storm-duty-registration/",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Fjw_didado.png?alt=media"
     },
     {
         "COMPANY": "JJM POWER",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "https://jjmpower.net/storm-roster-signup"
+        "WEBSITE": "https://jjmpower.net/storm-roster-signup",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Fjjm_power.png?alt=media"
     },
     {
         "COMPANY": "Kateri Powerline Solutions LLC",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "https://kateripowerline.com/?page_id=6"
+        "WEBSITE": "https://kateripowerline.com/?page_id=6",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Fkateri_powerline_solutions_llc.png?alt=media"
     },
     {
         "COMPANY": "KR UTILITIES",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "https://app2.simpletexting.com/join/joinWebForm?webFormId=6423313070401d33bc7111d4&c=USA%22"
+        "WEBSITE": "https://app2.simpletexting.com/join/joinWebForm?webFormId=6423313070401d33bc7111d4&c=USA%22",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Fkr_utilities.png?alt=media"
     },
     {
         "COMPANY": "LINEWERX INC",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "https://www.linewerxinc.com/index.php/join-our-team/storm-list"
+        "WEBSITE": "https://www.linewerxinc.com/index.php/join-our-team/storm-list",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Flinewerx_inc.png?alt=media"
     },
     {
         "COMPANY": "MIDWEST POWERLINE",
         "HOW TO SIGNUP": "Text \"STORMTEAM\" ",
-        "PHONE NUMBER": "269-210-3630"
+        "PHONE NUMBER": "269-210-3630",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Fmidwest_powerline.png?alt=media"
     },
     {
         "COMPANY": "MTV SOLUTIONS",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "https://www.mtvsolutions.com/storm-list"
+        "WEBSITE": "https://www.mtvsolutions.com/storm-list",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Fmtv_solutions.png?alt=media"
     },
     {
         "COMPANY": "ONE SOURCE POWER",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "https://www.ospllc.us/linemen-registry/"
+        "WEBSITE": "https://www.ospllc.us/linemen-registry/",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Fone_source_power.png?alt=media"
     },
     {
         "COMPANY": "OSR RESTORATION",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "https://onesourcerestorationllc.com/contact-us/"
+        "WEBSITE": "https://onesourcerestorationllc.com/contact-us/",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Fosr_restoration.png?alt=media"
     },
     {
         "COMPANY": "OUTSOURCE",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "https://outsourceucc.com/contact/"
+        "WEBSITE": "https://outsourceucc.com/contact/",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Foutsource.png?alt=media"
     },
     {
         "COMPANY": "P&G ",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "https://forms.office.com/pages/responsepage.aspx?id=_wY-hNrTRUS80xgP3wCtuVDPZN8D9yZLtxg1Oz5biL1UQlZYNE8wSlpPQVVMSjkzN1Y4WVY2Rjk5MiQlQCN0PWcu"
+        "WEBSITE": "https://forms.office.com/pages/responsepage.aspx?id=_wY-hNrTRUS80xgP3wCtuVDPZN8D9yZLtxg1Oz5biL1UQlZYNE8wSlpPQVVMSjkzN1Y4WVY2Rjk5MiQlQCN0PWcu",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Fpg.png?alt=media"
     },
     {
         "COMPANY": "PACK POWER",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "https://packpowerservices.com/join-our-team"
+        "WEBSITE": "https://packpowerservices.com/join-our-team",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Fpack_power.png?alt=media"
     },
     {
         "COMPANY": "PEACHES POWER",
         "HOW TO SIGNUP": " Text \"STORM\"",
-        "PHONE NUMBER": "206-828-5931"
+        "PHONE NUMBER": "206-828-5931",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Fpeaches_power.png?alt=media"
     },
     {
         "COMPANY": "PIERCE POWERLINE",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "https://piercepowerline.com/contact-us"
+        "WEBSITE": "https://piercepowerline.com/contact-us",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Fpierce_powerline.png?alt=media"
     },
     {
         "COMPANY": "Power Pro's Utility Services",
         "HOW TO SIGNUP": "Tex",
-        "PHONE NUMBER": "318-680-1225"
+        "PHONE NUMBER": "318-680-1225",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Fpower_pros_utility_services.png?alt=media"
     },
     {
         "COMPANY": "Praxel",
@@ -221,81 +265,97 @@
         "CITY": "London",
         "STATE": "KY",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "https://praxel.energy"
+        "WEBSITE": "https://praxel.energy",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Fpraxel.png?alt=media"
     },
     {
         "COMPANY": "PREMIER",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "https://app2.simpletexting.com/join/joinWebForm?webFormId=6423313070401d33bc7111d4&c=USA%22"
+        "WEBSITE": "https://app2.simpletexting.com/join/joinWebForm?webFormId=6423313070401d33bc7111d4&c=USA%22",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Fpremier.png?alt=media"
     },
     {
         "COMPANY": "PREMIER VOLTAGE INC. ",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "https://www.premiervoltagepower.com/stormteam"
+        "WEBSITE": "https://www.premiervoltagepower.com/stormteam",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Fpremier_voltage_inc.png?alt=media"
     },
     {
         "COMPANY": "PSE",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "https://primaryselectric.com/storm-roster-signup/"
+        "WEBSITE": "https://primaryselectric.com/storm-roster-signup/",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Fpse.png?alt=media"
     },
     {
         "COMPANY": "QUALITY LINES",
         "HOW TO SIGNUP": " Text \"storm\" ",
-        "PHONE NUMBER": "423-770-9131"
+        "PHONE NUMBER": "423-770-9131",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Fquality_lines.png?alt=media"
     },
     {
         "COMPANY": "RICHARDSON AND SONS",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "http://hrsutilities.com/storm-call-sign-up/"
+        "WEBSITE": "http://hrsutilities.com/storm-call-sign-up/",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Frichardson_and_sons.png?alt=media"
     },
     {
         "COMPANY": "ROKSTAD POWER",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "https://rokstadpower.com/storm/"
+        "WEBSITE": "https://rokstadpower.com/storm/",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Frokstad_power.png?alt=media"
     },
     {
         "COMPANY": "SM ELECTRIC GROUP, INC.",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "https://www.smelectric.com/storms/"
+        "WEBSITE": "https://www.smelectric.com/storms/",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Fsm_electric_group_inc.png?alt=media"
     },
     {
         "COMPANY": "SOS ",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "https://support-ops.com/lineworkers/"
+        "WEBSITE": "https://support-ops.com/lineworkers/",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Fsos.png?alt=media"
     },
     {
         "COMPANY": "SPE",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "https://www.spepower.com/"
+        "WEBSITE": "https://www.spepower.com/",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Fspe.png?alt=media"
     },
     {
         "COMPANY": "TRAVOLT",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "https://fs21.formsite.com/A0i2KS/g3oehbwpry/index"
+        "WEBSITE": "https://fs21.formsite.com/A0i2KS/g3oehbwpry/index",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Ftravolt.png?alt=media"
     },
     {
         "COMPANY": "VALIANT ENERGY ",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "https://www.valiantenergyservice.com/storms/#join"
+        "WEBSITE": "https://www.valiantenergyservice.com/storms/#join",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Fvaliant_energy.png?alt=media"
     },
     {
         "COMPANY": "VEC, INC.",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "https://vecohio.com/storm-roster/"
+        "WEBSITE": "https://vecohio.com/storm-roster/",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Fvec_inc.png?alt=media"
     },
     {
         "COMPANY": "VECTOR ELECTRIC",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "https://vectorelectric-ks.com/join-our-storm-list"
+        "WEBSITE": "https://vectorelectric-ks.com/join-our-storm-list",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Fvector_electric.png?alt=media"
     },
     {
         "COMPANY": "VISION UTILITIES",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "https://www.vision-utilities.com/"
+        "WEBSITE": "https://www.vision-utilities.com/",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Fvision_utilities.png?alt=media"
     },
     {
         "COMPANY": "ZEUS Electrical Utility Services",
         "HOW TO SIGNUP": "Online",
-        "WEBSITE": "https://zeus-utility.com/"
+        "WEBSITE": "https://zeus-utility.com/",
+        "LOGO_URL": "https://firebasestorage.googleapis.com/v0/b/journeyman-jobs.firebasestorage.app/o/storm_contractors/logos%2Fzeus_electrical_utility_services.png?alt=media"
     }
 ]

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import '../../../../design_system/app_theme.dart';
 import '../../../../core/models/contractor_model.dart';
 
@@ -45,6 +46,47 @@ class StormContractorCard extends StatelessWidget {
     }
   }
 
+  /// Builds the logo background layer with faded watermark effect
+  Widget _buildLogoBackground() {
+    final logoUrl = contractor.logoUrl;
+
+    // Fallback: Lightning bolt icon when no logo
+    if (logoUrl == null || logoUrl.isEmpty) {
+      return Positioned.fill(
+        child: Opacity(
+          opacity: 0.08,
+          child: Center(
+            child: Icon(
+              Icons.flash_on,
+              size: 200,
+              color: AppTheme.accentCopper,
+            ),
+          ),
+        ),
+      );
+    }
+
+    // Logo from Firebase Storage with faded effect
+    return Positioned.fill(
+      child: Opacity(
+        opacity: 0.15, // Faded watermark (adjust 0.1-0.25)
+        child: CachedNetworkImage(
+          imageUrl: logoUrl,
+          fit: BoxFit.contain,
+          alignment: Alignment.center,
+          placeholder: (context, url) => const SizedBox.shrink(),
+          errorWidget: (context, url, error) => Center(
+            child: Icon(
+              Icons.flash_on,
+              size: 200,
+              color: AppTheme.accentCopper.withValues(alpha: 0.5),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -76,16 +118,8 @@ class StormContractorCard extends StatelessWidget {
             bottomLeft: Radius.circular(2)),
         child: Stack(
           children: [
-            // Background Accent
-            Positioned(
-              right: -20,
-              top: -20,
-              child: Icon(
-                Icons.flash_on,
-                size: 100,
-                color: AppTheme.accentCopper.withValues(alpha: 0.05),
-              ),
-            ),
+            // NEW: Logo background layer (behind everything)
+            _buildLogoBackground(),
 
             Padding(
               padding: const EdgeInsets.all(AppTheme.spacingLg),

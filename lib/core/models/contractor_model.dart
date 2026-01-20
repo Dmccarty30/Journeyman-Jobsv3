@@ -12,6 +12,7 @@ class Contractor {
   final String? city;
   final String? state;
   final DateTime createdAt;
+  final String? logoUrl;
 
   Contractor({
     required this.id,
@@ -24,6 +25,7 @@ class Contractor {
     this.city,
     this.state,
     required this.createdAt,
+    this.logoUrl,
   });
 
   /// Creates a Contractor from JSON data
@@ -43,6 +45,7 @@ class Contractor {
               ? (json['createdAt'] as Timestamp).toDate()
               : DateTime.parse(json['createdAt']))
           : DateTime.now(),
+      logoUrl: json['LOGO_URL'] ?? json['logoUrl'],
     );
   }
 
@@ -59,6 +62,7 @@ class Contractor {
       'city': city,
       'state': state,
       'createdAt': createdAt.toIso8601String(),
+      'logoUrl': logoUrl,
     };
   }
 
@@ -75,6 +79,7 @@ class Contractor {
       'city': city,
       'state': state,
       'createdAt': Timestamp.fromDate(createdAt),
+      'logoUrl': logoUrl,
     };
   }
 
@@ -90,6 +95,7 @@ class Contractor {
     String? city,
     String? state,
     DateTime? createdAt,
+    String? logoUrl,
   }) {
     return Contractor(
       id: id ?? this.id,
@@ -102,12 +108,13 @@ class Contractor {
       city: city ?? this.city,
       state: state ?? this.state,
       createdAt: createdAt ?? this.createdAt,
+      logoUrl: logoUrl ?? this.logoUrl,
     );
   }
 
   @override
   String toString() {
-    return 'Contractor(id: $id, company: $company, howToSignup: $howToSignup, address: $address)';
+    return 'Contractor(id: $id, company: $company, howToSignup: $howToSignup, address: $address, logoUrl: $logoUrl)';
   }
 
   @override
@@ -123,7 +130,8 @@ class Contractor {
         other.website == website &&
         other.address == address &&
         other.city == city &&
-        other.state == state;
+        other.state == state &&
+        other.logoUrl == logoUrl;
   }
 
   @override
@@ -136,6 +144,7 @@ class Contractor {
         (website?.hashCode ?? 0) ^
         (address?.hashCode ?? 0) ^
         (city?.hashCode ?? 0) ^
-        (state?.hashCode ?? 0);
+        (state?.hashCode ?? 0) ^
+        (logoUrl?.hashCode ?? 0);
   }
 }
