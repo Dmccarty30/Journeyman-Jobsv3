@@ -89,10 +89,7 @@ class CondensedJobCard extends StatelessWidget {
                   (job.wage != null
                       ? '\$${job.wage!.toStringAsFixed(2)}/hr'
                       : 'N/A'),
-              rightValueColor:
-                  (job.rawWage != null || (job.wage != null && job.wage! > 0))
-                      ? AppTheme.successGreen
-                      : null,
+              rightValueColor: null,
             ),
             const SizedBox(height: 8),
 

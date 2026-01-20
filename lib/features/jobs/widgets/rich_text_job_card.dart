@@ -62,9 +62,7 @@ class RichTextJobCard extends StatelessWidget {
                 rightValue: job.wage != null && job.wage! > 0
                     ? '\$${job.wage!.toStringAsFixed(2)}/hr'
                     : 'N/A',
-                rightValueColor: job.wage != null && job.wage! > 0
-                    ? AppTheme.successGreen
-                    : null,
+                rightValueColor: null,
                 rightIcon: Icons.attach_money,
               ),
               const SizedBox(height: 8),
