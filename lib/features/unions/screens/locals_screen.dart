@@ -470,6 +470,7 @@ class LocalDetailsDialog extends StatelessWidget {
 
     return Dialog(
       backgroundColor: AppTheme.white,
+      clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppTheme.radiusLg),
         side: const BorderSide(
@@ -478,7 +479,6 @@ class LocalDetailsDialog extends StatelessWidget {
         ),
       ),
       child: Container(
-        color: AppTheme.white,
         constraints: BoxConstraints(
           maxHeight: MediaQuery.of(context).size.height * 0.85,
           maxWidth: MediaQuery.of(context).size.width * 0.95,

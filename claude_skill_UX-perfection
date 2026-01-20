@@ -1,6 +1,7 @@
 Lite PRD Generator
 
 ---
+
 description: Convert a rough MVP idea into a demo-grade PRD (Steps 1-7)
 ---
 
@@ -180,10 +181,10 @@ The skill will use the AskUserQuestion tool to interactively gather clarificatio
 
 $ARGUMENTS
 
-
 PRD Clarifier
 
 ---
+
 name: prd-clarifier
 description: Refine and clarify PRD documentation through structured questioning using the visual AskUserQuestion tool
 ---
@@ -205,6 +206,7 @@ First, determine the directory where the user's PRD file is located. This is whe
 ### Step 2: Create the Tracking Document
 
 IMMEDIATELY create a tracking document file in the SAME directory as the PRD being processed. Name it based on the PRD filename:
+
 - If PRD is `feature-auth.md` → create `feature-auth-clarification-session.md`
 - If PRD is `mobile-redesign-prd.md` → create `mobile-redesign-prd-clarification-session.md`
 
@@ -247,6 +249,7 @@ Use the AskUserQuestion tool to get the user's preferred depth:
 ```
 
 Map the response to question counts:
+
 - Quick = 5 questions
 - Medium = 10 questions
 - Long = 20 questions
@@ -284,7 +287,9 @@ Maintain a running tracker throughout the session. After EACH question-answer pa
 ## Questioning Strategy
 
 ### Prioritization Framework
+
 Analyze the PRD and prioritize questions by impact:
+
 1. **Critical Path Items**: Requirements that block other features or have safety/security implications
 2. **High-Ambiguity Areas**: Vague language, missing acceptance criteria, undefined terms
 3. **Integration Points**: Interfaces with external systems, APIs, third-party services
@@ -293,14 +298,18 @@ Analyze the PRD and prioritize questions by impact:
 6. **User Journey Gaps**: Missing steps, undefined user states, incomplete flows
 
 ### Adaptive Questioning
+
 After each answer, reassess:
+
 - Did the answer reveal NEW ambiguities? Prioritize those.
 - Did it clarify related areas? Skip now-redundant questions.
 - Did it contradict earlier answers? Address the conflict.
 - Did it introduce new scope? Flag for inclusion.
 
 ### Question Quality Standards
+
 Each question MUST be:
+
 - **Specific**: Reference exact sections, features, or statements from the PRD
 - **Actionable**: The answer should directly inform a requirement update
 - **Non-leading**: Avoid suggesting the "right" answer
@@ -335,6 +344,7 @@ Distribute questions across these areas (adjust based on PRD content and previou
 ## Session Completion
 
 After all questions are complete:
+
 1. Provide a summary of key clarifications made
 2. List any remaining ambiguities that surfaced but weren't fully resolved
 3. Suggest priority order for addressing unresolved items
@@ -346,12 +356,12 @@ The running tracker should be maintained in a code block or separate document se
 
 Remember: Your goal is not just to ask questions, but to systematically transform an ambiguous PRD into a clear, actionable specification through structured dialogue. Each question should demonstrably improve the document's clarity and completeness.
 
-
 PRD To UX Spec
 
 ---
+
 name: prd-to-ux
-description: Use when translating PRDs, feature specs, or product requirements into UX specifications for mockup tools like Google Stitch, Figma, or similar. Use before creating visual designs, wireframes, or component specs.
+description: Use when translating PRDs, feature specs, or product requirements into UX specifications for mockup tools like Google Stitch, Figma, or similar. Use before creating visual designs, wireframes, or component specs
 ---
 
 # PRD to UX Translation
@@ -374,6 +384,7 @@ Translate product requirements into UX foundations through **6 forced designer m
 **Write the UX specification to a file in the same directory as the source PRD.**
 
 Naming convention:
+
 - If PRD is `feature-x.md` → output `feature-x-ux-spec.md`
 - If PRD is `PRD.md` → output `UX-spec.md`
 - If PRD is `requirements.md` → output `requirements-ux-spec.md`
@@ -389,11 +400,13 @@ NO VISUAL SPECS UNTIL ALL 6 PASSES COMPLETE
 ```
 
 **Not negotiable:**
+
 - Don't mention colors, typography, or spacing until Pass 6 is done
 - Don't describe screen layouts until information architecture is explicit
 - Don't design components until affordances are mapped
 
 **No exceptions for urgency:**
+
 - "I'm in a hurry" → Passes take 5 minutes; fixing bad UX takes days
 - "Just give me screens" → Screens without foundations need rework
 - "Skip the analysis" → Analysis IS the value; screens are just output
@@ -429,11 +442,13 @@ digraph passes {
 **Designer mindset:** "What does the user think is happening?"
 
 **Force these questions:**
+
 - What does the user believe this system does?
 - What are they trying to accomplish in one sentence?
 - What wrong mental models are likely?
 
 **Required output:**
+
 ```markdown
 ## Pass 1: Mental Model
 
@@ -453,11 +468,13 @@ digraph passes {
 **Designer mindset:** "What exists, and how is it organized?"
 
 **Force these actions:**
+
 1. Enumerate ALL concepts the user will encounter
 2. Group into logical buckets
 3. Classify each as: Primary / Secondary / Hidden (progressive)
 
 **Required output:**
+
 ```markdown
 ## Pass 2: Information Architecture
 
@@ -485,12 +502,14 @@ digraph passes {
 **Designer mindset:** "What actions are obvious without explanation?"
 
 **Force explicit decisions:**
+
 - What is clickable?
 - What looks editable?
 - What looks like output (read-only)?
 - What looks final vs in-progress?
 
 **Required output:**
+
 ```markdown
 ## Pass 3: Affordances
 
@@ -512,16 +531,19 @@ No visuals required—just clarity on what signals what.
 **Designer mindset:** "Where will the user hesitate?"
 
 **Force identification of:**
+
 - Moments of choice (decisions required)
 - Moments of uncertainty (unclear what to do)
 - Moments of waiting (system processing)
 
 **Then apply:**
+
 - Collapse decisions (fewer choices)
 - Delay complexity (progressive disclosure)
 - Introduce defaults (reduce decision burden)
 
 **Required output:**
+
 ```markdown
 ## Pass 4: Cognitive Load
 
@@ -541,6 +563,7 @@ No visuals required—just clarity on what signals what.
 **Designer mindset:** "How does the system talk back?"
 
 **Force enumeration of states for EACH major element:**
+
 - Empty
 - Loading
 - Success
@@ -548,11 +571,13 @@ No visuals required—just clarity on what signals what.
 - Error
 
 **For each state, answer:**
+
 - What does the user see?
 - What do they understand?
 - What can they do next?
 
 **Required output:**
+
 ```markdown
 ## Pass 5: State Design
 
@@ -576,11 +601,13 @@ This prevents "dead UX"—screens with no feedback.
 **Designer mindset:** "Does this feel inevitable?"
 
 **Final sanity check:**
+
 - Where could users get lost?
 - Where would a first-time user fail?
 - What must be visible vs can be implied?
 
 **Required output:**
+
 ```markdown
 ## Pass 6: Flow Integrity
 
@@ -601,6 +628,7 @@ This prevents "dead UX"—screens with no feedback.
 ## THEN: Visual Specifications
 
 Only after all 6 passes are complete, create:
+
 - Screen layouts
 - Component specifications
 - Design system (colors, typography, spacing)
@@ -664,12 +692,12 @@ If you catch yourself doing any of these, STOP and return to the passes:
 [Only after passes complete]
 ```
 
-
 UX Spec To Prompt
 
 ---
+
 name: ux-spec-to-prompts
-description: Use when translating UX specifications into build-order prompts for UI generation tools. Triggers when user has a UX spec, PRD, or detailed feature doc and needs sequential, self-contained prompts for tools like v0, Bolt, or Claude frontend-design.
+description: Use when translating UX specifications into build-order prompts for UI generation tools. Triggers when user has a UX spec, PRD, or detailed feature doc and needs sequential, self-contained prompts for tools like v0, Bolt, or Claude frontend-design
 ---
 
 # UX Spec to Build-Order Prompts
@@ -750,6 +778,7 @@ Each generated prompt follows this structure:
 ### Step 1: Identify Atomic Units
 
 Read through the spec and list discrete buildable features:
+
 - Each screen/view
 - Each reusable component
 - Each interaction pattern
@@ -758,6 +787,7 @@ Read through the spec and list discrete buildable features:
 ### Step 2: Map Dependencies
 
 For each unit, note what it requires:
+
 - "Node card requires design tokens"
 - "Connection lines require nodes to exist"
 - "Lens picker requires prompt field"
@@ -769,6 +799,7 @@ Order units so dependencies come first. Group related items into single prompts 
 ### Step 4: Write Self-Contained Prompts
 
 For each prompt:
+
 1. **Re-state relevant context** - Don't assume reader saw previous prompts
 2. **Include specific measurements** - Extract from spec (dimensions, spacing)
 3. **Include all states** - Pull from state design section
@@ -778,12 +809,14 @@ For each prompt:
 ## Self-Containment Rules
 
 Each prompt MUST include:
+
 - Enough context to understand the feature in isolation
 - All visual specs (colors, spacing, dimensions) relevant to that feature
 - All states that feature can be in
 - All interactions for that feature
 
 Each prompt MUST NOT:
+
 - Reference "see previous prompt" or "as described earlier"
 - Assume knowledge from other prompts
 - Leave specs vague ("appropriate styling")
@@ -791,6 +824,7 @@ Each prompt MUST NOT:
 ## Example Transformation
 
 **From UX Spec:**
+
 ```
 #### Node Card (Sidebar)
 - Dimensions: ~200px width, ~48px height
@@ -799,6 +833,7 @@ Each prompt MUST NOT:
 ```
 
 **To Prompt:**
+
 ```markdown
 ## Sidebar Node Card Component
 

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:journeyman_jobs/design_system/design_system.dart';
+import 'package:journeyman_jobs/core/models/contractor_model.dart';
 
 class JJContractorCard extends StatelessWidget {
-  final Map<String, dynamic> contractor;
+  final Contractor contractor;
 
   const JJContractorCard({
     super.key,
@@ -33,15 +34,6 @@ class JJContractorCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final companyName = contractor['COMPANY']?.toString() ?? 'N/A';
-    final howToSignup = contractor['HOW TO SIGNUP']?.toString() ?? 'N/A';
-    final website = contractor['WEBSITE']?.toString();
-    final phoneNumber = contractor['PHONE NUMBER']?.toString();
-    final email = contractor['EMAIL']?.toString();
-    final address = contractor['ADDRESS']?.toString();
-    final city = contractor['CITY']?.toString();
-    final state = contractor['STATE']?.toString();
-
     return Container(
       margin: const EdgeInsets.only(bottom: AppTheme.spacingMd),
       padding: const EdgeInsets.all(AppTheme.spacingMd),
@@ -49,23 +41,25 @@ class JJContractorCard extends StatelessWidget {
         color: AppTheme.white,
         borderRadius: BorderRadius.circular(AppTheme.radiusMd),
         boxShadow: [AppTheme.shadowSm],
-        border: Border.all(color: AppTheme.primaryNavy.withValues(alpha: 0.1), width: 1),
+        border: Border.all(
+            color: AppTheme.primaryNavy.withValues(alpha: 0.1), width: 1),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            companyName,
+            contractor.company,
             style: AppTheme.titleLarge.copyWith(color: AppTheme.primaryNavy),
           ),
           const SizedBox(height: AppTheme.spacingSm),
           Text(
-            'Sign Up: $howToSignup',
+            'Sign Up: ${contractor.howToSignup}',
             style: AppTheme.bodyMedium.copyWith(color: AppTheme.textSecondary),
           ),
-          if (address != null && address.isNotEmpty) ...[
+          if (contractor.address != null && contractor.address!.isNotEmpty) ...[
+            const SizedBox(height: AppTheme.spacingXs),
             Text(
-              'Address: $address, $city, $state',
+              'Address: ${contractor.address}${contractor.city != null ? ', ${contractor.city}' : ''}${contractor.state != null ? ', ${contractor.state}' : ''}',
               style: AppTheme.bodySmall.copyWith(color: AppTheme.textLight),
             ),
           ],
@@ -73,23 +67,27 @@ class JJContractorCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              if (website != null && website.isNotEmpty)
+              if (contractor.website != null && contractor.website!.isNotEmpty)
                 _buildActionButton(
                   icon: Icons.public,
                   label: 'Website',
-                  onPressed: () => _launchUrl(website),
+                  onPressed: () => _launchUrl(contractor.website!),
+                  color: AppTheme.infoBlue,
                 ),
-              if (phoneNumber != null && phoneNumber.isNotEmpty)
+              if (contractor.phoneNumber != null &&
+                  contractor.phoneNumber!.isNotEmpty)
                 _buildActionButton(
                   icon: Icons.phone,
                   label: 'Call',
-                  onPressed: () => _makePhoneCall(phoneNumber),
+                  onPressed: () => _makePhoneCall(contractor.phoneNumber!),
+                  color: AppTheme.primaryNavy,
                 ),
-              if (email != null && email.isNotEmpty)
+              if (contractor.email != null && contractor.email!.isNotEmpty)
                 _buildActionButton(
                   icon: Icons.email,
                   label: 'Email',
-                  onPressed: () => _sendEmail(email),
+                  onPressed: () => _sendEmail(contractor.email!),
+                  color: AppTheme.accentCopper,
                 ),
             ],
           ),
@@ -102,16 +100,18 @@ class JJContractorCard extends StatelessWidget {
     required IconData icon,
     required String label,
     required VoidCallback onPressed,
+    required Color color,
   }) {
     return Column(
       children: [
         IconButton(
-          icon: Icon(icon, color: AppTheme.accentCopper),
+          icon: Icon(icon, color: color),
           onPressed: onPressed,
         ),
         Text(
           label,
-          style: AppTheme.labelSmall.copyWith(color: AppTheme.accentCopper),
+          style:
+              AppTheme.labelSmall.copyWith(color: color.withValues(alpha: 0.8)),
         ),
       ],
     );

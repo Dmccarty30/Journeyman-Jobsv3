@@ -645,7 +645,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
     final user = ref.watch(currentUserProvider);
 
     return Scaffold(
-      backgroundColor: Colors.transparent, // Changed to transparent
+      backgroundColor: AppTheme.offWhite, // Changed to transparent
       appBar: AppBar(
         backgroundColor: AppTheme.primaryNavy,
         elevation: 0,

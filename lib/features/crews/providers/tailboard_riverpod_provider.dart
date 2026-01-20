@@ -87,9 +87,8 @@ int unreadActivityCount(Ref ref, String crewId) {
 /// Provider to get pinned posts for a specific crew
 @riverpod
 List<Post> pinnedPosts(Ref ref, String crewId) {
-  ref.watch(tailboardPostsProvider(crewId));
-  // Post model doesn't have isPinned yet in the new schema, returning empty
-  return [];
+  final posts = ref.watch(tailboardPostsProvider(crewId));
+  return posts.where((post) => post.isPinned).toList();
 }
 
 /// Provider to get recent posts for a specific crew

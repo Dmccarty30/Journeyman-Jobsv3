@@ -8,6 +8,9 @@ class Contractor {
   final String? phoneNumber;
   final String? email;
   final String? website;
+  final String? address;
+  final String? city;
+  final String? state;
   final DateTime createdAt;
 
   Contractor({
@@ -17,6 +20,9 @@ class Contractor {
     this.phoneNumber,
     this.email,
     this.website,
+    this.address,
+    this.city,
+    this.state,
     required this.createdAt,
   });
 
@@ -29,6 +35,9 @@ class Contractor {
       phoneNumber: json['PHONE NUMBER'] ?? json['phoneNumber'],
       email: json['EMAIL'] ?? json['email'],
       website: json['WEBSITE'] ?? json['website'],
+      address: json['ADDRESS'] ?? json['address'],
+      city: json['CITY'] ?? json['city'],
+      state: json['STATE'] ?? json['state'],
       createdAt: json['createdAt'] != null
           ? (json['createdAt'] is Timestamp
               ? (json['createdAt'] as Timestamp).toDate()
@@ -46,6 +55,9 @@ class Contractor {
       'phoneNumber': phoneNumber,
       'email': email,
       'website': website,
+      'address': address,
+      'city': city,
+      'state': state,
       'createdAt': createdAt.toIso8601String(),
     };
   }
@@ -59,6 +71,9 @@ class Contractor {
       'phoneNumber': phoneNumber,
       'email': email,
       'website': website,
+      'address': address,
+      'city': city,
+      'state': state,
       'createdAt': Timestamp.fromDate(createdAt),
     };
   }
@@ -71,6 +86,9 @@ class Contractor {
     String? phoneNumber,
     String? email,
     String? website,
+    String? address,
+    String? city,
+    String? state,
     DateTime? createdAt,
   }) {
     return Contractor(
@@ -80,13 +98,16 @@ class Contractor {
       phoneNumber: phoneNumber ?? this.phoneNumber,
       email: email ?? this.email,
       website: website ?? this.website,
+      address: address ?? this.address,
+      city: city ?? this.city,
+      state: state ?? this.state,
       createdAt: createdAt ?? this.createdAt,
     );
   }
 
   @override
   String toString() {
-    return 'Contractor(id: $id, company: $company, howToSignup: $howToSignup)';
+    return 'Contractor(id: $id, company: $company, howToSignup: $howToSignup, address: $address)';
   }
 
   @override
@@ -99,7 +120,10 @@ class Contractor {
         other.howToSignup == howToSignup &&
         other.phoneNumber == phoneNumber &&
         other.email == email &&
-        other.website == website;
+        other.website == website &&
+        other.address == address &&
+        other.city == city &&
+        other.state == state;
   }
 
   @override
@@ -109,6 +133,9 @@ class Contractor {
         howToSignup.hashCode ^
         (phoneNumber?.hashCode ?? 0) ^
         (email?.hashCode ?? 0) ^
-        (website?.hashCode ?? 0);
+        (website?.hashCode ?? 0) ^
+        (address?.hashCode ?? 0) ^
+        (city?.hashCode ?? 0) ^
+        (state?.hashCode ?? 0);
   }
 }

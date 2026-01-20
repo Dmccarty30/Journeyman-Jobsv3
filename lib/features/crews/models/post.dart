@@ -8,6 +8,7 @@ class Post {
   final List<String> mediaUrls;
   final String type; // 'text', 'image', 'announcement'
   final DateTime createdAt;
+  final bool isPinned;
   final Map<String, int> stats; // { likeCount, lolCount, dislikeCount, commentCount }
 
   Post({
@@ -18,6 +19,7 @@ class Post {
     required this.mediaUrls,
     required this.type,
     required this.createdAt,
+    this.isPinned = false,
     required this.stats,
   });
 
@@ -31,6 +33,7 @@ class Post {
       mediaUrls: List<String>.from(data['mediaUrls'] ?? []),
       type: data['type'] ?? 'text',
       createdAt: (data['createdAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
+      isPinned: data['isPinned'] ?? false,
       stats: Map<String, int>.from(data['stats'] ?? {
         'likeCount': 0,
         'lolCount': 0,
@@ -48,6 +51,7 @@ class Post {
       'mediaUrls': mediaUrls,
       'type': type,
       'createdAt': Timestamp.fromDate(createdAt),
+      'isPinned': isPinned,
       'stats': stats,
     };
   }
@@ -60,6 +64,7 @@ class Post {
     List<String>? mediaUrls,
     String? type,
     DateTime? createdAt,
+    bool? isPinned,
     Map<String, int>? stats,
   }) {
     return Post(
@@ -70,6 +75,7 @@ class Post {
       mediaUrls: mediaUrls ?? this.mediaUrls,
       type: type ?? this.type,
       createdAt: createdAt ?? this.createdAt,
+      isPinned: isPinned ?? this.isPinned,
       stats: stats ?? this.stats,
     );
   }
