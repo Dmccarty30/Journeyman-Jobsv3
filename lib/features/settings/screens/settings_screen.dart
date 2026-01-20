@@ -61,7 +61,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final user = FirebaseAuth.instance.currentUser;
 
     return Scaffold(
-      backgroundColor: Colors.transparent, // Changed to transparent
+      backgroundColor: AppTheme.offWhite, // Changed to transparent
       appBar: AppBar(
         backgroundColor: AppTheme.primaryNavy,
         elevation: 0,
