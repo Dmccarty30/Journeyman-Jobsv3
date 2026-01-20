@@ -213,16 +213,17 @@ class _StormScreenState extends State<StormScreen> {
                           ],
                         ),
                         const SizedBox(height: AppTheme.spacingMd),
-                        SizedBox(
-                          height: 250, // Increased height for better visibility
-                          child: _isLoadingContractors
-                              ? const Center(
-                                  child: CircularProgressIndicator(
-                                    color: AppTheme.accentCopper,
-                                  ),
-                                )
-                              : _stormContractors.isEmpty
-                                  ? Center(
+                        if (_isLoadingContractors)
+                          const Center(
+                            child: CircularProgressIndicator(
+                              color: AppTheme.accentCopper,
+                            ),
+                          )
+                        else
+                          Column(
+                            children: _stormContractors.isEmpty
+                                ? [
+                                    Center(
                                       child: Text(
                                         'No storm contractors available',
                                         style: AppTheme.bodyMedium.copyWith(
@@ -230,16 +231,12 @@ class _StormScreenState extends State<StormScreen> {
                                         ),
                                       ),
                                     )
-                                  : ListView.builder(
-                                      itemCount: _stormContractors.length,
-                                      itemBuilder: (context, index) {
-                                        final contractor =
-                                            _stormContractors[index];
-                                        return JJContractorCard(
-                                            contractor: contractor);
-                                      },
-                                    ),
-                        ),
+                                  ]
+                                : _stormContractors
+                                    .map((contractor) => StormContractorCard(
+                                        contractor: contractor))
+                                    .toList(),
+                          ),
                         const SizedBox(height: AppTheme.spacingXl),
                       ],
                     ),

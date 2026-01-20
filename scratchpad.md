@@ -12,6 +12,8 @@
 
 - Finalize the functionality and ui-ux of 'my storm tracks' feature.
 
+- Enhance the 'Conractor Cards' UI
+
 ## CREWS SCREEN
 
 ## SETTINGS SCREEN

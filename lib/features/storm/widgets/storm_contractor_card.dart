@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../../design_system/app_theme.dart';
+import '../../../../core/models/contractor_model.dart';
 
 class StormContractorCard extends StatelessWidget {
-  final Map<String, dynamic> contractor;
+  final Contractor contractor;
 
   const StormContractorCard({
     super.key,
@@ -11,8 +13,9 @@ class StormContractorCard extends StatelessWidget {
   });
 
   Future<void> _launchUrl(String url) async {
-    final uri = Uri.parse(url);
-    if (!await launchUrl(uri)) {
+    // If the URL is just a domain without scheme, add https://
+    final launchUri = Uri.parse(url.startsWith('http') ? url : 'https://$url');
+    if (!await launchUrl(launchUri)) {
       throw Exception('Could not launch $url');
     }
   }
@@ -21,6 +24,17 @@ class StormContractorCard extends StatelessWidget {
     final uri = Uri.parse('tel:$phoneNumber');
     if (!await launchUrl(uri)) {
       throw Exception('Could not launch $phoneNumber');
+    }
+  }
+
+  Future<void> _sendSms(String phoneNumber, {String? body}) async {
+    final uri = Uri(
+      scheme: 'sms',
+      path: phoneNumber,
+      queryParameters: body != null ? {'body': body} : null,
+    );
+    if (!await launchUrl(uri)) {
+      throw Exception('Could not send SMS to $phoneNumber');
     }
   }
 
@@ -33,74 +47,244 @@ class StormContractorCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final companyName = contractor['COMPANY']?.toString() ?? 'N/A';
-    final howToSignup = contractor['HOW TO SIGNUP']?.toString() ?? 'N/A';
-    final website = contractor['WEBSITE']?.toString();
-    final phoneNumber = contractor['PHONE NUMBER']?.toString();
-    final email = contractor['EMAIL']?.toString();
-    final address = contractor['ADDRESS']?.toString();
-    final city = contractor['CITY']?.toString();
-    final state = contractor['STATE']?.toString();
-
     return Container(
       margin: const EdgeInsets.only(bottom: AppTheme.spacingMd),
-      padding: const EdgeInsets.all(AppTheme.spacingMd),
       decoration: BoxDecoration(
         color: AppTheme.white,
-        borderRadius: BorderRadius.circular(AppTheme.radiusMd),
-        boxShadow: [AppTheme.shadowSm],
-        border: Border.all(
-          color: AppTheme.borderLight,
-          width: 1,
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            companyName,
-            style: AppTheme.titleLarge.copyWith(color: AppTheme.primaryNavy),
-          ),
-          const SizedBox(height: AppTheme.spacingSm),
-          Text(
-            'Sign Up: $howToSignup',
-            style: AppTheme.bodyMedium.copyWith(color: AppTheme.textSecondary),
-          ),
-          if (address != null && address.isNotEmpty) ...[
-            const SizedBox(height: AppTheme.spacingXs),
-            Text(
-              'Address: $address${city != null ? ', $city' : ''}${state != null ? ', $state' : ''}',
-              style: AppTheme.bodySmall.copyWith(color: AppTheme.textLight),
-            ),
-          ],
-          const SizedBox(height: AppTheme.spacingMd),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              if (website != null && website.isNotEmpty)
-                _buildActionButton(
-                  icon: Icons.public,
-                  label: 'Website',
-                  onPressed: () => _launchUrl(website),
-                  color: AppTheme.infoBlue,
-                ),
-              if (phoneNumber != null && phoneNumber.isNotEmpty)
-                _buildActionButton(
-                  icon: Icons.phone,
-                  label: 'Call',
-                  onPressed: () => _makePhoneCall(phoneNumber),
-                  color: AppTheme.primaryNavy,
-                ),
-              if (email != null && email.isNotEmpty)
-                _buildActionButton(
-                  icon: Icons.email,
-                  label: 'Email',
-                  onPressed: () => _sendEmail(email),
-                  color: AppTheme.accentCopper,
-                ),
-            ],
+        borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(AppTheme.radiusMd),
+            bottomRight: Radius.circular(AppTheme.radiusMd),
+            topRight: Radius.circular(AppTheme.radiusXl),
+            bottomLeft: Radius.circular(2)),
+        boxShadow: [
+          BoxShadow(
+            color: AppTheme.primaryNavy.withValues(alpha: 0.1),
+            blurRadius: 12,
+            offset: const Offset(4, 4),
           ),
         ],
+        border: Border.all(
+          color: AppTheme.borderCopper, // Copper border
+          width: 1.5,
+        ),
+      ),
+      child: ClipRRect(
+        borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(AppTheme.radiusMd),
+            bottomRight: Radius.circular(AppTheme.radiusMd),
+            topRight: Radius.circular(AppTheme.radiusXl),
+            bottomLeft: Radius.circular(2)),
+        child: Stack(
+          children: [
+            // Background Accent
+            Positioned(
+              right: -20,
+              top: -20,
+              child: Icon(
+                Icons.flash_on,
+                size: 100,
+                color: AppTheme.accentCopper.withValues(alpha: 0.05),
+              ),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.all(AppTheme.spacingLg),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          contractor.company,
+                          style: AppTheme.headlineSmall.copyWith(
+                            color: AppTheme.primaryNavy,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: -0.5,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  // PRIMARY SIGNUP ACTION
+                  const SizedBox(height: AppTheme.spacingMd),
+                  _buildSmartSignupAction(),
+
+                  // Address Section
+                  if (contractor.address != null &&
+                      contractor.address!.isNotEmpty) ...[
+                    const SizedBox(height: AppTheme.spacingMd),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Icon(
+                          Icons.location_on_outlined,
+                          size: 16,
+                          color: AppTheme.textLight,
+                        ),
+                        const SizedBox(width: AppTheme.spacingXs),
+                        Expanded(
+                          child: Text(
+                            '${contractor.address}${contractor.city != null ? ', ${contractor.city}' : ''}${contractor.state != null ? ', ${contractor.state}' : ''}',
+                            style: AppTheme.bodySmall
+                                .copyWith(color: AppTheme.textLight),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+
+                  const SizedBox(height: AppTheme.spacingLg),
+                  const Divider(color: AppTheme.lightGray),
+                  const SizedBox(height: AppTheme.spacingSm),
+
+                  // Data Fields & Buttons
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      if (contractor.website != null &&
+                          contractor.website!.isNotEmpty)
+                        _buildActionButton(
+                          icon: FontAwesomeIcons.globe,
+                          label: 'WEB',
+                          onPressed: () => _launchUrl(contractor.website!),
+                          color: AppTheme.infoBlue,
+                        ),
+                      if (contractor.phoneNumber != null &&
+                          contractor.phoneNumber!.isNotEmpty) ...[
+                        _buildActionButton(
+                          icon: FontAwesomeIcons.phone,
+                          label: 'CALL',
+                          onPressed: () =>
+                              _makePhoneCall(contractor.phoneNumber!),
+                          color: AppTheme.primaryNavy,
+                        ),
+                      ],
+                      if (contractor.email != null &&
+                          contractor.email!.isNotEmpty)
+                        _buildActionButton(
+                          icon: FontAwesomeIcons.solidEnvelope,
+                          label: 'EMAIL',
+                          onPressed: () => _sendEmail(contractor.email!),
+                          color: AppTheme.accentCopper,
+                        ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSmartSignupAction() {
+    final howToSignup = contractor.howToSignup;
+    final website = contractor.website;
+    final phoneNumber = contractor.phoneNumber;
+
+    // Online Signup
+    if (howToSignup.toLowerCase().contains('online') &&
+        website != null &&
+        website.isNotEmpty) {
+      return InkWell(
+        onTap: () => _launchUrl(website),
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(
+              vertical: AppTheme.spacingSm, horizontal: AppTheme.spacingMd),
+          decoration: BoxDecoration(
+            color: AppTheme.accentCopper.withValues(alpha: 0.1),
+            borderRadius: BorderRadius.circular(AppTheme.radiusSm),
+            border:
+                Border.all(color: AppTheme.accentCopper.withValues(alpha: 0.3)),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(FontAwesomeIcons.laptop,
+                  size: 14, color: AppTheme.accentCopper),
+              const SizedBox(width: AppTheme.spacingSm),
+              Text(
+                'Sign Up Online',
+                style: AppTheme.labelLarge.copyWith(
+                  color: AppTheme.accentCopper,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(width: AppTheme.spacingXs),
+              const Icon(Icons.arrow_outward,
+                  size: 14, color: AppTheme.accentCopper),
+            ],
+          ),
+        ),
+      );
+    }
+
+    // Text Signup
+    if (howToSignup.toLowerCase().contains('text') &&
+        phoneNumber != null &&
+        phoneNumber.isNotEmpty) {
+      // Try to parse a specific message like "Text 'join'"
+      String? body;
+      final match = RegExp(r"Text\s+['" "]?(\w+)['" "]?", caseSensitive: false)
+          .firstMatch(howToSignup);
+      if (match != null) {
+        body = match.group(1);
+      }
+
+      return InkWell(
+        onTap: () => _sendSms(phoneNumber, body: body),
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(
+              vertical: AppTheme.spacingSm, horizontal: AppTheme.spacingMd),
+          decoration: BoxDecoration(
+            color: AppTheme.primaryNavy.withValues(alpha: 0.1),
+            borderRadius: BorderRadius.circular(AppTheme.radiusSm),
+            border:
+                Border.all(color: AppTheme.primaryNavy.withValues(alpha: 0.3)),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(FontAwesomeIcons.solidMessage,
+                  size: 14, color: AppTheme.primaryNavy),
+              const SizedBox(width: AppTheme.spacingSm),
+              Text(
+                body != null
+                    ? 'Text "$body" to Apply'
+                    : 'Text to Apply', // Fallback
+                style: AppTheme.labelLarge.copyWith(
+                  color: AppTheme.primaryNavy,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(width: AppTheme.spacingXs),
+              const Icon(Icons.send, size: 14, color: AppTheme.primaryNavy),
+            ],
+          ),
+        ),
+      );
+    }
+
+    // Default: Just display the text
+    return Container(
+      padding: const EdgeInsets.symmetric(
+          horizontal: AppTheme.spacingSm, vertical: 4),
+      decoration: BoxDecoration(
+        color: AppTheme.lightGray,
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: Text(
+        'Sign Up: $howToSignup',
+        style: AppTheme.labelSmall.copyWith(
+          color: AppTheme.textSecondary,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }
@@ -111,19 +295,29 @@ class StormContractorCard extends StatelessWidget {
     required VoidCallback onPressed,
     required Color color,
   }) {
-    return Column(
-      children: [
-        IconButton(
-          icon: Icon(icon, color: color),
-          onPressed: onPressed,
+    return InkWell(
+      onTap: onPressed,
+      borderRadius: BorderRadius.circular(AppTheme.radiusSm),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+            vertical: AppTheme.spacingXs, horizontal: AppTheme.spacingSm),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, color: color, size: 18),
+            const SizedBox(height: 4),
+            Text(
+              label,
+              style: AppTheme.labelSmall.copyWith(
+                color: color,
+                fontWeight: FontWeight.bold,
+                fontSize: 10,
+                letterSpacing: 1.0,
+              ),
+            ),
+          ],
         ),
-        Text(
-          label,
-          style:
-              AppTheme.labelSmall.copyWith(color: color.withValues(alpha: 0.8)),
-        ),
-      ],
+      ),
     );
   }
 }
-
