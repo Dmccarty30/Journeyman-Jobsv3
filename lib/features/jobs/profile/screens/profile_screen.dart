@@ -3,7 +3,6 @@ import 'package:journeyman_jobs/design_system/electrical/circuit_board_backgroun
 import 'package:journeyman_jobs/design_system/electrical/jj_circuit_breaker_switch.dart';
 import 'package:journeyman_jobs/design_system/electrical/jj_snack_bar.dart';
 import '../../../../design_system/popup_theme.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:image_picker/image_picker.dart';
@@ -11,15 +10,17 @@ import 'package:go_router/go_router.dart';
 import '../../../../design_system/app_theme.dart';
 import '../../../../design_system/widgets/design_system_widgets.dart';
 import '../profile.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:journeyman_jobs/features/auth/providers/auth_riverpod_provider.dart';
 
-class ProfileScreen extends StatefulWidget {
+class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
+  ConsumerState<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen>
+class _ProfileScreenState extends ConsumerState<ProfileScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   bool _isEditing = false;
@@ -201,7 +202,7 @@ class _ProfileScreenState extends State<ProfileScreen>
 
   Future<void> _loadUserData() async {
     try {
-      final user = FirebaseAuth.instance.currentUser;
+      final user = ref.read(currentUserProvider);
       if (user != null) {
         final doc = await FirebaseFirestore.instance
             .collection('users')
@@ -282,7 +283,7 @@ class _ProfileScreenState extends State<ProfileScreen>
 
   Future<void> _saveProfile() async {
     try {
-      final user = FirebaseAuth.instance.currentUser;
+      final user = ref.read(currentUserProvider);
       if (user == null) return;
 
       // Disable editing mode immediately to prevent double-saves
@@ -546,7 +547,7 @@ class _ProfileScreenState extends State<ProfileScreen>
       await avatarService.deleteOldAvatar(_avatarUrl);
 
       // Update Firestore to remove avatar URL
-      final user = FirebaseAuth.instance.currentUser;
+      final user = ref.read(currentUserProvider);
       if (user != null) {
         await FirebaseFirestore.instance
             .collection('users')
@@ -641,7 +642,7 @@ class _ProfileScreenState extends State<ProfileScreen>
 
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser;
+    final user = ref.watch(currentUserProvider);
 
     return Scaffold(
       backgroundColor: Colors.transparent, // Changed to transparent
@@ -1617,4 +1618,3 @@ class ArrowPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
-

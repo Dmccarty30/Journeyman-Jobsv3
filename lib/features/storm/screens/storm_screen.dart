@@ -14,9 +14,6 @@ class StormScreen extends StatefulWidget {
 }
 
 class _StormScreenState extends State<StormScreen> {
-  // Storm Tracker
-  // final StormTrackingService _stormTrackingService = StormTrackingService();
-
   String _selectedRegion = 'All Regions';
 
   // Power outage tracking
@@ -84,15 +81,6 @@ class _StormScreenState extends State<StormScreen> {
     ),
   ];
 
-  List<StormEvent> get _filteredStorms {
-    if (_selectedRegion == 'All Regions') {
-      return _activeStorms;
-    }
-    return _activeStorms
-        .where((storm) => storm.region == _selectedRegion)
-        .toList();
-  }
-
   @override
   void initState() {
     super.initState();
@@ -149,13 +137,13 @@ class _StormScreenState extends State<StormScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent, // Transparent for circuit background
+      backgroundColor: AppTheme.offWhite,
       appBar: AppBar(
         backgroundColor: AppTheme.primaryNavy,
         elevation: 0,
         title: Row(
           children: [
-            Icon(
+            const Icon(
               Icons.flash_on,
               color: AppTheme.warningYellow,
               size: AppTheme.iconMd,
@@ -169,9 +157,8 @@ class _StormScreenState extends State<StormScreen> {
         ),
         actions: [
           IconButton(
-            icon: Icon(
-              Icons
-                  .notifications_outlined, // Changed to a static icon as it now navigates
+            icon: const Icon(
+              Icons.notifications_outlined,
               color: AppTheme.white,
             ),
             onPressed: () {
@@ -181,14 +168,16 @@ class _StormScreenState extends State<StormScreen> {
           ),
         ],
       ),
-      body: ElectricalCircuitBackground(
-        child: Padding(
-          padding: const EdgeInsets.all(AppTheme.spacingMd),
-          child: Container(
-            decoration: BoxDecoration(
-              // Removed copper border from primary container
-              borderRadius: BorderRadius.circular(AppTheme.radiusLg),
-            ),
+      body: Stack(
+        children: [
+          const ElectricalCircuitBackground(
+            opacity: 0.08,
+            traceColor: AppTheme.primaryNavy,
+            copperColor: AppTheme.accentCopper,
+            componentDensity: ComponentDensity.medium,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(AppTheme.spacingMd),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -200,7 +189,7 @@ class _StormScreenState extends State<StormScreen> {
                       Text(
                         'Current Storm Activity',
                         style: AppTheme.headlineSmall.copyWith(
-                          color: AppTheme.white,
+                          color: AppTheme.primaryNavy,
                         ),
                       ),
                       IconButton(
@@ -276,12 +265,12 @@ class _StormScreenState extends State<StormScreen> {
                     Text(
                       'Major Power Outages by State',
                       style: AppTheme.headlineSmall.copyWith(
-                        color: AppTheme.white,
+                        color: AppTheme.primaryNavy,
                       ),
                     ),
                     const SizedBox(height: AppTheme.spacingMd),
                     if (_isLoadingOutages)
-                      Center(
+                      const Center(
                         child: CircularProgressIndicator(
                           color: AppTheme.accentCopper,
                         ),
@@ -344,12 +333,15 @@ class _StormScreenState extends State<StormScreen> {
                   Text(
                     'Active Storm Events',
                     style: AppTheme.headlineSmall.copyWith(
-                      color: AppTheme.white,
+                      color: AppTheme.primaryNavy,
                     ),
                   ),
                   const SizedBox(height: AppTheme.spacingMd),
 
-                  ..._filteredStorms
+                  ..._activeStorms
+                      .where((storm) =>
+                          _selectedRegion == 'All Regions' ||
+                          storm.region == _selectedRegion)
                       .map((storm) => StormEventCard(storm: storm)),
 
                   const SizedBox(height: AppTheme.spacingLg),
@@ -372,7 +364,7 @@ class _StormScreenState extends State<StormScreen> {
                       children: [
                         Row(
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.group_outlined,
                               color: AppTheme.primaryNavy,
                               size: AppTheme.iconMd,
@@ -423,7 +415,7 @@ class _StormScreenState extends State<StormScreen> {
               ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
@@ -557,7 +549,7 @@ class _StormScreenState extends State<StormScreen> {
                       children: [
                         Row(
                           children: [
-                            Icon(
+                            const Icon(
                               FontAwesomeIcons.circleInfo,
                               color: AppTheme.infoBlue,
                               size: 16,
@@ -724,7 +716,7 @@ class StormEventCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: AppTheme.spacingMd),
-                    Icon(
+                    const Icon(
                       Icons.schedule,
                       size: 16,
                       color: AppTheme.textSecondary,
@@ -1030,5 +1022,3 @@ class StormDetailsSheet extends StatelessWidget {
     );
   }
 }
-
-

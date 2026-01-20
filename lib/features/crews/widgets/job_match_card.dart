@@ -26,7 +26,7 @@ class JobMatchCard extends ConsumerWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
         side: BorderSide(
-          color: AppTheme.accentCopper.withValues(alpha:0.3),
+          color: AppTheme.accentCopper.withValues(alpha: 0.3),
           width: 1,
         ),
       ),
@@ -42,25 +42,27 @@ class JobMatchCard extends ConsumerWidget {
               Row(
                 children: [
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
-                      color: AppTheme.accentCopper.withValues(alpha:0.1),
+                      color: AppTheme.accentCopper.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: Text(
                       job.status.toUpperCase(),
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: AppTheme.accentCopper,
-                        fontWeight: FontWeight.w600,
-                      ),
+                            color: AppTheme.accentCopper,
+                            fontWeight: FontWeight.w600,
+                          ),
                     ),
                   ),
                   const Spacer(),
                   if (isApplied)
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
-                        color: AppTheme.successGreen.withValues(alpha:0.1),
+                        color: AppTheme.successGreen.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: const Row(
@@ -71,7 +73,7 @@ class JobMatchCard extends ConsumerWidget {
                             size: 14,
                             color: AppTheme.successGreen,
                           ),
-                          SizedBox(width: 4),
+                          const SizedBox(width: 4),
                           Text(
                             'Applied',
                             style: TextStyle(
@@ -89,16 +91,16 @@ class JobMatchCard extends ConsumerWidget {
               Text(
                 title,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: AppTheme.textPrimary,
-                ),
+                      fontWeight: FontWeight.bold,
+                      color: AppTheme.textPrimary,
+                    ),
               ),
               const SizedBox(height: 4),
               Text(
                 location,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: AppTheme.textSecondary,
-                ),
+                      color: AppTheme.textSecondary,
+                    ),
               ),
               if (job.crewNotes.isNotEmpty)
                 Padding(
@@ -106,9 +108,9 @@ class JobMatchCard extends ConsumerWidget {
                   child: Text(
                     'Notes: ${job.crewNotes}',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      fontStyle: FontStyle.italic,
-                      color: AppTheme.textSecondary,
-                    ),
+                          fontStyle: FontStyle.italic,
+                          color: AppTheme.textSecondary,
+                        ),
                   ),
                 ),
               const SizedBox(height: 12),
@@ -151,14 +153,15 @@ class JobMatchCard extends ConsumerWidget {
     );
   }
 
-  Widget _buildDetailChip(BuildContext context, IconData icon, String text, Color color) {
+  Widget _buildDetailChip(
+      BuildContext context, IconData icon, String text, Color color) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: color.withValues(alpha:0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: color.withValues(alpha:0.3),
+          color: color.withValues(alpha: 0.3),
           width: 1,
         ),
       ),
@@ -170,9 +173,9 @@ class JobMatchCard extends ConsumerWidget {
           Text(
             text,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: color,
-              fontWeight: FontWeight.w500,
-            ),
+                  color: color,
+                  fontWeight: FontWeight.w500,
+                ),
           ),
         ],
       ),
@@ -194,4 +197,3 @@ class JobMatchCard extends ConsumerWidget {
     );
   }
 }
-

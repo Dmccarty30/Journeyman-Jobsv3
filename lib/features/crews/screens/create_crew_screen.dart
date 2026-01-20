@@ -121,21 +121,24 @@ class CreateCrewScreenState extends ConsumerState<CreateCrewScreen> {
                   items: const [
                     DropdownMenuItem(
                         value: 'Journeyman Lineman',
-                        child: Text('Journeyman Lineman')),
+                        child: const Text('Journeyman Lineman')),
                     DropdownMenuItem(
-                        value: 'Inside Wireman', child: Text('Inside Wireman')),
+                        value: 'Inside Wireman',
+                        child: const Text('Inside Wireman')),
                     DropdownMenuItem(
                         value: 'Journeyman Electrician',
-                        child: Text('Journeyman Electrician')),
+                        child: const Text('Journeyman Electrician')),
                     DropdownMenuItem(
-                        value: 'Operator', child: Text('Operator')),
+                        value: 'Operator', child: const Text('Operator')),
                     DropdownMenuItem(
-                        value: 'URD Technician', child: Text('URD Technician')),
+                        value: 'URD Technician',
+                        child: const Text('URD Technician')),
                     DropdownMenuItem(
                         value: 'Transmission Technician',
-                        child: Text('Transmission Technician')),
+                        child: const Text('Transmission Technician')),
                     DropdownMenuItem(
-                        value: 'Cable Splicer', child: Text('Cable Splicer')),
+                        value: 'Cable Splicer',
+                        child: const Text('Cable Splicer')),
                   ],
                   onChanged: (String? newValue) {
                     setState(() {

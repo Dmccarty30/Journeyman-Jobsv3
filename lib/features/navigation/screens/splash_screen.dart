@@ -6,7 +6,6 @@ import 'package:journeyman_jobs/core/services/onboarding_service.dart';
 import 'package:journeyman_jobs/design_system/design_system.dart';
 import 'package:journeyman_jobs/features/navigation/services/app_router.dart';
 
-
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -20,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen>
   late AnimationController _textController;
   late AnimationController _progressController;
   late AnimationController _gradientController;
-  
+
   late Animation<double> _logoScaleAnimation;
   late Animation<double> _textOpacityAnimation;
   // Progress animation removed as unused
@@ -40,19 +39,19 @@ class _SplashScreenState extends State<SplashScreen>
       duration: const Duration(milliseconds: 1000),
       vsync: this,
     );
-    
+
     // Text animation controller
     _textController = AnimationController(
       duration: const Duration(milliseconds: 800),
       vsync: this,
     );
-    
+
     // Progress animation controller
     _progressController = AnimationController(
       duration: const Duration(milliseconds: 3000),
       vsync: this,
     );
-    
+
     // Gradient animation controller
     _gradientController = AnimationController(
       duration: const Duration(seconds: 4),
@@ -155,15 +154,15 @@ class _SplashScreenState extends State<SplashScreen>
 
     // Start animations in sequence
     _gradientController.repeat();
-    
+
     Future.delayed(const Duration(milliseconds: 300), () {
       _logoController.forward();
     });
-    
+
     Future.delayed(const Duration(milliseconds: 800), () {
       _textController.forward();
     });
-    
+
     Future.delayed(const Duration(milliseconds: 1200), () {
       _progressController.forward();
     });
@@ -243,7 +242,7 @@ class _SplashScreenState extends State<SplashScreen>
                   painter: CircuitPatternPainter(),
                   size: Size.infinite,
                 ),
-                
+
                 // Main content
                 Center(
                   child: Column(
@@ -293,9 +292,9 @@ class _SplashScreenState extends State<SplashScreen>
                           ),
                         ),
                       ),
-                      
+
                       const SizedBox(height: 32),
-                      
+
                       // App name with fade animation
                       Opacity(
                         opacity: _textOpacityAnimation.value,
@@ -350,7 +349,7 @@ class _SplashScreenState extends State<SplashScreen>
                     ],
                   ),
                 ),
-                
+
                 // Electrical loading indicator at bottom
                 Positioned(
                   bottom: 80,
@@ -398,17 +397,17 @@ class CircuitPatternPainter extends CustomPainter {
       ..style = PaintingStyle.stroke;
 
     final path = Path();
-    
+
     // Draw circuit lines
     for (int i = 0; i < 8; i++) {
       final y = size.height * (i / 8);
-      
+
       // Horizontal lines
       path.moveTo(0, y);
       path.lineTo(size.width * 0.3, y);
       path.moveTo(size.width * 0.7, y);
       path.lineTo(size.width, y);
-      
+
       // Circuit nodes
       canvas.drawCircle(
         Offset(size.width * 0.3, y),
@@ -420,27 +419,23 @@ class CircuitPatternPainter extends CustomPainter {
         2,
         paint..style = PaintingStyle.fill,
       );
-      
+
       paint.style = PaintingStyle.stroke;
     }
-    
+
     // Vertical connections
     for (int i = 0; i < 6; i++) {
       final x = size.width * (i / 6);
-      
+
       path.moveTo(x, 0);
       path.lineTo(x, size.height * 0.2);
       path.moveTo(x, size.height * 0.8);
       path.lineTo(x, size.height);
     }
-    
+
     canvas.drawPath(path, paint);
   }
 
   @override
   bool shouldRepaint(CustomPainter oldDelegate) => false;
 }
-
-
-
-

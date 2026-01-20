@@ -27,7 +27,8 @@ class OptimizedJobCard extends StatelessWidget {
             children: [
               Text(
                 toTitleCase(job.jobTitle ?? 'Job Position'),
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
               Row(
@@ -50,7 +51,8 @@ class OptimizedJobCard extends StatelessWidget {
                 children: [
                   const Icon(Icons.work, size: 16),
                   const SizedBox(width: 4),
-                  Text(JobDataFormatter.formatClassification(job.classification)),
+                  Text(JobDataFormatter.formatClassification(
+                      job.classification)),
                 ],
               ),
               if (job.wage != null) ...[
@@ -63,14 +65,16 @@ class OptimizedJobCard extends StatelessWidget {
                   ],
                 ),
               ],
-              if ((job.typeOfWork?.toLowerCase().contains('storm') ?? false) && showStormBadge)
+              if ((job.typeOfWork?.toLowerCase().contains('storm') ?? false) &&
+                  showStormBadge)
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
                   child: Row(
                     children: [
                       const Icon(Icons.flash_on, color: Colors.red, size: 16),
                       const SizedBox(width: 4),
-                      const Text('Storm Work', style: TextStyle(color: Colors.red)),
+                      const Text('Storm Work',
+                          style: TextStyle(color: Colors.red)),
                     ],
                   ),
                 ),
@@ -101,4 +105,3 @@ class _DetailChip extends StatelessWidget {
     return const SizedBox.shrink();
   }
 }
-

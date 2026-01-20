@@ -48,11 +48,9 @@ class JobDetailsDialog extends ConsumerWidget {
                     // Job Title and Company
                     _buildJobTitleSection(),
                     const SizedBox(height: 16),
-
                     // Main job details grid
                     _buildDetailsGrid(),
                     const SizedBox(height: 16),
-
                     // Qualifications/Requirements
                     if (job.qualifications?.isNotEmpty == true)
                       _buildQualificationsSection(),
@@ -98,7 +96,7 @@ class JobDetailsDialog extends ConsumerWidget {
             ),
           ),
           IconButton(
-            icon: const Icon(Icons.close),
+            icon: const Icon(Icons.close, color: null),
             onPressed: () => Navigator.of(context).pop(),
             color: AppTheme.white,
             style: IconButton.styleFrom(
@@ -264,7 +262,8 @@ class JobDetailsDialog extends ConsumerWidget {
   }
 
   Widget _buildFooter(BuildContext context, WidgetRef ref) {
-    final userCrews = ref.watch(userCrewsProvider);
+    // Using .select() for granular rebuilds - only rebuild when crews list changes
+    final userCrews = ref.watch(userCrewsProvider.select((crews) => crews));
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -353,12 +352,12 @@ class JobDetailsDialog extends ConsumerWidget {
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.flash_on,
                         size: 18,
                       ),
-                      SizedBox(width: 4),
-                      Text(
+                      const SizedBox(width: 4),
+                      const Text(
                         'Bid Now',
                         style: TextStyle(
                           fontSize: 14,

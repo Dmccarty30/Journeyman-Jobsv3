@@ -4,7 +4,6 @@ import '../../../../design_system/widgets/design_system_widgets.dart';
 import '../storm.dart';
 import 'package:intl/intl.dart';
 
-
 class StormTrackerSection extends StatefulWidget {
   const StormTrackerSection({super.key});
 
@@ -32,7 +31,7 @@ class _StormTrackerSectionState extends State<StormTrackerSection> {
             children: [
               Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.history,
                     color: AppTheme.primaryNavy,
                     size: AppTheme.iconMd,
@@ -62,7 +61,10 @@ class _StormTrackerSectionState extends State<StormTrackerSection> {
             future: _trackingService.getStormStats(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation(AppTheme.accentCopper)));
+                return const Center(
+                    child: CircularProgressIndicator(
+                        valueColor:
+                            AlwaysStoppedAnimation(AppTheme.accentCopper)));
               }
               if (!snapshot.hasData || snapshot.data!.isEmpty) {
                 return const SizedBox.shrink();
@@ -142,14 +144,16 @@ class _StormTrackerSectionState extends State<StormTrackerSection> {
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                         IconButton(
-                          icon: const Icon(Icons.calculate_outlined, size: 22, color: AppTheme.successGreen),
+                        IconButton(
+                          icon: const Icon(Icons.calculate_outlined,
+                              size: 22, color: AppTheme.successGreen),
                           tooltip: 'View Pay Summary',
                           onPressed: () => _showSummarySheet(context, track),
                         ),
                         IconButton(
                           icon: const Icon(Icons.edit_outlined, size: 20),
-                          onPressed: () => _showTrackForm(context, track: track),
+                          onPressed: () =>
+                              _showTrackForm(context, track: track),
                         ),
                       ],
                     ),
@@ -204,7 +208,7 @@ class _StormTrackerSectionState extends State<StormTrackerSection> {
   }
 
   void _showSummarySheet(BuildContext context, StormTrack track) {
-     showModalBottomSheet(
+    showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
@@ -212,4 +216,3 @@ class _StormTrackerSectionState extends State<StormTrackerSection> {
     );
   }
 }
-

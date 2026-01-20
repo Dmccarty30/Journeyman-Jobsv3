@@ -6,12 +6,14 @@ class ElectricalCalculatorsScreen extends StatefulWidget {
   const ElectricalCalculatorsScreen({super.key});
 
   @override
-  State<ElectricalCalculatorsScreen> createState() => _ElectricalCalculatorsScreenState();
+  State<ElectricalCalculatorsScreen> createState() =>
+      _ElectricalCalculatorsScreenState();
 }
 
-class _ElectricalCalculatorsScreenState extends State<ElectricalCalculatorsScreen> {
+class _ElectricalCalculatorsScreenState
+    extends State<ElectricalCalculatorsScreen> {
   int _selectedCalculator = 0;
-  
+
   final List<Map<String, dynamic>> _calculators = [
     {
       'title': 'Ohm\'s Law',
@@ -64,7 +66,7 @@ class _ElectricalCalculatorsScreenState extends State<ElectricalCalculatorsScree
               itemBuilder: (context, index) {
                 final calculator = _calculators[index];
                 final isSelected = index == _selectedCalculator;
-                
+
                 return Container(
                   width: 140,
                   margin: const EdgeInsets.only(right: AppTheme.spacingMd),
@@ -77,10 +79,14 @@ class _ElectricalCalculatorsScreenState extends State<ElectricalCalculatorsScree
                     child: Container(
                       padding: const EdgeInsets.all(AppTheme.spacingMd),
                       decoration: BoxDecoration(
-                        color: isSelected ? AppTheme.accentCopper.withValues(alpha: 0.1) : AppTheme.lightGray,
+                        color: isSelected
+                            ? AppTheme.accentCopper.withValues(alpha: 0.1)
+                            : AppTheme.lightGray,
                         borderRadius: BorderRadius.circular(AppTheme.radiusMd),
                         border: Border.all(
-                          color: isSelected ? AppTheme.accentCopper : AppTheme.mediumGray,
+                          color: isSelected
+                              ? AppTheme.accentCopper
+                              : AppTheme.mediumGray,
                           width: isSelected ? 2 : 1,
                         ),
                       ),
@@ -90,14 +96,20 @@ class _ElectricalCalculatorsScreenState extends State<ElectricalCalculatorsScree
                           Icon(
                             calculator['icon'],
                             size: AppTheme.iconMd,
-                            color: isSelected ? AppTheme.accentCopper : AppTheme.textSecondary,
+                            color: isSelected
+                                ? AppTheme.accentCopper
+                                : AppTheme.textSecondary,
                           ),
                           const SizedBox(height: AppTheme.spacingSm),
                           Text(
                             calculator['title'],
                             style: AppTheme.labelMedium.copyWith(
-                              color: isSelected ? AppTheme.accentCopper : AppTheme.textPrimary,
-                              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                              color: isSelected
+                                  ? AppTheme.accentCopper
+                                  : AppTheme.textPrimary,
+                              fontWeight: isSelected
+                                  ? FontWeight.bold
+                                  : FontWeight.normal,
                             ),
                             textAlign: TextAlign.center,
                           ),
@@ -148,15 +160,23 @@ class _OhmsLawCalculatorState extends State<_OhmsLawCalculator> {
   final _currentController = TextEditingController();
   final _resistanceController = TextEditingController();
   final _powerController = TextEditingController();
-  
+
   String _result = '';
 
   void _calculate() {
     try {
-      double? voltage = _voltageController.text.isNotEmpty ? double.parse(_voltageController.text) : null;
-      double? current = _currentController.text.isNotEmpty ? double.parse(_currentController.text) : null;
-      double? resistance = _resistanceController.text.isNotEmpty ? double.parse(_resistanceController.text) : null;
-      double? power = _powerController.text.isNotEmpty ? double.parse(_powerController.text) : null;
+      double? voltage = _voltageController.text.isNotEmpty
+          ? double.parse(_voltageController.text)
+          : null;
+      double? current = _currentController.text.isNotEmpty
+          ? double.parse(_currentController.text)
+          : null;
+      double? resistance = _resistanceController.text.isNotEmpty
+          ? double.parse(_resistanceController.text)
+          : null;
+      double? power = _powerController.text.isNotEmpty
+          ? double.parse(_powerController.text)
+          : null;
 
       String result = '';
 
@@ -222,40 +242,42 @@ class _OhmsLawCalculatorState extends State<_OhmsLawCalculator> {
             style: AppTheme.bodyMedium.copyWith(color: AppTheme.textSecondary),
           ),
           const SizedBox(height: AppTheme.spacingLg),
-
           JJTextField(
             label: 'Voltage (V)',
             controller: _voltageController,
             keyboardType: TextInputType.number,
-            inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d*'))],
+            inputFormatters: [
+              FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d*'))
+            ],
           ),
           const SizedBox(height: AppTheme.spacingMd),
-
           JJTextField(
             label: 'Current (A)',
             controller: _currentController,
             keyboardType: TextInputType.number,
-            inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d*'))],
+            inputFormatters: [
+              FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d*'))
+            ],
           ),
           const SizedBox(height: AppTheme.spacingMd),
-
           JJTextField(
             label: 'Resistance (Ω)',
             controller: _resistanceController,
             keyboardType: TextInputType.number,
-            inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d*'))],
+            inputFormatters: [
+              FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d*'))
+            ],
           ),
           const SizedBox(height: AppTheme.spacingMd),
-
           JJTextField(
             label: 'Power (W)',
             controller: _powerController,
             keyboardType: TextInputType.number,
-            inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d*'))],
+            inputFormatters: [
+              FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d*'))
+            ],
           ),
-
           const SizedBox(height: AppTheme.spacingLg),
-
           Row(
             children: [
               Expanded(
@@ -274,7 +296,6 @@ class _OhmsLawCalculatorState extends State<_OhmsLawCalculator> {
               ),
             ],
           ),
-
           if (_result.isNotEmpty) ...[
             const SizedBox(height: AppTheme.spacingLg),
             Container(
@@ -297,7 +318,8 @@ class _OhmsLawCalculatorState extends State<_OhmsLawCalculator> {
                   const SizedBox(height: AppTheme.spacingSm),
                   Text(
                     _result,
-                    style: AppTheme.bodyMedium.copyWith(color: AppTheme.textPrimary),
+                    style: AppTheme.bodyMedium
+                        .copyWith(color: AppTheme.textPrimary),
                   ),
                 ],
               ),
@@ -343,7 +365,7 @@ class _WireSizeCalculatorState extends State<_WireSizeCalculator> {
       double current = double.parse(_currentController.text);
       // Distance for future voltage drop calculations
       // double distance = double.parse(_distanceController.text);
-      
+
       // Find minimum wire size for current capacity
       String? selectedWire;
       for (String wire in _wireAmps.keys) {
@@ -355,14 +377,15 @@ class _WireSizeCalculatorState extends State<_WireSizeCalculator> {
 
       if (selectedWire == null) {
         setState(() {
-          _result = 'Current exceeds standard wire ratings. Consult an engineer.';
+          _result =
+              'Current exceeds standard wire ratings. Consult an engineer.';
         });
         return;
       }
 
       // Simple voltage drop calculation (3% max recommended)
       double maxVoltageDrop = double.parse(_selectedVoltage) * 0.03;
-      
+
       setState(() {
         _result = 'Recommended Wire Size: $selectedWire AWG\n';
         _result += 'Wire Capacity: ${_wireAmps[selectedWire]} A\n';
@@ -399,7 +422,9 @@ class _WireSizeCalculatorState extends State<_WireSizeCalculator> {
             label: 'Load Current (A)',
             controller: _currentController,
             keyboardType: TextInputType.number,
-            inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d*'))],
+            inputFormatters: [
+              FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d*'))
+            ],
           ),
           const SizedBox(height: AppTheme.spacingMd),
 
@@ -407,16 +432,21 @@ class _WireSizeCalculatorState extends State<_WireSizeCalculator> {
             label: 'Distance (ft)',
             controller: _distanceController,
             keyboardType: TextInputType.number,
-            inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d*'))],
+            inputFormatters: [
+              FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d*'))
+            ],
           ),
           const SizedBox(height: AppTheme.spacingMd),
 
           // Voltage dropdown
-          Text('Voltage', style: AppTheme.labelMedium.copyWith(color: AppTheme.textSecondary)),
+          Text('Voltage',
+              style:
+                  AppTheme.labelMedium.copyWith(color: AppTheme.textSecondary)),
           const SizedBox(height: AppTheme.spacingSm),
           Container(
             width: double.infinity,
-            padding: const EdgeInsets.symmetric(horizontal: AppTheme.spacingMd, vertical: AppTheme.spacingSm),
+            padding: const EdgeInsets.symmetric(
+                horizontal: AppTheme.spacingMd, vertical: AppTheme.spacingSm),
             decoration: BoxDecoration(
               border: Border.all(color: AppTheme.mediumGray),
               borderRadius: BorderRadius.circular(AppTheme.radiusMd),
@@ -425,10 +455,12 @@ class _WireSizeCalculatorState extends State<_WireSizeCalculator> {
               child: DropdownButton<String>(
                 value: _selectedVoltage,
                 isExpanded: true,
-                items: _voltages.map((voltage) => DropdownMenuItem(
-                  value: voltage,
-                  child: Text('${voltage}V'),
-                )).toList(),
+                items: _voltages
+                    .map((voltage) => DropdownMenuItem(
+                          value: voltage,
+                          child: Text('${voltage}V'),
+                        ))
+                    .toList(),
                 onChanged: (value) => setState(() => _selectedVoltage = value!),
               ),
             ),
@@ -472,13 +504,34 @@ class _ConduitFillCalculatorState extends State<_ConduitFillCalculator> {
   String _selectedWireSize = '12';
   String _result = '';
 
-  final List<String> _conduitSizes = ['1/2', '3/4', '1', '1-1/4', '1-1/2', '2', '2-1/2', '3', '4'];
-  final List<String> _wireSizes = ['14', '12', '10', '8', '6', '4', '2', '1', '1/0', '2/0'];
+  final List<String> _conduitSizes = [
+    '1/2',
+    '3/4',
+    '1',
+    '1-1/4',
+    '1-1/2',
+    '2',
+    '2-1/2',
+    '3',
+    '4'
+  ];
+  final List<String> _wireSizes = [
+    '14',
+    '12',
+    '10',
+    '8',
+    '6',
+    '4',
+    '2',
+    '1',
+    '1/0',
+    '2/0'
+  ];
 
   void _calculate() {
     try {
       int wireCount = int.parse(_wireCountController.text);
-      
+
       // Simplified conduit fill calculation
       // This is a basic example - real calculations are more complex
       Map<String, Map<String, int>> maxWires = {
@@ -490,13 +543,14 @@ class _ConduitFillCalculatorState extends State<_ConduitFillCalculator> {
 
       int maxAllowed = maxWires[_selectedConduitSize]?[_selectedWireSize] ?? 0;
       bool withinLimit = wireCount <= maxAllowed;
-      
+
       setState(() {
         _result = 'Conduit Size: $_selectedConduitSize"\n';
         _result += 'Wire Size: $_selectedWireSize AWG\n';
         _result += 'Wires: $wireCount\n';
         _result += 'Maximum Allowed: $maxAllowed\n';
-        _result += 'Status: ${withinLimit ? "✓ Within Limit" : "✗ Exceeds Limit"}\n';
+        _result +=
+            'Status: ${withinLimit ? "✓ Within Limit" : "✗ Exceeds Limit"}\n';
         _result += '\nNote: Based on NEC Chapter 9 tables. ';
         _result += 'Verify with current code requirements.';
       });
@@ -535,11 +589,14 @@ class _ConduitFillCalculatorState extends State<_ConduitFillCalculator> {
           const SizedBox(height: AppTheme.spacingMd),
 
           // Conduit size dropdown
-          Text('Conduit Size', style: AppTheme.labelMedium.copyWith(color: AppTheme.textSecondary)),
+          Text('Conduit Size',
+              style:
+                  AppTheme.labelMedium.copyWith(color: AppTheme.textSecondary)),
           const SizedBox(height: AppTheme.spacingSm),
           Container(
             width: double.infinity,
-            padding: const EdgeInsets.symmetric(horizontal: AppTheme.spacingMd, vertical: AppTheme.spacingSm),
+            padding: const EdgeInsets.symmetric(
+                horizontal: AppTheme.spacingMd, vertical: AppTheme.spacingSm),
             decoration: BoxDecoration(
               border: Border.all(color: AppTheme.mediumGray),
               borderRadius: BorderRadius.circular(AppTheme.radiusMd),
@@ -548,11 +605,14 @@ class _ConduitFillCalculatorState extends State<_ConduitFillCalculator> {
               child: DropdownButton<String>(
                 value: _selectedConduitSize,
                 isExpanded: true,
-                items: _conduitSizes.map((size) => DropdownMenuItem(
-                  value: size,
-                  child: Text('$size"'),
-                )).toList(),
-                onChanged: (value) => setState(() => _selectedConduitSize = value!),
+                items: _conduitSizes
+                    .map((size) => DropdownMenuItem(
+                          value: size,
+                          child: Text('$size"'),
+                        ))
+                    .toList(),
+                onChanged: (value) =>
+                    setState(() => _selectedConduitSize = value!),
               ),
             ),
           ),
@@ -560,11 +620,14 @@ class _ConduitFillCalculatorState extends State<_ConduitFillCalculator> {
           const SizedBox(height: AppTheme.spacingMd),
 
           // Wire size dropdown
-          Text('Wire Size', style: AppTheme.labelMedium.copyWith(color: AppTheme.textSecondary)),
+          Text('Wire Size',
+              style:
+                  AppTheme.labelMedium.copyWith(color: AppTheme.textSecondary)),
           const SizedBox(height: AppTheme.spacingSm),
           Container(
             width: double.infinity,
-            padding: const EdgeInsets.symmetric(horizontal: AppTheme.spacingMd, vertical: AppTheme.spacingSm),
+            padding: const EdgeInsets.symmetric(
+                horizontal: AppTheme.spacingMd, vertical: AppTheme.spacingSm),
             decoration: BoxDecoration(
               border: Border.all(color: AppTheme.mediumGray),
               borderRadius: BorderRadius.circular(AppTheme.radiusMd),
@@ -573,11 +636,14 @@ class _ConduitFillCalculatorState extends State<_ConduitFillCalculator> {
               child: DropdownButton<String>(
                 value: _selectedWireSize,
                 isExpanded: true,
-                items: _wireSizes.map((size) => DropdownMenuItem(
-                  value: size,
-                  child: Text('$size AWG'),
-                )).toList(),
-                onChanged: (value) => setState(() => _selectedWireSize = value!),
+                items: _wireSizes
+                    .map((size) => DropdownMenuItem(
+                          value: size,
+                          child: Text('$size AWG'),
+                        ))
+                    .toList(),
+                onChanged: (value) =>
+                    setState(() => _selectedWireSize = value!),
               ),
             ),
           ),
@@ -622,7 +688,18 @@ class _VoltageDropCalculatorState extends State<_VoltageDropCalculator> {
   String _result = '';
 
   final List<String> _voltages = ['120', '240', '277', '480'];
-  final List<String> _wireSizes = ['14', '12', '10', '8', '6', '4', '2', '1', '1/0', '2/0'];
+  final List<String> _wireSizes = [
+    '14',
+    '12',
+    '10',
+    '8',
+    '6',
+    '4',
+    '2',
+    '1',
+    '1/0',
+    '2/0'
+  ];
 
   // Wire resistance per 1000 feet (ohms)
   final Map<String, double> _wireResistance = {
@@ -643,11 +720,13 @@ class _VoltageDropCalculatorState extends State<_VoltageDropCalculator> {
       double current = double.parse(_currentController.text);
       double distance = double.parse(_distanceController.text);
       double voltage = double.parse(_selectedVoltage);
-      
-      double resistance = _wireResistance[_selectedWireSize]! * (distance / 1000) * 2; // Round trip
+
+      double resistance = _wireResistance[_selectedWireSize]! *
+          (distance / 1000) *
+          2; // Round trip
       double voltageDrop = current * resistance;
       double percentDrop = (voltageDrop / voltage) * 100;
-      
+
       String status;
       if (percentDrop <= 3) {
         status = '✓ Acceptable (≤3%)';
@@ -696,7 +775,9 @@ class _VoltageDropCalculatorState extends State<_VoltageDropCalculator> {
             label: 'Load Current (A)',
             controller: _currentController,
             keyboardType: TextInputType.number,
-            inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d*'))],
+            inputFormatters: [
+              FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d*'))
+            ],
           ),
           const SizedBox(height: AppTheme.spacingMd),
 
@@ -704,7 +785,9 @@ class _VoltageDropCalculatorState extends State<_VoltageDropCalculator> {
             label: 'One-way Distance (ft)',
             controller: _distanceController,
             keyboardType: TextInputType.number,
-            inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d*'))],
+            inputFormatters: [
+              FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d*'))
+            ],
           ),
           const SizedBox(height: AppTheme.spacingMd),
 
@@ -715,11 +798,15 @@ class _VoltageDropCalculatorState extends State<_VoltageDropCalculator> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Voltage', style: AppTheme.labelMedium.copyWith(color: AppTheme.textSecondary)),
+                    Text('Voltage',
+                        style: AppTheme.labelMedium
+                            .copyWith(color: AppTheme.textSecondary)),
                     const SizedBox(height: AppTheme.spacingSm),
                     Container(
                       width: double.infinity,
-                      padding: const EdgeInsets.symmetric(horizontal: AppTheme.spacingMd, vertical: AppTheme.spacingSm),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: AppTheme.spacingMd,
+                          vertical: AppTheme.spacingSm),
                       decoration: BoxDecoration(
                         border: Border.all(color: AppTheme.mediumGray),
                         borderRadius: BorderRadius.circular(AppTheme.radiusMd),
@@ -728,11 +815,14 @@ class _VoltageDropCalculatorState extends State<_VoltageDropCalculator> {
                         child: DropdownButton<String>(
                           value: _selectedVoltage,
                           isExpanded: true,
-                          items: _voltages.map((voltage) => DropdownMenuItem(
-                            value: voltage,
-                            child: Text('${voltage}V'),
-                          )).toList(),
-                          onChanged: (value) => setState(() => _selectedVoltage = value!),
+                          items: _voltages
+                              .map((voltage) => DropdownMenuItem(
+                                    value: voltage,
+                                    child: Text('${voltage}V'),
+                                  ))
+                              .toList(),
+                          onChanged: (value) =>
+                              setState(() => _selectedVoltage = value!),
                         ),
                       ),
                     ),
@@ -744,11 +834,15 @@ class _VoltageDropCalculatorState extends State<_VoltageDropCalculator> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Wire Size', style: AppTheme.labelMedium.copyWith(color: AppTheme.textSecondary)),
+                    Text('Wire Size',
+                        style: AppTheme.labelMedium
+                            .copyWith(color: AppTheme.textSecondary)),
                     const SizedBox(height: AppTheme.spacingSm),
                     Container(
                       width: double.infinity,
-                      padding: const EdgeInsets.symmetric(horizontal: AppTheme.spacingMd, vertical: AppTheme.spacingSm),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: AppTheme.spacingMd,
+                          vertical: AppTheme.spacingSm),
                       decoration: BoxDecoration(
                         border: Border.all(color: AppTheme.mediumGray),
                         borderRadius: BorderRadius.circular(AppTheme.radiusMd),
@@ -757,11 +851,14 @@ class _VoltageDropCalculatorState extends State<_VoltageDropCalculator> {
                         child: DropdownButton<String>(
                           value: _selectedWireSize,
                           isExpanded: true,
-                          items: _wireSizes.map((size) => DropdownMenuItem(
-                            value: size,
-                            child: Text('$size AWG'),
-                          )).toList(),
-                          onChanged: (value) => setState(() => _selectedWireSize = value!),
+                          items: _wireSizes
+                              .map((size) => DropdownMenuItem(
+                                    value: size,
+                                    child: Text('$size AWG'),
+                                  ))
+                              .toList(),
+                          onChanged: (value) =>
+                              setState(() => _selectedWireSize = value!),
                         ),
                       ),
                     ),
@@ -797,5 +894,3 @@ class _VoltageDropCalculatorState extends State<_VoltageDropCalculator> {
     );
   }
 }
-
-

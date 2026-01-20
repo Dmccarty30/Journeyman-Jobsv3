@@ -239,7 +239,7 @@ class _VirtualJobListState extends ConsumerState<VirtualJobList>
                     ),
                     child: Row(
                       children: [
-                        Icon(Icons.offline_bolt,
+                        const Icon(Icons.offline_bolt,
                             color: AppTheme.warningYellow, size: 16),
                         const SizedBox(width: 8),
                         Text(
@@ -340,7 +340,7 @@ class _VirtualJobListState extends ConsumerState<VirtualJobList>
   Widget _buildLoadMoreButton() {
     return ElevatedButton.icon(
       onPressed: widget.hasMore ? _loadMore : null,
-      icon: Icon(Icons.refresh, size: 16),
+      icon: const Icon(Icons.refresh, size: 16),
       label: Text(widget.hasMore ? 'Load More Jobs' : 'No More Jobs'),
       style: ElevatedButton.styleFrom(
         backgroundColor: AppTheme.primaryNavy,
@@ -387,7 +387,7 @@ class _VirtualJobListState extends ConsumerState<VirtualJobList>
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
+          const Icon(
             Icons.work_off_outlined,
             size: 80,
             color: AppTheme.textLight,
@@ -411,7 +411,7 @@ class _VirtualJobListState extends ConsumerState<VirtualJobList>
           const SizedBox(height: AppTheme.spacingLg),
           ElevatedButton.icon(
             onPressed: () => _refreshJobs(),
-            icon: Icon(Icons.refresh),
+            icon: const Icon(Icons.refresh),
             label: const Text('Refresh'),
             style: ElevatedButton.styleFrom(
               backgroundColor: AppTheme.accentCopper,
@@ -429,7 +429,7 @@ class _VirtualJobListState extends ConsumerState<VirtualJobList>
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
+          const Icon(
             Icons.error_outline,
             size: 80,
             color: AppTheme.errorRed,
@@ -453,7 +453,7 @@ class _VirtualJobListState extends ConsumerState<VirtualJobList>
           const SizedBox(height: AppTheme.spacingLg),
           ElevatedButton.icon(
             onPressed: () => _refreshJobs(),
-            icon: Icon(Icons.refresh),
+            icon: const Icon(Icons.refresh),
             label: const Text('Retry'),
             style: ElevatedButton.styleFrom(
               backgroundColor: AppTheme.errorRed,

@@ -182,7 +182,8 @@ class _PostCardState extends State<PostCard> {
   }
 
   Widget _buildPostHeader() {
-    final displayName = widget.post.authorSnapshot['displayName'] ?? 'Unknown User';
+    final displayName =
+        widget.post.authorSnapshot['displayName'] ?? 'Unknown User';
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Row(
@@ -234,7 +235,8 @@ class _PostCardState extends State<PostCard> {
                   value: 'edit',
                   child: Row(
                     children: [
-                      Icon(Icons.edit, size: 16, color: AppTheme.accentCopper),
+                      const Icon(Icons.edit,
+                          size: 16, color: AppTheme.accentCopper),
                       SizedBox(width: 8),
                       Text('Edit'),
                     ],
@@ -245,7 +247,8 @@ class _PostCardState extends State<PostCard> {
                   value: 'delete',
                   child: Row(
                     children: [
-                      Icon(Icons.delete, size: 16, color: AppTheme.errorRed),
+                      const Icon(Icons.delete,
+                          size: 16, color: AppTheme.errorRed),
                       SizedBox(width: 8),
                       Text('Delete'),
                     ],
@@ -255,7 +258,8 @@ class _PostCardState extends State<PostCard> {
                 value: 'report',
                 child: Row(
                   children: [
-                    Icon(Icons.report, size: 16, color: AppTheme.warningYellow),
+                    const Icon(Icons.report,
+                        size: 16, color: AppTheme.warningYellow),
                     SizedBox(width: 8),
                     Text('Report'),
                   ],
@@ -288,7 +292,7 @@ class _PostCardState extends State<PostCard> {
           if (widget.post.mediaUrls.isNotEmpty) ...[
             const SizedBox(height: 16),
             SizedBox(
-              height: 200, 
+              height: 200,
               child: _buildMediaGrid(),
             ),
           ],
@@ -375,7 +379,7 @@ class _PostCardState extends State<PostCard> {
   Widget _buildPostActions() {
     final likeCount = widget.post.stats['likeCount'] ?? 0;
     final commentCount = widget.post.stats['commentCount'] ?? 0;
-    
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Row(
@@ -536,6 +540,3 @@ class _PostCardState extends State<PostCard> {
     );
   }
 }
-
-
-

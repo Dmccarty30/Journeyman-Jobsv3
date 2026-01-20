@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:journeyman_jobs/design_system/design_system.dart';
 
-
 class TrainingCertificatesScreen extends StatefulWidget {
   const TrainingCertificatesScreen({super.key});
 
   @override
-  State<TrainingCertificatesScreen> createState() => _TrainingCertificatesScreenState();
+  State<TrainingCertificatesScreen> createState() =>
+      _TrainingCertificatesScreenState();
 }
 
-class _TrainingCertificatesScreenState extends State<TrainingCertificatesScreen> with SingleTickerProviderStateMixin {
+class _TrainingCertificatesScreenState extends State<TrainingCertificatesScreen>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   final List<Certificate> _certificates = [
@@ -63,7 +64,8 @@ class _TrainingCertificatesScreenState extends State<TrainingCertificatesScreen>
       duration: '40 hours',
       format: CourseFormat.inPerson,
       cost: '\$1,200',
-      description: 'Advanced programmable logic controller programming and troubleshooting',
+      description:
+          'Advanced programmable logic controller programming and troubleshooting',
       category: 'Technical Training',
       startDate: DateTime(2024, 2, 15),
       location: 'Seattle Training Center',
@@ -205,11 +207,27 @@ class _TrainingCertificatesScreenState extends State<TrainingCertificatesScreen>
             ),
             child: Row(
               children: [
-                _buildStatusCard('Active', _certificates.where((c) => c.status == CertificateStatus.active).length, AppTheme.successGreen),
+                _buildStatusCard(
+                    'Active',
+                    _certificates
+                        .where((c) => c.status == CertificateStatus.active)
+                        .length,
+                    AppTheme.successGreen),
                 const SizedBox(width: AppTheme.spacingMd),
-                _buildStatusCard('Expiring', _certificates.where((c) => c.status == CertificateStatus.expiringSoon).length, AppTheme.warningYellow),
+                _buildStatusCard(
+                    'Expiring',
+                    _certificates
+                        .where(
+                            (c) => c.status == CertificateStatus.expiringSoon)
+                        .length,
+                    AppTheme.warningYellow),
                 const SizedBox(width: AppTheme.spacingMd),
-                _buildStatusCard('Expired', _certificates.where((c) => c.status == CertificateStatus.expired).length, AppTheme.errorRed),
+                _buildStatusCard(
+                    'Expired',
+                    _certificates
+                        .where((c) => c.status == CertificateStatus.expired)
+                        .length,
+                    AppTheme.errorRed),
               ],
             ),
           ),
@@ -222,7 +240,8 @@ class _TrainingCertificatesScreenState extends State<TrainingCertificatesScreen>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: AppTheme.spacingSm, bottom: AppTheme.spacingSm),
+                  padding: const EdgeInsets.only(
+                      left: AppTheme.spacingSm, bottom: AppTheme.spacingSm),
                   child: Text(
                     entry.key,
                     style: AppTheme.titleMedium.copyWith(
@@ -246,7 +265,9 @@ class _TrainingCertificatesScreenState extends State<TrainingCertificatesScreen>
                       return Column(
                         children: [
                           CertificateCard(certificate: cert),
-                          if (!isLast) const Divider(height: 1, indent: AppTheme.spacingXl),
+                          if (!isLast)
+                            const Divider(
+                                height: 1, indent: AppTheme.spacingXl),
                         ],
                       );
                     }).toList(),
@@ -310,18 +331,21 @@ class _TrainingCertificatesScreenState extends State<TrainingCertificatesScreen>
             decoration: BoxDecoration(
               color: AppTheme.infoBlue.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(AppTheme.radiusMd),
-              border: Border.all(color: AppTheme.infoBlue.withValues(alpha: 0.3)),
+              border:
+                  Border.all(color: AppTheme.infoBlue.withValues(alpha: 0.3)),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
-                    Icon(Icons.info_outline, color: AppTheme.infoBlue, size: AppTheme.iconSm),
+                    const Icon(Icons.info_outline,
+                        color: AppTheme.infoBlue, size: AppTheme.iconSm),
                     const SizedBox(width: AppTheme.spacingSm),
                     Text(
                       'Available Training Courses',
-                      style: AppTheme.titleMedium.copyWith(color: AppTheme.infoBlue),
+                      style: AppTheme.titleMedium
+                          .copyWith(color: AppTheme.infoBlue),
                     ),
                   ],
                 ),
@@ -342,7 +366,8 @@ class _TrainingCertificatesScreenState extends State<TrainingCertificatesScreen>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: AppTheme.spacingSm, bottom: AppTheme.spacingSm),
+                  padding: const EdgeInsets.only(
+                      left: AppTheme.spacingSm, bottom: AppTheme.spacingSm),
                   child: Text(
                     entry.key,
                     style: AppTheme.titleMedium.copyWith(
@@ -381,14 +406,21 @@ class _TrainingCertificatesScreenState extends State<TrainingCertificatesScreen>
               children: [
                 Text(
                   'Training Statistics',
-                  style: AppTheme.headlineSmall.copyWith(color: AppTheme.primaryNavy),
+                  style: AppTheme.headlineSmall
+                      .copyWith(color: AppTheme.primaryNavy),
                 ),
                 const SizedBox(height: AppTheme.spacingMd),
                 Row(
                   children: [
-                    _buildStatItem('Courses Completed', _trainingHistory.length.toString()),
+                    _buildStatItem('Courses Completed',
+                        _trainingHistory.length.toString()),
                     const SizedBox(width: AppTheme.spacingLg),
-                    _buildStatItem('Total Hours', _trainingHistory.fold(0, (sum, record) => sum + record.hoursCompleted).toString()),
+                    _buildStatItem(
+                        'Total Hours',
+                        _trainingHistory
+                            .fold(
+                                0, (sum, record) => sum + record.hoursCompleted)
+                            .toString()),
                   ],
                 ),
               ],
@@ -421,7 +453,8 @@ class _TrainingCertificatesScreenState extends State<TrainingCertificatesScreen>
                 return Column(
                   children: [
                     TrainingHistoryCard(record: record),
-                    if (!isLast) const Divider(height: 1, indent: AppTheme.spacingXl),
+                    if (!isLast)
+                      const Divider(height: 1, indent: AppTheme.spacingXl),
                   ],
                 );
               }).toList(),
@@ -455,6 +488,7 @@ class _TrainingCertificatesScreenState extends State<TrainingCertificatesScreen>
 }
 
 enum CertificateStatus { active, expiringSoon, expired }
+
 enum CourseFormat { inPerson, online, hybrid }
 
 class Certificate {
@@ -581,7 +615,8 @@ class CertificateCard extends StatelessWidget {
                           ),
                           decoration: BoxDecoration(
                             color: _getStatusColor().withValues(alpha: 0.1),
-                            borderRadius: BorderRadius.circular(AppTheme.radiusXs),
+                            borderRadius:
+                                BorderRadius.circular(AppTheme.radiusXs),
                           ),
                           child: Text(
                             _getStatusText(),
@@ -605,7 +640,7 @@ class CertificateCard extends StatelessWidget {
                   ],
                 ),
               ),
-              Icon(
+              const Icon(
                 Icons.arrow_forward_ios,
                 size: 16,
                 color: AppTheme.textLight,
@@ -658,7 +693,8 @@ class CertificateCard extends StatelessWidget {
             _buildDetailRow('Issuer', certificate.issuer),
             _buildDetailRow('Issue Date', _formatDate(certificate.issueDate)),
             if (certificate.expiryDate != null)
-              _buildDetailRow('Expiry Date', _formatDate(certificate.expiryDate!)),
+              _buildDetailRow(
+                  'Expiry Date', _formatDate(certificate.expiryDate!)),
             _buildDetailRow('Credential ID', certificate.credentialId),
             _buildDetailRow('Description', certificate.description),
           ],
@@ -780,22 +816,27 @@ class CourseCard extends StatelessWidget {
                 const SizedBox(height: AppTheme.spacingMd),
                 Row(
                   children: [
-                    Icon(Icons.schedule, size: 16, color: AppTheme.textLight),
+                    const Icon(Icons.schedule,
+                        size: 16, color: AppTheme.textLight),
                     const SizedBox(width: AppTheme.spacingXs),
                     Text(
                       course.duration,
-                      style: AppTheme.bodySmall.copyWith(color: AppTheme.textLight),
+                      style: AppTheme.bodySmall
+                          .copyWith(color: AppTheme.textLight),
                     ),
                     const SizedBox(width: AppTheme.spacingMd),
-                    Icon(Icons.attach_money, size: 16, color: AppTheme.textLight),
+                    const Icon(Icons.attach_money,
+                        size: 16, color: AppTheme.textLight),
                     Text(
                       course.cost,
-                      style: AppTheme.bodySmall.copyWith(color: AppTheme.textLight),
+                      style: AppTheme.bodySmall
+                          .copyWith(color: AppTheme.textLight),
                     ),
                     const Spacer(),
                     Text(
                       'Starts ${_formatDate(course.startDate)}',
-                      style: AppTheme.bodySmall.copyWith(color: AppTheme.textLight),
+                      style: AppTheme.bodySmall
+                          .copyWith(color: AppTheme.textLight),
                     ),
                   ],
                 ),
@@ -848,14 +889,16 @@ class CourseCard extends StatelessWidget {
             children: [
               Text(
                 course.description,
-                style: AppTheme.bodyMedium.copyWith(color: AppTheme.textSecondary),
+                style:
+                    AppTheme.bodyMedium.copyWith(color: AppTheme.textSecondary),
               ),
               const SizedBox(height: AppTheme.spacingMd),
               _buildDetailRow('Provider', course.provider),
               _buildDetailRow('Duration', course.duration),
               _buildDetailRow('Format', _getFormatText()),
               _buildDetailRow('Cost', course.cost),
-              _buildDetailRow('Start Date', '${course.startDate.month}/${course.startDate.day}/${course.startDate.year}'),
+              _buildDetailRow('Start Date',
+                  '${course.startDate.month}/${course.startDate.day}/${course.startDate.year}'),
               _buildDetailRow('Location', course.location),
               if (course.prerequisites.isNotEmpty) ...[
                 const SizedBox(height: AppTheme.spacingSm),
@@ -867,12 +910,13 @@ class CourseCard extends StatelessWidget {
                   ),
                 ),
                 ...course.prerequisites.map((prereq) => Padding(
-                  padding: const EdgeInsets.only(left: AppTheme.spacingSm),
-                  child: Text(
-                    '• $prereq',
-                    style: AppTheme.bodyMedium.copyWith(color: AppTheme.textPrimary),
-                  ),
-                )),
+                      padding: const EdgeInsets.only(left: AppTheme.spacingSm),
+                      child: Text(
+                        '• $prereq',
+                        style: AppTheme.bodyMedium
+                            .copyWith(color: AppTheme.textPrimary),
+                      ),
+                    )),
               ],
             ],
           ),
@@ -946,12 +990,16 @@ class TrainingHistoryCard extends StatelessWidget {
             width: 40,
             height: 40,
             decoration: BoxDecoration(
-              color: record.certificateEarned ? AppTheme.successGreen.withValues(alpha: 0.1) : AppTheme.infoBlue.withValues(alpha: 0.1),
+              color: record.certificateEarned
+                  ? AppTheme.successGreen.withValues(alpha: 0.1)
+                  : AppTheme.infoBlue.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(AppTheme.radiusSm),
             ),
             child: Icon(
               record.certificateEarned ? Icons.verified : Icons.school,
-              color: record.certificateEarned ? AppTheme.successGreen : AppTheme.infoBlue,
+              color: record.certificateEarned
+                  ? AppTheme.successGreen
+                  : AppTheme.infoBlue,
               size: AppTheme.iconSm,
             ),
           ),
@@ -979,17 +1027,20 @@ class TrainingHistoryCard extends StatelessWidget {
                   children: [
                     Text(
                       'Completed: ${record.completionDate.month}/${record.completionDate.day}/${record.completionDate.year}',
-                      style: AppTheme.bodySmall.copyWith(color: AppTheme.textLight),
+                      style: AppTheme.bodySmall
+                          .copyWith(color: AppTheme.textLight),
                     ),
                     const SizedBox(width: AppTheme.spacingMd),
                     Text(
                       '${record.hoursCompleted}h',
-                      style: AppTheme.bodySmall.copyWith(color: AppTheme.textLight),
+                      style: AppTheme.bodySmall
+                          .copyWith(color: AppTheme.textLight),
                     ),
                     const SizedBox(width: AppTheme.spacingMd),
                     Text(
                       'Grade: ${record.grade}',
-                      style: AppTheme.bodySmall.copyWith(color: AppTheme.textLight),
+                      style: AppTheme.bodySmall
+                          .copyWith(color: AppTheme.textLight),
                     ),
                   ],
                 ),
@@ -1001,4 +1052,3 @@ class TrainingHistoryCard extends StatelessWidget {
     );
   }
 }
-

@@ -561,7 +561,7 @@ class _CircuitBoardPainter extends CustomPainter {
 
     // Inner circle
     final innerPaint = Paint()
-      ..color = paint.color.withValues(alpha: paint.color.opacity * 0.5)
+      ..color = paint.color.withValues(alpha: paint.color.a * 0.5)
       ..style = PaintingStyle.fill;
     canvas.drawCircle(Offset.zero, size * 0.25, innerPaint);
   }

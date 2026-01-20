@@ -31,7 +31,8 @@ class JJPrimaryButton extends StatelessWidget {
       height: height ?? 56,
       decoration: BoxDecoration(
         gradient: _getButtonGradient(),
-        borderRadius: BorderRadius.circular(AppTheme.radiusMd),
+        borderRadius:
+            const BorderRadius.all(Radius.circular(AppTheme.radiusMd)),
         boxShadow: [
           // Modern shadcn-like shadow for primary action
           BoxShadow(
@@ -46,7 +47,8 @@ class JJPrimaryButton extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           onTap: isLoading ? null : onPressed,
-          borderRadius: BorderRadius.circular(AppTheme.radiusMd),
+          borderRadius:
+              const BorderRadius.all(Radius.circular(AppTheme.radiusMd)),
           child: Container(
             padding: const EdgeInsets.symmetric(
               horizontal: AppTheme.spacingLg,
@@ -77,7 +79,8 @@ class JJPrimaryButton extends StatelessWidget {
                   Expanded(
                     child: Text(
                       text,
-                      style: AppTheme.buttonMedium.copyWith(color: AppTheme.white),
+                      style:
+                          AppTheme.buttonMedium.copyWith(color: AppTheme.white),
                       textAlign: TextAlign.center, // Center the text
                     ),
                   ),
@@ -96,7 +99,7 @@ class JJPrimaryButton extends StatelessWidget {
       case JJButtonVariant.primary:
         return AppTheme.buttonGradient;
       case JJButtonVariant.secondary:
-        return LinearGradient(
+        return const LinearGradient(
           colors: [AppTheme.white, AppTheme.white],
         );
       case JJButtonVariant.danger:
@@ -106,7 +109,7 @@ class JJPrimaryButton extends StatelessWidget {
           end: Alignment.bottomRight,
         );
       case JJButtonVariant.outline:
-        return LinearGradient(
+        return const LinearGradient(
           colors: [Colors.transparent, Colors.transparent],
         );
     }

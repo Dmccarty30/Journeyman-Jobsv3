@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:journeyman_jobs/design_system/design_system.dart';
 
-
 class HelpSupportScreen extends StatefulWidget {
   const HelpSupportScreen({super.key});
 
@@ -10,7 +9,8 @@ class HelpSupportScreen extends StatefulWidget {
   State<HelpSupportScreen> createState() => _HelpSupportScreenState();
 }
 
-class _HelpSupportScreenState extends State<HelpSupportScreen> with SingleTickerProviderStateMixin {
+class _HelpSupportScreenState extends State<HelpSupportScreen>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
   final TextEditingController _searchController = TextEditingController();
   String _searchQuery = '';
@@ -19,62 +19,74 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> with SingleTicker
     FAQItem(
       category: 'Account',
       question: 'How do I update my IBEW local information?',
-      answer: 'Go to More → Profile → Professional tab. You can update your home local, ticket number, and classification. Make sure your information is current to receive relevant job opportunities.',
+      answer:
+          'Go to More → Profile → Professional tab. You can update your home local, ticket number, and classification. Make sure your information is current to receive relevant job opportunities.',
     ),
     FAQItem(
       category: 'Account',
       question: 'Can I change my job preferences after onboarding?',
-      answer: 'Yes! Navigate to More → Profile → Professional tab. You can update your preferred construction types, hours per week, per diem requirements, and career goals at any time.',
+      answer:
+          'Yes! Navigate to More → Profile → Professional tab. You can update your preferred construction types, hours per week, per diem requirements, and career goals at any time.',
     ),
     FAQItem(
       category: 'Jobs',
       question: 'How do I apply for storm work?',
-      answer: 'Go to the Storm tab to view emergency restoration opportunities. These jobs are marked as "URGENT" and often have enhanced pay rates. Tap on any storm event to see details and express interest.',
+      answer:
+          'Go to the Storm tab to view emergency restoration opportunities. These jobs are marked as "URGENT" and often have enhanced pay rates. Tap on any storm event to see details and express interest.',
     ),
     FAQItem(
       category: 'Jobs',
       question: 'What does "Books On" mean in my profile?',
-      answer: '"Books on" refers to what books are you on what out of work books have you already signed in you\'re actively on SO that we know what locals and what jobs to present to you ahead of others so that we\'re not showing you jobs that you aren\'t able to bid for.',
+      answer:
+          '"Books on" refers to what books are you on what out of work books have you already signed in you\'re actively on SO that we know what locals and what jobs to present to you ahead of others so that we\'re not showing you jobs that you aren\'t able to bid for.',
     ),
     FAQItem(
       category: 'Jobs',
       question: 'How are job opportunities matched to me?',
-      answer: 'Jobs are matched based on your classification, preferred construction types, location preferences, and experience level. Update your profile regularly for better matches.',
+      answer:
+          'Jobs are matched based on your classification, preferred construction types, location preferences, and experience level. Update your profile regularly for better matches.',
     ),
     FAQItem(
       category: 'Locals',
       question: 'How do I find IBEW locals in other areas?',
-      answer: 'Use the Unions tab to browse IBEW locals by region. You can view contact information, jurisdiction areas, and current job opportunities for each local.',
+      answer:
+          'Use the Unions tab to browse IBEW locals by region. You can view contact information, jurisdiction areas, and current job opportunities for each local.',
     ),
     FAQItem(
       category: 'Locals',
       question: 'Can I work for a local other than my home local?',
-      answer: 'Yes, as an IBEW member you can work in other local jurisdictions. Check with both your home local and the hiring local about any reciprocity agreements or procedures.',
+      answer:
+          'Yes, as an IBEW member you can work in other local jurisdictions. Check with both your home local and the hiring local about any reciprocity agreements or procedures.',
     ),
     FAQItem(
       category: 'Technical',
       question: 'Why am I not receiving job notifications?',
-      answer: 'Check More → Profile → Settings tab and ensure "Job Alerts" and "Push Notifications" are enabled. Also verify your device notification settings allow the app to send notifications.',
+      answer:
+          'Check More → Profile → Settings tab and ensure "Job Alerts" and "Push Notifications" are enabled. Also verify your device notification settings allow the app to send notifications.',
     ),
     FAQItem(
       category: 'Technical',
       question: 'The app is running slowly. What can I do?',
-      answer: 'Try closing and reopening the app. If issues persist, restart your device. Make sure you have the latest app version installed from your app store.',
+      answer:
+          'Try closing and reopening the app. If issues persist, restart your device. Make sure you have the latest app version installed from your app store.',
     ),
     FAQItem(
       category: 'Technical',
       question: 'I forgot my password. How do I reset it?',
-      answer: 'On the sign-in screen, tap "Forgot Password?" and enter your email address. You\'ll receive a password reset link. If you don\'t see the email, check your spam folder.',
+      answer:
+          'On the sign-in screen, tap "Forgot Password?" and enter your email address. You\'ll receive a password reset link. If you don\'t see the email, check your spam folder.',
     ),
     FAQItem(
       category: 'Safety',
       question: 'What safety information should I know for storm work?',
-      answer: 'Storm work involves additional hazards including downed lines, debris, and unstable structures. Always follow proper safety protocols, use appropriate PPE, and report unsafe conditions immediately.',
+      answer:
+          'Storm work involves additional hazards including downed lines, debris, and unstable structures. Always follow proper safety protocols, use appropriate PPE, and report unsafe conditions immediately.',
     ),
     FAQItem(
       category: 'Safety',
       question: 'How do I report unsafe working conditions?',
-      answer: 'Contact your foreman or safety representative immediately. You can also contact your local\'s safety committee or OSHA if needed. Your safety is the top priority.',
+      answer:
+          'Contact your foreman or safety representative immediately. You can also contact your local\'s safety committee or OSHA if needed. Your safety is the top priority.',
     ),
   ];
 
@@ -124,11 +136,12 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> with SingleTicker
 
   List<FAQItem> get _filteredFAQs {
     if (_searchQuery.isEmpty) return _faqItems;
-    return _faqItems.where((faq) =>
-      faq.question.toLowerCase().contains(_searchQuery.toLowerCase()) ||
-      faq.answer.toLowerCase().contains(_searchQuery.toLowerCase()) ||
-      faq.category.toLowerCase().contains(_searchQuery.toLowerCase())
-    ).toList();
+    return _faqItems
+        .where((faq) =>
+            faq.question.toLowerCase().contains(_searchQuery.toLowerCase()) ||
+            faq.answer.toLowerCase().contains(_searchQuery.toLowerCase()) ||
+            faq.category.toLowerCase().contains(_searchQuery.toLowerCase()))
+        .toList();
   }
 
   @override
@@ -262,14 +275,15 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> with SingleTicker
             decoration: BoxDecoration(
               color: AppTheme.warningYellow.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(AppTheme.radiusMd),
-              border: Border.all(color: AppTheme.warningYellow.withValues(alpha: 0.3)),
+              border: Border.all(
+                  color: AppTheme.warningYellow.withValues(alpha: 0.3)),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.emergency,
                       color: AppTheme.warningYellow,
                       size: AppTheme.iconMd,
@@ -321,7 +335,6 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> with SingleTicker
             ),
           ),
           const SizedBox(height: AppTheme.spacingMd),
-
           GuideCard(
             icon: Icons.person_add_outlined,
             title: 'Setting Up Your Profile',
@@ -334,7 +347,6 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> with SingleTicker
               'Enable notifications for alerts',
             ],
           ),
-
           GuideCard(
             icon: Icons.work_outline,
             title: 'Finding and Applying for Jobs',
@@ -347,7 +359,6 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> with SingleTicker
               'Tap "Apply Now" to submit your interest',
             ],
           ),
-
           GuideCard(
             icon: Icons.flash_on_outlined,
             title: 'Storm Work Opportunities',
@@ -360,7 +371,6 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> with SingleTicker
               'Wait for deployment contact information',
             ],
           ),
-
           GuideCard(
             icon: Icons.business_outlined,
             title: 'Working with Different Locals',
@@ -373,7 +383,6 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> with SingleTicker
               'Maintain good standing with your home local',
             ],
           ),
-
           GuideCard(
             icon: Icons.notifications_outlined,
             title: 'Managing Notifications',
@@ -568,7 +577,7 @@ class ContactCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                Icon(
+                const Icon(
                   Icons.arrow_forward_ios,
                   size: 16,
                   color: AppTheme.textLight,
@@ -598,7 +607,7 @@ class ContactCard extends StatelessWidget {
         );
         break;
       default:
-JJSnackBar.showSuccess(
+        JJSnackBar.showSuccess(
           context: context,
           message: '${option.title} feature coming soon',
         );
@@ -717,4 +726,3 @@ class GuideCard extends StatelessWidget {
     );
   }
 }
-

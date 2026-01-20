@@ -27,8 +27,10 @@ class JJSecondaryButton extends StatelessWidget {
       width: isFullWidth ? double.infinity : width,
       height: height ?? 56,
       decoration: BoxDecoration(
-        border: Border.all(color: AppTheme.primaryNavy.withValues(alpha: 0.2), width: 1.5),
-        borderRadius: BorderRadius.circular(AppTheme.radiusMd),
+        border: Border.all(
+            color: AppTheme.primaryNavy.withValues(alpha: 0.2), width: 1.5),
+        borderRadius:
+            const BorderRadius.all(Radius.circular(AppTheme.radiusMd)),
         color: AppTheme.white,
         boxShadow: [
           // Subtle shadow for secondary action
@@ -43,7 +45,8 @@ class JJSecondaryButton extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           onTap: isLoading ? null : onPressed,
-          borderRadius: BorderRadius.circular(AppTheme.radiusMd),
+          borderRadius:
+              const BorderRadius.all(Radius.circular(AppTheme.radiusMd)),
           child: Container(
             padding: const EdgeInsets.symmetric(
               horizontal: AppTheme.spacingLg,
@@ -74,7 +77,8 @@ class JJSecondaryButton extends StatelessWidget {
                   Expanded(
                     child: Text(
                       text,
-                      style: AppTheme.buttonMedium.copyWith(color: AppTheme.primaryNavy),
+                      style: AppTheme.buttonMedium
+                          .copyWith(color: AppTheme.primaryNavy),
                       textAlign: TextAlign.center,
                     ),
                   ),

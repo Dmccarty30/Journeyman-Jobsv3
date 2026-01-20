@@ -240,7 +240,7 @@ class _JobsScreenState extends ConsumerState<JobsScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
+            const Icon(
               Icons.error_outline,
               size: 64,
               color: AppTheme.textSecondary,
@@ -278,7 +278,7 @@ class _JobsScreenState extends ConsumerState<JobsScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
+            const Icon(
               Icons.work_outline,
               size: 64,
               color: AppTheme.textSecondary,
@@ -322,7 +322,10 @@ class _JobsScreenState extends ConsumerState<JobsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final jobsState = ref.watch(jobsProvider);
+    // Antigravity Kit 2.0: Use .select() for granular rebuilds
+    final isLoading = ref.watch(jobsProvider.select((s) => s.isLoading));
+    final error = ref.watch(jobsProvider.select((s) => s.error));
+    final jobs = ref.watch(jobsProvider.select((s) => s.jobs));
 
     return Scaffold(
       backgroundColor: AppTheme.offWhite,
@@ -341,7 +344,7 @@ class _JobsScreenState extends ConsumerState<JobsScreen> {
                 ),
                 shape: BoxShape.circle,
               ),
-              child: Icon(
+              child: const Icon(
                 Icons.electrical_services,
                 size: 20,
                 color: AppTheme.white,
@@ -371,7 +374,7 @@ class _JobsScreenState extends ConsumerState<JobsScreen> {
       body: Stack(
         children: [
           // Electrical circuit background
-          ElectricalCircuitBackground(
+          const ElectricalCircuitBackground(
             opacity: 0.35,
             animationSpeed: 4.0,
             componentDensity: ComponentDensity.high,
@@ -391,15 +394,15 @@ class _JobsScreenState extends ConsumerState<JobsScreen> {
               // Jobs list
               Expanded(
                 child: () {
-                  if (jobsState.error != null) {
-                    return _buildErrorState(jobsState.error!);
+                  if (error != null) {
+                    return _buildErrorState(error);
                   }
 
-                  if (jobsState.isLoading && jobsState.jobs.isEmpty) {
+                  if (isLoading && jobs.isEmpty) {
                     return _buildLoadingIndicator();
                   }
 
-                  final filteredJobs = _getFilteredJobs(jobsState.jobs);
+                  final filteredJobs = _getFilteredJobs(jobs);
 
                   if (filteredJobs.isEmpty) {
                     return _buildEmptyState();

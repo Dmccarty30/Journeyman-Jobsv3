@@ -5,7 +5,6 @@ import 'package:journeyman_jobs/design_system/design_system.dart';
 /// Unified electrical-themed notification widgets
 /// Includes toast, snack bar, and tooltip with lightning animations
 class JJElectricalNotifications {
-  
   /// Shows an electrical-themed toast notification
   static void showElectricalToast({
     required BuildContext context,
@@ -16,7 +15,7 @@ class JJElectricalNotifications {
   }) {
     final overlay = Overlay.of(context);
     late OverlayEntry overlayEntry;
-    
+
     overlayEntry = OverlayEntry(
       builder: (context) => Positioned(
         top: MediaQuery.of(context).padding.top + 20,
@@ -30,9 +29,9 @@ class JJElectricalNotifications {
         ),
       ),
     );
-    
+
     overlay.insert(overlayEntry);
-    
+
     // Auto-dismiss after duration
     Future.delayed(duration, () {
       if (overlayEntry.mounted) {
@@ -40,9 +39,10 @@ class JJElectricalNotifications {
       }
     });
   }
-  
+
   /// Shows an electrical-themed snack bar
-  static ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showElectricalSnackBar({
+  static ScaffoldFeatureController<SnackBar, SnackBarClosedReason>
+      showElectricalSnackBar({
     required BuildContext context,
     required String message,
     ElectricalNotificationType type = ElectricalNotificationType.info,
@@ -70,7 +70,7 @@ class JJElectricalNotifications {
       ),
     );
   }
-  
+
   /// Creates an electrical-themed tooltip
   static Widget electricalTooltip({
     required String message,
@@ -83,7 +83,7 @@ class JJElectricalNotifications {
       child: child,
     );
   }
-  
+
   static Color _getTypeColor(ElectricalNotificationType type) {
     switch (type) {
       case ElectricalNotificationType.success:
@@ -93,17 +93,17 @@ class JJElectricalNotifications {
       case ElectricalNotificationType.error:
         return const Color(0xFFDC2626); // Red
       case ElectricalNotificationType.info:
-      return const Color(0xFF00D4FF); // Electric blue
+        return const Color(0xFF00D4FF); // Electric blue
     }
   }
 }
 
 /// Notification types with corresponding electrical themes
 enum ElectricalNotificationType {
-  success,  // Green power indicator
-  warning,  // Yellow caution
-  error,    // Red danger
-  info,     // Blue electrical flow
+  success, // Green power indicator
+  warning, // Yellow caution
+  error, // Red danger
+  info, // Blue electrical flow
 }
 
 /// Electrical-themed toast widget
@@ -115,12 +115,12 @@ class ElectricalToast extends StatefulWidget {
     this.type = ElectricalNotificationType.info,
     this.showLightning = true,
   });
-  
+
   final String message;
   final ElectricalNotificationType type;
   final bool showLightning;
   final VoidCallback onDismiss;
-  
+
   @override
   State<ElectricalToast> createState() => _ElectricalToastState();
 }
@@ -131,11 +131,11 @@ class _ElectricalToastState extends State<ElectricalToast>
   late AnimationController _lightningController;
   late Animation<Offset> _slideAnimation;
   late Animation<double> _lightningAnimation;
-  
+
   @override
   void initState() {
     super.initState();
-    
+
     // Slide in animation
     _slideController = AnimationController(
       duration: const Duration(milliseconds: 400),
@@ -148,7 +148,7 @@ class _ElectricalToastState extends State<ElectricalToast>
       parent: _slideController,
       curve: Curves.elasticOut,
     ));
-    
+
     // Lightning animation
     _lightningController = AnimationController(
       duration: const Duration(milliseconds: 300),
@@ -161,7 +161,7 @@ class _ElectricalToastState extends State<ElectricalToast>
       parent: _lightningController,
       curve: Curves.easeOut,
     ));
-    
+
     // Start animations
     _slideController.forward();
     if (widget.showLightning) {
@@ -170,24 +170,24 @@ class _ElectricalToastState extends State<ElectricalToast>
       });
     }
   }
-  
+
   @override
   void dispose() {
     _slideController.dispose();
     _lightningController.dispose();
     super.dispose();
   }
-  
+
   void _dismiss() async {
     await _slideController.reverse();
     widget.onDismiss();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     // Get theme configuration based on notification type
     final themeConfig = _getThemeConfig(widget.type);
-    
+
     return SlideTransition(
       position: _slideAnimation,
       child: Material(
@@ -195,20 +195,26 @@ class _ElectricalToastState extends State<ElectricalToast>
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 20),
           decoration: BoxDecoration(
-            color: themeConfig['backgroundColor']?.withValues(alpha: AppTheme.opacityElectricalBackground) ??
-                   AppTheme.primaryNavy.withValues(alpha: AppTheme.opacityElectricalBackground),
-            borderRadius: BorderRadius.circular(themeConfig['borderRadius'] ?? AppTheme.radiusElectricalToast),
+            color: themeConfig['backgroundColor']
+                    ?.withValues(alpha: AppTheme.opacityElectricalBackground) ??
+                AppTheme.primaryNavy
+                    .withValues(alpha: AppTheme.opacityElectricalBackground),
+            borderRadius: BorderRadius.circular(
+                themeConfig['borderRadius'] ?? AppTheme.radiusElectricalToast),
             border: Border.all(
-              color: themeConfig['borderColor'] ?? JJElectricalNotifications._getTypeColor(widget.type),
+              color: themeConfig['borderColor'] ??
+                  JJElectricalNotifications._getTypeColor(widget.type),
               width: themeConfig['borderWidth'] ?? AppTheme.borderWidthCopper,
             ),
             boxShadow: [
-              themeConfig['shadow'] ?? BoxShadow(
-                color: JJElectricalNotifications._getTypeColor(widget.type).withValues(alpha: AppTheme.opacityElectricalGlow),
-                blurRadius: 15,
-                spreadRadius: 2,
-                offset: const Offset(0, 4),
-              ),
+              themeConfig['shadow'] ??
+                  BoxShadow(
+                    color: JJElectricalNotifications._getTypeColor(widget.type)
+                        .withValues(alpha: AppTheme.opacityElectricalGlow),
+                    blurRadius: 15,
+                    spreadRadius: 2,
+                    offset: const Offset(0, 4),
+                  ),
             ],
           ),
           child: Stack(
@@ -216,16 +222,20 @@ class _ElectricalToastState extends State<ElectricalToast>
               // High density circuit background (adjusted to match showcase appearance)
               Positioned.fill(
                 child: ElectricalCircuitBackground(
-                  opacity: 0.08, // Match showcase screen low opacity but with high density
-                  componentDensity: ComponentDensity.high, // HIGH density as required
+                  opacity:
+                      0.08, // Match showcase screen low opacity but with high density
+                  componentDensity:
+                      ComponentDensity.high, // HIGH density as required
                   enableCurrentFlow: themeConfig['enableCurrentFlow'] ?? true,
-                  enableInteractiveComponents: themeConfig['enableInteractiveComponents'] ?? true,
+                  enableInteractiveComponents:
+                      themeConfig['enableInteractiveComponents'] ?? true,
                   traceColor: AppTheme.electricalBackground,
-                  currentColor: themeConfig['glowColor'] ?? JJElectricalNotifications._getTypeColor(widget.type),
+                  currentColor: themeConfig['glowColor'] ??
+                      JJElectricalNotifications._getTypeColor(widget.type),
                   copperColor: AppTheme.accentCopper,
                 ),
               ),
-              
+
               // Lightning animation
               if (widget.showLightning)
                 AnimatedBuilder(
@@ -234,12 +244,13 @@ class _ElectricalToastState extends State<ElectricalToast>
                     return CustomPaint(
                       painter: _LightningPainter(
                         progress: _lightningAnimation.value,
-                        color: JJElectricalNotifications._getTypeColor(widget.type),
+                        color: JJElectricalNotifications._getTypeColor(
+                            widget.type),
                       ),
                     );
                   },
                 ),
-              
+
               // Content
               Padding(
                 padding: const EdgeInsets.all(16),
@@ -250,7 +261,9 @@ class _ElectricalToastState extends State<ElectricalToast>
                       width: 24,
                       height: 24,
                       decoration: BoxDecoration(
-                        color: themeConfig['borderColor'] ?? JJElectricalNotifications._getTypeColor(widget.type),
+                        color: themeConfig['borderColor'] ??
+                            JJElectricalNotifications._getTypeColor(
+                                widget.type),
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
@@ -260,7 +273,7 @@ class _ElectricalToastState extends State<ElectricalToast>
                       ),
                     ),
                     const SizedBox(width: 12),
-                    
+
                     // Message
                     Expanded(
                       child: Text(
@@ -272,7 +285,7 @@ class _ElectricalToastState extends State<ElectricalToast>
                         ),
                       ),
                     ),
-                    
+
                     // Dismiss button
                     GestureDetector(
                       onTap: _dismiss,
@@ -294,7 +307,7 @@ class _ElectricalToastState extends State<ElectricalToast>
       ),
     );
   }
-  
+
   IconData _getTypeIcon(ElectricalNotificationType type) {
     switch (type) {
       case ElectricalNotificationType.success:
@@ -304,7 +317,7 @@ class _ElectricalToastState extends State<ElectricalToast>
       case ElectricalNotificationType.error:
         return Icons.error;
       case ElectricalNotificationType.info:
-      return Icons.info;
+        return Icons.info;
     }
   }
 
@@ -317,7 +330,7 @@ class _ElectricalToastState extends State<ElectricalToast>
       case ElectricalNotificationType.error:
         return AppTheme.electricalErrorTheme;
       case ElectricalNotificationType.info:
-      return AppTheme.electricalInfoTheme;
+        return AppTheme.electricalInfoTheme;
     }
   }
 }
@@ -329,23 +342,24 @@ class ElectricalSnackBarContent extends StatefulWidget {
     required this.message,
     this.type = ElectricalNotificationType.info,
   });
-  
+
   final String message;
   final ElectricalNotificationType type;
-  
+
   @override
-  State<ElectricalSnackBarContent> createState() => _ElectricalSnackBarContentState();
+  State<ElectricalSnackBarContent> createState() =>
+      _ElectricalSnackBarContentState();
 }
 
 class _ElectricalSnackBarContentState extends State<ElectricalSnackBarContent>
     with SingleTickerProviderStateMixin {
   late AnimationController _glowController;
   late Animation<double> _glowAnimation;
-  
+
   @override
   void initState() {
     super.initState();
-    
+
     _glowController = AnimationController(
       duration: const Duration(seconds: 2),
       vsync: this,
@@ -357,42 +371,51 @@ class _ElectricalSnackBarContentState extends State<ElectricalSnackBarContent>
       parent: _glowController,
       curve: Curves.easeInOut,
     ));
-    
+
     _glowController.repeat(reverse: true);
   }
-  
+
   @override
   void dispose() {
     _glowController.dispose();
     super.dispose();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     // Get theme configuration based on notification type
     final themeConfig = _getThemeConfig(widget.type);
-    
+
     return AnimatedBuilder(
       animation: _glowAnimation,
       builder: (context, child) {
         return Container(
           decoration: BoxDecoration(
-            color: themeConfig['backgroundColor']?.withValues(alpha: AppTheme.opacityElectricalBackground) ??
-                   AppTheme.primaryNavy.withValues(alpha: AppTheme.opacityElectricalBackground),
-            borderRadius: BorderRadius.circular(themeConfig['borderRadius'] ?? AppTheme.radiusElectricalSnackBar),
+            color: themeConfig['backgroundColor']
+                    ?.withValues(alpha: AppTheme.opacityElectricalBackground) ??
+                AppTheme.primaryNavy
+                    .withValues(alpha: AppTheme.opacityElectricalBackground),
+            borderRadius: BorderRadius.circular(themeConfig['borderRadius'] ??
+                AppTheme.radiusElectricalSnackBar),
             border: Border.all(
-              color: (themeConfig['glowColor'] ?? JJElectricalNotifications._getTypeColor(widget.type))
+              color: (themeConfig['glowColor'] ??
+                      JJElectricalNotifications._getTypeColor(widget.type))
                   .withValues(alpha: _glowAnimation.value),
               width: themeConfig['borderWidth'] ?? AppTheme.borderWidthMedium,
             ),
             boxShadow: [
-              themeConfig['shadow'] ?? BoxShadow(
-                color: (themeConfig['glowColor'] ?? JJElectricalNotifications._getTypeColor(widget.type))
-                    .withValues(alpha: _glowAnimation.value * AppTheme.opacityElectricalGlow),
-                blurRadius: 12,
-                spreadRadius: 1,
-                offset: const Offset(0, 4),
-              ),
+              themeConfig['shadow'] ??
+                  BoxShadow(
+                    color: (themeConfig['glowColor'] ??
+                            JJElectricalNotifications._getTypeColor(
+                                widget.type))
+                        .withValues(
+                            alpha: _glowAnimation.value *
+                                AppTheme.opacityElectricalGlow),
+                    blurRadius: 12,
+                    spreadRadius: 1,
+                    offset: const Offset(0, 4),
+                  ),
             ],
           ),
           child: Stack(
@@ -400,19 +423,24 @@ class _ElectricalSnackBarContentState extends State<ElectricalSnackBarContent>
               // High density circuit background (adjusted to match showcase appearance)
               Positioned.fill(
                 child: ElectricalCircuitBackground(
-                  opacity: 0.08, // Match showcase screen low opacity but with high density
-                  componentDensity: ComponentDensity.high, // HIGH density as required
-                  enableCurrentFlow: false, // SnackBar doesn't need current flow
+                  opacity:
+                      0.08, // Match showcase screen low opacity but with high density
+                  componentDensity:
+                      ComponentDensity.high, // HIGH density as required
+                  enableCurrentFlow:
+                      false, // SnackBar doesn't need current flow
                   enableInteractiveComponents: false, // SnackBar is static
                   traceColor: AppTheme.electricalBackground,
-                  currentColor: themeConfig['glowColor'] ?? JJElectricalNotifications._getTypeColor(widget.type),
+                  currentColor: themeConfig['glowColor'] ??
+                      JJElectricalNotifications._getTypeColor(widget.type),
                   copperColor: AppTheme.accentCopper,
                 ),
               ),
-              
+
               // Content
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 child: Text(
                   widget.message,
                   style: AppTheme.bodyMedium.copyWith(
@@ -437,7 +465,7 @@ class _ElectricalSnackBarContentState extends State<ElectricalSnackBarContent>
       case ElectricalNotificationType.error:
         return AppTheme.electricalErrorTheme;
       case ElectricalNotificationType.info:
-      return AppTheme.electricalInfoTheme;
+        return AppTheme.electricalInfoTheme;
     }
   }
 }
@@ -450,11 +478,11 @@ class ElectricalTooltip extends StatefulWidget {
     required this.child,
     this.type = ElectricalNotificationType.info,
   });
-  
+
   final String message;
   final Widget child;
   final ElectricalNotificationType type;
-  
+
   @override
   State<ElectricalTooltip> createState() => _ElectricalTooltipState();
 }
@@ -463,11 +491,11 @@ class _ElectricalTooltipState extends State<ElectricalTooltip>
     with SingleTickerProviderStateMixin {
   late AnimationController _sparkController;
   late Animation<double> _sparkAnimation;
-  
+
   @override
   void initState() {
     super.initState();
-    
+
     _sparkController = AnimationController(
       duration: const Duration(milliseconds: 800),
       vsync: this,
@@ -480,36 +508,42 @@ class _ElectricalTooltipState extends State<ElectricalTooltip>
       curve: Curves.easeOut,
     ));
   }
-  
+
   @override
   void dispose() {
     _sparkController.dispose();
     super.dispose();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     // Get theme configuration based on notification type
     final themeConfig = _getThemeConfig(widget.type);
-    
+
     return Tooltip(
       message: widget.message,
       decoration: BoxDecoration(
-        color: themeConfig['backgroundColor']?.withValues(alpha: AppTheme.opacityElectricalBackground) ??
-               AppTheme.primaryNavy.withValues(alpha: AppTheme.opacityElectricalBackground),
-        borderRadius: BorderRadius.circular(themeConfig['borderRadius'] ?? AppTheme.radiusElectricalTooltip),
+        color: themeConfig['backgroundColor']
+                ?.withValues(alpha: AppTheme.opacityElectricalBackground) ??
+            AppTheme.primaryNavy
+                .withValues(alpha: AppTheme.opacityElectricalBackground),
+        borderRadius: BorderRadius.circular(
+            themeConfig['borderRadius'] ?? AppTheme.radiusElectricalTooltip),
         border: Border.all(
-          color: themeConfig['borderColor'] ?? JJElectricalNotifications._getTypeColor(widget.type),
+          color: themeConfig['borderColor'] ??
+              JJElectricalNotifications._getTypeColor(widget.type),
           width: AppTheme.borderWidthThin,
         ),
         boxShadow: [
-          themeConfig['shadow'] ?? BoxShadow(
-            color: (themeConfig['glowColor'] ?? JJElectricalNotifications._getTypeColor(widget.type))
-                .withValues(alpha: AppTheme.opacityElectricalGlow),
-            blurRadius: 8,
-            spreadRadius: 1,
-            offset: const Offset(0, 2),
-          ),
+          themeConfig['shadow'] ??
+              BoxShadow(
+                color: (themeConfig['glowColor'] ??
+                        JJElectricalNotifications._getTypeColor(widget.type))
+                    .withValues(alpha: AppTheme.opacityElectricalGlow),
+                blurRadius: 8,
+                spreadRadius: 1,
+                offset: const Offset(0, 2),
+              ),
         ],
       ),
       textStyle: AppTheme.bodySmall.copyWith(
@@ -526,29 +560,33 @@ class _ElectricalTooltipState extends State<ElectricalTooltip>
           // High density circuit background (adjusted to match showcase appearance)
           Positioned.fill(
             child: ElectricalCircuitBackground(
-              opacity: 0.08, // Match showcase screen low opacity but with high density
-              componentDensity: ComponentDensity.high, // HIGH density as required
+              opacity:
+                  0.08, // Match showcase screen low opacity but with high density
+              componentDensity:
+                  ComponentDensity.high, // HIGH density as required
               enableCurrentFlow: false,
               enableInteractiveComponents: false,
               traceColor: AppTheme.electricalBackground,
-              currentColor: themeConfig['glowColor'] ?? JJElectricalNotifications._getTypeColor(widget.type),
+              currentColor: themeConfig['glowColor'] ??
+                  JJElectricalNotifications._getTypeColor(widget.type),
               copperColor: AppTheme.accentCopper,
               child: widget.child,
             ),
           ),
-          
+
           // Spark effect on hover/tap
           AnimatedBuilder(
             animation: _sparkAnimation,
             builder: (context, child) {
               if (_sparkAnimation.value == 0) return const SizedBox.shrink();
-              
+
               return Positioned.fill(
                 child: IgnorePointer(
                   child: CustomPaint(
                     painter: _SparkEffectPainter(
                       progress: _sparkAnimation.value,
-                      color: themeConfig['glowColor'] ?? JJElectricalNotifications._getTypeColor(widget.type),
+                      color: themeConfig['glowColor'] ??
+                          JJElectricalNotifications._getTypeColor(widget.type),
                     ),
                   ),
                 ),
@@ -569,83 +607,50 @@ class _ElectricalTooltipState extends State<ElectricalTooltip>
       case ElectricalNotificationType.error:
         return AppTheme.electricalErrorTheme;
       case ElectricalNotificationType.info:
-      return AppTheme.electricalInfoTheme;
+        return AppTheme.electricalInfoTheme;
     }
   }
-}
-
-/// Mini circuit pattern painter for toast backgrounds
-class _MiniCircuitPainter extends CustomPainter {
-  final Color color;
-  
-  _MiniCircuitPainter({required this.color});
-  
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = color
-      ..strokeWidth = 1
-      ..style = PaintingStyle.stroke;
-    
-    // Draw simple circuit traces
-    final path = Path();
-    path.moveTo(0, size.height * 0.3);
-    path.lineTo(size.width * 0.3, size.height * 0.3);
-    path.lineTo(size.width * 0.3, size.height * 0.7);
-    path.lineTo(size.width * 0.7, size.height * 0.7);
-    path.lineTo(size.width * 0.7, size.height * 0.3);
-    path.lineTo(size.width, size.height * 0.3);
-    
-    canvas.drawPath(path, paint);
-    
-    // Add connection points
-    canvas.drawCircle(Offset(size.width * 0.3, size.height * 0.3), 2, paint..style = PaintingStyle.fill);
-    canvas.drawCircle(Offset(size.width * 0.7, size.height * 0.7), 2, paint);
-  }
-  
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
 
 /// Lightning bolt painter for dramatic entrances
 class _LightningPainter extends CustomPainter {
   final double progress;
   final Color color;
-  
+
   _LightningPainter({required this.progress, required this.color});
-  
+
   @override
   void paint(Canvas canvas, Size size) {
     if (progress == 0) return;
-    
+
     final paint = Paint()
       ..color = color.withValues(alpha: 0.8)
       ..strokeWidth = 2
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round;
-    
+
     final glowPaint = Paint()
       ..color = color.withValues(alpha: 0.4)
       ..strokeWidth = 6
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round
       ..maskFilter = const MaskFilter.blur(BlurStyle.outer, 3);
-    
+
     // Lightning bolt path
     final path = Path();
     final centerX = size.width * 0.1;
     final height = size.height * progress;
-    
+
     path.moveTo(centerX, 0);
     path.lineTo(centerX + 8, height * 0.3);
     path.lineTo(centerX - 4, height * 0.5);
     path.lineTo(centerX + 6, height * 0.8);
     path.lineTo(centerX - 2, height);
-    
+
     canvas.drawPath(path, glowPaint);
     canvas.drawPath(path, paint);
   }
-  
+
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return oldDelegate is! _LightningPainter ||
@@ -653,58 +658,29 @@ class _LightningPainter extends CustomPainter {
   }
 }
 
-/// Circuit painter for snack bar backgrounds
-class _SnackBarCircuitPainter extends CustomPainter {
-  final Color color;
-  
-  _SnackBarCircuitPainter({required this.color});
-  
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = color
-      ..strokeWidth = 1
-      ..style = PaintingStyle.stroke;
-    
-    // Horizontal traces
-    canvas.drawLine(Offset(0, size.height * 0.2), Offset(size.width, size.height * 0.2), paint);
-    canvas.drawLine(Offset(0, size.height * 0.8), Offset(size.width, size.height * 0.8), paint);
-    
-    // Vertical connections
-    for (double x = 40; x < size.width; x += 60) {
-      canvas.drawLine(Offset(x, size.height * 0.2), Offset(x, size.height * 0.8), paint);
-      canvas.drawCircle(Offset(x, size.height * 0.2), 2, paint..style = PaintingStyle.fill);
-      canvas.drawCircle(Offset(x, size.height * 0.8), 2, paint);
-    }
-  }
-  
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
-}
-
 /// Spark effect painter for tooltips
 class _SparkEffectPainter extends CustomPainter {
   final double progress;
   final Color color;
-  
+
   _SparkEffectPainter({required this.progress, required this.color});
-  
+
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
       ..color = color.withValues(alpha: 1.0 - progress)
       ..style = PaintingStyle.fill;
-    
+
     final random = math.Random(42);
     final sparkCount = 8;
     final radius = progress * 30;
-    
+
     for (int i = 0; i < sparkCount; i++) {
       final angle = (i / sparkCount) * math.pi * 2;
       final sparkRadius = radius * (0.5 + random.nextDouble() * 0.5);
       final x = size.width / 2 + math.cos(angle) * sparkRadius;
       final y = size.height / 2 + math.sin(angle) * sparkRadius;
-      
+
       canvas.drawCircle(
         Offset(x, y),
         (1.0 - progress) * 3,
@@ -712,7 +688,7 @@ class _SparkEffectPainter extends CustomPainter {
       );
     }
   }
-  
+
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return oldDelegate is! _SparkEffectPainter ||

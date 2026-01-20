@@ -186,7 +186,7 @@ final class JobsNotifierProvider
   }
 }
 
-String _$jobsNotifierHash() => r'4b45d8efe4a6762a2f9b798f70d38ad6e923aeb6';
+String _$jobsNotifierHash() => r'2670f792826a3c012f528c3ef487f5ebc5b9a55e';
 
 /// Jobs notifier for managing job data and operations
 

@@ -9,7 +9,6 @@ import '../../../../design_system/app_theme.dart';
 import '../../../../design_system/widgets/design_system_widgets.dart';
 import '../../../../features/navigation/navigation.dart';
 
-
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
 
@@ -22,16 +21,16 @@ class _AuthScreenState extends State<AuthScreen>
   late TabController _tabController;
   final _signUpFormKey = GlobalKey<FormState>();
   final _signInFormKey = GlobalKey<FormState>();
-  
+
   // Sign Up Controllers
   final _signUpEmailController = TextEditingController();
   final _signUpPasswordController = TextEditingController();
   final _signUpConfirmPasswordController = TextEditingController();
-  
+
   // Sign In Controllers
   final _signInEmailController = TextEditingController();
   final _signInPasswordController = TextEditingController();
-  
+
   bool _obscureSignUpPassword = true;
   bool _obscureSignUpConfirmPassword = true;
   bool _obscureSignInPassword = true;
@@ -87,7 +86,6 @@ class _AuthScreenState extends State<AuthScreen>
     }
     return null;
   }
-
 
   // Authentication Methods
   Future<void> _signUpWithEmail() async {
@@ -180,9 +178,10 @@ class _AuthScreenState extends State<AuthScreen>
     try {
       // Initialize GoogleSignIn if not already done
       await GoogleSignIn.instance.initialize();
-      
+
       // Try to authenticate the user
-      final GoogleSignInAccount googleUser = await GoogleSignIn.instance.authenticate();
+      final GoogleSignInAccount googleUser =
+          await GoogleSignIn.instance.authenticate();
 
       final GoogleSignInAuthentication googleAuth = googleUser.authentication;
       final credential = GoogleAuthProvider.credential(
@@ -201,7 +200,8 @@ class _AuthScreenState extends State<AuthScreen>
           message = 'Google sign in was canceled.';
         } else if (e.code == GoogleSignInExceptionCode.interrupted) {
           message = 'Sign in was interrupted. Please try again.';
-        } else if (e.code == GoogleSignInExceptionCode.clientConfigurationError) {
+        } else if (e.code ==
+            GoogleSignInExceptionCode.clientConfigurationError) {
           message = 'Configuration error. Please contact support.';
         }
         JJSnackBar.showError(
@@ -272,73 +272,73 @@ class _AuthScreenState extends State<AuthScreen>
             opacity: 0.08,
           ),
           SafeArea(
-        child: Column(
-          children: [
-            // Header
-            Container(
-              padding: const EdgeInsets.all(AppTheme.spacingLg),
-              child: Column(
-                children: [
-                  // Logo
-                  Container(
-                    width: 80,
-                    height: 80,
-                    decoration: BoxDecoration(
-                      gradient: AppTheme.buttonGradient,
-                      shape: BoxShape.circle,
-                      boxShadow: [AppTheme.shadowMd],
-                    ),
-                    child: const Icon(
-                      Icons.electrical_services,
-                      size: 40,
-                      color: AppTheme.white,
-                    ),
+            child: Column(
+              children: [
+                // Header
+                Container(
+                  padding: const EdgeInsets.all(AppTheme.spacingLg),
+                  child: Column(
+                    children: [
+                      // Logo
+                      Container(
+                        width: 80,
+                        height: 80,
+                        decoration: BoxDecoration(
+                          gradient: AppTheme.buttonGradient,
+                          shape: BoxShape.circle,
+                          boxShadow: [AppTheme.shadowMd],
+                        ),
+                        child: const Icon(
+                          Icons.electrical_services,
+                          size: 40,
+                          color: AppTheme.white,
+                        ),
+                      ),
+
+                      const SizedBox(height: AppTheme.spacingMd),
+
+                      Text(
+                        'Join Journeyman Jobs',
+                        style: AppTheme.displaySmall.copyWith(
+                          color: AppTheme.primaryNavy,
+                        ),
+                      ),
+
+                      const SizedBox(height: AppTheme.spacingSm),
+
+                      Text(
+                        'Connect with electrical opportunities',
+                        style: AppTheme.bodyLarge.copyWith(
+                          color: AppTheme.textSecondary,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
                   ),
-                  
-                  const SizedBox(height: AppTheme.spacingMd),
-                  
-                  Text(
-                    'Join Journeyman Jobs',
-                    style: AppTheme.displaySmall.copyWith(
-                      color: AppTheme.primaryNavy,
-                    ),
+                ),
+
+                // Tab bar
+                SegmentedTabBar(
+                  controller: _tabController,
+                  onTabChanged: (index) {
+                    setState(() {
+                      // Update any state if needed
+                    });
+                  },
+                ),
+
+                // Tab content
+                Expanded(
+                  child: TabBarView(
+                    controller: _tabController,
+                    children: [
+                      _buildSignUpForm(),
+                      _buildSignInForm(),
+                    ],
                   ),
-                  
-                  const SizedBox(height: AppTheme.spacingSm),
-                  
-                  Text(
-                    'Connect with electrical opportunities',
-                    style: AppTheme.bodyLarge.copyWith(
-                      color: AppTheme.textSecondary,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-            
-            // Tab bar
-            SegmentedTabBar(
-              controller: _tabController,
-              onTabChanged: (index) {
-                setState(() {
-                  // Update any state if needed
-                });
-              },
-            ),
-            
-            // Tab content
-            Expanded(
-              child: TabBarView(
-                controller: _tabController,
-                children: [
-                  _buildSignUpForm(),
-                  _buildSignInForm(),
-                ],
-              ),
-            ),
-          ],
-        ),
           ),
         ],
       ),
@@ -354,7 +354,7 @@ class _AuthScreenState extends State<AuthScreen>
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const SizedBox(height: AppTheme.spacingXl),
-            
+
             // Email
             JJTextField(
               label: 'Email',
@@ -363,9 +363,9 @@ class _AuthScreenState extends State<AuthScreen>
               keyboardType: TextInputType.emailAddress,
               prefixIcon: Icons.email_outlined,
             ),
-            
+
             const SizedBox(height: AppTheme.spacingLg),
-            
+
             // Password
             JJTextField(
               label: 'Password',
@@ -382,9 +382,9 @@ class _AuthScreenState extends State<AuthScreen>
                 });
               },
             ),
-            
+
             const SizedBox(height: AppTheme.spacingLg),
-            
+
             // Confirm Password
             JJTextField(
               label: 'Confirm Password',
@@ -397,13 +397,14 @@ class _AuthScreenState extends State<AuthScreen>
                   : Icons.visibility_off_outlined,
               onSuffixIconPressed: () {
                 setState(() {
-                  _obscureSignUpConfirmPassword = !_obscureSignUpConfirmPassword;
+                  _obscureSignUpConfirmPassword =
+                      !_obscureSignUpConfirmPassword;
                 });
               },
             ),
-            
+
             const SizedBox(height: AppTheme.spacingXl),
-            
+
             // Sign Up Button
             JJPrimaryButton(
               text: 'Create Account',
@@ -412,9 +413,9 @@ class _AuthScreenState extends State<AuthScreen>
               isFullWidth: true,
               variant: JJButtonVariant.primary,
             ),
-            
+
             const SizedBox(height: AppTheme.spacingLg),
-            
+
             _buildSocialSignInButtons(),
           ],
         ),
@@ -431,7 +432,7 @@ class _AuthScreenState extends State<AuthScreen>
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const SizedBox(height: AppTheme.spacingXl),
-            
+
             // Email
             JJTextField(
               label: 'Email',
@@ -440,9 +441,9 @@ class _AuthScreenState extends State<AuthScreen>
               keyboardType: TextInputType.emailAddress,
               prefixIcon: Icons.email_outlined,
             ),
-            
+
             const SizedBox(height: AppTheme.spacingLg),
-            
+
             // Password
             JJTextField(
               label: 'Password',
@@ -459,9 +460,9 @@ class _AuthScreenState extends State<AuthScreen>
                 });
               },
             ),
-            
+
             const SizedBox(height: AppTheme.spacingMd),
-            
+
             // Forgot Password
             Align(
               alignment: Alignment.centerRight,
@@ -481,9 +482,9 @@ class _AuthScreenState extends State<AuthScreen>
                 ),
               ),
             ),
-            
+
             const SizedBox(height: AppTheme.spacingLg),
-            
+
             // Sign In Button
             JJPrimaryButton(
               text: 'Sign In',
@@ -492,9 +493,9 @@ class _AuthScreenState extends State<AuthScreen>
               isFullWidth: true,
               variant: JJButtonVariant.primary,
             ),
-            
+
             const SizedBox(height: AppTheme.spacingLg),
-            
+
             _buildSocialSignInButtons(),
           ],
         ),
@@ -510,7 +511,8 @@ class _AuthScreenState extends State<AuthScreen>
           children: [
             const Expanded(child: Divider()),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: AppTheme.spacingMd),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: AppTheme.spacingMd),
               child: Text(
                 'or continue with',
                 style: AppTheme.bodySmall.copyWith(
@@ -521,9 +523,9 @@ class _AuthScreenState extends State<AuthScreen>
             const Expanded(child: Divider()),
           ],
         ),
-        
+
         const SizedBox(height: AppTheme.spacingLg),
-        
+
         // Google Sign In
         JJSocialSignInButton(
           text: 'Continue with Google',
@@ -535,9 +537,9 @@ class _AuthScreenState extends State<AuthScreen>
           onPressed: _signInWithGoogle,
           isLoading: _isGoogleLoading,
         ),
-        
+
         const SizedBox(height: AppTheme.spacingMd),
-        
+
         // Apple Sign In (iOS only)
         if (Theme.of(context).platform == TargetPlatform.iOS)
           JJSocialSignInButton(
@@ -587,7 +589,8 @@ class _SegmentedTabBarState extends State<SegmentedTabBar>
     _animation = Tween<double>(
       begin: 0.0,
       end: 1.0,
-    ).animate(CurveTween(curve: Curves.easeInOut).animate(_animationController));
+    ).animate(
+        CurveTween(curve: Curves.easeInOut).animate(_animationController));
 
     widget.controller.addListener(_handleTabControllerTick);
   }
@@ -612,12 +615,20 @@ class _SegmentedTabBarState extends State<SegmentedTabBar>
     if (index == 0) {
       // Sign Up: Orange on left, Navy on right
       return const LinearGradient(
-        colors: [AppTheme.accentCopper, AppTheme.secondaryCopper, AppTheme.primaryNavy],
+        colors: [
+          AppTheme.accentCopper,
+          AppTheme.secondaryCopper,
+          AppTheme.primaryNavy
+        ],
       );
     } else {
       // Sign In: Navy on left, Orange on right
       return const LinearGradient(
-        colors: [AppTheme.primaryNavy, AppTheme.secondaryCopper, AppTheme.accentCopper],
+        colors: [
+          AppTheme.primaryNavy,
+          AppTheme.secondaryCopper,
+          AppTheme.accentCopper
+        ],
       );
     }
   }
@@ -626,7 +637,8 @@ class _SegmentedTabBarState extends State<SegmentedTabBar>
   Widget build(BuildContext context) {
     // Total width available for the tab bar content (screen width - margins)
     // margin horizontal: spacingLg * 2 = 24 * 2 = 48
-    final double totalWidth = MediaQuery.of(context).size.width - (AppTheme.spacingLg * 2);
+    final double totalWidth =
+        MediaQuery.of(context).size.width - (AppTheme.spacingLg * 2);
     // Padding inside the main container
     const double innerPadding = 4.0;
     // Width of each tab: (totalWidth - (innerPadding * 2)) / 2
@@ -638,7 +650,8 @@ class _SegmentedTabBarState extends State<SegmentedTabBar>
       decoration: BoxDecoration(
         color: AppTheme.offWhite,
         borderRadius: BorderRadius.circular(AppTheme.radiusMd),
-        border: Border.all(color: AppTheme.lightGray, width: 1), // Subtle border
+        border:
+            Border.all(color: AppTheme.lightGray, width: 1), // Subtle border
         boxShadow: [
           // Inner shadow simulation or subtle outer shadow
           BoxShadow(
@@ -676,7 +689,7 @@ class _SegmentedTabBarState extends State<SegmentedTabBar>
               );
             },
           ),
-          
+
           // Tab buttons
           Row(
             children: [
@@ -692,9 +705,14 @@ class _SegmentedTabBarState extends State<SegmentedTabBar>
                         ? AppTheme.labelLarge.copyWith(
                             color: AppTheme.white,
                             fontWeight: FontWeight.bold,
-                            shadows: [Shadow(color: Colors.black.withValues(alpha: 0.18), offset: const Offset(0, 1))],
+                            shadows: [
+                              Shadow(
+                                  color: Colors.black.withValues(alpha: 0.18),
+                                  offset: const Offset(0, 1))
+                            ],
                           )
-                        : AppTheme.labelLarge.copyWith(color: AppTheme.textSecondary),
+                        : AppTheme.labelLarge
+                            .copyWith(color: AppTheme.textSecondary),
                   ),
                 ),
               ),
@@ -725,9 +743,14 @@ class _SegmentedTabBarState extends State<SegmentedTabBar>
                         ? AppTheme.labelLarge.copyWith(
                             color: AppTheme.white,
                             fontWeight: FontWeight.bold,
-                            shadows: [Shadow(color: Colors.black.withValues(alpha: 0.18), offset: const Offset(0, 1))],
+                            shadows: [
+                              Shadow(
+                                  color: Colors.black.withValues(alpha: 0.18),
+                                  offset: const Offset(0, 1))
+                            ],
                           )
-                        : AppTheme.labelLarge.copyWith(color: AppTheme.textSecondary),
+                        : AppTheme.labelLarge
+                            .copyWith(color: AppTheme.textSecondary),
                   ),
                 ),
               ),
@@ -738,4 +761,3 @@ class _SegmentedTabBarState extends State<SegmentedTabBar>
     );
   }
 }
-

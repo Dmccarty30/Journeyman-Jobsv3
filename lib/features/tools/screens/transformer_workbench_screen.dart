@@ -6,9 +6,11 @@ import '../models/transformer_models.dart';
 
 /// Interactive transformer workbench screen for hands-on training
 class TransformerWorkbenchScreen extends StatefulWidget {
-
   const TransformerWorkbenchScreen({
-    required this.bankType, required this.mode, required this.difficulty, super.key,
+    required this.bankType,
+    required this.mode,
+    required this.difficulty,
+    super.key,
     this.isReferenceMode = false,
   });
   final TransformerBankType bankType;
@@ -17,12 +19,12 @@ class TransformerWorkbenchScreen extends StatefulWidget {
   final bool isReferenceMode;
 
   @override
-  State<TransformerWorkbenchScreen> createState() => _TransformerWorkbenchScreenState();
+  State<TransformerWorkbenchScreen> createState() =>
+      _TransformerWorkbenchScreenState();
 }
 
 class _TransformerWorkbenchScreenState extends State<TransformerWorkbenchScreen>
     with TickerProviderStateMixin {
-  
   // Animation controllers
   late AnimationController _successAnimationController;
   late AnimationController _hintAnimationController;
@@ -36,7 +38,7 @@ class _TransformerWorkbenchScreenState extends State<TransformerWorkbenchScreen>
   final List<ConnectionPoint> _connectionPoints = <ConnectionPoint>[];
   String? _selectedConnectionPointId;
   ConnectionMode _connectionMode = ConnectionMode.stickyKeys;
-  
+
   // UI state
   bool _showHints = false;
   bool _showValidation = false;
@@ -44,7 +46,7 @@ class _TransformerWorkbenchScreenState extends State<TransformerWorkbenchScreen>
   String? _validationMessage;
   Color _selectedWireColor = Colors.red;
   String _selectedPhase = 'A';
-  
+
   // Wire colors for different phases
   final Map<String, Color> _wireColors = <String, Color>{
     'A': Colors.red,
@@ -73,19 +75,20 @@ class _TransformerWorkbenchScreenState extends State<TransformerWorkbenchScreen>
     );
 
     _successAnimation = Tween<double>(begin: 0, end: 1).animate(
-      CurvedAnimation(parent: _successAnimationController, curve: Curves.elasticOut),
+      CurvedAnimation(
+          parent: _successAnimationController, curve: Curves.elasticOut),
     );
     _hintAnimation = Tween<double>(begin: 0, end: 1).animate(
-      CurvedAnimation(parent: _hintAnimationController, curve: Curves.easeInOut),
+      CurvedAnimation(
+          parent: _hintAnimationController, curve: Curves.easeInOut),
     );
   }
 
-  void _initializeTrainingState() {
-  }
+  void _initializeTrainingState() {}
 
   void _generateConnectionPoints() {
     _connectionPoints.clear();
-    
+
     // Generate connection points based on transformer bank type
     switch (widget.bankType) {
       case TransformerBankType.wyeToWye:
@@ -295,319 +298,326 @@ class _TransformerWorkbenchScreenState extends State<TransformerWorkbenchScreen>
 
   @override
   Widget build(BuildContext context) => Scaffold(
-      backgroundColor: AppTheme.offWhite,
-      appBar: _buildAppBar(),
-      body: Column(
-        children: <Widget>[
-          // Top half - Transformer diagram
-          Expanded(
-            flex: 3,
-            child: _buildTransformerDiagramSection(),
-          ),
-          // Bottom half - Interactive workbench
-          Expanded(
-            flex: 2,
-            child: _buildWorkbenchSection(),
-          ),
-        ],
-      ),
-    );
+        backgroundColor: AppTheme.offWhite,
+        appBar: _buildAppBar(),
+        body: Column(
+          children: <Widget>[
+            // Top half - Transformer diagram
+            Expanded(
+              flex: 3,
+              child: _buildTransformerDiagramSection(),
+            ),
+            // Bottom half - Interactive workbench
+            Expanded(
+              flex: 2,
+              child: _buildWorkbenchSection(),
+            ),
+          ],
+        ),
+      );
 
   PreferredSizeWidget _buildAppBar() => AppBar(
-      backgroundColor: AppTheme.primaryNavy,
-      foregroundColor: AppTheme.white,
-      title: Text(
-        widget.isReferenceMode ? 'Reference Mode' : 'Training Mode',
-        style: const TextStyle(fontWeight: FontWeight.bold),
-      ),
-      actions: <Widget>[
-        if (!widget.isReferenceMode) ...<Widget>[
+        backgroundColor: AppTheme.primaryNavy,
+        foregroundColor: AppTheme.white,
+        title: Text(
+          widget.isReferenceMode ? 'Reference Mode' : 'Training Mode',
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
+        actions: <Widget>[
+          if (!widget.isReferenceMode) ...<Widget>[
+            IconButton(
+              icon:
+                  Icon(_showHints ? Icons.lightbulb : Icons.lightbulb_outline),
+              onPressed: _toggleHints,
+              tooltip: 'Toggle Hints',
+            ),
+          ],
           IconButton(
-            icon: Icon(_showHints ? Icons.lightbulb : Icons.lightbulb_outline),
-            onPressed: _toggleHints,
-            tooltip: 'Toggle Hints',
+            icon: const Icon(Icons.refresh),
+            onPressed: _resetWorkbench,
+            tooltip: 'Reset',
+          ),
+          IconButton(
+            icon: const Icon(Icons.more_vert),
+            onPressed: _showOptionsMenu,
           ),
         ],
-        IconButton(
-          icon: const Icon(Icons.refresh),
-          onPressed: _resetWorkbench,
-          tooltip: 'Reset',
-        ),
-        IconButton(
-          icon: const Icon(Icons.more_vert),
-          onPressed: _showOptionsMenu,
-        ),
-      ],
-    );
+      );
 
   Widget _buildTransformerDiagramSection() => Container(
-      width: double.infinity,
-      margin: const EdgeInsets.all(AppTheme.spacingMd),
-      decoration: BoxDecoration(
-        color: AppTheme.white,
-        borderRadius: BorderRadius.circular(AppTheme.radiusMd),
-        boxShadow: const <BoxShadow>[AppTheme.shadowSm],
-        border: Border.all(color: AppTheme.borderLight),
-      ),
-      child: Stack(
-        children: <Widget>[
-          // Background image
-          Positioned.fill(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(AppTheme.radiusMd),
-              child: Image.asset(
-                'assets/images/blank-three-bank.png',
-                fit: BoxFit.contain,
+        width: double.infinity,
+        margin: const EdgeInsets.all(AppTheme.spacingMd),
+        decoration: BoxDecoration(
+          color: AppTheme.white,
+          borderRadius: BorderRadius.circular(AppTheme.radiusMd),
+          boxShadow: const <BoxShadow>[AppTheme.shadowSm],
+          border: Border.all(color: AppTheme.borderLight),
+        ),
+        child: Stack(
+          children: <Widget>[
+            // Background image
+            Positioned.fill(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(AppTheme.radiusMd),
+                child: Image.asset(
+                  'assets/images/blank-three-bank.png',
+                  fit: BoxFit.contain,
+                ),
               ),
             ),
-          ),
-          // Connection points overlay
-          Positioned.fill(
-            child: CustomPaint(
-              painter: WireConnectionPainter(
-                connections: _connections,
-                connectionPoints: _connectionPoints,
-                wireColors: _wireColors,
-                showConnections: widget.isReferenceMode,
+            // Connection points overlay
+            Positioned.fill(
+              child: CustomPaint(
+                painter: WireConnectionPainter(
+                  connections: _connections,
+                  connectionPoints: _connectionPoints,
+                  wireColors: _wireColors,
+                  showConnections: widget.isReferenceMode,
+                ),
               ),
             ),
-          ),
-          // Interactive connection points
-          ..._buildConnectionPointWidgets(),
-          // Validation feedback overlay
-          if (_showValidation) _buildValidationOverlay(),
-          // Hint overlay
-          if (_showHints && _currentHint != null) _buildHintOverlay(),
-        ],
-      ),
-    );
-
-  List<Widget> _buildConnectionPointWidgets() => _connectionPoints.map((ConnectionPoint point) {
-      final bool isSelected = _selectedConnectionPointId == point.id;
-      final bool isConnected = _connections.any(
-        (WireConnection conn) => conn.fromPointId == point.id || conn.toPointId == point.id,
-      );
-      final bool isCompatible = _isCompatibleConnection(point.id);
-
-      return Positioned(
-        left: point.position.dx - 22, // Center the touch target
-        top: point.position.dy - 22,
-        child: ConnectionPointTooltip(
-          connectionPoint: point,
-          child: GenericConnectionPointWidget(
-            connectionPoint: point,
-            isSelected: isSelected,
-            isConnected: isConnected,
-            showGuidance: _showHints,
-            isCompatible: isCompatible,
-            isDragSource: isSelected,
-            connectionMode: _connectionMode,
-            onTap: () => _handleConnectionPointTap(point.id),
-            onDragStart: () => _handleDragStart(point.id),
-            onDragEnd: _handleDragEnd,
-            onAcceptDrop: (details) => _handleConnectionDrop(details.data, point.id),
-          ),
+            // Interactive connection points
+            ..._buildConnectionPointWidgets(),
+            // Validation feedback overlay
+            if (_showValidation) _buildValidationOverlay(),
+            // Hint overlay
+            if (_showHints && _currentHint != null) _buildHintOverlay(),
+          ],
         ),
       );
-    }).toList();
+
+  List<Widget> _buildConnectionPointWidgets() =>
+      _connectionPoints.map((ConnectionPoint point) {
+        final bool isSelected = _selectedConnectionPointId == point.id;
+        final bool isConnected = _connections.any(
+          (WireConnection conn) =>
+              conn.fromPointId == point.id || conn.toPointId == point.id,
+        );
+        final bool isCompatible = _isCompatibleConnection(point.id);
+
+        return Positioned(
+          left: point.position.dx - 22, // Center the touch target
+          top: point.position.dy - 22,
+          child: ConnectionPointTooltip(
+            connectionPoint: point,
+            child: GenericConnectionPointWidget(
+              connectionPoint: point,
+              isSelected: isSelected,
+              isConnected: isConnected,
+              showGuidance: _showHints,
+              isCompatible: isCompatible,
+              isDragSource: isSelected,
+              connectionMode: _connectionMode,
+              onTap: () => _handleConnectionPointTap(point.id),
+              onDragStart: () => _handleDragStart(point.id),
+              onDragEnd: _handleDragEnd,
+              onAcceptDrop: (details) =>
+                  _handleConnectionDrop(details.data, point.id),
+            ),
+          ),
+        );
+      }).toList();
 
   Widget _buildWorkbenchSection() => Container(
-      width: double.infinity,
-      decoration: const BoxDecoration(
-        color: AppTheme.white,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(AppTheme.radiusLg),
-          topRight: Radius.circular(AppTheme.radiusLg),
-        ),
-        boxShadow: <BoxShadow>[AppTheme.shadowMd],
-      ),
-      child: Column(
-        children: <Widget>[
-          // Handle bar
-          Container(
-            width: 40,
-            height: 4,
-            margin: const EdgeInsets.only(top: AppTheme.spacingSm),
-            decoration: BoxDecoration(
-              color: AppTheme.borderLight,
-              borderRadius: BorderRadius.circular(2),
-            ),
+        width: double.infinity,
+        decoration: const BoxDecoration(
+          color: AppTheme.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(AppTheme.radiusLg),
+            topRight: Radius.circular(AppTheme.radiusLg),
           ),
-          // Workbench content
+          boxShadow: <BoxShadow>[AppTheme.shadowMd],
+        ),
+        child: Column(
+          children: <Widget>[
+            // Handle bar
+            Container(
+              width: 40,
+              height: 4,
+              margin: const EdgeInsets.only(top: AppTheme.spacingSm),
+              decoration: BoxDecoration(
+                color: AppTheme.borderLight,
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+            // Workbench content
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(AppTheme.spacingMd),
+                child: Column(
+                  children: <Widget>[
+                    _buildToolsRow(),
+                    const SizedBox(height: AppTheme.spacingMd),
+                    _buildConfigurationOptions(),
+                    const SizedBox(height: AppTheme.spacingMd),
+                    _buildActionButtons(),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+
+  Widget _buildToolsRow() => Row(
+        children: <Widget>[
+          // Connection mode toggle
           Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(AppTheme.spacingMd),
-              child: Column(
-                children: <Widget>[
-                  _buildToolsRow(),
-                  const SizedBox(height: AppTheme.spacingMd),
-                  _buildConfigurationOptions(),
-                  const SizedBox(height: AppTheme.spacingMd),
-                  _buildActionButtons(),
+            child: _buildToolCard(
+              title: 'Connection Mode',
+              child: SegmentedButton<ConnectionMode>(
+                segments: const <ButtonSegment<ConnectionMode>>[
+                  ButtonSegment(
+                    value: ConnectionMode.stickyKeys,
+                    label: Text('Tap'),
+                    icon: Icon(Icons.touch_app, size: 16),
+                  ),
+                  ButtonSegment(
+                    value: ConnectionMode.dragAndDrop,
+                    label: Text('Drag'),
+                    icon: Icon(Icons.drag_indicator, size: 16),
+                  ),
                 ],
+                selected: <ConnectionMode>{_connectionMode},
+                onSelectionChanged: (Set<ConnectionMode> selection) {
+                  setState(() {
+                    _connectionMode = selection.first;
+                  });
+                },
+                style: SegmentedButton.styleFrom(
+                  selectedBackgroundColor:
+                      AppTheme.accentCopper.withValues(alpha: 0.2),
+                  selectedForegroundColor: AppTheme.accentCopper,
+                ),
               ),
             ),
           ),
         ],
-      ),
-    );
-
-  Widget _buildToolsRow() => Row(
-      children: <Widget>[
-        // Connection mode toggle
-        Expanded(
-          child: _buildToolCard(
-            title: 'Connection Mode',
-            child: SegmentedButton<ConnectionMode>(
-              segments: const <ButtonSegment<ConnectionMode>>[
-                ButtonSegment(
-                  value: ConnectionMode.stickyKeys,
-                  label: Text('Tap'),
-                  icon: Icon(Icons.touch_app, size: 16),
-                ),
-                ButtonSegment(
-                  value: ConnectionMode.dragAndDrop,
-                  label: Text('Drag'),
-                  icon: Icon(Icons.drag_indicator, size: 16),
-                ),
-              ],
-              selected: <ConnectionMode>{_connectionMode},
-              onSelectionChanged: (Set<ConnectionMode> selection) {
-                setState(() {
-                  _connectionMode = selection.first;
-                });
-              },
-              style: SegmentedButton.styleFrom(
-                selectedBackgroundColor: AppTheme.accentCopper.withValues(alpha: 0.2),
-                selectedForegroundColor: AppTheme.accentCopper,
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
+      );
 
   Widget _buildConfigurationOptions() => Row(
-      children: <Widget>[
-        // Phase selection
-        Expanded(
-          child: _buildToolCard(
-            title: 'Phase',
-            child: Wrap(
-              spacing: AppTheme.spacingSm,
-              children: _wireColors.keys.map((String phase) {
-                final bool isSelected = _selectedPhase == phase;
-                return FilterChip(
-                  label: Text(phase),
-                  selected: isSelected,
-                  onSelected: (bool selected) {
-                    setState(() {
-                      _selectedPhase = phase;
-                      _selectedWireColor = _wireColors[phase]!;
-                    });
-                  },
-                  selectedColor: _wireColors[phase]!.withValues(alpha: 0.3),
-                  checkmarkColor: _wireColors[phase],
-                  side: BorderSide(color: _wireColors[phase]!),
-                );
-              }).toList(),
-            ),
-          ),
-        ),
-        const SizedBox(width: AppTheme.spacingMd),
-        // Wire color preview
-        Container(
-          width: 60,
-          height: 60,
-          decoration: BoxDecoration(
-            color: _selectedWireColor,
-            borderRadius: BorderRadius.circular(AppTheme.radiusSm),
-            border: Border.all(color: AppTheme.borderLight, width: 2),
-          ),
-          child: const Icon(
-            Icons.cable,
-            color: Colors.white,
-            size: 24,
-          ),
-        ),
-      ],
-    );
-
-  Widget _buildActionButtons() => Row(
-      children: <Widget>[
-        // Reset button
-        Expanded(
-          child: ElevatedButton.icon(
-            onPressed: _resetWorkbench,
-            icon: const Icon(Icons.refresh),
-            label: const Text('Reset'),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppTheme.borderLight,
-              foregroundColor: AppTheme.textSecondary,
-            ),
-          ),
-        ),
-        const SizedBox(width: AppTheme.spacingMd),
-        // Validation button
-        if (!widget.isReferenceMode) ...<Widget>[
+        children: <Widget>[
+          // Phase selection
           Expanded(
-            child: ElevatedButton.icon(
-              onPressed: _validateConnections,
-              icon: const Icon(Icons.check_circle),
-              label: const Text('Check'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppTheme.accentCopper,
-                foregroundColor: AppTheme.white,
+            child: _buildToolCard(
+              title: 'Phase',
+              child: Wrap(
+                spacing: AppTheme.spacingSm,
+                children: _wireColors.keys.map((String phase) {
+                  final bool isSelected = _selectedPhase == phase;
+                  return FilterChip(
+                    label: Text(phase),
+                    selected: isSelected,
+                    onSelected: (bool selected) {
+                      setState(() {
+                        _selectedPhase = phase;
+                        _selectedWireColor = _wireColors[phase]!;
+                      });
+                    },
+                    selectedColor: _wireColors[phase]!.withValues(alpha: 0.3),
+                    checkmarkColor: _wireColors[phase],
+                    side: BorderSide(color: _wireColors[phase]!),
+                  );
+                }).toList(),
               ),
             ),
           ),
           const SizedBox(width: AppTheme.spacingMd),
-        ],
-        // Help button
-        Expanded(
-          child: ElevatedButton.icon(
-            onPressed: _showHelp,
-            icon: const Icon(Icons.help_outline),
-            label: const Text('Help'),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppTheme.infoBlue,
-              foregroundColor: AppTheme.white,
+          // Wire color preview
+          Container(
+            width: 60,
+            height: 60,
+            decoration: BoxDecoration(
+              color: _selectedWireColor,
+              borderRadius: BorderRadius.circular(AppTheme.radiusSm),
+              border: Border.all(color: AppTheme.borderLight, width: 2),
+            ),
+            child: const Icon(
+              Icons.cable,
+              color: Colors.white,
+              size: 24,
             ),
           ),
-        ),
-      ],
-    );
+        ],
+      );
 
-  Widget _buildToolCard({required String title, required Widget child}) => Container(
-      padding: const EdgeInsets.all(AppTheme.spacingMd),
-      decoration: BoxDecoration(
-        color: AppTheme.lightGray,
-        borderRadius: BorderRadius.circular(AppTheme.radiusSm),
-        border: Border.all(color: AppTheme.borderLight),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+  Widget _buildActionButtons() => Row(
         children: <Widget>[
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
-              color: AppTheme.textSecondary,
+          // Reset button
+          Expanded(
+            child: ElevatedButton.icon(
+              onPressed: _resetWorkbench,
+              icon: const Icon(Icons.refresh),
+              label: const Text('Reset'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppTheme.borderLight,
+                foregroundColor: AppTheme.textSecondary,
+              ),
             ),
           ),
-          const SizedBox(height: AppTheme.spacingSm),
-          child,
+          const SizedBox(width: AppTheme.spacingMd),
+          // Validation button
+          if (!widget.isReferenceMode) ...<Widget>[
+            Expanded(
+              child: ElevatedButton.icon(
+                onPressed: _validateConnections,
+                icon: const Icon(Icons.check_circle),
+                label: const Text('Check'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppTheme.accentCopper,
+                  foregroundColor: AppTheme.white,
+                ),
+              ),
+            ),
+            const SizedBox(width: AppTheme.spacingMd),
+          ],
+          // Help button
+          Expanded(
+            child: ElevatedButton.icon(
+              onPressed: _showHelp,
+              icon: const Icon(Icons.help_outline),
+              label: const Text('Help'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppTheme.infoBlue,
+                foregroundColor: AppTheme.white,
+              ),
+            ),
+          ),
         ],
-      ),
-    );
+      );
+
+  Widget _buildToolCard({required String title, required Widget child}) =>
+      Container(
+        padding: const EdgeInsets.all(AppTheme.spacingMd),
+        decoration: BoxDecoration(
+          color: AppTheme.lightGray,
+          borderRadius: BorderRadius.circular(AppTheme.radiusSm),
+          border: Border.all(color: AppTheme.borderLight),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              title,
+              style: const TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+                color: AppTheme.textSecondary,
+              ),
+            ),
+            const SizedBox(height: AppTheme.spacingSm),
+            child,
+          ],
+        ),
+      );
 
   Widget _buildValidationOverlay() => AnimatedBuilder(
-      animation: _successAnimation,
-      builder: (BuildContext context, Widget? child) => Positioned.fill(
+        animation: _successAnimation,
+        builder: (BuildContext context, Widget? child) => Positioned.fill(
           child: DecoratedBox(
             decoration: BoxDecoration(
-              color: Colors.green.withValues(alpha: 0.1 * _successAnimation.value),
+              color:
+                  Colors.green.withValues(alpha: 0.1 * _successAnimation.value),
               borderRadius: BorderRadius.circular(AppTheme.radiusMd),
             ),
             child: Center(
@@ -644,11 +654,11 @@ class _TransformerWorkbenchScreenState extends State<TransformerWorkbenchScreen>
             ),
           ),
         ),
-    );
+      );
 
   Widget _buildHintOverlay() => AnimatedBuilder(
-      animation: _hintAnimation,
-      builder: (BuildContext context, Widget? child) => Positioned(
+        animation: _hintAnimation,
+        builder: (BuildContext context, Widget? child) => Positioned(
           top: 20,
           left: 20,
           right: 20,
@@ -700,7 +710,7 @@ class _TransformerWorkbenchScreenState extends State<TransformerWorkbenchScreen>
             ),
           ),
         ),
-    );
+      );
 
   // Event handlers
   void _handleConnectionPointTap(String pointId) {
@@ -740,9 +750,9 @@ class _TransformerWorkbenchScreenState extends State<TransformerWorkbenchScreen>
 
     // Check if connection already exists
     final bool existingConnection = _connections.any(
-      (WireConnection conn) => 
-        (conn.fromPointId == fromPointId && conn.toPointId == toPointId) ||
-        (conn.fromPointId == toPointId && conn.toPointId == fromPointId),
+      (WireConnection conn) =>
+          (conn.fromPointId == fromPointId && conn.toPointId == toPointId) ||
+          (conn.fromPointId == toPointId && conn.toPointId == fromPointId),
     );
 
     if (existingConnection) {
@@ -752,14 +762,16 @@ class _TransformerWorkbenchScreenState extends State<TransformerWorkbenchScreen>
 
     // Validate connection
     final bool isValid = _validateConnection(fromPointId, toPointId);
-    
+
     setState(() {
-      _connections.add(WireConnection(
-        fromPointId: fromPointId,
-        toPointId: toPointId,
-        isCorrect: isValid,
-        errorReason: isValid ? null : 'Invalid connection type',
-      ),);
+      _connections.add(
+        WireConnection(
+          fromPointId: fromPointId,
+          toPointId: toPointId,
+          isCorrect: isValid,
+          errorReason: isValid ? null : 'Invalid connection type',
+        ),
+      );
     });
 
     if (isValid) {
@@ -772,11 +784,14 @@ class _TransformerWorkbenchScreenState extends State<TransformerWorkbenchScreen>
   }
 
   bool _validateConnection(String fromPointId, String toPointId) {
-    final ConnectionPoint fromPoint = _connectionPoints.firstWhere((ConnectionPoint p) => p.id == fromPointId);
-    final ConnectionPoint toPoint = _connectionPoints.firstWhere((ConnectionPoint p) => p.id == toPointId);
+    final ConnectionPoint fromPoint = _connectionPoints
+        .firstWhere((ConnectionPoint p) => p.id == fromPointId);
+    final ConnectionPoint toPoint =
+        _connectionPoints.firstWhere((ConnectionPoint p) => p.id == toPointId);
 
     // Basic validation rules
-    if (fromPoint.type == toPoint.type && fromPoint.isInput == toPoint.isInput) {
+    if (fromPoint.type == toPoint.type &&
+        fromPoint.isInput == toPoint.isInput) {
       return false; // Can't connect same type inputs/outputs
     }
 
@@ -793,7 +808,8 @@ class _TransformerWorkbenchScreenState extends State<TransformerWorkbenchScreen>
 
   void _validateConnections() {
     // Implement validation logic based on transformer configuration
-    final int correctConnections = _connections.where((WireConnection conn) => conn.isCorrect).length;
+    final int correctConnections =
+        _connections.where((WireConnection conn) => conn.isCorrect).length;
     final int totalConnections = _connections.length;
 
     if (totalConnections == 0) {
@@ -802,11 +818,13 @@ class _TransformerWorkbenchScreenState extends State<TransformerWorkbenchScreen>
     }
 
     final double accuracy = correctConnections / totalConnections;
-    
+
     if (accuracy >= 0.8) {
-      _showValidationSuccess('Excellent work! ${(accuracy * 100).round()}% correct');
+      _showValidationSuccess(
+          'Excellent work! ${(accuracy * 100).round()}% correct');
     } else if (accuracy >= 0.6) {
-      _showValidationWarning('Good progress! ${(accuracy * 100).round()}% correct');
+      _showValidationWarning(
+          'Good progress! ${(accuracy * 100).round()}% correct');
     } else {
       _showValidationError('Keep trying! ${(accuracy * 100).round()}% correct');
     }
@@ -900,8 +918,10 @@ class _TransformerWorkbenchScreenState extends State<TransformerWorkbenchScreen>
                 'Connection Modes:',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              Text('• Tap Mode: Tap first point, then tap second point to connect'),
-              Text('• Drag Mode: Long press and drag from one point to another'),
+              Text(
+                  '• Tap Mode: Tap first point, then tap second point to connect'),
+              Text(
+                  '• Drag Mode: Long press and drag from one point to another'),
               SizedBox(height: 16),
               Text(
                 'Connection Points:',
@@ -1004,7 +1024,6 @@ class _TransformerWorkbenchScreenState extends State<TransformerWorkbenchScreen>
 
 /// Custom painter for drawing wire connections
 class WireConnectionPainter extends CustomPainter {
-
   WireConnectionPainter({
     required this.connections,
     required this.connectionPoints,
@@ -1034,28 +1053,33 @@ class WireConnectionPainter extends CustomPainter {
       );
 
       // Set wire color based on connection validity
-      paint.color = connection.isCorrect 
-        ? Colors.green 
-        : Colors.red.withValues(alpha: 0.7);
+      paint.color = connection.isCorrect
+          ? Colors.green
+          : Colors.red.withValues(alpha: 0.7);
 
       // Draw curved wire
       final Path path = Path();
       path.moveTo(fromPoint.position.dx, fromPoint.position.dy);
-      
+
       // Create a curved path for more realistic wire appearance
       final Offset controlPoint1 = Offset(
-        fromPoint.position.dx + (toPoint.position.dx - fromPoint.position.dx) * 0.3,
+        fromPoint.position.dx +
+            (toPoint.position.dx - fromPoint.position.dx) * 0.3,
         fromPoint.position.dy - 20,
       );
       final Offset controlPoint2 = Offset(
-        fromPoint.position.dx + (toPoint.position.dx - fromPoint.position.dx) * 0.7,
+        fromPoint.position.dx +
+            (toPoint.position.dx - fromPoint.position.dx) * 0.7,
         toPoint.position.dy - 20,
       );
-      
+
       path.cubicTo(
-        controlPoint1.dx, controlPoint1.dy,
-        controlPoint2.dx, controlPoint2.dy,
-        toPoint.position.dx, toPoint.position.dy,
+        controlPoint1.dx,
+        controlPoint1.dy,
+        controlPoint2.dx,
+        controlPoint2.dy,
+        toPoint.position.dx,
+        toPoint.position.dy,
       );
 
       canvas.drawPath(path, paint);
@@ -1071,6 +1095,7 @@ class WireConnectionPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant WireConnectionPainter oldDelegate) => connections != oldDelegate.connections ||
-           showConnections != oldDelegate.showConnections;
+  bool shouldRepaint(covariant WireConnectionPainter oldDelegate) =>
+      connections != oldDelegate.connections ||
+      showConnections != oldDelegate.showConnections;
 }

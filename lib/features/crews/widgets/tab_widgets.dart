@@ -20,7 +20,8 @@ import 'package:journeyman_jobs/features/crews/providers/crews_providers.dart';
 // Models
 
 // Widgets
-import 'package:journeyman_jobs/core/core.dart' hide selectedCrewProvider, MessageBubble;
+import 'package:journeyman_jobs/core/core.dart'
+    hide selectedCrewProvider, MessageBubble;
 
 // Services
 

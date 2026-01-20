@@ -8,7 +8,6 @@ import 'package:journeyman_jobs/features/jobs/jobs.dart';
 import 'package:journeyman_jobs/features/jobs/profile/models/user_model.dart';
 import 'package:journeyman_jobs/features/navigation/navigation.dart';
 import 'package:journeyman_jobs/features/auth/auth.dart';
-import 'package:journeyman_jobs/utils/text_formatting_wrapper.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -99,10 +98,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   Widget _buildWelcomeSection(WidgetRef ref) {
-    final authState = ref.watch(authProvider);
+    // Antigravity Kit 2.0: Use .select() for granular rebuilds
+    final isAuthenticated =
+        ref.watch(authProvider.select((s) => s.isAuthenticated));
     final userModelAsync = ref.watch(userModelStreamProvider);
 
-    if (!authState.isAuthenticated) {
+    if (!isAuthenticated) {
       return _buildGuestWelcome();
     }
 
@@ -333,9 +334,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   Widget _buildSuggestedJobsList(WidgetRef ref) {
-    final jobsState = ref.watch(jobsProvider);
+    // Antigravity Kit 2.0: Use .select() for granular rebuilds
+    // Only rebuild when these specific properties change
+    final isLoading = ref.watch(jobsProvider.select((s) => s.isLoading));
+    final error = ref.watch(jobsProvider.select((s) => s.error));
+    final jobs = ref.watch(jobsProvider.select((s) => s.jobs));
 
-    if (jobsState.isLoading) {
+    if (isLoading && jobs.isEmpty) {
       return const Center(
         child: Padding(
           padding: EdgeInsets.all(AppTheme.spacingLg),
@@ -346,7 +351,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       );
     }
 
-    if (jobsState.error != null) {
+    if (error != null) {
       return Center(
         child: Padding(
           padding: const EdgeInsets.all(AppTheme.spacingLg),
@@ -369,7 +374,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       );
     }
 
-    if (jobsState.jobs.isEmpty) {
+    if (jobs.isEmpty) {
       return Center(
         child: Padding(
           padding: const EdgeInsets.all(AppTheme.spacingLg),
@@ -404,40 +409,22 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     }
 
     return Column(
-      children: jobsState.jobs.take(5).map((job) {
-        return CondensedJobCard(
+      children: jobs.take(5).map((job) {
+        return RichTextJobCard(
           job: job,
-          onTap: () => _showJobDetailsDialog(context, job),
+          onDetails: () => _showJobDetailsDialog(context, job),
+          onBid: () {
+            // Handle bid action
+          },
         );
       }).toList(),
     );
   }
 
-  void _showJobDetailsDialog(BuildContext context, dynamic job) {
-    final jobModel =
-        job is JobsRecord ? _convertJobsRecordToJob(job) : job as Job;
+  void _showJobDetailsDialog(BuildContext context, Job jobModel) {
     showDialog(
       context: context,
       builder: (context) => JobDetailsDialog(job: jobModel),
-    );
-  }
-
-  Job _convertJobsRecordToJob(JobsRecord jobsRecord) {
-    return Job(
-      id: jobsRecord.id,
-      company: toTitleCase(jobsRecord.company),
-      location: toTitleCase(jobsRecord.location),
-      classification: toTitleCase(jobsRecord.classification),
-      local: jobsRecord.localNumber,
-      wage: jobsRecord.wage,
-      hours: jobsRecord.hours,
-      perDiem: jobsRecord.perDiem,
-      typeOfWork: toTitleCase(jobsRecord.typeOfWork),
-      startDate: jobsRecord.startDate,
-      duration: jobsRecord.duration,
-      jobDescription: jobsRecord.jobDescription,
-      jobDetails: const {},
-      sharerId: jobsRecord.id,
     );
   }
 }

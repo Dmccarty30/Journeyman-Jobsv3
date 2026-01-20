@@ -6,24 +6,26 @@ class JobSearchPreferencesScreen extends StatefulWidget {
   const JobSearchPreferencesScreen({super.key});
 
   @override
-  State<JobSearchPreferencesScreen> createState() => _JobSearchPreferencesScreenState();
+  State<JobSearchPreferencesScreen> createState() =>
+      _JobSearchPreferencesScreenState();
 }
 
-class _JobSearchPreferencesScreenState extends State<JobSearchPreferencesScreen> {
+class _JobSearchPreferencesScreenState
+    extends State<JobSearchPreferencesScreen> {
   double _defaultSearchRadius = 50.0;
   String _units = 'Miles';
   bool _autoApplyEnabled = false;
   double _minimumHourlyRate = 35.0;
-  
+
   @override
   void initState() {
     super.initState();
     _loadSettings();
   }
-  
+
   Future<void> _loadSettings() async {
     final prefs = await SharedPreferences.getInstance();
-    
+
     setState(() {
       _defaultSearchRadius = prefs.getDouble('default_search_radius') ?? 50.0;
       _units = prefs.getString('units') ?? 'Miles';
@@ -31,10 +33,10 @@ class _JobSearchPreferencesScreenState extends State<JobSearchPreferencesScreen>
       _minimumHourlyRate = prefs.getDouble('minimum_hourly_rate') ?? 35.0;
     });
   }
-  
+
   Future<void> _saveSetting(String key, dynamic value) async {
     final prefs = await SharedPreferences.getInstance();
-    
+
     if (value is bool) {
       await prefs.setBool(key, value);
     } else if (value is double) {
@@ -108,9 +110,7 @@ class _JobSearchPreferencesScreenState extends State<JobSearchPreferencesScreen>
                     },
                   ),
                 ]),
-                
                 const SizedBox(height: AppTheme.spacingLg),
-
                 _buildSectionHeader('Application Automation'),
                 _buildSettingsCard([
                   _buildSwitchTile(
@@ -124,7 +124,6 @@ class _JobSearchPreferencesScreenState extends State<JobSearchPreferencesScreen>
                     },
                   ),
                 ]),
-                
                 const SizedBox(height: AppTheme.spacingXl),
               ],
             ),
@@ -149,7 +148,7 @@ class _JobSearchPreferencesScreenState extends State<JobSearchPreferencesScreen>
       ),
     );
   }
-  
+
   Widget _buildSettingsCard(List<Widget> children) {
     return JJCard(
       child: Column(
@@ -157,7 +156,7 @@ class _JobSearchPreferencesScreenState extends State<JobSearchPreferencesScreen>
       ),
     );
   }
-  
+
   Widget _buildSwitchTile({
     required IconData icon,
     required String title,
@@ -212,7 +211,7 @@ class _JobSearchPreferencesScreenState extends State<JobSearchPreferencesScreen>
       ),
     );
   }
-  
+
   Widget _buildDropdownTile({
     required IconData icon,
     required String title,
@@ -270,7 +269,7 @@ class _JobSearchPreferencesScreenState extends State<JobSearchPreferencesScreen>
               onChanged: onChanged,
               underline: const SizedBox(),
               isDense: true,
-              icon: Icon(
+              icon: const Icon(
                 Icons.arrow_drop_down,
                 color: AppTheme.accentCopper,
               ),
@@ -353,4 +352,3 @@ class _JobSearchPreferencesScreenState extends State<JobSearchPreferencesScreen>
     );
   }
 }
-

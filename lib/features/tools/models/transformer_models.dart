@@ -11,26 +11,25 @@ enum TransformerBankType {
 
 /// Training mode - guided learning vs quiz testing
 enum TrainingMode {
-  guided,  // Step-by-step with hints
-  quiz,    // Test knowledge without guidance
+  guided, // Step-by-step with hints
+  quiz, // Test knowledge without guidance
 }
 
 /// Difficulty levels with different voltage scenarios
 enum DifficultyLevel {
-  beginner,     // 120V/240V basic residential
-  intermediate, // 240V/480V light commercial  
-  advanced,     // 480V+ industrial scenarios
+  beginner, // 120V/240V basic residential
+  intermediate, // 240V/480V light commercial
+  advanced, // 480V+ industrial scenarios
 }
 
 /// Connection mode for the workbench
 enum ConnectionMode {
-  stickyKeys,  // Tap to connect
+  stickyKeys, // Tap to connect
   dragAndDrop, // Drag to connect
 }
 
 /// Represents a connection point on the transformer diagram
 class ConnectionPoint {
-  
   const ConnectionPoint({
     required this.id,
     required this.position,
@@ -43,9 +42,12 @@ class ConnectionPoint {
     final Map<String, dynamic> pos = json['position'] as Map<String, dynamic>;
     return ConnectionPoint(
       id: json['id'] as String,
-      position: Offset((pos['dx'] as num).toDouble(), (pos['dy'] as num).toDouble()),
+      position:
+          Offset((pos['dx'] as num).toDouble(), (pos['dy'] as num).toDouble()),
       label: json['label'] as String,
-      type: ConnectionType.values.firstWhere((ConnectionType e) => e.name == (json['type'] as String), orElse: () => ConnectionType.primary),
+      type: ConnectionType.values.firstWhere(
+          (ConnectionType e) => e.name == (json['type'] as String),
+          orElse: () => ConnectionType.primary),
       isInput: json['isInput'] as bool? ?? false,
     );
   }
@@ -56,25 +58,24 @@ class ConnectionPoint {
   final bool isInput;
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-      'id': id,
-      'position': <String, double>{'dx': position.dx, 'dy': position.dy},
-      'label': label,
-      'type': type.name,
-      'isInput': isInput,
-    };
+        'id': id,
+        'position': <String, double>{'dx': position.dx, 'dy': position.dy},
+        'label': label,
+        'type': type.name,
+        'isInput': isInput,
+      };
 }
 
 /// Types of electrical connections
 enum ConnectionType {
-  primary,    // High voltage side (H1, H2)
-  secondary,  // Low voltage side (X1, X2, X3)
-  neutral,    // Neutral connections
-  ground,     // Ground connections
+  primary, // High voltage side (H1, H2)
+  secondary, // Low voltage side (X1, X2, X3)
+  neutral, // Neutral connections
+  ground, // Ground connections
 }
 
 /// Represents a wire connection between two points
 class WireConnection {
-  
   const WireConnection({
     required this.fromPointId,
     required this.toPointId,
@@ -85,13 +86,13 @@ class WireConnection {
   });
 
   factory WireConnection.fromJson(Map<String, dynamic> json) => WireConnection(
-      fromPointId: json['fromPointId'] as String,
-      toPointId: json['toPointId'] as String,
-      isCorrect: json['isCorrect'] as bool? ?? false,
-      errorReason: json['errorReason'] as String?,
-      color: json['color'] != null ? Color(json['color'] as int) : Colors.red,
-      phase: json['phase'] as String? ?? 'A',
-    );
+        fromPointId: json['fromPointId'] as String,
+        toPointId: json['toPointId'] as String,
+        isCorrect: json['isCorrect'] as bool? ?? false,
+        errorReason: json['errorReason'] as String?,
+        color: json['color'] != null ? Color(json['color'] as int) : Colors.red,
+        phase: json['phase'] as String? ?? 'A',
+      );
   final String fromPointId;
   final String toPointId;
   final bool isCorrect;
@@ -100,18 +101,17 @@ class WireConnection {
   final String phase;
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-      'fromPointId': fromPointId,
-      'toPointId': toPointId,
-      'isCorrect': isCorrect,
-      'errorReason': errorReason,
-      'color': color.value,
-      'phase': phase,
-    };
+        'fromPointId': fromPointId,
+        'toPointId': toPointId,
+        'isCorrect': isCorrect,
+        'errorReason': errorReason,
+        'color': color.toARGB32(),
+        'phase': phase,
+      };
 }
 
 /// Represents the current state of the training session
 class TrainingState {
-  
   const TrainingState({
     required this.bankType,
     required this.mode,
@@ -123,17 +123,26 @@ class TrainingState {
   });
 
   factory TrainingState.fromJson(Map<String, dynamic> json) => TrainingState(
-      bankType: TransformerBankType.values.firstWhere((TransformerBankType e) => e.name == (json['bankType'] as String), orElse: () => TransformerBankType.wyeToWye),
-      mode: TrainingMode.values.firstWhere((TrainingMode e) => e.name == (json['mode'] as String), orElse: () => TrainingMode.guided),
-      difficulty: DifficultyLevel.values.firstWhere((DifficultyLevel e) => e.name == (json['difficulty'] as String), orElse: () => DifficultyLevel.beginner),
-      connections: (json['connections'] as List<dynamic>?)
-          ?.map((c) => WireConnection.fromJson(c as Map<String, dynamic>))
-          .toList() ??
-          const <WireConnection>[],
-      currentStep: json['currentStep'] as int? ?? 0,
-      isComplete: json['isComplete'] as bool? ?? false,
-      completedSteps: (json['completedSteps'] as List<dynamic>?)?.map((e) => e as String).toList() ?? const <String>[],
-    );
+        bankType: TransformerBankType.values.firstWhere(
+            (TransformerBankType e) => e.name == (json['bankType'] as String),
+            orElse: () => TransformerBankType.wyeToWye),
+        mode: TrainingMode.values.firstWhere(
+            (TrainingMode e) => e.name == (json['mode'] as String),
+            orElse: () => TrainingMode.guided),
+        difficulty: DifficultyLevel.values.firstWhere(
+            (DifficultyLevel e) => e.name == (json['difficulty'] as String),
+            orElse: () => DifficultyLevel.beginner),
+        connections: (json['connections'] as List<dynamic>?)
+                ?.map((c) => WireConnection.fromJson(c as Map<String, dynamic>))
+                .toList() ??
+            const <WireConnection>[],
+        currentStep: json['currentStep'] as int? ?? 0,
+        isComplete: json['isComplete'] as bool? ?? false,
+        completedSteps: (json['completedSteps'] as List<dynamic>?)
+                ?.map((e) => e as String)
+                .toList() ??
+            const <String>[],
+      );
   final TransformerBankType bankType;
   final TrainingMode mode;
   final DifficultyLevel difficulty;
@@ -141,7 +150,7 @@ class TrainingState {
   final int currentStep;
   final bool isComplete;
   final List<String> completedSteps;
-  
+
   TrainingState copyWith({
     TransformerBankType? bankType,
     TrainingMode? mode,
@@ -150,30 +159,31 @@ class TrainingState {
     int? currentStep,
     bool? isComplete,
     List<String>? completedSteps,
-  }) => TrainingState(
-      bankType: bankType ?? this.bankType,
-      mode: mode ?? this.mode,
-      difficulty: difficulty ?? this.difficulty,
-      connections: connections ?? this.connections,
-      currentStep: currentStep ?? this.currentStep,
-      isComplete: isComplete ?? this.isComplete,
-      completedSteps: completedSteps ?? this.completedSteps,
-    );
+  }) =>
+      TrainingState(
+        bankType: bankType ?? this.bankType,
+        mode: mode ?? this.mode,
+        difficulty: difficulty ?? this.difficulty,
+        connections: connections ?? this.connections,
+        currentStep: currentStep ?? this.currentStep,
+        isComplete: isComplete ?? this.isComplete,
+        completedSteps: completedSteps ?? this.completedSteps,
+      );
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-      'bankType': bankType.name,
-      'mode': mode.name,
-      'difficulty': difficulty.name,
-      'connections': connections.map((WireConnection c) => c.toJson()).toList(),
-      'currentStep': currentStep,
-      'isComplete': isComplete,
-      'completedSteps': completedSteps,
-    };
+        'bankType': bankType.name,
+        'mode': mode.name,
+        'difficulty': difficulty.name,
+        'connections':
+            connections.map((WireConnection c) => c.toJson()).toList(),
+        'currentStep': currentStep,
+        'isComplete': isComplete,
+        'completedSteps': completedSteps,
+      };
 }
 
 /// Voltage scenario for different difficulty levels
 class VoltageScenario {
-  
   const VoltageScenario({
     required this.name,
     required this.voltages,
@@ -186,7 +196,6 @@ class VoltageScenario {
 
 /// Step in the guided training mode
 class TrainingStep {
-  
   const TrainingStep({
     required this.stepNumber,
     required this.instruction,
@@ -197,13 +206,14 @@ class TrainingStep {
   });
 
   factory TrainingStep.fromJson(Map<String, dynamic> json) => TrainingStep(
-      stepNumber: json['stepNumber'] as int,
-      instruction: json['instruction'] as String,
-      explanation: json['explanation'] as String,
-      requiredConnections: List<String>.from(json['requiredConnections'] as List),
-      safetyNote: json['safetyNote'] as String?,
-      commonMistake: json['commonMistake'] as String?,
-    );
+        stepNumber: json['stepNumber'] as int,
+        instruction: json['instruction'] as String,
+        explanation: json['explanation'] as String,
+        requiredConnections:
+            List<String>.from(json['requiredConnections'] as List),
+        safetyNote: json['safetyNote'] as String?,
+        commonMistake: json['commonMistake'] as String?,
+      );
   final int stepNumber;
   final String instruction;
   final String explanation;
@@ -212,11 +222,11 @@ class TrainingStep {
   final String? commonMistake;
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-      'stepNumber': stepNumber,
-      'instruction': instruction,
-      'explanation': explanation,
-      'requiredConnections': requiredConnections,
-      'safetyNote': safetyNote,
-      'commonMistake': commonMistake,
-    };
+        'stepNumber': stepNumber,
+        'instruction': instruction,
+        'explanation': explanation,
+        'requiredConnections': requiredConnections,
+        'safetyNote': safetyNote,
+        'commonMistake': commonMistake,
+      };
 }

@@ -101,6 +101,13 @@ dependencies:
   http: any
   crypto: any
   riverpod: any
+  
+  # Antigravity Kit 2.0 - Local storage
+  hive: any
+  hive_flutter: any
+  
+  # Antigravity Kit 2.0 - Secure token storage
+  flutter_secure_storage: any
 dev_dependencies:
   flutter_test:
     sdk: flutter

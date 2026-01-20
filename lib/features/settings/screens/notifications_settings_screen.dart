@@ -403,7 +403,7 @@ class _NotificationsScreenState extends State<NotificationsScreen>
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
+          const Icon(
             Icons.notifications_none,
             size: 64,
             color: AppTheme.textSecondary,
@@ -1103,7 +1103,3 @@ class _NotificationsScreenState extends State<NotificationsScreen>
     );
   }
 }
-
-
-
-

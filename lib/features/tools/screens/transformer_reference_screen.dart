@@ -412,7 +412,6 @@ class _TransformerReferenceScreenState
 
   Widget _buildDeltaWyeDiagram() =>
       CustomPaint(painter: DeltaWyeDiagramPainter());
-
 }
 
 // Custom painters for transformer diagrams
@@ -664,4 +663,3 @@ class DeltaWyeDiagramPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
-

@@ -119,7 +119,7 @@ class CondensedJobCard extends StatelessWidget {
             Row(
               children: [
                 const Spacer(),
-                Icon(
+                const Icon(
                   Icons.arrow_forward_ios,
                   size: 16,
                   color: AppTheme.textLight,
@@ -148,9 +148,9 @@ class CondensedJobCard extends StatelessWidget {
             child: RichText(
               text: TextSpan(
                 children: [
-                  const TextSpan(
-                    text: 'Contractor: ',
-                    style: TextStyle(
+                  TextSpan(
+                    text: '$leftLabel: ',
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       color: AppTheme.textDark,
                       fontSize: 12,

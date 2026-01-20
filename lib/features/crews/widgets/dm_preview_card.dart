@@ -27,7 +27,9 @@ class DMPreviewCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         decoration: BoxDecoration(
-          color: unreadCount > 0 ? AppTheme.accentCopper.withValues(alpha: 0.05) : AppTheme.white,
+          color: unreadCount > 0
+              ? AppTheme.accentCopper.withValues(alpha: 0.05)
+              : AppTheme.white,
           border: Border(
             bottom: BorderSide(
               color: AppTheme.borderLight.withValues(alpha: 0.5),
@@ -49,10 +51,11 @@ class DMPreviewCard extends StatelessWidget {
                   child: otherUserAvatarUrl == null
                       ? Text(
                           _getInitials(otherUserName),
-                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            color: AppTheme.accentCopper,
-                            fontWeight: FontWeight.w600,
-                          ),
+                          style:
+                              Theme.of(context).textTheme.titleMedium?.copyWith(
+                                    color: AppTheme.accentCopper,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                         )
                       : null,
                 ),
@@ -74,11 +77,12 @@ class DMPreviewCard extends StatelessWidget {
                       child: Center(
                         child: Text(
                           unreadCount > 9 ? '9+' : unreadCount.toString(),
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: AppTheme.white,
-                            fontSize: 8,
-                            fontWeight: FontWeight.w600,
-                          ),
+                          style:
+                              Theme.of(context).textTheme.bodySmall?.copyWith(
+                                    color: AppTheme.white,
+                                    fontSize: 8,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                         ),
                       ),
                     ),
@@ -96,10 +100,13 @@ class DMPreviewCard extends StatelessWidget {
                       Expanded(
                         child: Text(
                           otherUserName,
-                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                            color: AppTheme.textPrimary,
-                            fontWeight: unreadCount > 0 ? FontWeight.w600 : FontWeight.w500,
-                          ),
+                          style:
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                    color: AppTheme.textPrimary,
+                                    fontWeight: unreadCount > 0
+                                        ? FontWeight.w600
+                                        : FontWeight.w500,
+                                  ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -107,9 +114,9 @@ class DMPreviewCard extends StatelessWidget {
                       Text(
                         _formatTime(lastMessage.sentAt),
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: AppTheme.textLight,
-                          fontSize: 12,
-                        ),
+                              color: AppTheme.textLight,
+                              fontSize: 12,
+                            ),
                       ),
                     ],
                   ),
@@ -117,7 +124,7 @@ class DMPreviewCard extends StatelessWidget {
                   Row(
                     children: [
                       if (lastMessage.senderId == otherUserId)
-                        Icon(
+                        const Icon(
                           Icons.reply,
                           size: 14,
                           color: AppTheme.textLight,
@@ -125,10 +132,15 @@ class DMPreviewCard extends StatelessWidget {
                       Expanded(
                         child: Text(
                           _getMessagePreview(lastMessage),
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: unreadCount > 0 ? AppTheme.textPrimary : AppTheme.textSecondary,
-                            fontWeight: unreadCount > 0 ? FontWeight.w500 : FontWeight.normal,
-                          ),
+                          style:
+                              Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                    color: unreadCount > 0
+                                        ? AppTheme.textPrimary
+                                        : AppTheme.textSecondary,
+                                    fontWeight: unreadCount > 0
+                                        ? FontWeight.w500
+                                        : FontWeight.normal,
+                                  ),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -179,4 +191,3 @@ class DMPreviewCard extends StatelessWidget {
     }
   }
 }
-

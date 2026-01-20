@@ -42,27 +42,28 @@ class _SyncSettingsScreenState extends State<SyncSettingsScreen> {
               children: [
                 // Connection Status Card
                 _buildConnectionStatusCard(connectivity),
-                
+
                 const SizedBox(height: 16),
-                
+
                 // Sync Status Card
                 SyncStatusWidget(
                   onSyncPressed: () => _performSync(offlineService),
-                  onPendingPressed: () => _showPendingChanges(context, offlineService),
+                  onPendingPressed: () =>
+                      _showPendingChanges(context, offlineService),
                 ),
-                
+
                 const SizedBox(height: 16),
-                
+
                 // Sync Strategy Settings
                 _buildSyncStrategyCard(offlineService),
-                
+
                 const SizedBox(height: 16),
-                
+
                 // Storage Usage
                 const StorageUsageIndicator(showDetails: true),
-                
+
                 const SizedBox(height: 16),
-                
+
                 // Advanced Settings
                 _buildAdvancedSettingsCard(context, offlineService),
               ],
@@ -77,7 +78,8 @@ class _SyncSettingsScreenState extends State<SyncSettingsScreen> {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppTheme.radiusLg),
-        side: const BorderSide(color: AppTheme.accentCopper, width: AppTheme.borderWidthMedium),
+        side: const BorderSide(
+            color: AppTheme.accentCopper, width: AppTheme.borderWidthMedium),
       ),
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -102,9 +104,7 @@ class _SyncSettingsScreenState extends State<SyncSettingsScreen> {
                 const ConnectionStatusIndicator(),
               ],
             ),
-            
             const SizedBox(height: 12),
-            
             Row(
               children: [
                 Expanded(
@@ -123,7 +123,6 @@ class _SyncSettingsScreenState extends State<SyncSettingsScreen> {
                 ),
               ],
             ),
-            
             if (connectivity.lastOfflineTime != null) ...[
               const SizedBox(height: 8),
               _buildInfoRow(
@@ -132,7 +131,6 @@ class _SyncSettingsScreenState extends State<SyncSettingsScreen> {
                 Colors.orange,
               ),
             ],
-            
             if (connectivity.offlineDurationMinutes != null) ...[
               const SizedBox(height: 8),
               _buildInfoRow(
@@ -151,7 +149,8 @@ class _SyncSettingsScreenState extends State<SyncSettingsScreen> {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppTheme.radiusLg),
-        side: const BorderSide(color: AppTheme.accentCopper, width: AppTheme.borderWidthMedium),
+        side: const BorderSide(
+            color: AppTheme.accentCopper, width: AppTheme.borderWidthMedium),
       ),
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -171,9 +170,9 @@ class _SyncSettingsScreenState extends State<SyncSettingsScreen> {
                 ),
               ],
             ),
-            
+
             const SizedBox(height: 16),
-            
+
             // Sync Strategy Selection
             _buildSyncStrategyOption(
               offlineService,
@@ -182,7 +181,7 @@ class _SyncSettingsScreenState extends State<SyncSettingsScreen> {
               'Sync as soon as internet is available',
               Icons.flash_on,
             ),
-            
+
             _buildSyncStrategyOption(
               offlineService,
               SyncStrategy.smart,
@@ -190,7 +189,7 @@ class _SyncSettingsScreenState extends State<SyncSettingsScreen> {
               'Intelligent sync based on usage patterns',
               Icons.auto_awesome,
             ),
-            
+
             _buildSyncStrategyOption(
               offlineService,
               SyncStrategy.manual,
@@ -198,9 +197,9 @@ class _SyncSettingsScreenState extends State<SyncSettingsScreen> {
               'Only sync when you tap the sync button',
               Icons.touch_app,
             ),
-            
+
             const SizedBox(height: 16),
-            
+
             // Additional Settings
             _buildSwitchTile(
               'Wi-Fi Only Sync',
@@ -209,13 +208,14 @@ class _SyncSettingsScreenState extends State<SyncSettingsScreen> {
               true, // Placeholder - would get from service
               (value) => offlineService.configureSyncStrategy(wifiOnly: value),
             ),
-            
+
             _buildSwitchTile(
               'Background Sync',
               'Allow syncing in the background',
               Icons.sync,
               true, // Placeholder - would get from service
-              (value) => offlineService.configureSyncStrategy(backgroundSync: value),
+              (value) =>
+                  offlineService.configureSyncStrategy(backgroundSync: value),
             ),
           ],
         ),
@@ -231,7 +231,7 @@ class _SyncSettingsScreenState extends State<SyncSettingsScreen> {
     IconData icon,
   ) {
     final isSelected = offlineService.syncStrategy == strategy;
-    
+
     return RadioListTile<SyncStrategy>(
       value: strategy,
       groupValue: offlineService.syncStrategy,
@@ -278,11 +278,13 @@ class _SyncSettingsScreenState extends State<SyncSettingsScreen> {
     );
   }
 
-  Widget _buildAdvancedSettingsCard(BuildContext context, OfflineDataService offlineService) {
+  Widget _buildAdvancedSettingsCard(
+      BuildContext context, OfflineDataService offlineService) {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppTheme.radiusLg),
-        side: const BorderSide(color: AppTheme.accentCopper, width: AppTheme.borderWidthMedium),
+        side: const BorderSide(
+            color: AppTheme.accentCopper, width: AppTheme.borderWidthMedium),
       ),
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -302,14 +304,14 @@ class _SyncSettingsScreenState extends State<SyncSettingsScreen> {
                 ),
               ],
             ),
-            
+
             const SizedBox(height: 16),
-            
+
             // Storage limit slider
             _buildStorageLimitSlider(offlineService),
-            
+
             const SizedBox(height: 16),
-            
+
             // Action buttons
             Row(
               children: [
@@ -323,10 +325,10 @@ class _SyncSettingsScreenState extends State<SyncSettingsScreen> {
                 const SizedBox(width: 8),
                 Expanded(
                   child: OutlinedButton.icon(
-                    onPressed: _isClearing 
-                        ? null 
-                        : () => _clearOfflineData(context, offlineService),
-                    icon: _isClearing 
+                    onPressed: _isClearing
+                        ? null
+                        : () => _clearOfflineData(offlineService),
+                    icon: _isClearing
                         ? const SizedBox(
                             width: 16,
                             height: 16,
@@ -349,10 +351,10 @@ class _SyncSettingsScreenState extends State<SyncSettingsScreen> {
       future: offlineService.getStorageStats(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) return const SizedBox.shrink();
-        
+
         final stats = snapshot.data!;
         final maxMB = (stats['max_size_mb'] as int).toDouble();
-        
+
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -368,7 +370,8 @@ class _SyncSettingsScreenState extends State<SyncSettingsScreen> {
               divisions: 49,
               label: '${maxMB.round()} MB',
               onChanged: (value) {
-                offlineService.configureSyncStrategy(maxDataSizeMB: value.round());
+                offlineService.configureSyncStrategy(
+                    maxDataSizeMB: value.round());
               },
             ),
             Text(
@@ -409,7 +412,7 @@ class _SyncSettingsScreenState extends State<SyncSettingsScreen> {
   String _formatDateTime(DateTime dateTime) {
     final now = DateTime.now();
     final diff = now.difference(dateTime);
-    
+
     if (diff.inMinutes < 1) {
       return 'Just now';
     } else if (diff.inHours < 1) {
@@ -426,13 +429,14 @@ class _SyncSettingsScreenState extends State<SyncSettingsScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Starting sync...')),
       );
-      
+
       final success = await offlineService.performSync(force: true);
-      
+
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(success ? 'Sync completed successfully' : 'Sync failed'),
+            content:
+                Text(success ? 'Sync completed successfully' : 'Sync failed'),
             backgroundColor: success ? Colors.green : Colors.red,
           ),
         );
@@ -449,7 +453,7 @@ class _SyncSettingsScreenState extends State<SyncSettingsScreen> {
     }
   }
 
-  Future<void> _clearOfflineData(BuildContext context, OfflineDataService offlineService) async {
+  Future<void> _clearOfflineData(OfflineDataService offlineService) async {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
@@ -473,11 +477,12 @@ class _SyncSettingsScreenState extends State<SyncSettingsScreen> {
     );
 
     if (confirmed == true) {
+      if (!mounted) return;
       setState(() => _isClearing = true);
-      
+
       try {
         await offlineService.clearOfflineData();
-        
+
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
@@ -536,7 +541,8 @@ class _SyncSettingsScreenState extends State<SyncSettingsScreen> {
     );
   }
 
-  void _showPendingChanges(BuildContext context, OfflineDataService offlineService) {
+  void _showPendingChanges(
+      BuildContext context, OfflineDataService offlineService) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -610,4 +616,3 @@ class _SyncSettingsScreenState extends State<SyncSettingsScreen> {
     );
   }
 }
-

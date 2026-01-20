@@ -14,7 +14,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _emailFocus = FocusNode();
-  
+
   bool _isLoading = false;
   bool _emailSent = false;
   String? _errorMessage;
@@ -40,7 +40,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       await FirebaseAuth.instance.sendPasswordResetEmail(
         email: _emailController.text.trim(),
       );
-      
+
       setState(() {
         _emailSent = true;
         _isLoading = false;
@@ -93,7 +93,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: AppTheme.spacingXl),
-              
+
               // Header section
               Container(
                 width: double.infinity,
@@ -169,26 +169,29 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                             if (value == null || value.trim().isEmpty) {
                               return 'Email address is required';
                             }
-                            if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value.trim())) {
+                            if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                                .hasMatch(value.trim())) {
                               return 'Please enter a valid email address';
                             }
                             return null;
                           },
                           onFieldSubmitted: (_) => _resetPassword(),
                         ),
-
                         if (_errorMessage != null) ...[
                           const SizedBox(height: AppTheme.spacingMd),
                           Container(
                             padding: const EdgeInsets.all(AppTheme.spacingMd),
                             decoration: BoxDecoration(
                               color: AppTheme.errorRed.withValues(alpha: 0.1),
-                              borderRadius: BorderRadius.circular(AppTheme.radiusSm),
-                              border: Border.all(color: AppTheme.errorRed.withValues(alpha: 0.3)),
+                              borderRadius:
+                                  BorderRadius.circular(AppTheme.radiusSm),
+                              border: Border.all(
+                                  color:
+                                      AppTheme.errorRed.withValues(alpha: 0.3)),
                             ),
                             child: Row(
                               children: [
-                                Icon(
+                                const Icon(
                                   Icons.error_outline,
                                   color: AppTheme.errorRed,
                                   size: AppTheme.iconSm,
@@ -206,9 +209,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                             ),
                           ),
                         ],
-
                         const SizedBox(height: AppTheme.spacingXl),
-                        
                         JJPrimaryButton(
                           text: 'Send Reset Instructions',
                           icon: Icons.send,
@@ -237,14 +238,17 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         padding: const EdgeInsets.all(AppTheme.spacingMd),
                         decoration: BoxDecoration(
                           color: AppTheme.successGreen.withValues(alpha: 0.1),
-                          borderRadius: BorderRadius.circular(AppTheme.radiusSm),
-                          border: Border.all(color: AppTheme.successGreen.withValues(alpha: 0.3)),
+                          borderRadius:
+                              BorderRadius.circular(AppTheme.radiusSm),
+                          border: Border.all(
+                              color:
+                                  AppTheme.successGreen.withValues(alpha: 0.3)),
                         ),
                         child: Column(
                           children: [
                             Row(
                               children: [
-                                Icon(
+                                const Icon(
                                   Icons.check_circle_outline,
                                   color: AppTheme.successGreen,
                                   size: AppTheme.iconSm,
@@ -271,9 +275,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           ],
                         ),
                       ),
-
                       const SizedBox(height: AppTheme.spacingLg),
-
                       JJPrimaryButton(
                         text: 'Back to Sign In',
                         icon: Icons.login,
@@ -281,18 +283,18 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         isFullWidth: true,
                         variant: JJButtonVariant.primary,
                       ),
-
                       const SizedBox(height: AppTheme.spacingMd),
-
                       JJSecondaryButton(
                         text: 'Resend Email',
                         icon: Icons.refresh,
-                        onPressed: _isLoading ? null : () {
-                          setState(() {
-                            _emailSent = false;
-                            _errorMessage = null;
-                          });
-                        },
+                        onPressed: _isLoading
+                            ? null
+                            : () {
+                                setState(() {
+                                  _emailSent = false;
+                                  _errorMessage = null;
+                                });
+                              },
                         isFullWidth: true,
                       ),
                     ],
@@ -309,14 +311,15 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 decoration: BoxDecoration(
                   color: AppTheme.infoBlue.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(AppTheme.radiusMd),
-                  border: Border.all(color: AppTheme.infoBlue.withValues(alpha: 0.3)),
+                  border: Border.all(
+                      color: AppTheme.infoBlue.withValues(alpha: 0.3)),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.help_outline,
                           color: AppTheme.infoBlue,
                           size: AppTheme.iconSm,

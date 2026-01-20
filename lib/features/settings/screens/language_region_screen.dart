@@ -13,26 +13,26 @@ class _LanguageRegionScreenState extends State<LanguageRegionScreen> {
   String _selectedLanguage = 'English';
   String _dateFormat = 'MM/DD/YYYY';
   String _timeFormat = '12-hour';
-  
+
   @override
   void initState() {
     super.initState();
     _loadSettings();
   }
-  
+
   Future<void> _loadSettings() async {
     final prefs = await SharedPreferences.getInstance();
-    
+
     setState(() {
       _selectedLanguage = prefs.getString('language') ?? 'English';
       _dateFormat = prefs.getString('date_format') ?? 'MM/DD/YYYY';
       _timeFormat = prefs.getString('time_format') ?? '12-hour';
     });
   }
-  
+
   Future<void> _saveSetting(String key, dynamic value) async {
     final prefs = await SharedPreferences.getInstance();
-    
+
     if (value is String) {
       await prefs.setString(key, value);
     }
@@ -96,7 +96,6 @@ class _LanguageRegionScreenState extends State<LanguageRegionScreen> {
                     },
                   ),
                 ]),
-                
                 const SizedBox(height: AppTheme.spacingXl),
               ],
             ),
@@ -121,7 +120,7 @@ class _LanguageRegionScreenState extends State<LanguageRegionScreen> {
       ),
     );
   }
-  
+
   Widget _buildSettingsCard(List<Widget> children) {
     return JJCard(
       child: Column(
@@ -129,7 +128,7 @@ class _LanguageRegionScreenState extends State<LanguageRegionScreen> {
       ),
     );
   }
-  
+
   Widget _buildDropdownTile({
     required IconData icon,
     required String title,
@@ -187,7 +186,7 @@ class _LanguageRegionScreenState extends State<LanguageRegionScreen> {
               onChanged: onChanged,
               underline: const SizedBox(),
               isDense: true,
-              icon: Icon(
+              icon: const Icon(
                 Icons.arrow_drop_down,
                 color: AppTheme.accentCopper,
               ),
@@ -198,4 +197,3 @@ class _LanguageRegionScreenState extends State<LanguageRegionScreen> {
     );
   }
 }
-

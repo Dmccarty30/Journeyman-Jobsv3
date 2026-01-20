@@ -53,7 +53,7 @@ class _FoxWeatherWidgetState extends State<FoxWeatherWidget> {
             padding: const EdgeInsets.all(AppTheme.spacingMd),
             child: Row(
               children: [
-                Icon(Icons.tv, color: AppTheme.primaryNavy),
+                const Icon(Icons.tv, color: AppTheme.primaryNavy),
                 const SizedBox(width: AppTheme.spacingSm),
                 Text(
                   'Fox Weather',

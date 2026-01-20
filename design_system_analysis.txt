@@ -1,0 +1,10 @@
+Analyzing design_system...                                      
+
+   info - 'background' is deprecated and shouldn't be used. Use surface instead. This feature was deprecated after v3.18.0-0.1.pre - lib\design_system\app_theme.dart:678:9 - deprecated_member_use
+   info - 'opacity' is deprecated and shouldn't be used. Use .a - lib\design_system\electrical\circuit_board_background.dart:564:59 - deprecated_member_use
+warning - The declaration '_MiniCircuitPainter' isn't referenced - lib\design_system\electrical\jj_electrical_notifications.dart:578:7 - unused_element
+warning - The declaration '_SnackBarCircuitPainter' isn't referenced - lib\design_system\electrical\jj_electrical_notifications.dart:657:7 - unused_element
+   info - 'window' is deprecated and shouldn't be used. Look up the current FlutterView from the context via View.of(context) or consult the PlatformDispatcher directly instead. Deprecated to prepare for the upcoming multi-window support. This feature was deprecated after v3.7.0-32.0.pre - lib\design_system\electrical\transformer_trainer\painters\base_transformer_painter.dart:71:29 - deprecated_member_use
+   info - 'textScaleFactor' is deprecated and shouldn't be used. Use textScaler instead. Use of textScaleFactor was deprecated in preparation for the upcoming nonlinear text scaling support. This feature was deprecated after v3.12.0-2.0.pre - lib\design_system\electrical\transformer_trainer\utils\accessibility_manager.dart:21:35 - deprecated_member_use
+   info - 'textScaleFactor' is deprecated and shouldn't be used. Use textScaler instead. Use of textScaleFactor was deprecated in preparation for the upcoming nonlinear text scaling support. This feature was deprecated after v3.12.0-2.0.pre - lib\design_system\electrical\transformer_trainer\utils\responsive_layout_manager.dart:145:59 - deprecated_member_use
+

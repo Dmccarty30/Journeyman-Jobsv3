@@ -6,7 +6,6 @@ import 'package:journeyman_jobs/core/services/onboarding_service.dart';
 import 'package:journeyman_jobs/design_system/design_system.dart';
 import 'package:journeyman_jobs/features/navigation/services/app_router.dart';
 
-
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
 
@@ -105,7 +104,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           gradient: AppTheme.buttonGradient,
                           shape: BoxShape.circle,
                         ),
-                        child: Icon(
+                        child: const Icon(
                           Icons.person,
                           size: AppTheme.iconLg,
                           color: AppTheme.white,
@@ -370,7 +369,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ],
                   ),
                 ),
-                Icon(
+                const Icon(
                   Icons.chevron_right,
                   color: AppTheme.textLight,
                   size: AppTheme.iconSm,
@@ -456,7 +455,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         children: [
           Row(
             children: [
-              Icon(
+              const Icon(
                 Icons.bug_report,
                 color: AppTheme.warningYellow,
                 size: AppTheme.iconMd,
@@ -547,7 +546,3 @@ class _MenuOption {
     required this.onTap,
   });
 }
-
-
-
-

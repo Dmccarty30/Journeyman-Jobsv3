@@ -22,7 +22,7 @@ class JJSnackBar {
       duration: duration,
       backgroundColor: backgroundColor,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: const BorderRadius.all(Radius.circular(8)),
       ),
       content: Row(
         children: <Widget>[
@@ -99,4 +99,3 @@ class JJSnackBar {
     );
   }
 }
-

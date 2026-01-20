@@ -1,0 +1,6 @@
+Analyzing screens...                                            
+
+warning - Unused import: 'package:firebase_auth/firebase_auth.dart' - lib\features\jobs\profile\screens\profile_screen.dart:6:8 - unused_import
+  error - Invalid constant value - lib\features\jobs\profile\screens\profile_screen.dart:452:26 - invalid_constant
+  error - Invalid constant value - lib\features\jobs\profile\screens\profile_screen.dart:468:56 - invalid_constant
+

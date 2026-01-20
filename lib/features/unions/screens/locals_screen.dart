@@ -239,6 +239,7 @@ class LocalCard extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.only(bottom: AppTheme.spacingMd),
       elevation: 2,
+      color: AppTheme.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppTheme.radiusLg),
         side: const BorderSide(
@@ -477,6 +478,7 @@ class LocalDetailsDialog extends StatelessWidget {
         ),
       ),
       child: Container(
+        color: AppTheme.white,
         constraints: BoxConstraints(
           maxHeight: MediaQuery.of(context).size.height * 0.85,
           maxWidth: MediaQuery.of(context).size.width * 0.95,

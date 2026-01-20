@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:journeyman_jobs/design_system/design_system.dart';
 
-
 class FeedbackScreen extends StatefulWidget {
   const FeedbackScreen({super.key});
 
@@ -16,10 +15,10 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
   final _subjectController = TextEditingController();
   final _messageController = TextEditingController();
   final _emailController = TextEditingController();
-  
+
   String _selectedCategory = 'General';
   bool _isSubmitting = false;
-  
+
   final List<String> _categories = [
     'General',
     'Bug Report',
@@ -65,9 +64,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
         'appVersion': '1.0.0', // In a real app, get this from package_info
       };
 
-      await FirebaseFirestore.instance
-          .collection('feedback')
-          .add(feedbackData);
+      await FirebaseFirestore.instance.collection('feedback').add(feedbackData);
 
       if (mounted) {
         JJSnackBar.showSuccess(
@@ -134,7 +131,8 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                           padding: const EdgeInsets.all(AppTheme.spacingSm),
                           decoration: BoxDecoration(
                             color: AppTheme.accentCopper.withValues(alpha: 0.1),
-                            borderRadius: BorderRadius.circular(AppTheme.radiusSm),
+                            borderRadius:
+                                BorderRadius.circular(AppTheme.radiusSm),
                           ),
                           child: JJElectricalIcons.hardHat(
                             size: AppTheme.iconLg,
@@ -237,7 +235,8 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                         if (value == null || value.trim().isEmpty) {
                           return 'Please enter your email';
                         }
-                        if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+                        if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                            .hasMatch(value)) {
                           return 'Please enter a valid email address';
                         }
                         return null;
@@ -302,7 +301,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                   children: [
                     Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.info_outline,
                           color: AppTheme.primaryNavy,
                           size: AppTheme.iconMd,
@@ -328,4 +327,3 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
     );
   }
 }
-

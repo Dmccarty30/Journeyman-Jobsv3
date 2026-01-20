@@ -187,7 +187,7 @@ final class UserCrewsStreamProvider extends $FunctionalProvider<
   }
 }
 
-String _$userCrewsStreamHash() => r'6b7c8df69c33081dadf68808f9c291119ffbcddd';
+String _$userCrewsStreamHash() => r'417e8dc908954e67e54259dd37f3f1af5a218bb0';
 
 /// Current user's crews provider
 
@@ -235,16 +235,15 @@ final class UserCrewsProvider
 
 String _$userCrewsHash() => r'298a533caa58a465d0e6ec46cdf1ad03ccc12df8';
 
-/// Selected crew provider
+/// Selected crew controller
 
-@ProviderFor(selectedCrew)
+@ProviderFor(SelectedCrew)
 final selectedCrewProvider = SelectedCrewProvider._();
 
-/// Selected crew provider
-
+/// Selected crew controller
 final class SelectedCrewProvider
-    extends $FunctionalProvider<Crew?, Crew?, Crew?> with $Provider<Crew?> {
-  /// Selected crew provider
+    extends $NotifierProvider<SelectedCrew, Crew?> {
+  /// Selected crew controller
   SelectedCrewProvider._()
       : super(
           from: null,
@@ -261,13 +260,7 @@ final class SelectedCrewProvider
 
   @$internal
   @override
-  $ProviderElement<Crew?> $createElement($ProviderPointer pointer) =>
-      $ProviderElement(pointer);
-
-  @override
-  Crew? create(Ref ref) {
-    return selectedCrew(ref);
-  }
+  SelectedCrew create() => SelectedCrew();
 
   /// {@macro riverpod.override_with_value}
   Override overrideWithValue(Crew? value) {
@@ -278,57 +271,21 @@ final class SelectedCrewProvider
   }
 }
 
-String _$selectedCrewHash() => r'7da0b10ed7a33ed8b2da2d60178785710934bea5';
+String _$selectedCrewHash() => r'7eee83b74c81485321943d75bbafa9cb13ddc74e';
 
-/// Selected crew notifier provider
+/// Selected crew controller
 
-@ProviderFor(selectedCrewNotifierProvider)
-final selectedCrewNotifierProviderProvider =
-    SelectedCrewNotifierProviderProvider._();
-
-/// Selected crew notifier provider
-
-final class SelectedCrewNotifierProviderProvider extends $FunctionalProvider<
-    SelectedCrewNotifier,
-    SelectedCrewNotifier,
-    SelectedCrewNotifier> with $Provider<SelectedCrewNotifier> {
-  /// Selected crew notifier provider
-  SelectedCrewNotifierProviderProvider._()
-      : super(
-          from: null,
-          argument: null,
-          retry: null,
-          name: r'selectedCrewNotifierProviderProvider',
-          isAutoDispose: true,
-          dependencies: null,
-          $allTransitiveDependencies: null,
-        );
-
+abstract class _$SelectedCrew extends $Notifier<Crew?> {
+  Crew? build();
+  @$mustCallSuper
   @override
-  String debugGetCreateSourceHash() => _$selectedCrewNotifierProviderHash();
-
-  @$internal
-  @override
-  $ProviderElement<SelectedCrewNotifier> $createElement(
-          $ProviderPointer pointer) =>
-      $ProviderElement(pointer);
-
-  @override
-  SelectedCrewNotifier create(Ref ref) {
-    return selectedCrewNotifierProvider(ref);
-  }
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(SelectedCrewNotifier value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<SelectedCrewNotifier>(value),
-    );
+  void runBuild() {
+    final ref = this.ref as $Ref<Crew?, Crew?>;
+    final element = ref.element as $ClassProviderElement<
+        AnyNotifier<Crew?, Crew?>, Crew?, Object?, Object?>;
+    element.handleCreate(ref, build);
   }
 }
-
-String _$selectedCrewNotifierProviderHash() =>
-    r'e720cf8f7f08eee41dcaea57ac90d459ec62f4a1';
 
 /// Provider to check if current user is in a specific crew
 
@@ -1375,18 +1332,15 @@ final class HasReachedCrewLimitProvider
 String _$hasReachedCrewLimitHash() =>
     r'6c6cb512f0d8e6bf943cfa282f23b8a09ade7736';
 
-/// Provider for crew creation notifier
+/// Notifier for creating crews with preferences
 
-@ProviderFor(crewCreationNotifier)
+@ProviderFor(CrewCreationNotifier)
 final crewCreationProvider = CrewCreationNotifierProvider._();
 
-/// Provider for crew creation notifier
-
-final class CrewCreationNotifierProvider extends $FunctionalProvider<
-    CrewCreationNotifier,
-    CrewCreationNotifier,
-    CrewCreationNotifier> with $Provider<CrewCreationNotifier> {
-  /// Provider for crew creation notifier
+/// Notifier for creating crews with preferences
+final class CrewCreationNotifierProvider
+    extends $NotifierProvider<CrewCreationNotifier, AsyncValue<void>> {
+  /// Notifier for creating crews with preferences
   CrewCreationNotifierProvider._()
       : super(
           from: null,
@@ -1403,62 +1357,7 @@ final class CrewCreationNotifierProvider extends $FunctionalProvider<
 
   @$internal
   @override
-  $ProviderElement<CrewCreationNotifier> $createElement(
-          $ProviderPointer pointer) =>
-      $ProviderElement(pointer);
-
-  @override
-  CrewCreationNotifier create(Ref ref) {
-    return crewCreationNotifier(ref);
-  }
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(CrewCreationNotifier value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<CrewCreationNotifier>(value),
-    );
-  }
-}
-
-String _$crewCreationNotifierHash() =>
-    r'28a17361d065e3366282ec119e670c8bde834bdb';
-
-/// Stream of crew creation state
-
-@ProviderFor(crewCreationState)
-final crewCreationStateProvider = CrewCreationStateProvider._();
-
-/// Stream of crew creation state
-
-final class CrewCreationStateProvider extends $FunctionalProvider<
-    AsyncValue<void>,
-    AsyncValue<void>,
-    AsyncValue<void>> with $Provider<AsyncValue<void>> {
-  /// Stream of crew creation state
-  CrewCreationStateProvider._()
-      : super(
-          from: null,
-          argument: null,
-          retry: null,
-          name: r'crewCreationStateProvider',
-          isAutoDispose: true,
-          dependencies: null,
-          $allTransitiveDependencies: null,
-        );
-
-  @override
-  String debugGetCreateSourceHash() => _$crewCreationStateHash();
-
-  @$internal
-  @override
-  $ProviderElement<AsyncValue<void>> $createElement($ProviderPointer pointer) =>
-      $ProviderElement(pointer);
-
-  @override
-  AsyncValue<void> create(Ref ref) {
-    return crewCreationState(ref);
-  }
+  CrewCreationNotifier create() => CrewCreationNotifier();
 
   /// {@macro riverpod.override_with_value}
   Override overrideWithValue(AsyncValue<void> value) {
@@ -1469,4 +1368,22 @@ final class CrewCreationStateProvider extends $FunctionalProvider<
   }
 }
 
-String _$crewCreationStateHash() => r'298083a6536d7e748562a55e99d5876d3c5cf8f0';
+String _$crewCreationNotifierHash() =>
+    r'504e96d769cc67a46433639921cc0e6c28abfe20';
+
+/// Notifier for creating crews with preferences
+
+abstract class _$CrewCreationNotifier extends $Notifier<AsyncValue<void>> {
+  AsyncValue<void> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final ref = this.ref as $Ref<AsyncValue<void>, AsyncValue<void>>;
+    final element = ref.element as $ClassProviderElement<
+        AnyNotifier<AsyncValue<void>, AsyncValue<void>>,
+        AsyncValue<void>,
+        Object?,
+        Object?>;
+    element.handleCreate(ref, build);
+  }
+}

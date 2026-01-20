@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:journeyman_jobs/design_system/design_system.dart';
 import '../../../features/tools/tools.dart';
 
-
 class ResourcesScreen extends StatefulWidget {
   const ResourcesScreen({super.key});
 
@@ -12,7 +11,8 @@ class ResourcesScreen extends StatefulWidget {
   State<ResourcesScreen> createState() => _ResourcesScreenState();
 }
 
-class _ResourcesScreenState extends State<ResourcesScreen> with SingleTickerProviderStateMixin {
+class _ResourcesScreenState extends State<ResourcesScreen>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
   final TextEditingController _searchController = TextEditingController();
   String _searchQuery = '';
@@ -43,7 +43,8 @@ class _ResourcesScreenState extends State<ResourcesScreen> with SingleTickerProv
       type: ResourceType.document,
       icon: Icons.security,
       color: AppTheme.warningYellow,
-      action: 'https://www.nfpa.org/codes-and-standards/all-codes-and-standards/list-of-codes-and-standards/detail?code=70E',
+      action:
+          'https://www.nfpa.org/codes-and-standards/all-codes-and-standards/list-of-codes-and-standards/detail?code=70E',
     ),
     ResourceItem(
       category: 'Safety',
@@ -52,7 +53,8 @@ class _ResourcesScreenState extends State<ResourcesScreen> with SingleTickerProv
       type: ResourceType.document,
       icon: Icons.shield,
       color: AppTheme.warningYellow,
-      action: 'https://www.osha.gov/laws-regs/regulations/standardnumber/1926/1926Subparts',
+      action:
+          'https://www.osha.gov/laws-regs/regulations/standardnumber/1926/1926Subparts',
     ),
     ResourceItem(
       category: 'Technical',
@@ -61,7 +63,8 @@ class _ResourcesScreenState extends State<ResourcesScreen> with SingleTickerProv
       type: ResourceType.document,
       icon: Icons.electrical_services,
       color: AppTheme.infoBlue,
-      action: 'https://www.nfpa.org/codes-and-standards/all-codes-and-standards/list-of-codes-and-standards/detail?code=70',
+      action:
+          'https://www.nfpa.org/codes-and-standards/all-codes-and-standards/list-of-codes-and-standards/detail?code=70',
     ),
     ResourceItem(
       category: 'Technical',
@@ -132,7 +135,8 @@ class _ResourcesScreenState extends State<ResourcesScreen> with SingleTickerProv
     ResourceItem(
       category: 'Reference',
       title: 'Transformer Banks',
-      description: 'Interactive transformer bank configurations and connections',
+      description:
+          'Interactive transformer bank configurations and connections',
       type: ResourceType.tool,
       icon: Icons.electrical_services,
       color: AppTheme.accentCopper,
@@ -212,11 +216,14 @@ class _ResourcesScreenState extends State<ResourcesScreen> with SingleTickerProv
 
   List<ResourceItem> _getFilteredItems(List<ResourceItem> items) {
     if (_searchQuery.isEmpty) return items;
-    return items.where((item) =>
-      item.title.toLowerCase().contains(_searchQuery.toLowerCase()) ||
-      item.description.toLowerCase().contains(_searchQuery.toLowerCase()) ||
-      item.category.toLowerCase().contains(_searchQuery.toLowerCase())
-    ).toList();
+    return items
+        .where((item) =>
+            item.title.toLowerCase().contains(_searchQuery.toLowerCase()) ||
+            item.description
+                .toLowerCase()
+                .contains(_searchQuery.toLowerCase()) ||
+            item.category.toLowerCase().contains(_searchQuery.toLowerCase()))
+        .toList();
   }
 
   @override
@@ -323,31 +330,28 @@ class _ResourcesScreenState extends State<ResourcesScreen> with SingleTickerProv
         final category = groupedItems.keys.elementAt(index);
         final categoryItems = groupedItems[category]!;
 
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (index > 0) const SizedBox(height: AppTheme.spacingLg),
-            
-            // Category header
-            Padding(
-              padding: const EdgeInsets.only(
-                left: AppTheme.spacingSm,
-                bottom: AppTheme.spacingSm,
-              ),
-              child: Text(
-                category,
-                style: AppTheme.titleMedium.copyWith(
-                  color: AppTheme.textSecondary,
-                  fontWeight: FontWeight.w600,
-                ),
+        return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          if (index > 0) const SizedBox(height: AppTheme.spacingLg),
+
+          // Category header
+          Padding(
+            padding: const EdgeInsets.only(
+              left: AppTheme.spacingSm,
+              bottom: AppTheme.spacingSm,
+            ),
+            child: Text(
+              category,
+              style: AppTheme.titleMedium.copyWith(
+                color: AppTheme.textSecondary,
+                fontWeight: FontWeight.w600,
               ),
             ),
+          ),
 
-            // Category items
-            // Category items
-            ...categoryItems.map((item) => ResourceCard(item: item)),
-          ]  
-        );
+          // Category items
+          // Category items
+          ...categoryItems.map((item) => ResourceCard(item: item)),
+        ]);
       },
     );
   }
@@ -556,11 +560,12 @@ class ResourceCard extends StatelessWidget {
               decoration: BoxDecoration(
                 color: AppTheme.infoBlue.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(AppTheme.radiusSm),
-                border: Border.all(color: AppTheme.infoBlue.withValues(alpha: 0.3)),
+                border:
+                    Border.all(color: AppTheme.infoBlue.withValues(alpha: 0.3)),
               ),
               child: Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.info_outline,
                     color: AppTheme.infoBlue,
                     size: AppTheme.iconSm,
@@ -589,9 +594,3 @@ class ResourceCard extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-

@@ -7,7 +7,6 @@ import '../crews.dart' hide connectivityServiceProvider;
 import 'package:journeyman_jobs/core/core.dart'
     hide connectivityServiceProvider;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:state_notifier/state_notifier.dart';
 
 import '../../auth/auth.dart' hide currentUserProvider;
 
@@ -69,34 +68,21 @@ List<Crew> userCrews(Ref ref) {
   );
 }
 
-/// Selected crew notifier
-class SelectedCrewNotifier extends StateNotifier<Crew?> {
-  SelectedCrewNotifier() : super(null);
+/// Selected crew controller
+@riverpod
+class SelectedCrew extends _$SelectedCrew {
+  @override
+  Crew? build() {
+    return null;
+  }
 
   void setCrew(Crew crew) {
     state = crew;
-    // Additional logic can be added here if needed when a crew is selected
-    // For example, loading crew-specific data for tabs
   }
 
   void clearCrew() {
     state = null;
-    // Additional logic can be added here if needed when a crew is cleared
   }
-}
-
-/// Selected crew provider
-@riverpod
-Crew? selectedCrew(Ref ref) {
-  final crews = ref.watch(userCrewsProvider);
-  // For now, return the first crew or null
-  return crews.isNotEmpty ? crews.first : null;
-}
-
-/// Selected crew notifier provider
-@riverpod
-SelectedCrewNotifier selectedCrewNotifierProvider(Ref ref) {
-  return SelectedCrewNotifier();
 }
 
 /// Provider to check if current user is in a specific crew
@@ -233,10 +219,12 @@ bool hasReachedCrewLimit(Ref ref) {
 }
 
 /// Notifier for creating crews with preferences
-class CrewCreationNotifier extends StateNotifier<AsyncValue<void>> {
-  CrewCreationNotifier(this._ref) : super(const AsyncValue.data(null));
-
-  final Ref _ref;
+@riverpod
+class CrewCreationNotifier extends _$CrewCreationNotifier {
+  @override
+  AsyncValue<void> build() {
+    return const AsyncValue.data(null);
+  }
 
   Future<void> createCrewWithPreferences({
     required String name,
@@ -246,7 +234,7 @@ class CrewCreationNotifier extends StateNotifier<AsyncValue<void>> {
   }) async {
     state = const AsyncValue.loading();
     try {
-      final crewService = _ref.read(crewServiceProvider);
+      final crewService = ref.read(crewServiceProvider);
       await crewService.createCrew(
         name: name,
         foremanId: foremanId,
@@ -265,7 +253,7 @@ class CrewCreationNotifier extends StateNotifier<AsyncValue<void>> {
   }) async {
     state = const AsyncValue.loading();
     try {
-      final crewService = _ref.read(crewServiceProvider);
+      final crewService = ref.read(crewServiceProvider);
       await crewService.updateCrew(
         crewId: crewId,
         preferences: preferences,
@@ -279,16 +267,4 @@ class CrewCreationNotifier extends StateNotifier<AsyncValue<void>> {
   void reset() {
     state = const AsyncValue.data(null);
   }
-}
-
-/// Provider for crew creation notifier
-@riverpod
-CrewCreationNotifier crewCreationNotifier(Ref ref) {
-  return CrewCreationNotifier(ref);
-}
-
-/// Stream of crew creation state
-@riverpod
-AsyncValue<void> crewCreationState(Ref ref) {
-  return ref.watch(crewCreationStateProvider);
 }

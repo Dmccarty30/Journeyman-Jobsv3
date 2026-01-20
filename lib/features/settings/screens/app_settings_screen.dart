@@ -1,4 +1,4 @@
-  import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:journeyman_jobs/design_system/design_system.dart';
 
@@ -10,60 +10,52 @@ class AppSettingsScreen extends StatefulWidget {
 }
 
 class _AppSettingsScreenState extends State<AppSettingsScreen> {
-
-  
-
-  
-
-  
-
-  
   // Language & Region
   String _selectedLanguage = 'English';
   String _dateFormat = 'MM/DD/YYYY';
   String _timeFormat = '12-hour';
-  
+
   // Storm Work Settings
   double _stormAlertRadius = 100.0;
   double _stormRateMultiplier = 1.5;
   final String _units = 'miles';
-  
+
   @override
   void initState() {
     super.initState();
     _loadSettings();
   }
-  
+
   Future<void> _loadSettings() async {
     final prefs = await SharedPreferences.getInstance();
-    
+
     setState(() {
       // Appearance
       // Removed as these settings are now handled by AppearanceDisplayScreen
-      
+
       // Job Search
       // Removed as these settings are now handled by JobSearchPreferencesScreen
-      
+
       // Data & Storage
       // Removed as these settings are now handled by DataStorageScreen
-      
+
       // Privacy & Security
       // Removed as these settings are now handled by PrivacySecurityScreen
-      
+
       // Language & Region
       _selectedLanguage = prefs.getString('language') ?? 'English';
       _dateFormat = prefs.getString('date_format') ?? 'MM/DD/YYYY';
       _timeFormat = prefs.getString('time_format') ?? '12-hour';
-      
+
       // Storm Work
       _stormAlertRadius = prefs.getDouble('storm_alert_radius') ?? 100.0;
       _stormRateMultiplier = prefs.getDouble('storm_rate_multiplier') ?? 1.5;
     });
   }
-  
+
   Future<void> _saveSetting(String key, dynamic value) async {
     final prefs = await SharedPreferences.getInstance();
-    
+
     if (value is bool) {
       await prefs.setBool(key, value);
     } else if (value is double) {
@@ -72,7 +64,6 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
       await prefs.setString(key, value);
     }
   }
-  
 
   @override
   Widget build(BuildContext context) {
@@ -94,18 +85,10 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
-            
             const SizedBox(height: AppTheme.spacingLg),
-            
 
-            
-
-            
-
-            
             const SizedBox(height: AppTheme.spacingLg),
-            
+
             // Language & Region
             // Language & Region
             _buildSectionHeader('Language & Region'),
@@ -139,9 +122,9 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
                 _saveSetting('time_format', value);
               },
             ),
-            
+
             const SizedBox(height: AppTheme.spacingLg),
-            
+
             // Storm Work Settings
             _buildSectionHeader('Storm Work Settings'),
             _buildSliderTile(
@@ -170,9 +153,9 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
                 _saveSetting('storm_rate_multiplier', value);
               },
             ),
-            
+
             const SizedBox(height: AppTheme.spacingLg),
-            
+
             // About Section
             _buildSectionHeader('About'),
             _buildInfoTile(
@@ -210,7 +193,7 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
       ),
     );
   }
-  
+
   Widget _buildSectionHeader(String title) {
     return Padding(
       padding: const EdgeInsets.only(
@@ -226,8 +209,7 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
       ),
     );
   }
-  
-  
+
   Widget _buildDropdownTile({
     required IconData icon,
     required String title,
@@ -291,7 +273,7 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
               onChanged: onChanged,
               underline: const SizedBox(),
               isDense: true,
-              icon: Icon(
+              icon: const Icon(
                 Icons.arrow_drop_down,
                 color: AppTheme.accentCopper,
               ),
@@ -301,7 +283,7 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
       ),
     );
   }
-  
+
   Widget _buildSliderTile({
     required IconData icon,
     required String title,
@@ -379,7 +361,7 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
       ),
     );
   }
-  
+
   Widget _buildActionTile({
     required IconData icon,
     required String title,
@@ -435,7 +417,7 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
                     ],
                   ),
                 ),
-                Icon(
+                const Icon(
                   Icons.chevron_right,
                   color: AppTheme.textLight,
                   size: AppTheme.iconMd,
@@ -447,7 +429,7 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
       ),
     );
   }
-  
+
   Widget _buildInfoTile({
     required IconData icon,
     required String title,
@@ -495,4 +477,3 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
     );
   }
 }
-

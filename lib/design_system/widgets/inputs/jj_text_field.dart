@@ -62,10 +62,9 @@ class JJTextField extends StatelessWidget {
     // --------------------------------------------------------
     //  Handle IconData to Widget conversion for backward compatibility
     // --------------------------------------------------------
-    final Widget? prefixIconWidget = prefixIcon != null
-        ? Icon(prefixIcon, color: AppTheme.textLight)
-        : null;
-    
+    final Widget? prefixIconWidget =
+        prefixIcon != null ? Icon(prefixIcon, color: AppTheme.textLight) : null;
+
     final Widget? suffixIconWidget = suffixIcon != null
         ? IconButton(
             icon: Icon(suffixIcon, color: AppTheme.textLight),
@@ -84,22 +83,22 @@ class JJTextField extends StatelessWidget {
       prefixIcon: prefixIconWidget,
       suffixIcon: suffixIconWidget,
       // Border when the field is *enabled* but NOT focused
-      enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.grey.shade400, width: 1.5),
-        borderRadius: BorderRadius.circular(8),
+      enabledBorder: const OutlineInputBorder(
+        borderSide: BorderSide(color: AppTheme.mediumGray, width: 1.5),
+        borderRadius: BorderRadius.all(Radius.circular(8)),
       ),
       // Border when the field *has* focus – we switch colour here
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(color: borderColor, width: 2),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: const BorderRadius.all(Radius.circular(8)),
       ),
-      errorBorder: OutlineInputBorder(
+      errorBorder: const OutlineInputBorder(
         borderSide: BorderSide(color: AppTheme.errorRed, width: 1.5),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.all(Radius.circular(8)),
       ),
-      focusedErrorBorder: OutlineInputBorder(
+      focusedErrorBorder: const OutlineInputBorder(
         borderSide: BorderSide(color: AppTheme.errorRed, width: 2),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.all(Radius.circular(8)),
       ),
     );
 

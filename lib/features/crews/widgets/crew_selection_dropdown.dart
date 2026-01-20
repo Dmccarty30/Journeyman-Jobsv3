@@ -44,7 +44,7 @@ class CrewSelectionDropdown extends ConsumerWidget {
         if (crews.isNotEmpty && selectedCrew == null) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             final firstCrew = crews.first;
-            ref.read(selectedCrewNotifierProviderProvider).setCrew(firstCrew);
+            ref.read(selectedCrewProvider.notifier).setCrew(firstCrew);
           });
         }
 
@@ -71,9 +71,7 @@ class CrewSelectionDropdown extends ConsumerWidget {
               : (String? value) {
                   if (value != null) {
                     final crew = crews.firstWhere((c) => c.id == value);
-                    ref
-                        .read(selectedCrewNotifierProviderProvider)
-                        .setCrew(crew);
+                    ref.read(selectedCrewProvider.notifier).setCrew(crew);
 
                     // Notify tabs about the crew change
                     // This will trigger a rebuild of the TabBarView and all its tabs

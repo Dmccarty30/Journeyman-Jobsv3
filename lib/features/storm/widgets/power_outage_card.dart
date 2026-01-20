@@ -56,7 +56,7 @@ class PowerOutageCard extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(
+                            const Icon(
                               FontAwesomeIcons.bolt,
                               color: AppTheme.accentCopper,
                               size: 24,
@@ -89,7 +89,7 @@ class PowerOutageCard extends StatelessWidget {
                           const SizedBox(height: AppTheme.spacingXs),
                           Row(
                             children: [
-                              Icon(
+                              const Icon(
                                 FontAwesomeIcons.usersSlash,
                                 size: 14,
                                 color: AppTheme.textSecondary,
@@ -159,7 +159,7 @@ class PowerOutageCard extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        Icon(
+                        const Icon(
                           FontAwesomeIcons.circleExclamation,
                           size: 12,
                           color: AppTheme.warningYellow,
@@ -218,7 +218,7 @@ class PowerOutageSummary extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(
+              const Icon(
                 FontAwesomeIcons.plugCircleXmark,
                 color: AppTheme.white,
                 size: 28,
@@ -308,5 +308,3 @@ class PowerOutageSummary extends StatelessWidget {
     );
   }
 }
-
-

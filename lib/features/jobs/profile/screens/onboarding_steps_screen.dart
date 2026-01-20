@@ -12,7 +12,6 @@ import 'package:journeyman_jobs/design_system/design_system.dart';
 import 'package:journeyman_jobs/features/jobs/profile/models/user_model.dart';
 import 'package:journeyman_jobs/features/navigation/services/app_router.dart';
 
-
 class OnboardingStepsScreen extends StatefulWidget {
   const OnboardingStepsScreen({super.key});
 
@@ -34,7 +33,7 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
   final _cityController = TextEditingController();
   final _stateController = TextEditingController();
   final _zipcodeController = TextEditingController();
-  
+
   // Focus nodes for keyboard navigation
   final _firstNameFocus = FocusNode();
   final _lastNameFocus = FocusNode();
@@ -74,12 +73,12 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
   final _careerGoalsController = TextEditingController();
   final _howHeardAboutUsController = TextEditingController();
   final _lookingToAccomplishController = TextEditingController();
-  
+
   // Step 2 Focus nodes
   final _ticketNumberFocus = FocusNode();
   final _homeLocalFocus = FocusNode();
   final _booksOnFocus = FocusNode();
-  
+
   // Step 3 Focus nodes
   final _preferredLocalsFocus = FocusNode();
   final _careerGoalsFocus = FocusNode();
@@ -92,11 +91,56 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
   final List<String> _constructionTypes = ConstructionTypes.all;
 
   final List<String> _usStates = [
-    'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA',
-    'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD',
-    'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ',
-    'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC',
-    'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'
+    'AL',
+    'AK',
+    'AZ',
+    'AR',
+    'CA',
+    'CO',
+    'CT',
+    'DE',
+    'FL',
+    'GA',
+    'HI',
+    'ID',
+    'IL',
+    'IN',
+    'IA',
+    'KS',
+    'KY',
+    'LA',
+    'ME',
+    'MD',
+    'MA',
+    'MI',
+    'MN',
+    'MS',
+    'MO',
+    'MT',
+    'NE',
+    'NV',
+    'NH',
+    'NJ',
+    'NM',
+    'NY',
+    'NC',
+    'ND',
+    'OH',
+    'OK',
+    'OR',
+    'PA',
+    'RI',
+    'SC',
+    'SD',
+    'TN',
+    'TX',
+    'UT',
+    'VT',
+    'VA',
+    'WA',
+    'WV',
+    'WI',
+    'WY'
   ];
 
   final List<String> _hoursPerWeekOptions = [
@@ -107,11 +151,7 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
     '>70'
   ];
 
-  final List<String> _perDiemOptions = [
-    '100-150',
-    '150-200',
-    '200+'
-  ];
+  final List<String> _perDiemOptions = ['100-150', '150-200', '200+'];
 
   @override
   void dispose() {
@@ -131,7 +171,7 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
     _careerGoalsController.dispose();
     _howHeardAboutUsController.dispose();
     _lookingToAccomplishController.dispose();
-    
+
     // Dispose focus nodes
     _firstNameFocus.dispose();
     _lastNameFocus.dispose();
@@ -147,7 +187,7 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
     _careerGoalsFocus.dispose();
     _howHeardAboutUsFocus.dispose();
     _lookingToAccomplishFocus.dispose();
-    
+
     super.dispose();
   }
 
@@ -194,7 +234,7 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
       if (user == null) throw Exception('No authenticated user');
 
       final firestoreService = FirestoreService();
-      
+
       final userModel = UserModel(
         uid: user.uid,
         email: user.email ?? '',
@@ -270,7 +310,9 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
           'ticketNumber': _ticketNumberController.text.trim(),
           'classification': _selectedClassification ?? '',
           'isWorking': _isWorking,
-          'booksOn': _booksOnController.text.trim().isEmpty ? null : _booksOnController.text.trim(),
+          'booksOn': _booksOnController.text.trim().isEmpty
+              ? null
+              : _booksOnController.text.trim(),
         },
       );
 
@@ -309,7 +351,9 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
         'constructionTypes': _selectedConstructionTypes.toList(),
         'hoursPerWeek': _selectedHoursPerWeek,
         'perDiemRequirement': _selectedPerDiem,
-        'preferredLocals': _preferredLocalsController.text.trim().isEmpty ? null : _preferredLocalsController.text.trim(),
+        'preferredLocals': _preferredLocalsController.text.trim().isEmpty
+            ? null
+            : _preferredLocalsController.text.trim(),
         'networkWithOthers': _networkWithOthers,
         'careerAdvancements': _careerAdvancements,
         'betterBenefits': _betterBenefits,
@@ -317,9 +361,16 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
         'learnNewSkill': _learnNewSkill,
         'travelToNewLocation': _travelToNewLocation,
         'findLongTermWork': _findLongTermWork,
-        'careerGoals': _careerGoalsController.text.trim().isEmpty ? null : _careerGoalsController.text.trim(),
-        'howHeardAboutUs': _howHeardAboutUsController.text.trim().isEmpty ? null : _howHeardAboutUsController.text.trim(),
-        'lookingToAccomplish': _lookingToAccomplishController.text.trim().isEmpty ? null : _lookingToAccomplishController.text.trim(),
+        'careerGoals': _careerGoalsController.text.trim().isEmpty
+            ? null
+            : _careerGoalsController.text.trim(),
+        'howHeardAboutUs': _howHeardAboutUsController.text.trim().isEmpty
+            ? null
+            : _howHeardAboutUsController.text.trim(),
+        'lookingToAccomplish':
+            _lookingToAccomplishController.text.trim().isEmpty
+                ? null
+                : _lookingToAccomplishController.text.trim(),
         'onboardingStatus': OnboardingStatus.complete.name, // Mark as complete
       };
 
@@ -366,16 +417,16 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
     switch (_currentStep) {
       case 0: // Basic Information
         return _firstNameController.text.isNotEmpty &&
-               _lastNameController.text.isNotEmpty &&
-               _phoneController.text.isNotEmpty &&
-               _address1Controller.text.isNotEmpty &&
-               _cityController.text.isNotEmpty &&
-               _stateController.text.isNotEmpty &&
-               _zipcodeController.text.isNotEmpty;
+            _lastNameController.text.isNotEmpty &&
+            _phoneController.text.isNotEmpty &&
+            _address1Controller.text.isNotEmpty &&
+            _cityController.text.isNotEmpty &&
+            _stateController.text.isNotEmpty &&
+            _zipcodeController.text.isNotEmpty;
       case 1: // Professional Details
         return _homeLocalController.text.isNotEmpty &&
-               _ticketNumberController.text.isNotEmpty &&
-               _selectedClassification != null;
+            _ticketNumberController.text.isNotEmpty &&
+            _selectedClassification != null;
       case 2: // Preferences & Feedback
         return _selectedConstructionTypes.isNotEmpty;
       default:
@@ -412,40 +463,41 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
             children: [
               // Progress indicator
               Container(
-            padding: const EdgeInsets.all(AppTheme.spacingMd),
-            child: Column(
-              children: [
-                JJProgressIndicator(
-                  currentStep: _currentStep + 1,
-                  totalSteps: _totalSteps,
+                padding: const EdgeInsets.all(AppTheme.spacingMd),
+                child: Column(
+                  children: [
+                    JJProgressIndicator(
+                      currentStep: _currentStep + 1,
+                      totalSteps: _totalSteps,
+                    ),
+                    const SizedBox(height: AppTheme.spacingXs),
+                    Text(
+                      'Step ${_currentStep + 1} of $_totalSteps',
+                      style: AppTheme.bodySmall
+                          .copyWith(color: AppTheme.textSecondary),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: AppTheme.spacingXs),
-                Text(
-                  'Step ${_currentStep + 1} of $_totalSteps',
-                  style: AppTheme.bodySmall.copyWith(color: AppTheme.textSecondary),
+              ),
+
+              // Page content
+              Expanded(
+                child: PageView(
+                  controller: _pageController,
+                  onPageChanged: (page) {
+                    setState(() {
+                      _currentStep = page;
+                    });
+                  },
+                  children: [
+                    _buildStep1(),
+                    _buildStep2(),
+                    _buildStep3(),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-          
-          // Page content
-          Expanded(
-            child: PageView(
-              controller: _pageController,
-              onPageChanged: (page) {
-                setState(() {
-                  _currentStep = page;
-                });
-              },
-              children: [
-                _buildStep1(),
-                _buildStep2(),
-                _buildStep3(),
-              ],
-            ),
-          ),
-        ],
-      ),
         ],
       ),
       bottomNavigationBar: Container(
@@ -459,7 +511,8 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
           color: AppTheme.white,
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.2), // Darker shadcn-like shadow
+              color: Colors.black
+                  .withValues(alpha: 0.2), // Darker shadcn-like shadow
               blurRadius: 12,
               spreadRadius: -1,
               offset: const Offset(0, -6),
@@ -480,9 +533,7 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
                   )
                 else
                   const Expanded(child: SizedBox()),
-                
                 const SizedBox(width: AppTheme.spacingMd),
-                
                 Expanded(
                   child: JJPrimaryButton(
                     text: _currentStep == _totalSteps - 1 ? 'Complete' : 'Next',
@@ -516,9 +567,9 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
               subtitle: 'Let\'s start with your essential details',
             ),
           ),
-          
+
           const SizedBox(height: AppTheme.spacingMd),
-          
+
           // Name fields
           Row(
             children: [
@@ -528,7 +579,8 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
                   controller: _firstNameController,
                   focusNode: _firstNameFocus,
                   textInputAction: TextInputAction.next,
-                  onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_lastNameFocus),
+                  onFieldSubmitted: (_) =>
+                      FocusScope.of(context).requestFocus(_lastNameFocus),
                   prefixIcon: Icons.person_outline,
                   hintText: 'Enter first name',
                 ),
@@ -540,16 +592,17 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
                   controller: _lastNameController,
                   focusNode: _lastNameFocus,
                   textInputAction: TextInputAction.next,
-                  onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_phoneFocus),
+                  onFieldSubmitted: (_) =>
+                      FocusScope.of(context).requestFocus(_phoneFocus),
                   prefixIcon: Icons.person_outline,
                   hintText: 'Enter last name',
                 ),
               ),
             ],
           ),
-          
+
           const SizedBox(height: AppTheme.spacingMd),
-          
+
           // Phone number
           JJTextField(
             label: 'Phone Number',
@@ -557,45 +610,49 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
             focusNode: _phoneFocus,
             keyboardType: TextInputType.phone,
             textInputAction: TextInputAction.next,
-            onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_address1Focus),
+            onFieldSubmitted: (_) =>
+                FocusScope.of(context).requestFocus(_address1Focus),
             prefixIcon: Icons.phone_outlined,
             hintText: 'Enter your phone number',
           ),
-          
+
           const SizedBox(height: AppTheme.spacingMd),
-          
+
           // Address
           JJTextField(
             label: 'Address Line 1',
             controller: _address1Controller,
             focusNode: _address1Focus,
             textInputAction: TextInputAction.next,
-            onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_address2Focus),
+            onFieldSubmitted: (_) =>
+                FocusScope.of(context).requestFocus(_address2Focus),
             prefixIcon: Icons.home_outlined,
             hintText: 'Enter your street address',
           ),
-          
+
           const SizedBox(height: AppTheme.spacingSm),
-          
+
           JJTextField(
             label: 'Address Line 2 (Optional)',
             controller: _address2Controller,
             focusNode: _address2Focus,
             textInputAction: TextInputAction.next,
-            onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_cityFocus),
+            onFieldSubmitted: (_) =>
+                FocusScope.of(context).requestFocus(_cityFocus),
             prefixIcon: Icons.home_outlined,
             hintText: 'Apartment, suite, etc.',
           ),
-          
+
           const SizedBox(height: AppTheme.spacingMd),
-          
+
           // City, State, Zip
           JJTextField(
             label: 'City',
             controller: _cityController,
             focusNode: _cityFocus,
             textInputAction: TextInputAction.next,
-            onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_zipcodeFocus),
+            onFieldSubmitted: (_) =>
+                FocusScope.of(context).requestFocus(_zipcodeFocus),
             prefixIcon: Icons.location_city_outlined,
             hintText: 'Enter city',
           ),
@@ -624,12 +681,14 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
                   children: [
                     Text(
                       'State',
-                      style: AppTheme.labelMedium.copyWith(color: AppTheme.textSecondary),
+                      style: AppTheme.labelMedium
+                          .copyWith(color: AppTheme.textSecondary),
                     ),
                     const SizedBox(height: AppTheme.spacingSm),
                     Container(
                       height: 56,
-                      padding: const EdgeInsets.symmetric(horizontal: AppTheme.spacingSm),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: AppTheme.spacingSm),
                       decoration: BoxDecoration(
                         border: Border.all(color: AppTheme.lightGray),
                         borderRadius: BorderRadius.circular(AppTheme.radiusMd),
@@ -637,10 +696,13 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
                       ),
                       child: DropdownButtonHideUnderline(
                         child: DropdownButton<String>(
-                          value: _stateController.text.isEmpty ? null : _stateController.text,
+                          value: _stateController.text.isEmpty
+                              ? null
+                              : _stateController.text,
                           hint: Text(
                             'State',
-                            style: AppTheme.bodyMedium.copyWith(color: AppTheme.textLight),
+                            style: AppTheme.bodyMedium
+                                .copyWith(color: AppTheme.textLight),
                           ),
                           isExpanded: true,
                           items: _usStates.map((state) {
@@ -662,7 +724,7 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
               ),
             ],
           ),
-          
+
           const SizedBox(height: AppTheme.spacingXl),
         ],
       ),
@@ -672,7 +734,8 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
   Widget _buildStep2() {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(AppTheme.spacingMd),
-      child: Form( // Wrap with Form
+      child: Form(
+        // Wrap with Form
         key: _step2FormKey, // Assign key
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -681,159 +744,163 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
             _buildStepHeader(
               icon: Icons.electrical_services,
               title: 'IBEW Professional Details',
-              subtitle: 'Tell us about your electrical career and qualifications',
+              subtitle:
+                  'Tell us about your electrical career and qualifications',
             ),
-          
-          const SizedBox(height: AppTheme.spacingMd),
-          
-          // Ticket Number
-          JJTextField(
-            label: 'Ticket Number',
-            controller: _ticketNumberController,
-            focusNode: _ticketNumberFocus,
-            keyboardType: TextInputType.number,
-            textInputAction: TextInputAction.next,
-            onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_homeLocalFocus),
-            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-            prefixIcon: Icons.badge_outlined,
-            hintText: 'Enter your ticket number',
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Ticket number is required';
-              }
-              return null;
-            },
-          ),
-          
-          const SizedBox(height: AppTheme.spacingMd),
-          
-          // Home Local
-          JJTextField(
-            label: 'Home Local Number',
-            controller: _homeLocalController,
-            focusNode: _homeLocalFocus,
-            keyboardType: TextInputType.number,
-            textInputAction: TextInputAction.next,
-            onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_booksOnFocus),
-            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-            prefixIcon: Icons.location_on_outlined,
-            hintText: 'Enter your home local number',
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Home Local number is required';
-              }
-              if (int.tryParse(value) == null) {
-                return 'Please enter a valid number';
-              }
-              return null;
-            },
-          ),
-          
-          const SizedBox(height: AppTheme.spacingMd),
-          
-          // Classification selection
-          Text(
-            'Classification',
-            style: AppTheme.titleMedium.copyWith(color: AppTheme.textPrimary),
-          ),
-          const SizedBox(height: AppTheme.spacingSm),
-          Text(
-            'Select your current classification',
-            style: AppTheme.bodySmall.copyWith(color: AppTheme.textSecondary),
-          ),
-          const SizedBox(height: AppTheme.spacingMd),
-          Wrap(
-            spacing: AppTheme.spacingSm,
-            runSpacing: AppTheme.spacingSm,
-            children: _classifications.map((classification) {
-              final isSelected = _selectedClassification == classification;
-              return JJChip(
-                label: classification,
-                isSelected: isSelected,
-                onTap: () {
+
+            const SizedBox(height: AppTheme.spacingMd),
+
+            // Ticket Number
+            JJTextField(
+              label: 'Ticket Number',
+              controller: _ticketNumberController,
+              focusNode: _ticketNumberFocus,
+              keyboardType: TextInputType.number,
+              textInputAction: TextInputAction.next,
+              onFieldSubmitted: (_) =>
+                  FocusScope.of(context).requestFocus(_homeLocalFocus),
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              prefixIcon: Icons.badge_outlined,
+              hintText: 'Enter your ticket number',
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Ticket number is required';
+                }
+                return null;
+              },
+            ),
+
+            const SizedBox(height: AppTheme.spacingMd),
+
+            // Home Local
+            JJTextField(
+              label: 'Home Local Number',
+              controller: _homeLocalController,
+              focusNode: _homeLocalFocus,
+              keyboardType: TextInputType.number,
+              textInputAction: TextInputAction.next,
+              onFieldSubmitted: (_) =>
+                  FocusScope.of(context).requestFocus(_booksOnFocus),
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              prefixIcon: Icons.location_on_outlined,
+              hintText: 'Enter your home local number',
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Home Local number is required';
+                }
+                if (int.tryParse(value) == null) {
+                  return 'Please enter a valid number';
+                }
+                return null;
+              },
+            ),
+
+            const SizedBox(height: AppTheme.spacingMd),
+
+            // Classification selection
+            Text(
+              'Classification',
+              style: AppTheme.titleMedium.copyWith(color: AppTheme.textPrimary),
+            ),
+            const SizedBox(height: AppTheme.spacingSm),
+            Text(
+              'Select your current classification',
+              style: AppTheme.bodySmall.copyWith(color: AppTheme.textSecondary),
+            ),
+            const SizedBox(height: AppTheme.spacingMd),
+            Wrap(
+              spacing: AppTheme.spacingSm,
+              runSpacing: AppTheme.spacingSm,
+              children: _classifications.map((classification) {
+                final isSelected = _selectedClassification == classification;
+                return JJChip(
+                  label: classification,
+                  isSelected: isSelected,
+                  onTap: () {
+                    setState(() {
+                      _selectedClassification = classification;
+                    });
+                  },
+                );
+              }).toList(),
+            ),
+
+            const SizedBox(height: AppTheme.spacingMd),
+
+            // Currently working status
+            Container(
+              padding: const EdgeInsets.all(AppTheme.spacingMd),
+              decoration: BoxDecoration(
+                color: AppTheme.offWhite,
+                borderRadius: BorderRadius.circular(AppTheme.radiusMd),
+              ),
+              child: JJCircuitBreakerSwitchListTile(
+                title: Text(
+                  'Currently Working',
+                  style: AppTheme.titleMedium,
+                ),
+                subtitle: Text(
+                  'Are you currently employed?',
+                  style: AppTheme.bodySmall
+                      .copyWith(color: AppTheme.textSecondary),
+                ),
+                value: _isWorking,
+                onChanged: (value) {
                   setState(() {
-                    _selectedClassification = classification;
+                    _isWorking = value;
                   });
                 },
-              );
-            }).toList(),
-          ),
-          
-          const SizedBox(height: AppTheme.spacingMd),
-          
-          // Currently working status
-          Container(
-            padding: const EdgeInsets.all(AppTheme.spacingMd),
-            decoration: BoxDecoration(
-              color: AppTheme.offWhite,
-              borderRadius: BorderRadius.circular(AppTheme.radiusMd),
-            ),
-            child: JJCircuitBreakerSwitchListTile(
-              title: Text(
-                'Currently Working',
-                style: AppTheme.titleMedium,
+                size: JJCircuitBreakerSize.small,
+                showElectricalEffects: true,
               ),
-              subtitle: Text(
-                'Are you currently employed?',
-                style: AppTheme.bodySmall.copyWith(color: AppTheme.textSecondary),
+            ),
+
+            const SizedBox(height: AppTheme.spacingMd),
+
+            // Books they're on - CRITICAL FIELD
+            JJTextField(
+              label: 'Books You\'re Currently On',
+              controller: _booksOnController,
+              focusNode: _booksOnFocus,
+              textInputAction: TextInputAction.done,
+              onFieldSubmitted: (_) => FocusScope.of(context).unfocus(),
+              prefixIcon: Icons.book_outlined,
+              hintText: 'e.g., Book 1, Book 2, Local 456 Book 1',
+              maxLines: 2,
+            ),
+
+            const SizedBox(height: AppTheme.spacingSm),
+
+            Container(
+              padding: const EdgeInsets.all(AppTheme.spacingSm),
+              decoration: BoxDecoration(
+                color: AppTheme.accentCopper.withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(AppTheme.radiusSm),
               ),
-              value: _isWorking,
-              onChanged: (value) {
-                setState(() {
-                  _isWorking = value;
-                });
-              },
-              size: JJCircuitBreakerSize.small,
-              showElectricalEffects: true,
-            ),
-          ),
-          
-          const SizedBox(height: AppTheme.spacingMd),
-          
-          // Books they're on - CRITICAL FIELD
-          JJTextField(
-            label: 'Books You\'re Currently On',
-            controller: _booksOnController,
-            focusNode: _booksOnFocus,
-            textInputAction: TextInputAction.done,
-            onFieldSubmitted: (_) => FocusScope.of(context).unfocus(),
-            prefixIcon: Icons.book_outlined,
-            hintText: 'e.g., Book 1, Book 2, Local 456 Book 1',
-            maxLines: 2,
-          ),
-          
-          const SizedBox(height: AppTheme.spacingSm),
-          
-          Container(
-            padding: const EdgeInsets.all(AppTheme.spacingSm),
-            decoration: BoxDecoration(
-              color: AppTheme.accentCopper.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(AppTheme.radiusSm),
-            ),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.info_outline,
-                  color: AppTheme.accentCopper,
-                  size: 16,
-                ),
-                const SizedBox(width: AppTheme.spacingXs),
-                Expanded(
-                  child: Text(
-                    'This helps us manage your monthly resignations and maintain your position',
-                    style: AppTheme.bodySmall.copyWith(
-                      color: AppTheme.textSecondary,
-                      fontSize: 11,
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.info_outline,
+                    color: AppTheme.accentCopper,
+                    size: 16,
+                  ),
+                  const SizedBox(width: AppTheme.spacingXs),
+                  Expanded(
+                    child: Text(
+                      'This helps us manage your monthly resignations and maintain your position',
+                      style: AppTheme.bodySmall.copyWith(
+                        color: AppTheme.textSecondary,
+                        fontSize: 11,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          
-          const SizedBox(height: AppTheme.spacingXl),
-        ],
-      ),
+
+            const SizedBox(height: AppTheme.spacingXl),
+          ],
+        ),
       ),
     ).animate().fadeIn(duration: 400.ms).slideX(begin: 0.2, end: 0);
   }
@@ -850,9 +917,9 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
             title: 'Preferences & Feedback',
             subtitle: 'Help us personalize your experience',
           ),
-          
+
           const SizedBox(height: AppTheme.spacingMd),
-          
+
           // Construction Types
           Text(
             'Construction Types',
@@ -885,9 +952,9 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
               );
             }).toList(),
           ),
-          
+
           const SizedBox(height: AppTheme.spacingMd),
-          
+
           // Hours per week
           Text(
             'Hours Per Week',
@@ -911,7 +978,8 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
                 value: _selectedHoursPerWeek,
                 hint: Text(
                   'Select hours per week',
-                  style: AppTheme.bodyMedium.copyWith(color: AppTheme.textLight),
+                  style:
+                      AppTheme.bodyMedium.copyWith(color: AppTheme.textLight),
                 ),
                 isExpanded: true,
                 items: _hoursPerWeekOptions.map((hours) {
@@ -928,9 +996,9 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
               ),
             ),
           ),
-          
+
           const SizedBox(height: AppTheme.spacingMd),
-          
+
           // Per diem
           Text(
             'Per Diem Requirements',
@@ -954,7 +1022,8 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
                 value: _selectedPerDiem,
                 hint: Text(
                   'Select per diem preference',
-                  style: AppTheme.bodyMedium.copyWith(color: AppTheme.textLight),
+                  style:
+                      AppTheme.bodyMedium.copyWith(color: AppTheme.textLight),
                 ),
                 isExpanded: true,
                 items: _perDiemOptions.map((perDiem) {
@@ -971,23 +1040,24 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
               ),
             ),
           ),
-          
+
           const SizedBox(height: AppTheme.spacingMd),
-          
+
           // Preferred locals
           JJTextField(
             label: 'Preferred Locals (Optional)',
             controller: _preferredLocalsController,
             focusNode: _preferredLocalsFocus,
             textInputAction: TextInputAction.next,
-            onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_careerGoalsFocus),
+            onFieldSubmitted: (_) =>
+                FocusScope.of(context).requestFocus(_careerGoalsFocus),
             prefixIcon: Icons.location_on_outlined,
             hintText: 'e.g., Local 26, Local 103, Local 456',
             maxLines: 2,
           ),
-          
+
           const SizedBox(height: AppTheme.spacingMd),
-          
+
           // Job search goals
           Text(
             'Job Search Goals',
@@ -1008,95 +1078,122 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
             child: Column(
               children: [
                 CheckboxListTile(
-                  title: Text('Network with Others', style: AppTheme.bodyMedium),
-                  subtitle: Text('Connect with other electricians', style: AppTheme.bodySmall.copyWith(color: AppTheme.textSecondary)),
+                  title:
+                      Text('Network with Others', style: AppTheme.bodyMedium),
+                  subtitle: Text('Connect with other electricians',
+                      style: AppTheme.bodySmall
+                          .copyWith(color: AppTheme.textSecondary)),
                   value: _networkWithOthers,
                   activeColor: AppTheme.accentCopper,
-                  onChanged: (value) => setState(() => _networkWithOthers = value ?? false),
+                  onChanged: (value) =>
+                      setState(() => _networkWithOthers = value ?? false),
                   dense: true,
                 ),
                 CheckboxListTile(
                   title: Text('Career Advancement', style: AppTheme.bodyMedium),
-                  subtitle: Text('Seek leadership roles', style: AppTheme.bodySmall.copyWith(color: AppTheme.textSecondary)),
+                  subtitle: Text('Seek leadership roles',
+                      style: AppTheme.bodySmall
+                          .copyWith(color: AppTheme.textSecondary)),
                   value: _careerAdvancements,
                   activeColor: AppTheme.accentCopper,
-                  onChanged: (value) => setState(() => _careerAdvancements = value ?? false),
+                  onChanged: (value) =>
+                      setState(() => _careerAdvancements = value ?? false),
                   dense: true,
                 ),
                 CheckboxListTile(
                   title: Text('Better Benefits', style: AppTheme.bodyMedium),
-                  subtitle: Text('Improved benefit packages', style: AppTheme.bodySmall.copyWith(color: AppTheme.textSecondary)),
+                  subtitle: Text('Improved benefit packages',
+                      style: AppTheme.bodySmall
+                          .copyWith(color: AppTheme.textSecondary)),
                   value: _betterBenefits,
                   activeColor: AppTheme.accentCopper,
-                  onChanged: (value) => setState(() => _betterBenefits = value ?? false),
+                  onChanged: (value) =>
+                      setState(() => _betterBenefits = value ?? false),
                   dense: true,
                 ),
                 CheckboxListTile(
                   title: Text('Higher Pay Rate', style: AppTheme.bodyMedium),
-                  subtitle: Text('Increase compensation', style: AppTheme.bodySmall.copyWith(color: AppTheme.textSecondary)),
+                  subtitle: Text('Increase compensation',
+                      style: AppTheme.bodySmall
+                          .copyWith(color: AppTheme.textSecondary)),
                   value: _higherPayRate,
                   activeColor: AppTheme.accentCopper,
-                  onChanged: (value) => setState(() => _higherPayRate = value ?? false),
+                  onChanged: (value) =>
+                      setState(() => _higherPayRate = value ?? false),
                   dense: true,
                 ),
                 CheckboxListTile(
                   title: Text('Learn New Skills', style: AppTheme.bodyMedium),
-                  subtitle: Text('Gain new experience', style: AppTheme.bodySmall.copyWith(color: AppTheme.textSecondary)),
+                  subtitle: Text('Gain new experience',
+                      style: AppTheme.bodySmall
+                          .copyWith(color: AppTheme.textSecondary)),
                   value: _learnNewSkill,
                   activeColor: AppTheme.accentCopper,
-                  onChanged: (value) => setState(() => _learnNewSkill = value ?? false),
+                  onChanged: (value) =>
+                      setState(() => _learnNewSkill = value ?? false),
                   dense: true,
                 ),
                 CheckboxListTile(
-                  title: Text('Travel to New Locations', style: AppTheme.bodyMedium),
-                  subtitle: Text('Work in different areas', style: AppTheme.bodySmall.copyWith(color: AppTheme.textSecondary)),
+                  title: Text('Travel to New Locations',
+                      style: AppTheme.bodyMedium),
+                  subtitle: Text('Work in different areas',
+                      style: AppTheme.bodySmall
+                          .copyWith(color: AppTheme.textSecondary)),
                   value: _travelToNewLocation,
                   activeColor: AppTheme.accentCopper,
-                  onChanged: (value) => setState(() => _travelToNewLocation = value ?? false),
+                  onChanged: (value) =>
+                      setState(() => _travelToNewLocation = value ?? false),
                   dense: true,
                 ),
                 CheckboxListTile(
-                  title: Text('Find Long-term Work', style: AppTheme.bodyMedium),
-                  subtitle: Text('Secure stable employment', style: AppTheme.bodySmall.copyWith(color: AppTheme.textSecondary)),
+                  title:
+                      Text('Find Long-term Work', style: AppTheme.bodyMedium),
+                  subtitle: Text('Secure stable employment',
+                      style: AppTheme.bodySmall
+                          .copyWith(color: AppTheme.textSecondary)),
                   value: _findLongTermWork,
                   activeColor: AppTheme.accentCopper,
-                  onChanged: (value) => setState(() => _findLongTermWork = value ?? false),
+                  onChanged: (value) =>
+                      setState(() => _findLongTermWork = value ?? false),
                   dense: true,
                 ),
               ],
             ),
           ),
-          
+
           const SizedBox(height: AppTheme.spacingMd),
-          
+
           // Career goals
           JJTextField(
             label: 'Career Goals (Optional)',
             controller: _careerGoalsController,
             focusNode: _careerGoalsFocus,
             textInputAction: TextInputAction.next,
-            onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_howHeardAboutUsFocus),
+            onFieldSubmitted: (_) =>
+                FocusScope.of(context).requestFocus(_howHeardAboutUsFocus),
             maxLines: 3,
             prefixIcon: Icons.flag_outlined,
-            hintText: 'Describe your career goals and where you see yourself in the future...',
+            hintText:
+                'Describe your career goals and where you see yourself in the future...',
           ),
-          
+
           const SizedBox(height: AppTheme.spacingMd),
-          
+
           // How did you hear about us
           JJTextField(
             label: 'How did you hear about us?',
             controller: _howHeardAboutUsController,
             focusNode: _howHeardAboutUsFocus,
             textInputAction: TextInputAction.next,
-            onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_lookingToAccomplishFocus),
+            onFieldSubmitted: (_) =>
+                FocusScope.of(context).requestFocus(_lookingToAccomplishFocus),
             maxLines: 2,
             prefixIcon: Icons.info_outline,
             hintText: 'Tell us how you discovered Journeyman Jobs...',
           ),
-          
+
           const SizedBox(height: AppTheme.spacingMd),
-          
+
           // What are you looking to accomplish
           JJTextField(
             label: 'What are you looking to accomplish?',
@@ -1108,7 +1205,7 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
             prefixIcon: Icons.track_changes_outlined,
             hintText: 'What do you hope to achieve through our platform?',
           ),
-          
+
           const SizedBox(height: AppTheme.spacingXl),
         ],
       ),
@@ -1136,17 +1233,13 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
             color: AppTheme.white,
           ),
         ),
-        
         const SizedBox(height: AppTheme.spacingSm),
-        
         Text(
           title,
           style: AppTheme.headlineSmall.copyWith(color: AppTheme.primaryNavy),
           textAlign: TextAlign.center,
         ),
-        
         const SizedBox(height: AppTheme.spacingXs),
-        
         Text(
           subtitle,
           style: AppTheme.bodyMedium.copyWith(color: AppTheme.textSecondary),
@@ -1178,10 +1271,4 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
         return Icons.construction_outlined;
     }
   }
-
 }
-
-
-
-
-

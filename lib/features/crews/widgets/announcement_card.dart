@@ -24,7 +24,9 @@ class AnnouncementCard extends ConsumerWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
         side: BorderSide(
-          color: isPinned ? AppTheme.accentCopper.withValues(alpha: 0.5) : AppTheme.borderLight,
+          color: isPinned
+              ? AppTheme.accentCopper.withValues(alpha: 0.5)
+              : AppTheme.borderLight,
           width: isPinned ? 2 : 1,
         ),
       ),
@@ -45,7 +47,7 @@ class AnnouncementCard extends ConsumerWidget {
               ),
               child: Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.push_pin,
                     size: 16,
                     color: AppTheme.accentCopper,
@@ -54,9 +56,9 @@ class AnnouncementCard extends ConsumerWidget {
                   Text(
                     'Pinned Announcement',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: AppTheme.accentCopper,
-                      fontWeight: FontWeight.w600,
-                    ),
+                          color: AppTheme.accentCopper,
+                          fontWeight: FontWeight.w600,
+                        ),
                   ),
                 ],
               ),
@@ -72,8 +74,9 @@ class AnnouncementCard extends ConsumerWidget {
                   children: [
                     CircleAvatar(
                       radius: 16,
-                      backgroundColor: AppTheme.accentCopper.withValues(alpha: 0.2),
-                      child: Icon(
+                      backgroundColor:
+                          AppTheme.accentCopper.withValues(alpha: 0.2),
+                      child: const Icon(
                         Icons.person,
                         size: 16,
                         color: AppTheme.accentCopper,
@@ -83,16 +86,16 @@ class AnnouncementCard extends ConsumerWidget {
                     Text(
                       'Crew Leader', // Would be actual user name
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: AppTheme.textPrimary,
-                      ),
+                            fontWeight: FontWeight.w600,
+                            color: AppTheme.textPrimary,
+                          ),
                     ),
                     const SizedBox(width: 8),
                     Text(
                       _formatTimeAgo(post.createdAt),
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: AppTheme.textLight,
-                      ),
+                            color: AppTheme.textLight,
+                          ),
                     ),
                   ],
                 ),
@@ -101,13 +104,12 @@ class AnnouncementCard extends ConsumerWidget {
                 Text(
                   post.content,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: AppTheme.textSecondary,
-                  ),
+                        color: AppTheme.textSecondary,
+                      ),
                 ),
                 const SizedBox(height: 16),
                 // Attachments (if any)
-                if (post.mediaUrls.isNotEmpty)
-                  _buildAttachments(context),
+                if (post.mediaUrls.isNotEmpty) _buildAttachments(context),
                 // Reactions and actions
                 Row(
                   children: [
@@ -154,9 +156,9 @@ class AnnouncementCard extends ConsumerWidget {
         Text(
           'Attachments:',
           style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            color: AppTheme.textLight,
-            fontWeight: FontWeight.w600,
-          ),
+                color: AppTheme.textLight,
+                fontWeight: FontWeight.w600,
+              ),
         ),
         const SizedBox(height: 8),
         Wrap(
@@ -185,8 +187,8 @@ class AnnouncementCard extends ConsumerWidget {
                   Text(
                     _getFileName(url),
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: AppTheme.textSecondary,
-                    ),
+                          color: AppTheme.textSecondary,
+                        ),
                   ),
                 ],
               ),
@@ -225,85 +227,46 @@ class AnnouncementCard extends ConsumerWidget {
     }
   }
 
-    void _handleReaction(BuildContext context) {
+  void _handleReaction(BuildContext context) {
+    // This would typically call a provider method to add/remove reaction
 
-      // This would typically call a provider method to add/remove reaction
-
-      ScaffoldMessenger.of(context).showSnackBar(
-
-        const SnackBar(
-
-          content: Text('Reaction functionality coming soon'),
-
-          duration: Duration(seconds: 2),
-
-        ),
-
-      );
-
-    }
-
-  
-
-    void _showMoreOptions(BuildContext context) {
-
-      showModalBottomSheet(
-
-        context: context,
-
-        builder: (context) => Container(
-
-          padding: const EdgeInsets.all(16),
-
-          child: Column(
-
-            mainAxisSize: MainAxisSize.min,
-
-            children: [
-
-              ListTile(
-
-                leading: const Icon(Icons.edit),
-
-                title: const Text('Edit announcement'),
-
-                onTap: () {
-
-                  Navigator.pop(context);
-
-                  // Navigate to edit screen
-
-                },
-
-              ),
-
-              ListTile(
-
-                leading: const Icon(Icons.delete),
-
-                title: const Text('Delete announcement'),
-
-                onTap: () {
-
-                  Navigator.pop(context);
-
-                  // Show delete confirmation
-
-                },
-
-              ),
-
-            ],
-
-          ),
-
-        ),
-
-      );
-
-    }
-
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Reaction functionality coming soon'),
+        duration: Duration(seconds: 2),
+      ),
+    );
   }
 
-  
+  void _showMoreOptions(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => Container(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: const Icon(Icons.edit),
+              title: const Text('Edit announcement'),
+              onTap: () {
+                Navigator.pop(context);
 
+                // Navigate to edit screen
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.delete),
+              title: const Text('Delete announcement'),
+              onTap: () {
+                Navigator.pop(context);
+
+                // Show delete confirmation
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

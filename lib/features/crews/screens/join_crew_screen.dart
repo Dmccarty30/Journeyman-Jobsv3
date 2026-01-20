@@ -77,7 +77,7 @@ class JoinCrewScreenState extends ConsumerState<JoinCrewScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const SizedBox(height: 24),
-              Icon(
+              const Icon(
                 Icons.group_add,
                 size: 80,
                 color: AppTheme.accentCopper,
@@ -105,7 +105,7 @@ class JoinCrewScreenState extends ConsumerState<JoinCrewScreen> {
                 decoration: const InputDecoration(
                   labelText: 'Invite Code',
                   hintText: 'Enter crew invite code',
-                  prefixIcon: Icon(Icons.code),
+                  prefixIcon: const Icon(Icons.code),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -169,4 +169,3 @@ class JoinCrewScreenState extends ConsumerState<JoinCrewScreen> {
     );
   }
 }
-

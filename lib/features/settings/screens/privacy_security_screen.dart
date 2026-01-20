@@ -23,9 +23,10 @@ class _PrivacySecurityScreenState extends State<PrivacySecurityScreen> {
 
   Future<void> _loadSettings() async {
     final prefs = await SharedPreferences.getInstance();
-    
+
     setState(() {
-      _profileVisibility = prefs.getString('profile_visibility') ?? 'Union Members Only';
+      _profileVisibility =
+          prefs.getString('profile_visibility') ?? 'Union Members Only';
       _locationServicesEnabled = prefs.getBool('location_services') ?? true;
       _biometricLoginEnabled = prefs.getBool('biometric_login') ?? false;
       _twoFactorEnabled = prefs.getBool('two_factor') ?? false;
@@ -34,7 +35,7 @@ class _PrivacySecurityScreenState extends State<PrivacySecurityScreen> {
 
   Future<void> _saveSetting(String key, dynamic value) async {
     final prefs = await SharedPreferences.getInstance();
-    
+
     if (value is bool) {
       await prefs.setBool(key, value);
     } else if (value is String) {
@@ -89,9 +90,7 @@ class _PrivacySecurityScreenState extends State<PrivacySecurityScreen> {
                     },
                   ),
                 ]),
-                
                 const SizedBox(height: AppTheme.spacingLg),
-                
                 _buildSectionHeader('Account Security'),
                 _buildSettingsCard([
                   _buildSwitchTile(
@@ -116,7 +115,6 @@ class _PrivacySecurityScreenState extends State<PrivacySecurityScreen> {
                     },
                   ),
                 ]),
-                
                 const SizedBox(height: AppTheme.spacingXl),
               ],
             ),
@@ -141,7 +139,7 @@ class _PrivacySecurityScreenState extends State<PrivacySecurityScreen> {
       ),
     );
   }
-  
+
   Widget _buildSettingsCard(List<Widget> children) {
     return JJCard(
       child: Column(
@@ -149,7 +147,7 @@ class _PrivacySecurityScreenState extends State<PrivacySecurityScreen> {
       ),
     );
   }
-  
+
   Widget _buildSwitchTile({
     required IconData icon,
     required String title,
@@ -204,7 +202,7 @@ class _PrivacySecurityScreenState extends State<PrivacySecurityScreen> {
       ),
     );
   }
-  
+
   Widget _buildDropdownTile({
     required IconData icon,
     required String title,
@@ -262,7 +260,7 @@ class _PrivacySecurityScreenState extends State<PrivacySecurityScreen> {
               onChanged: onChanged,
               underline: const SizedBox(),
               isDense: true,
-              icon: Icon(
+              icon: const Icon(
                 Icons.arrow_drop_down,
                 color: AppTheme.accentCopper,
               ),
@@ -273,4 +271,3 @@ class _PrivacySecurityScreenState extends State<PrivacySecurityScreen> {
     );
   }
 }
-

@@ -31,7 +31,7 @@ class JJButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final dimensions = _getButtonDimensions();
     final colors = _getButtonColors();
-    
+
     return Container(
       width: isFullWidth ? double.infinity : (width ?? dimensions.width),
       height: height ?? dimensions.height,
@@ -40,7 +40,8 @@ class JJButton extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           onTap: isLoading ? null : onPressed,
-          borderRadius: BorderRadius.circular(AppTheme.radiusMd),
+          borderRadius:
+              const BorderRadius.all(Radius.circular(AppTheme.radiusMd)),
           child: Container(
             padding: EdgeInsets.symmetric(
               horizontal: dimensions.horizontalPadding,
@@ -149,18 +150,20 @@ class JJButton extends StatelessWidget {
     if (variant == JJButtonVariant.primary) {
       return BoxDecoration(
         gradient: AppTheme.electricalGradient,
-        borderRadius: BorderRadius.circular(AppTheme.radiusMd),
+        borderRadius:
+            const BorderRadius.all(Radius.circular(AppTheme.radiusMd)),
         boxShadow: [AppTheme.shadowSm],
       );
     }
-    
+
     return BoxDecoration(
       color: colors.backgroundColor,
-      borderRadius: BorderRadius.circular(AppTheme.radiusMd),
-      border: colors.borderColor != null 
-        ? Border.all(color: colors.borderColor!, width: 1.5)
-        : null,
-      boxShadow: variant == JJButtonVariant.outline ? null : [AppTheme.shadowXs],
+      borderRadius: const BorderRadius.all(Radius.circular(AppTheme.radiusMd)),
+      border: colors.borderColor != null
+          ? Border.all(color: colors.borderColor!, width: 1.5)
+          : null,
+      boxShadow:
+          variant == JJButtonVariant.outline ? null : [AppTheme.shadowXs],
     );
   }
 }
