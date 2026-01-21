@@ -7,7 +7,8 @@ class CrewPreferencesDialog extends StatefulWidget {
   final CrewPreferences initialPreferences;
   final String crewId;
   final CrewService crewService;
-  final bool isNewCrew; // New parameter to distinguish between new and existing crews
+  final bool
+      isNewCrew; // New parameter to distinguish between new and existing crews
 
   const CrewPreferencesDialog({
     super.key,
@@ -32,45 +33,25 @@ class _CrewPreferencesDialogState extends State<CrewPreferencesDialog> {
     'Journeyman Lineman',
     'Apprentice Lineman',
     'Electrical Foreman',
-    'Project Manager',
-    'Electrical Engineer',
-    'Safety Coordinator',
-    'Estimator',
-    'Service Technician',
-    'Maintenance Electrician',
   ];
 
   // Common electrical companies
   final List<String> _commonCompanies = [
-    'IBEW Local Unions',
-    'NECA Contractors',
     'Quanta Services',
     'MYR Group',
-    'Mastec',
-    'Pike Corporation',
-    'PowerTeam Services',
     'Summit Line Construction',
-    'Potelco',
     'Henkel',
   ];
 
   // Common electrical skills
   final List<String> _commonSkills = [
-    'High Voltage',
     'Underground Distribution',
     'Overhead Distribution',
     'Substation',
     'Transformer',
-    'Motor Control',
-    'PLC Programming',
-    'Fiber Optics',
-    'SCADA Systems',
-    'Safety Training',
     'OSHA 30',
     'CDL License',
-    'Crane Operation',
-    'Welding',
-  ];
+    'Crane Operation',  ];
 
   @override
   void initState() {
@@ -97,14 +78,17 @@ class _CrewPreferencesDialogState extends State<CrewPreferencesDialog> {
               size: AppTheme.iconMd,
             ),
             const SizedBox(width: AppTheme.spacingSm),
-            Text(
-              widget.isNewCrew ? 'Set Crew Preferences' : 'Crew Job Preferences',
-              style: AppTheme.headlineMedium.copyWith(
-                color: AppTheme.white,
-                fontWeight: FontWeight.bold,
+            Expanded(
+              child: Text(
+                widget.isNewCrew
+                    ? 'Set Crew Preferences'
+                    : 'Crew Job Preferences',
+                style: AppTheme.headlineMedium.copyWith(
+                  color: AppTheme.white,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
-            const Spacer(),
             IconButton(
               onPressed: _isLoading ? null : () => Navigator.of(context).pop(),
               icon: Icon(
@@ -214,7 +198,9 @@ class _CrewPreferencesDialogState extends State<CrewPreferencesDialog> {
                     );
                   } else {
                     _preferences = _preferences.copyWith(
-                      jobTypes: _preferences.jobTypes.where((type) => type != jobType).toList(),
+                      jobTypes: _preferences.jobTypes
+                          .where((type) => type != jobType)
+                          .toList(),
                     );
                   }
                 });
@@ -225,7 +211,8 @@ class _CrewPreferencesDialogState extends State<CrewPreferencesDialog> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(AppTheme.radiusSm),
                 side: BorderSide(
-                  color: isSelected ? AppTheme.accentCopper : AppTheme.borderLight,
+                  color:
+                      isSelected ? AppTheme.accentCopper : AppTheme.borderLight,
                   width: AppTheme.borderWidthThin,
                 ),
               ),
@@ -283,7 +270,9 @@ class _CrewPreferencesDialogState extends State<CrewPreferencesDialog> {
             return null;
           },
           onSaved: (value) {
-            final rate = value != null && value.isNotEmpty ? double.tryParse(value) : null;
+            final rate = value != null && value.isNotEmpty
+                ? double.tryParse(value)
+                : null;
             _preferences = _preferences.copyWith(minHourlyRate: rate);
           },
         ),
@@ -338,7 +327,8 @@ class _CrewPreferencesDialogState extends State<CrewPreferencesDialog> {
             return null;
           },
           onSaved: (value) {
-            final distance = value != null && value.isNotEmpty ? int.tryParse(value) : null;
+            final distance =
+                value != null && value.isNotEmpty ? int.tryParse(value) : null;
             _preferences = _preferences.copyWith(maxDistanceMiles: distance);
           },
         ),
@@ -369,7 +359,8 @@ class _CrewPreferencesDialogState extends State<CrewPreferencesDialog> {
           spacing: AppTheme.spacingXs,
           runSpacing: AppTheme.spacingXs,
           children: _commonCompanies.map((company) {
-            final isSelected = _preferences.preferredCompanies.contains(company);
+            final isSelected =
+                _preferences.preferredCompanies.contains(company);
             return FilterChip(
               label: Text(
                 company,
@@ -382,11 +373,16 @@ class _CrewPreferencesDialogState extends State<CrewPreferencesDialog> {
                 setState(() {
                   if (selected) {
                     _preferences = _preferences.copyWith(
-                      preferredCompanies: [..._preferences.preferredCompanies, company],
+                      preferredCompanies: [
+                        ..._preferences.preferredCompanies,
+                        company
+                      ],
                     );
                   } else {
                     _preferences = _preferences.copyWith(
-                      preferredCompanies: _preferences.preferredCompanies.where((c) => c != company).toList(),
+                      preferredCompanies: _preferences.preferredCompanies
+                          .where((c) => c != company)
+                          .toList(),
                     );
                   }
                 });
@@ -397,7 +393,8 @@ class _CrewPreferencesDialogState extends State<CrewPreferencesDialog> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(AppTheme.radiusSm),
                 side: BorderSide(
-                  color: isSelected ? AppTheme.accentCopper : AppTheme.borderLight,
+                  color:
+                      isSelected ? AppTheme.accentCopper : AppTheme.borderLight,
                   width: AppTheme.borderWidthThin,
                 ),
               ),
@@ -448,7 +445,9 @@ class _CrewPreferencesDialogState extends State<CrewPreferencesDialog> {
                     );
                   } else {
                     _preferences = _preferences.copyWith(
-                      requiredSkills: _preferences.requiredSkills.where((s) => s != skill).toList(),
+                      requiredSkills: _preferences.requiredSkills
+                          .where((s) => s != skill)
+                          .toList(),
                     );
                   }
                 });
@@ -459,7 +458,8 @@ class _CrewPreferencesDialogState extends State<CrewPreferencesDialog> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(AppTheme.radiusSm),
                 side: BorderSide(
-                  color: isSelected ? AppTheme.accentCopper : AppTheme.borderLight,
+                  color:
+                      isSelected ? AppTheme.accentCopper : AppTheme.borderLight,
                   width: AppTheme.borderWidthThin,
                 ),
               ),
@@ -641,7 +641,8 @@ class _CrewPreferencesDialogState extends State<CrewPreferencesDialog> {
                       height: 20,
                       child: CircularProgressIndicator(
                         strokeWidth: 2,
-                        valueColor: AlwaysStoppedAnimation<Color>(AppTheme.white),
+                        valueColor:
+                            AlwaysStoppedAnimation<Color>(AppTheme.white),
                       ),
                     )
                   : Text(
@@ -698,7 +699,8 @@ class _CrewPreferencesDialogState extends State<CrewPreferencesDialog> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Failed to ${widget.isNewCrew ? 'set' : 'update'} preferences: $e'),
+            content: Text(
+                'Failed to ${widget.isNewCrew ? 'set' : 'update'} preferences: $e'),
             backgroundColor: AppTheme.errorRed,
             duration: const Duration(seconds: 5),
           ),
@@ -713,4 +715,3 @@ class _CrewPreferencesDialogState extends State<CrewPreferencesDialog> {
     }
   }
 }
-

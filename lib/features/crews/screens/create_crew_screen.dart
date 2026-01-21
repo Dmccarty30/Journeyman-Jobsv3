@@ -43,38 +43,44 @@ class CreateCrewScreenState extends ConsumerState<CreateCrewScreen> {
           throw Exception('User not authenticated');
         }
 
-        // Create crew with initial preferences
-        final crewId =
-            '${_crewNameController.text}-${DateTime.now().millisecondsSinceEpoch}';
+        // Create initial preferences from the form
+        final initialPreferences = CrewPreferences(
+          jobTypes: [_selectedJobType],
+          minHourlyRate: _minHourlyRate.toDouble(),
+          autoShareEnabled: _autoShareEnabled,
+        );
+
+        // Actually CREATE the crew in Firestore and get the generated ID
+        final crewId = await crewService.createCrew(
+          name: _crewNameController.text,
+          foremanId: currentUser.uid,
+          preferences: initialPreferences,
+        );
 
         if (mounted) {
-          // Show CrewPreferencesDialog after successful crew creation
+          // Show CrewPreferencesDialog to refine preferences (optional)
           final updatedPreferences = await showDialog<CrewPreferences>(
             context: context,
+            barrierDismissible: true,
             builder: (context) => CrewPreferencesDialog(
-              initialPreferences: CrewPreferences(
-                jobTypes: [_selectedJobType],
-                minHourlyRate: _minHourlyRate.toDouble(),
-                autoShareEnabled: _autoShareEnabled,
-              ),
+              initialPreferences: initialPreferences,
               crewId: crewId,
               crewService: crewService,
-              isNewCrew: true, // Indicate this is for a new crew
+              isNewCrew:
+                  false, // Crew is already created, we're just updating preferences
             ),
           );
 
           if (updatedPreferences != null && mounted) {
-            // Update crew with final preferences
+            // Update crew with refined preferences
             await crewService.updateCrew(
               crewId: crewId,
               preferences: updatedPreferences,
             );
+          }
 
+          if (mounted) {
             // Navigate to Tailboard screen
-            // ignore: use_build_context_synchronously
-            context.go('${AppRouter.crews}/$crewId');
-          } else if (mounted) {
-            // User cancelled preferences, navigate to Tailboard with initial preferences
             context.go('${AppRouter.crews}/$crewId');
           }
         }
