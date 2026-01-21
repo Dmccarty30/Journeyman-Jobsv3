@@ -649,12 +649,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
       appBar: AppBar(
         backgroundColor: AppTheme.primaryNavy,
         elevation: 0,
-        title: Text(
+        title: const Text(
           'My Profile',
-          style: AppTheme.headlineSmall.copyWith(
-            color: AppTheme.white,
-            fontWeight: FontWeight.bold,
-          ),
+          style: AppTheme.headlineSmall,
         ),
         iconTheme: const IconThemeData(color: AppTheme.white),
         actions: [
@@ -838,11 +835,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             'Personal Information',
-            style: AppTheme.headlineSmall.copyWith(
-              color: AppTheme.primaryNavy,
-            ),
+            style: AppTheme.headlineSmall,
           ),
           const SizedBox(height: AppTheme.spacingMd),
           // Name fields
@@ -884,11 +879,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
             keyboardType: TextInputType.phone,
           ),
           const SizedBox(height: AppTheme.spacingLg),
-          Text(
+          const Text(
             'Address',
-            style: AppTheme.headlineSmall.copyWith(
-              color: AppTheme.primaryNavy,
-            ),
+            style: AppTheme.headlineSmall,
           ),
           const SizedBox(height: AppTheme.spacingMd),
           JJTextField(
@@ -956,11 +949,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
             keyboardType: TextInputType.number,
           ),
           const SizedBox(height: AppTheme.spacingLg),
-          Text(
+          const Text(
             'What brings you to Journeyman Jobs?',
-            style: AppTheme.headlineSmall.copyWith(
-              color: AppTheme.primaryNavy,
-            ),
+            style: AppTheme.headlineSmall,
           ),
           const SizedBox(height: AppTheme.spacingMd),
           _buildGoalChip('Network with Others', _networkWithOthers,
@@ -978,11 +969,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
           _buildGoalChip('Find Long Term Work', _findLongTermWork,
               (value) => setState(() => _findLongTermWork = value)),
           const SizedBox(height: AppTheme.spacingLg),
-          Text(
+          const Text(
             'Additional Information',
-            style: AppTheme.headlineSmall.copyWith(
-              color: AppTheme.primaryNavy,
-            ),
+            style: AppTheme.headlineSmall,
           ),
           const SizedBox(height: AppTheme.spacingMd),
           JJTextField(
@@ -1018,11 +1007,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             'Professional Information',
-            style: AppTheme.headlineSmall.copyWith(
-              color: AppTheme.primaryNavy,
-            ),
+            style: AppTheme.headlineSmall,
           ),
           const SizedBox(height: AppTheme.spacingMd),
           JJTextField(
@@ -1076,11 +1063,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
             hintText: 'e.g., Book 1, Book 2',
           ),
           const SizedBox(height: AppTheme.spacingLg),
-          Text(
+          const Text(
             'Job Preferences',
-            style: AppTheme.headlineSmall.copyWith(
-              color: AppTheme.primaryNavy,
-            ),
+            style: AppTheme.headlineSmall,
           ),
           const SizedBox(height: AppTheme.spacingMd),
 
@@ -1248,11 +1233,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             'Settings & Preferences',
-            style: AppTheme.headlineSmall.copyWith(
-              color: AppTheme.primaryNavy,
-            ),
+            style: AppTheme.headlineSmall,
           ),
           const SizedBox(height: AppTheme.spacingMd),
 
@@ -1276,11 +1259,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
           ),
 
           const SizedBox(height: AppTheme.spacingLg),
-          Text(
+          const Text(
             'Account Actions',
-            style: AppTheme.headlineSmall.copyWith(
-              color: AppTheme.primaryNavy,
-            ),
+            style: AppTheme.headlineSmall,
           ),
           const SizedBox(height: AppTheme.spacingMd),
           _buildActionTile(
@@ -1315,11 +1296,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
             isDestructive: true,
           ),
           const SizedBox(height: AppTheme.spacingLg),
-          Text(
+          const Text(
             'Support & About',
-            style: AppTheme.headlineSmall.copyWith(
-              color: AppTheme.primaryNavy,
-            ),
+            style: AppTheme.headlineSmall,
           ),
           const SizedBox(height: AppTheme.spacingMd),
           _buildNavigationTile(
@@ -1347,11 +1326,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
             },
           ),
           const SizedBox(height: AppTheme.spacingLg),
-          Text(
+          const Text(
             'App Information',
-            style: AppTheme.headlineSmall.copyWith(
-              color: AppTheme.primaryNavy,
-            ),
+            style: AppTheme.headlineSmall,
           ),
           const SizedBox(height: AppTheme.spacingMd),
           _buildInfoTile('Version', '1.0.0'),

@@ -55,11 +55,9 @@ class _FoxWeatherWidgetState extends State<FoxWeatherWidget> {
               children: [
                 const Icon(Icons.tv, color: AppTheme.primaryNavy),
                 const SizedBox(width: AppTheme.spacingSm),
-                Text(
+                const Text(
                   'Fox Weather',
-                  style: AppTheme.headlineSmall.copyWith(
-                    color: AppTheme.primaryNavy,
-                  ),
+                  style: AppTheme.headlineSmall,
                 ),
               ],
             ),

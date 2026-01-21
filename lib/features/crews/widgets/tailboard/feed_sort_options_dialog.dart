@@ -23,7 +23,7 @@ import '../../crews.dart';class FeedSortOptionsDialog extends ConsumerWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                const Text(
                   'Sort Feed',
                   style: TailboardTheme.headingMedium,
                 ),

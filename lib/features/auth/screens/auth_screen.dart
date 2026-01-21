@@ -288,7 +288,7 @@ class _AuthScreenState extends State<AuthScreen>
                           shape: BoxShape.circle,
                           boxShadow: [AppTheme.shadowMd],
                         ),
-                        child: const Icon(
+                        child: Icon(
                           Icons.electrical_services,
                           size: 40,
                           color: AppTheme.white,

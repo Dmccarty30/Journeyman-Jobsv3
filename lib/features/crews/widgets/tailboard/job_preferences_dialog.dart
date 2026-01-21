@@ -94,7 +94,7 @@ class _JobPreferencesDialogState extends ConsumerState<JobPreferencesDialog> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                const Text(
                   'Job Preferences',
                   style: TailboardTheme.headingMedium,
                 ),
@@ -110,7 +110,7 @@ class _JobPreferencesDialogState extends ConsumerState<JobPreferencesDialog> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text(
+                    const Text(
                       'Job Types',
                       style: TailboardTheme.headingSmall,
                     ),
@@ -145,7 +145,7 @@ class _JobPreferencesDialogState extends ConsumerState<JobPreferencesDialog> {
                       }).toList(),
                     ),
                     const SizedBox(height: TailboardTheme.spacingL),
-                    Text(
+                    const Text(
                       'Minimum Hourly Rate',
                       style: TailboardTheme.headingSmall,
                     ),
@@ -163,7 +163,7 @@ class _JobPreferencesDialogState extends ConsumerState<JobPreferencesDialog> {
                       },
                     ),
                     const SizedBox(height: TailboardTheme.spacingL),
-                    Text(
+                    const Text(
                       'Maximum Distance (miles)',
                       style: TailboardTheme.headingSmall,
                     ),
@@ -181,7 +181,7 @@ class _JobPreferencesDialogState extends ConsumerState<JobPreferencesDialog> {
                       },
                     ),
                     const SizedBox(height: TailboardTheme.spacingL),
-                    Text(
+                    const Text(
                       'Required Skills',
                       style: TailboardTheme.headingSmall,
                     ),
@@ -217,7 +217,7 @@ class _JobPreferencesDialogState extends ConsumerState<JobPreferencesDialog> {
                     ),
                     const SizedBox(height: TailboardTheme.spacingL),
                     SwitchListTile(
-                      title: Text(
+                      title: const Text(
                         'Auto-Share Matching Jobs',
                         style: TailboardTheme.bodyMedium,
                       ),

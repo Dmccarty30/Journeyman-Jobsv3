@@ -46,7 +46,7 @@ class _MemberRolesDialogState extends ConsumerState<MemberRolesDialog> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                const Text(
                   'Member Roles',
                   style: TailboardTheme.headingMedium,
                 ),

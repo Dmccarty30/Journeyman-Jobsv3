@@ -80,7 +80,7 @@ class _ApplyJobDialogState extends ConsumerState<ApplyJobDialog> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           'Apply for Job',
                           style: TailboardTheme.headingMedium,
                         ),
@@ -111,7 +111,7 @@ class _ApplyJobDialogState extends ConsumerState<ApplyJobDialog> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Send a message with your application (optional):',
                     style: TailboardTheme.bodyMedium,
                   ),

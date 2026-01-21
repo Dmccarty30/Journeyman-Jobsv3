@@ -167,11 +167,9 @@ class _InteractiveRadarMapState extends State<InteractiveRadarMap>
                 color: AppTheme.accentCopper,
               ),
               const SizedBox(height: 16),
-              Text(
+              const Text(
                 'Loading Weather Radar...',
-                style: AppTheme.bodyLarge.copyWith(
-                  color: AppTheme.textLight,
-                ),
+                style: AppTheme.bodyLarge,
               ),
             ],
           ),
@@ -496,11 +494,9 @@ class _InteractiveRadarMapState extends State<InteractiveRadarMap>
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
+          const Text(
             'Intensity:',
-            style: AppTheme.bodySmall.copyWith(
-              color: AppTheme.textLight,
-            ),
+            style: AppTheme.bodySmall,
           ),
           const SizedBox(width: 8),
           _buildIntensityIndicator(Colors.green, 'Light'),

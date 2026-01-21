@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:journeyman_jobs/design_system/design_system.dart';
-import 'package:journeyman_jobs/features/navigation/navigation.dart' hide CircuitPatternPainter;
+import 'package:journeyman_jobs/features/navigation/navigation.dart'
+    hide CircuitPatternPainter;
 
 /// A themed popup widget for quick notification access
 /// Displays a electrical-themed popup with notification options
 class NotificationPopup extends StatefulWidget {
   final VoidCallback? onClose;
-  
+
   const NotificationPopup({
     super.key,
     this.onClose,
@@ -89,8 +90,10 @@ class _NotificationPopupState extends State<NotificationPopup>
                 Positioned.fill(
                   child: CustomPaint(
                     painter: CircuitPatternPainter(
-                      primaryColor: AppTheme.accentCopper.withValues(alpha: 0.05),
-                      secondaryColor: AppTheme.primaryNavy.withValues(alpha: 0.03),
+                      primaryColor:
+                          AppTheme.accentCopper.withValues(alpha: 0.05),
+                      secondaryColor:
+                          AppTheme.primaryNavy.withValues(alpha: 0.03),
                       animate: true,
                     ),
                   ),
@@ -117,8 +120,10 @@ class _NotificationPopupState extends State<NotificationPopup>
                           Container(
                             padding: const EdgeInsets.all(AppTheme.spacingSm),
                             decoration: BoxDecoration(
-                              color: AppTheme.accentCopper.withValues(alpha: 0.2),
-                              borderRadius: BorderRadius.circular(AppTheme.radiusSm),
+                              color:
+                                  AppTheme.accentCopper.withValues(alpha: 0.2),
+                              borderRadius:
+                                  BorderRadius.circular(AppTheme.radiusSm),
                             ),
                             child: Icon(
                               Icons.notifications_active,
@@ -170,7 +175,8 @@ class _NotificationPopupState extends State<NotificationPopup>
                             onTap: () {
                               _closePopup();
                               // Navigate to notifications screen with settings tab selected
-                              context.go('${AppRouter.notifications}?tab=settings');
+                              context.go(
+                                  '${AppRouter.notifications}?tab=settings');
                             },
                           ),
                           const SizedBox(height: AppTheme.spacingMd),
@@ -255,7 +261,7 @@ class _NotificationPopupState extends State<NotificationPopup>
                   ],
                 ),
               ),
-              Icon(
+              const Icon(
                 Icons.chevron_right,
                 color: AppTheme.textLight,
                 size: AppTheme.iconMd,
@@ -277,7 +283,7 @@ class _NotificationPopupState extends State<NotificationPopup>
         ),
         title: Row(
           children: [
-            Icon(
+            const Icon(
               Icons.bedtime,
               color: AppTheme.warningYellow,
               size: AppTheme.iconMd,
@@ -360,7 +366,3 @@ void showNotificationPopup(BuildContext context) {
     ),
   );
 }
-
-
-
-

@@ -35,7 +35,7 @@ class ChannelListDialog extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                const Text(
                   'Channels',
                   style: TailboardTheme.headingMedium,
                 ),

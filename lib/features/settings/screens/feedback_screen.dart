@@ -102,12 +102,9 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
     return Scaffold(
       backgroundColor: AppTheme.lightGray,
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Send Feedback',
-          style: AppTheme.headlineSmall.copyWith(
-            color: AppTheme.white,
-            fontWeight: FontWeight.bold,
-          ),
+          style: AppTheme.headlineSmall,
         ),
         backgroundColor: AppTheme.primaryNavy,
         elevation: 0,

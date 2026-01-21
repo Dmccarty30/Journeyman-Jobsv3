@@ -4,19 +4,19 @@ import 'package:journeyman_jobs/design_system/design_system.dart';
 import 'package:journeyman_jobs/core/core.dart';
 
 /// Widget that displays connectivity status and offline indicators
-/// 
+///
 /// Shows a persistent banner when offline and provides sync controls
 /// when connection is restored. Integrates with caching for offline-first UX.
 class OfflineIndicator extends ConsumerWidget {
   /// Whether to show the indicator persistently when online
   final bool showWhenOnline;
-  
+
   /// Custom height for the indicator
   final double? height;
-  
+
   /// Whether to include sync controls
   final bool showSyncControls;
-  
+
   const OfflineIndicator({
     super.key,
     this.showWhenOnline = false,
@@ -42,12 +42,14 @@ class OfflineIndicator extends ConsumerWidget {
   /// Calculate indicator height based on connectivity state
   double _getIndicatorHeight(ConnectivityService connectivity) {
     if (!connectivity.isOnline) return 56.0; // Offline - full height
-    if (connectivity.wasOffline) return 48.0; // Recently offline - medium height
+    if (connectivity.wasOffline)
+      return 48.0; // Recently offline - medium height
     return 32.0; // Online status - minimal height
   }
 
   /// Build the main indicator content
-  Widget _buildIndicatorContent(BuildContext context, ConnectivityService connectivity, WidgetRef ref) {
+  Widget _buildIndicatorContent(
+      BuildContext context, ConnectivityService connectivity, WidgetRef ref) {
     if (!connectivity.isOnline) {
       return _buildOfflineIndicator(context, connectivity);
     } else if (connectivity.wasOffline) {
@@ -58,7 +60,8 @@ class OfflineIndicator extends ConsumerWidget {
   }
 
   /// Build offline state indicator
-  Widget _buildOfflineIndicator(BuildContext context, ConnectivityService connectivity) {
+  Widget _buildOfflineIndicator(
+      BuildContext context, ConnectivityService connectivity) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -75,7 +78,7 @@ class OfflineIndicator extends ConsumerWidget {
       child: SafeArea(
         child: Row(
           children: [
-            Icon(
+            const Icon(
               Icons.cloud_off,
               color: AppTheme.white,
               size: 20,
@@ -110,8 +113,9 @@ class OfflineIndicator extends ConsumerWidget {
     );
   }
 
-  /// Build reconnected state indicator  
-  Widget _buildReconnectedIndicator(BuildContext context, ConnectivityService connectivity, WidgetRef ref) {
+  /// Build reconnected state indicator
+  Widget _buildReconnectedIndicator(
+      BuildContext context, ConnectivityService connectivity, WidgetRef ref) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -128,7 +132,7 @@ class OfflineIndicator extends ConsumerWidget {
       child: SafeArea(
         child: Row(
           children: [
-            Icon(
+            const Icon(
               Icons.cloud_done,
               color: AppTheme.white,
               size: 20,
@@ -167,7 +171,8 @@ class OfflineIndicator extends ConsumerWidget {
   }
 
   /// Build online state indicator (minimal)
-  Widget _buildOnlineIndicator(BuildContext context, ConnectivityService connectivity) {
+  Widget _buildOnlineIndicator(
+      BuildContext context, ConnectivityService connectivity) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
@@ -176,7 +181,9 @@ class OfflineIndicator extends ConsumerWidget {
         child: Row(
           children: [
             Icon(
-              connectivity.isConnectedToWifi ? Icons.wifi : Icons.signal_cellular_alt,
+              connectivity.isConnectedToWifi
+                  ? Icons.wifi
+                  : Icons.signal_cellular_alt,
               color: AppTheme.white,
               size: 16,
             ),
@@ -197,7 +204,8 @@ class OfflineIndicator extends ConsumerWidget {
   }
 
   /// Build refresh connectivity button
-  Widget _buildRefreshButton(BuildContext context, ConnectivityService connectivity) {
+  Widget _buildRefreshButton(
+      BuildContext context, ConnectivityService connectivity) {
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -205,7 +213,7 @@ class OfflineIndicator extends ConsumerWidget {
         borderRadius: BorderRadius.circular(20),
         child: Container(
           padding: const EdgeInsets.all(8),
-          child: Icon(
+          child: const Icon(
             Icons.refresh,
             color: AppTheme.white,
             size: 20,
@@ -242,7 +250,8 @@ class OfflineIndicator extends ConsumerWidget {
               const SizedBox(width: 4),
               Text(
                 'Sync',
-                style: (isSmall ? AppTheme.bodySmall : AppTheme.labelSmall).copyWith(
+                style: (isSmall ? AppTheme.bodySmall : AppTheme.labelSmall)
+                    .copyWith(
                   color: AppTheme.white,
                   fontWeight: FontWeight.w600,
                 ),
@@ -263,7 +272,7 @@ class OfflineIndicator extends ConsumerWidget {
         borderRadius: BorderRadius.circular(20),
         child: Container(
           padding: const EdgeInsets.all(4),
-          child: Icon(
+          child: const Icon(
             Icons.close,
             color: AppTheme.white,
             size: 16,
@@ -281,7 +290,7 @@ class OfflineIndicator extends ConsumerWidget {
         SnackBar(
           content: Row(
             children: [
-              SizedBox(
+              const SizedBox(
                 width: 16,
                 height: 16,
                 child: CircularProgressIndicator(
@@ -312,7 +321,7 @@ class OfflineIndicator extends ConsumerWidget {
           SnackBar(
             content: Row(
               children: [
-                Icon(Icons.check_circle, color: AppTheme.white, size: 16),
+                const Icon(Icons.check_circle, color: AppTheme.white, size: 16),
                 const SizedBox(width: 12),
                 const Text('Data synced successfully'),
               ],
@@ -329,7 +338,7 @@ class OfflineIndicator extends ConsumerWidget {
           SnackBar(
             content: Row(
               children: [
-                Icon(Icons.error, color: AppTheme.white, size: 16),
+                const Icon(Icons.error, color: AppTheme.white, size: 16),
                 const SizedBox(width: 12),
                 Text('Sync failed: ${e.toString()}'),
               ],
@@ -365,9 +374,8 @@ class CompactOfflineIndicator extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: connectivity.isOnline
-            ? AppTheme.successGreen
-            : AppTheme.errorRed,
+        color:
+            connectivity.isOnline ? AppTheme.successGreen : AppTheme.errorRed,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
@@ -392,5 +400,3 @@ class CompactOfflineIndicator extends ConsumerWidget {
     );
   }
 }
-
-

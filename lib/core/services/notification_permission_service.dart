@@ -5,7 +5,8 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 
 /// Service to handle notification permissions and guide users through setup
 class NotificationPermissionService {
-  static final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+  static final FirebaseMessaging _firebaseMessaging =
+      FirebaseMessaging.instance;
 
   /// Check current notification permission status
   static Future<PermissionStatus> checkPermissionStatus() async {
@@ -64,7 +65,7 @@ class NotificationPermissionService {
                   color: AppTheme.accentCopper.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(AppTheme.radiusSm),
                 ),
-                child: Icon(
+                child: const Icon(
                   Icons.notifications_active,
                   color: AppTheme.accentCopper,
                   size: AppTheme.iconMd,
@@ -96,7 +97,8 @@ class NotificationPermissionService {
               _buildFeatureItem(
                 icon: Icons.work_outline,
                 title: 'New Job Matches',
-                description: 'Get alerted when jobs match your skills and location',
+                description:
+                    'Get alerted when jobs match your skills and location',
               ),
               const SizedBox(height: AppTheme.spacingSm),
               _buildFeatureItem(
@@ -157,7 +159,7 @@ class NotificationPermissionService {
           ),
           title: Row(
             children: [
-              Icon(
+              const Icon(
                 Icons.settings,
                 color: AppTheme.warningYellow,
                 size: AppTheme.iconMd,
@@ -266,5 +268,3 @@ class NotificationPermissionService {
     );
   }
 }
-
-

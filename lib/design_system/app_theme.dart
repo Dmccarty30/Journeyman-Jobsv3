@@ -314,97 +314,112 @@ class AppTheme {
   // =================== TYPOGRAPHY ===================
 
   // Display Styles
-  static TextStyle displayLarge = GoogleFonts.inter(
+  static const TextStyle displayLarge = TextStyle(
+    fontFamily: 'Inter',
     fontSize: 32,
     fontWeight: FontWeight.w700,
     height: 1.2,
     letterSpacing: -0.5,
   );
 
-  static TextStyle displayMedium = GoogleFonts.inter(
+  static const TextStyle displayMedium = TextStyle(
+    fontFamily: 'Inter',
     fontSize: 28,
     fontWeight: FontWeight.w600,
     height: 1.25,
     letterSpacing: -0.25,
   );
 
-  static TextStyle displaySmall = GoogleFonts.inter(
+  static const TextStyle displaySmall = TextStyle(
+    fontFamily: 'Inter',
     fontSize: 24,
     fontWeight: FontWeight.w600,
     height: 1.3,
   );
 
   // Headline Styles
-  static TextStyle headlineLarge = GoogleFonts.inter(
+  static const TextStyle headlineLarge = TextStyle(
+    fontFamily: 'Inter',
     fontSize: 22,
     fontWeight: FontWeight.w600,
     height: 1.3,
   );
 
-  static TextStyle headlineMedium = GoogleFonts.inter(
+  static const TextStyle headlineMedium = TextStyle(
+    fontFamily: 'Inter',
     fontSize: 20,
     fontWeight: FontWeight.w600,
     height: 1.3,
   );
 
-  static TextStyle headlineSmall = GoogleFonts.inter(
+  static const TextStyle headlineSmall = TextStyle(
+    fontFamily: 'Inter',
     fontSize: 18,
     fontWeight: FontWeight.w600,
     height: 1.4,
   );
 
   // Title Styles
-  static TextStyle titleLarge = GoogleFonts.inter(
+  static const TextStyle titleLarge = TextStyle(
+    fontFamily: 'Inter',
     fontSize: 16,
     fontWeight: FontWeight.w600,
     height: 1.5,
   );
 
-  static TextStyle titleMedium = GoogleFonts.inter(
+  static const TextStyle titleMedium = TextStyle(
+    fontFamily: 'Inter',
     fontSize: 14,
     fontWeight: FontWeight.w600,
     height: 1.4,
   );
 
-  static TextStyle titleSmall = GoogleFonts.inter(
+  static const TextStyle titleSmall = TextStyle(
+    fontFamily: 'Inter',
     fontSize: 12,
     fontWeight: FontWeight.w600,
     height: 1.4,
   );
 
   // Body Styles
-  static TextStyle bodyLarge = GoogleFonts.inter(
+  static const TextStyle bodyLarge = TextStyle(
+    fontFamily: 'Inter',
     fontSize: 16,
     fontWeight: FontWeight.w400,
     height: 1.5,
   );
 
-  static TextStyle bodyMedium = GoogleFonts.inter(
+  static const TextStyle bodyMedium = TextStyle(
+    fontFamily: 'Inter',
     fontSize: 14,
     fontWeight: FontWeight.w400,
     height: 1.4,
   );
 
-  static TextStyle bodySmall = GoogleFonts.inter(
+  static const TextStyle bodySmall = TextStyle(
+    fontFamily: 'Inter',
     fontSize: 12,
     fontWeight: FontWeight.w400,
     height: 1.4,
   );
 
   // Label Styles
-  static TextStyle labelLarge = GoogleFonts.inter(
+  static const TextStyle labelLarge = TextStyle(
+    fontFamily: 'Inter',
     fontSize: 14,
     fontWeight: FontWeight.w500,
     height: 1.4,
   );
 
-  static TextStyle labelMedium = GoogleFonts.inter(
+  static const TextStyle labelMedium = TextStyle(
+    fontFamily: 'Inter',
     fontSize: 12,
     fontWeight: FontWeight.w500,
     height: 1.4,
   );
 
-  static TextStyle labelSmall = GoogleFonts.inter(
+  static const TextStyle labelSmall = TextStyle(
+    fontFamily: 'Inter',
     fontSize: 10,
     fontWeight: FontWeight.w500,
     height: 1.4,
@@ -412,19 +427,22 @@ class AppTheme {
   );
 
   // Button Text Styles
-  static TextStyle buttonLarge = GoogleFonts.inter(
+  static const TextStyle buttonLarge = TextStyle(
+    fontFamily: 'Inter',
     fontSize: 16,
     fontWeight: FontWeight.w600,
     height: 1.25,
   );
 
-  static TextStyle buttonMedium = GoogleFonts.inter(
+  static const TextStyle buttonMedium = TextStyle(
+    fontFamily: 'Inter',
     fontSize: 14,
     fontWeight: FontWeight.w600,
     height: 1.25,
   );
 
-  static TextStyle buttonSmall = GoogleFonts.inter(
+  static const TextStyle buttonSmall = TextStyle(
+    fontFamily: 'Inter',
     fontSize: 12,
     fontWeight: FontWeight.w600,
     height: 1.25,

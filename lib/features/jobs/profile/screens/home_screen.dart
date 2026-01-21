@@ -82,9 +82,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             ),
           ),
           const SizedBox(width: AppTheme.spacingSm),
-          Text(
+          const Text(
             'Journeyman Jobs',
-            style: AppTheme.headlineMedium.copyWith(color: AppTheme.white),
+            style: AppTheme.headlineMedium,
           ),
         ],
       ),
@@ -118,19 +118,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'Welcome Back!',
-          style: AppTheme.headlineMedium.copyWith(
-            color: AppTheme.primaryNavy,
-            fontWeight: FontWeight.bold,
-          ),
+          style: AppTheme.headlineMedium,
         ),
         const SizedBox(height: AppTheme.spacingSm),
-        Text(
+        const Text(
           'IBEW Member',
-          style: AppTheme.bodyMedium.copyWith(
-            color: AppTheme.textSecondary,
-          ),
+          style: AppTheme.bodyMedium,
         ),
       ],
     );
@@ -165,12 +160,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 'Welcome Back!',
-                style: AppTheme.headlineMedium.copyWith(
-                  color: AppTheme.primaryNavy,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: AppTheme.headlineMedium,
               ),
               const SizedBox(height: AppTheme.spacingXs),
               Text(
@@ -208,19 +200,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 'Welcome Back!',
-                style: AppTheme.headlineMedium.copyWith(
-                  color: AppTheme.primaryNavy,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: AppTheme.headlineMedium,
               ),
               const SizedBox(height: AppTheme.spacingSm),
-              Text(
+              const Text(
                 'IBEW Member',
-                style: AppTheme.bodyMedium.copyWith(
-                  color: AppTheme.textSecondary,
-                ),
+                style: AppTheme.bodyMedium,
               ),
             ],
           ),
@@ -233,11 +220,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'Quick Actions',
-          style: AppTheme.headlineSmall.copyWith(
-            color: AppTheme.primaryNavy,
-          ),
+          style: AppTheme.headlineSmall,
         ),
         const SizedBox(height: AppTheme.spacingLg),
         Row(
@@ -313,11 +298,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
+        const Text(
           'Suggested Jobs',
-          style: AppTheme.headlineSmall.copyWith(
-            color: AppTheme.primaryNavy,
-          ),
+          style: AppTheme.headlineSmall,
         ),
         TextButton(
           onPressed: () => context.push(AppRouter.jobs),

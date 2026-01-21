@@ -300,48 +300,18 @@ class _SplashScreenState extends State<SplashScreen>
                         opacity: _textOpacityAnimation.value,
                         child: Column(
                           children: [
-                            Text(
+                            const Text(
                               'Journeyman',
-                              style: AppTheme.displayLarge.copyWith(
-                                color: AppTheme.white,
-                                fontWeight: FontWeight.w700,
-                                shadows: [
-                                  Shadow(
-                                    color: Colors.black.withValues(alpha: 0.3),
-                                    offset: const Offset(0, 2),
-                                    blurRadius: 4,
-                                  ),
-                                ],
-                              ),
+                              style: AppTheme.displayLarge,
                             ),
-                            Text(
+                            const Text(
                               'Jobs',
-                              style: AppTheme.displayMedium.copyWith(
-                                color: AppTheme.white,
-                                fontWeight: FontWeight.w600,
-                                shadows: [
-                                  Shadow(
-                                    color: Colors.black.withValues(alpha: 0.3),
-                                    offset: const Offset(0, 2),
-                                    blurRadius: 4,
-                                  ),
-                                ],
-                              ),
+                              style: AppTheme.displayMedium,
                             ),
                             const SizedBox(height: 8),
-                            Text(
+                            const Text(
                               'Clearing the Books.',
-                              style: AppTheme.bodyLarge.copyWith(
-                                color: AppTheme.white.withValues(alpha: 0.9),
-                                fontWeight: FontWeight.w500,
-                                shadows: [
-                                  Shadow(
-                                    color: Colors.black.withValues(alpha: 0.3),
-                                    offset: const Offset(0, 1),
-                                    blurRadius: 2,
-                                  ),
-                                ],
-                              ),
+                              style: AppTheme.bodyLarge,
                             ),
                           ],
                         ),
@@ -359,12 +329,9 @@ class _SplashScreenState extends State<SplashScreen>
                     opacity: _textOpacityAnimation.value,
                     child: Column(
                       children: [
-                        Text(
+                        const Text(
                           'Powering up your electrical career...',
-                          style: AppTheme.bodySmall.copyWith(
-                            color: AppTheme.white.withValues(alpha: 0.8),
-                            fontWeight: FontWeight.w500,
-                          ),
+                          style: AppTheme.bodySmall,
                           textAlign: TextAlign.center,
                         ),
                         const SizedBox(height: 16),

@@ -38,7 +38,7 @@ import '../../crews.dart';class MemberAvailabilityDialog extends ConsumerWidget 
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                const Text(
                   'Member Availability',
                   style: TailboardTheme.headingMedium,
                 ),

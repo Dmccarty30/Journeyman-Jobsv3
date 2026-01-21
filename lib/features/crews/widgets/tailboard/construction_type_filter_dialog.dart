@@ -68,7 +68,7 @@ class ConstructionTypeFilterDialog extends ConsumerWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                const Text(
                   'Construction Type',
                   style: TailboardTheme.headingMedium,
                 ),

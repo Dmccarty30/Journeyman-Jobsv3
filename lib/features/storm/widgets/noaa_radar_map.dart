@@ -133,11 +133,9 @@ class _NoaaRadarMapState extends State<NoaaRadarMap> {
                 color: AppTheme.accentCopper,
               ),
               const SizedBox(height: 16),
-              Text(
+              const Text(
                 'Loading NOAA Weather Data...',
-                style: AppTheme.bodyLarge.copyWith(
-                  color: AppTheme.textLight,
-                ),
+                style: AppTheme.bodyLarge,
               ),
             ],
           ),

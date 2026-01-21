@@ -165,12 +165,9 @@ class PowerOutageCard extends StatelessWidget {
                           color: AppTheme.warningYellow,
                         ),
                         const SizedBox(width: 4),
-                        Text(
+                        const Text(
                           'Storm restoration needed',
-                          style: AppTheme.bodySmall.copyWith(
-                            color: AppTheme.warningYellow,
-                            fontWeight: FontWeight.w500,
-                          ),
+                          style: AppTheme.bodySmall,
                         ),
                       ],
                     ),
@@ -228,18 +225,13 @@ class PowerOutageSummary extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'MAJOR POWER OUTAGES',
-                      style: AppTheme.titleLarge.copyWith(
-                        color: AppTheme.white,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: AppTheme.titleLarge,
                     ),
-                    Text(
+                    const Text(
                       'Restoration crews needed nationwide',
-                      style: AppTheme.bodyMedium.copyWith(
-                        color: AppTheme.white.withAlpha((255 * 0.9).round()),
-                      ),
+                      style: AppTheme.bodyMedium,
                     ),
                   ],
                 ),

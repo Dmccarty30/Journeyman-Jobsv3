@@ -448,9 +448,9 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
                 onPressed: _previousStep,
               )
             : null,
-        title: Text(
+        title: const Text(
           'Setup Profile',
-          style: AppTheme.headlineMedium.copyWith(color: AppTheme.primaryNavy),
+          style: AppTheme.headlineMedium,
         ),
         centerTitle: true,
       ),
@@ -798,14 +798,14 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
             const SizedBox(height: AppTheme.spacingMd),
 
             // Classification selection
-            Text(
+            const Text(
               'Classification',
-              style: AppTheme.titleMedium.copyWith(color: AppTheme.textPrimary),
+              style: AppTheme.titleMedium,
             ),
             const SizedBox(height: AppTheme.spacingSm),
-            Text(
+            const Text(
               'Select your current classification',
-              style: AppTheme.bodySmall.copyWith(color: AppTheme.textSecondary),
+              style: AppTheme.bodySmall,
             ),
             const SizedBox(height: AppTheme.spacingMd),
             Wrap(
@@ -921,14 +921,14 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
           const SizedBox(height: AppTheme.spacingMd),
 
           // Construction Types
-          Text(
+          const Text(
             'Construction Types',
-            style: AppTheme.titleMedium.copyWith(color: AppTheme.textPrimary),
+            style: AppTheme.titleMedium,
           ),
           const SizedBox(height: AppTheme.spacingSm),
-          Text(
+          const Text(
             'Select all construction types you\'re interested in:',
-            style: AppTheme.bodySmall.copyWith(color: AppTheme.textSecondary),
+            style: AppTheme.bodySmall,
           ),
           const SizedBox(height: AppTheme.spacingMd),
           Wrap(
@@ -956,14 +956,14 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
           const SizedBox(height: AppTheme.spacingMd),
 
           // Hours per week
-          Text(
+          const Text(
             'Hours Per Week',
-            style: AppTheme.titleMedium.copyWith(color: AppTheme.textPrimary),
+            style: AppTheme.titleMedium,
           ),
           const SizedBox(height: AppTheme.spacingSm),
-          Text(
+          const Text(
             'How many hours are you willing to work per week?',
-            style: AppTheme.bodySmall.copyWith(color: AppTheme.textSecondary),
+            style: AppTheme.bodySmall,
           ),
           const SizedBox(height: AppTheme.spacingMd),
           Container(
@@ -1000,14 +1000,14 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
           const SizedBox(height: AppTheme.spacingMd),
 
           // Per diem
-          Text(
+          const Text(
             'Per Diem Requirements',
-            style: AppTheme.titleMedium.copyWith(color: AppTheme.textPrimary),
+            style: AppTheme.titleMedium,
           ),
           const SizedBox(height: AppTheme.spacingSm),
-          Text(
+          const Text(
             'What per diem amount are you looking for?',
-            style: AppTheme.bodySmall.copyWith(color: AppTheme.textSecondary),
+            style: AppTheme.bodySmall,
           ),
           const SizedBox(height: AppTheme.spacingMd),
           Container(
@@ -1059,14 +1059,14 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
           const SizedBox(height: AppTheme.spacingMd),
 
           // Job search goals
-          Text(
+          const Text(
             'Job Search Goals',
-            style: AppTheme.titleMedium.copyWith(color: AppTheme.textPrimary),
+            style: AppTheme.titleMedium,
           ),
           const SizedBox(height: AppTheme.spacingSm),
-          Text(
+          const Text(
             'Select all that apply to your job search:',
-            style: AppTheme.bodySmall.copyWith(color: AppTheme.textSecondary),
+            style: AppTheme.bodySmall,
           ),
           const SizedBox(height: AppTheme.spacingMd),
           Container(
@@ -1078,9 +1078,7 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
             child: Column(
               children: [
                 CheckboxListTile(
-                  title:
-                      Text('Network with Others', style: AppTheme.bodyMedium),
-                  subtitle: Text('Connect with other electricians',
+                                        title: const Text('Network with Others', style: AppTheme.bodyMedium),                  subtitle: Text('Connect with other electricians',
                       style: AppTheme.bodySmall
                           .copyWith(color: AppTheme.textSecondary)),
                   value: _networkWithOthers,
@@ -1146,9 +1144,8 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
                   dense: true,
                 ),
                 CheckboxListTile(
-                  title:
-                      Text('Find Long-term Work', style: AppTheme.bodyMedium),
-                  subtitle: Text('Secure stable employment',
+                                        title:
+                                        const Text('Find Long-term Work', style: AppTheme.bodyMedium),                  subtitle: Text('Secure stable employment',
                       style: AppTheme.bodySmall
                           .copyWith(color: AppTheme.textSecondary)),
                   value: _findLongTermWork,
@@ -1234,15 +1231,15 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
           ),
         ),
         const SizedBox(height: AppTheme.spacingSm),
-        Text(
+        const Text(
           title,
-          style: AppTheme.headlineSmall.copyWith(color: AppTheme.primaryNavy),
+          style: AppTheme.headlineSmall,
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: AppTheme.spacingXs),
-        Text(
+        const Text(
           subtitle,
-          style: AppTheme.bodyMedium.copyWith(color: AppTheme.textSecondary),
+          style: AppTheme.bodyMedium,
           textAlign: TextAlign.center,
         ),
       ],

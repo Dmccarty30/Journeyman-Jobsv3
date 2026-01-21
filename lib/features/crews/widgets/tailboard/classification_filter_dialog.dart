@@ -67,7 +67,7 @@ class ClassificationFilterDialog extends ConsumerWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                const Text(
                   'Classification',
                   style: TailboardTheme.headingMedium,
                 ),

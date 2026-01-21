@@ -26,7 +26,7 @@ class ChatHistoryDialog extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                const Text(
                   'Chat History',
                   style: TailboardTheme.headingMedium,
                 ),

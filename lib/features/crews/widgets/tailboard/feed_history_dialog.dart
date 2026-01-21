@@ -31,7 +31,7 @@ class FeedHistoryDialog extends ConsumerWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                const Text(
                   'Feed History',
                   style: TailboardTheme.headingMedium,
                 ),

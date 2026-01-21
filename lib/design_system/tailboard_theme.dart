@@ -72,63 +72,63 @@ class TailboardTheme {
   ];
 
   // Text styles
-  static TextStyle get headingLarge => const TextStyle(
+  static const TextStyle headingLarge = TextStyle(
     fontSize: 24,
     fontWeight: FontWeight.bold,
     color: textPrimary,
     fontFamily: 'Plus Jakarta Sans',
   );
 
-  static TextStyle get headingMedium => const TextStyle(
+  static const TextStyle headingMedium = TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.bold,
     color: textPrimary,
     fontFamily: 'Plus Jakarta Sans',
   );
 
-  static TextStyle get headingSmall => const TextStyle(
+  static const TextStyle headingSmall = TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.w600,
     color: textPrimary,
     fontFamily: 'Plus Jakarta Sans',
   );
 
-  static TextStyle get bodyLarge => const TextStyle(
+  static const TextStyle bodyLarge = TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.normal,
     color: textPrimary,
     fontFamily: 'Plus Jakarta Sans',
   );
 
-  static TextStyle get bodyMedium => const TextStyle(
+  static const TextStyle bodyMedium = TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.normal,
     color: textPrimary,
     fontFamily: 'Plus Jakarta Sans',
   );
 
-  static TextStyle get bodySmall => const TextStyle(
+  static const TextStyle bodySmall = TextStyle(
     fontSize: 12,
     fontWeight: FontWeight.normal,
     color: textSecondary,
     fontFamily: 'Plus Jakarta Sans',
   );
 
-  static TextStyle get labelLarge => const TextStyle(
+  static const TextStyle labelLarge = TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.w600,
     color: textPrimary,
     fontFamily: 'Plus Jakarta Sans',
   );
 
-  static TextStyle get labelMedium => const TextStyle(
+  static const TextStyle labelMedium = TextStyle(
     fontSize: 12,
     fontWeight: FontWeight.w600,
     color: textSecondary,
     fontFamily: 'Plus Jakarta Sans',
   );
 
-  static TextStyle get labelSmall => const TextStyle(
+  static const TextStyle labelSmall = TextStyle(
     fontSize: 10,
     fontWeight: FontWeight.w600,
     color: textTertiary,

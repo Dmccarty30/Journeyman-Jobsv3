@@ -39,7 +39,7 @@ import '../../crews.dart';class MemberRosterDialog extends ConsumerWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                const Text(
                   'Member Roster',
                   style: TailboardTheme.headingMedium,
                 ),

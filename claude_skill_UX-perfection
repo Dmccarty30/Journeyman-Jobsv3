@@ -825,7 +825,7 @@ Each prompt MUST NOT:
 
 **From UX Spec:**
 
-```
+```swift
 #### Node Card (Sidebar)
 - Dimensions: ~200px width, ~48px height
 - Content: Icon (left), Name (center/left), Preview badge (right, if applicable)

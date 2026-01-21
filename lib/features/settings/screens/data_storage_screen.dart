@@ -142,7 +142,7 @@ class _DataStorageScreenState extends State<DataStorageScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Clear Cache', style: AppTheme.titleMedium),
+                            const Text('Clear Cache', style: AppTheme.titleMedium),
                             Text(
                               'Current cache size: $_cacheSize',
                               style: AppTheme.bodySmall.copyWith(color: AppTheme.textSecondary),
@@ -204,7 +204,7 @@ class _DataStorageScreenState extends State<DataStorageScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: AppTheme.titleMedium),
+                const Text(title, style: AppTheme.titleMedium),
                 Text(
                   subtitle,
                   style: AppTheme.bodySmall.copyWith(color: AppTheme.textSecondary),

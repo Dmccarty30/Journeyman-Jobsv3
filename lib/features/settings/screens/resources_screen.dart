@@ -276,7 +276,7 @@ class _ResourcesScreenState extends State<ResourcesScreen>
                   hintText: 'Search resources...',
                   prefixIcon: Icon(Icons.search, color: AppTheme.textLight),
                   border: InputBorder.none,
-                  contentPadding: EdgeInsets.symmetric(
+                  contentPadding: const EdgeInsets.symmetric(
                     horizontal: AppTheme.spacingMd,
                     vertical: AppTheme.spacingSm,
                   ),
@@ -309,7 +309,7 @@ class _ResourcesScreenState extends State<ResourcesScreen>
   Widget _buildResourceList(List<ResourceItem> items) {
     if (items.isEmpty) {
       return Center(
-        child: JJEmptyState(
+        child: const JJEmptyState(
           title: 'No Resources Found',
           subtitle: 'Try searching with different keywords',
           icon: Icons.search_off,

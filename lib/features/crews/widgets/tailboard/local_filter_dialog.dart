@@ -96,7 +96,7 @@ class _LocalFilterDialogState extends ConsumerState<LocalFilterDialog> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                    const Text(
                       'IBEW Local',
                       style: TailboardTheme.headingMedium,
                     ),
