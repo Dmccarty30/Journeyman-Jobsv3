@@ -49,40 +49,60 @@ class StormContractorCard extends StatelessWidget {
   /// Builds the logo background layer with faded watermark effect
   Widget _buildLogoBackground() {
     final logoUrl = contractor.logoUrl;
+    final assetPath = contractor.localAssetPath;
 
-    // Fallback: Lightning bolt icon when no logo
-    if (logoUrl == null || logoUrl.isEmpty) {
-      return Positioned.fill(
-        child: Opacity(
-          opacity: 0.08,
-          child: Center(
-            child: Icon(
-              Icons.flash_on,
-              size: 200,
-              color: AppTheme.accentCopper,
-            ),
-          ),
-        ),
+    // Logo background layer (behind everything)
+    return Positioned.fill(
+      child: Opacity(
+        opacity: 0.15, // Faded watermark
+        child: _buildLogoImage(assetPath, logoUrl),
+      ),
+    );
+  }
+
+  Widget _buildLogoImage(String? assetPath, String? logoUrl) {
+    // Try local asset first
+    if (assetPath != null) {
+      return Image.asset(
+        assetPath,
+        fit: BoxFit.contain,
+        alignment: Alignment.center,
+        errorBuilder: (context, error, stackTrace) {
+          // If asset fails, try remote URL
+          if (logoUrl != null && logoUrl.isNotEmpty) {
+            return CachedNetworkImage(
+              imageUrl: logoUrl,
+              fit: BoxFit.contain,
+              alignment: Alignment.center,
+              placeholder: (context, url) => const SizedBox.shrink(),
+              errorWidget: (context, url, error) => _buildFallbackIcon(),
+            );
+          }
+          return _buildFallbackIcon();
+        },
       );
     }
 
-    // Logo from Firebase Storage with faded effect
-    return Positioned.fill(
-      child: Opacity(
-        opacity: 0.15, // Faded watermark (adjust 0.1-0.25)
-        child: CachedNetworkImage(
-          imageUrl: logoUrl,
-          fit: BoxFit.contain,
-          alignment: Alignment.center,
-          placeholder: (context, url) => const SizedBox.shrink(),
-          errorWidget: (context, url, error) => Center(
-            child: Icon(
-              Icons.flash_on,
-              size: 200,
-              color: AppTheme.accentCopper.withValues(alpha: 0.5),
-            ),
-          ),
-        ),
+    // Fallback to remote URL if no asset path calculated
+    if (logoUrl != null && logoUrl.isNotEmpty) {
+      return CachedNetworkImage(
+        imageUrl: logoUrl,
+        fit: BoxFit.contain,
+        alignment: Alignment.center,
+        placeholder: (context, url) => const SizedBox.shrink(),
+        errorWidget: (context, url, error) => _buildFallbackIcon(),
+      );
+    }
+
+    return _buildFallbackIcon();
+  }
+
+  Widget _buildFallbackIcon() {
+    return Center(
+      child: Icon(
+        Icons.flash_on,
+        size: 200,
+        color: AppTheme.accentCopper.withValues(alpha: 0.5),
       ),
     );
   }

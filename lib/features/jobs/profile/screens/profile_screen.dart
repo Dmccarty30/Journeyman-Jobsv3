@@ -14,7 +14,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:journeyman_jobs/features/auth/providers/auth_riverpod_provider.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
-  const ProfileScreen({super.key});
+  final bool initialEditMode;
+  const ProfileScreen({super.key, this.initialEditMode = false});
 
   @override
   ConsumerState<ProfileScreen> createState() => _ProfileScreenState();
@@ -170,6 +171,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
+    _isEditing = widget.initialEditMode;
     _loadUserData();
   }
 

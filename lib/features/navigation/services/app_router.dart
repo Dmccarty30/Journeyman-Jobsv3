@@ -18,6 +18,7 @@ import '../../settings/settings.dart';
 import '../../storm/storm.dart';
 import '../../tools/tools.dart';
 import '../../unions/unions.dart';
+import 'package:journeyman_jobs/features/demo/circuit_background_demo.dart';
 
 class AppRouter {
   static const String splash = '/';
@@ -58,6 +59,7 @@ class AppRouter {
       '/settings/data-storage'; // New route constant
   static const String languageRegion =
       '/settings/language-region'; // New route constant
+  static const String circuitBackgroundDemo = '/demo/circuit-background';
 
   static final GoRouter router = GoRouter(
     initialLocation: splash,
@@ -149,7 +151,11 @@ class AppRouter {
       GoRoute(
         path: profile,
         name: 'profile',
-        builder: (context, state) => const ProfileScreen(),
+        builder: (context, state) {
+          final bool initialEditMode =
+              state.uri.queryParameters['edit'] == 'true';
+          return ProfileScreen(initialEditMode: initialEditMode);
+        },
       ),
       GoRoute(
         path: help,
@@ -230,6 +236,11 @@ class AppRouter {
         path: languageRegion,
         name: 'language-region',
         builder: (context, state) => const LanguageRegionScreen(),
+      ),
+      GoRoute(
+        path: circuitBackgroundDemo,
+        name: 'circuit-background-demo',
+        builder: (context, state) => const CircuitBackgroundDemoScreen(),
       ),
     ],
     errorBuilder: (context, state) => Scaffold(

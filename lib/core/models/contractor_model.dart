@@ -112,9 +112,27 @@ class Contractor {
     );
   }
 
+  /// Gets the expected local asset path for the contractor's logo
+  String? get localAssetPath {
+    if (company.isEmpty) return null;
+    final fileName = company
+        .trim()
+        .toLowerCase()
+        .replaceAll(' ', '_')
+        .replaceAll('.', '')
+        .replaceAll(',', '')
+        .replaceAll("'", '')
+        .replaceAll('"', '')
+        .replaceAll('-', '_')
+        .replaceAll('__', '_');
+
+    // Most contractor logos are saved as jpg inassets/images/
+    return 'assets/images/$fileName.jpg';
+  }
+
   @override
   String toString() {
-    return 'Contractor(id: $id, company: $company, howToSignup: $howToSignup, address: $address, logoUrl: $logoUrl)';
+    return 'Contractor(id: $id, company: $company, howToSignup: $howToSignup, address: $address, logoUrl: $logoUrl, localAssetPath: $localAssetPath)';
   }
 
   @override

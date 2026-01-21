@@ -1,64 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:journeyman_jobs/features/auth/providers/auth_riverpod_provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:journeyman_jobs/core/services/onboarding_service.dart';
 import 'package:journeyman_jobs/design_system/design_system.dart';
 import 'package:journeyman_jobs/features/navigation/services/app_router.dart';
 
-class SettingsScreen extends StatefulWidget {
+class SettingsScreen extends ConsumerStatefulWidget {
   const SettingsScreen({super.key});
 
   @override
-  State<SettingsScreen> createState() => _SettingsScreenState();
+  ConsumerState<SettingsScreen> createState() => _SettingsScreenState();
 }
 
-class _SettingsScreenState extends State<SettingsScreen> {
-  String? _ticketNumber;
-  bool _isLoading = true;
-
+class _SettingsScreenState extends ConsumerState<SettingsScreen> {
+  // Removed manual _loadUserData since we use userModelStreamProvider now
   @override
   void initState() {
     super.initState();
-    _loadUserData();
-  }
-
-  Future<void> _loadUserData() async {
-    final user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      try {
-        final doc = await FirebaseFirestore.instance
-            .collection('users')
-            .doc(user.uid)
-            .get();
-
-        if (doc.exists && mounted) {
-          setState(() {
-            _ticketNumber = doc.data()?['ticket_number']?.toString();
-            _isLoading = false;
-          });
-        } else if (mounted) {
-          setState(() {
-            _isLoading = false;
-          });
-        }
-      } catch (e) {
-        if (mounted) {
-          setState(() {
-            _isLoading = false;
-          });
-        }
-      }
-    } else {
-      setState(() {
-        _isLoading = false;
-      });
-    }
   }
 
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
+    final userModelAsync = ref.watch(userModelStreamProvider);
 
     return Scaffold(
       backgroundColor: AppTheme.offWhite, // Changed to transparent
@@ -119,29 +85,36 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         textAlign: TextAlign.center,
                       ),
                       const SizedBox(height: AppTheme.spacingSm),
-                      if (_isLoading)
-                        const SizedBox(
-                          height: 16,
-                          width: 16,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                          ),
-                        )
-                      else
-                        Text(
-                          _ticketNumber != null
-                              ? 'Ticket #$_ticketNumber'
+                      const SizedBox(height: AppTheme.spacingSm),
+                      userModelAsync.when(
+                        data: (userModel) => Text(
+                          userModel.ticketNumber.isNotEmpty
+                              ? 'Ticket #${userModel.ticketNumber}'
                               : 'IBEW Member',
                           style: AppTheme.bodyMedium.copyWith(
                             color: AppTheme.textSecondary,
                           ),
                         ),
+                        loading: () => const SizedBox(
+                          height: 16,
+                          width: 16,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                          ),
+                        ),
+                        error: (_, __) => Text(
+                          'IBEW Member',
+                          style: AppTheme.bodyMedium.copyWith(
+                            color: AppTheme.textSecondary,
+                          ),
+                        ),
+                      ),
                       const SizedBox(height: AppTheme.spacingLg),
                       JJPrimaryButton(
                         text: 'Edit Profile',
                         icon: Icons.edit,
                         onPressed: () {
-                          context.push(AppRouter.profile);
+                          context.push('${AppRouter.profile}?edit=true');
                         },
                         isFullWidth: true,
                         variant: JJButtonVariant.primary,
@@ -160,7 +133,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       icon: Icons.person_outline,
                       title: 'Profile',
                       subtitle: 'Manage your personal information',
-                      onTap: () => context.push(AppRouter.profile),
+                      onTap: () =>
+                          context.push('${AppRouter.profile}?edit=true'),
                     ),
                     _MenuOption(
                       icon: Icons.badge_outlined,

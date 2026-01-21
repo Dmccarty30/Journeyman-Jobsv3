@@ -740,7 +740,7 @@ final class PinnedPostsProvider
   }
 }
 
-String _$pinnedPostsHash() => r'dc8d3f74b2546ad63c34c407ad5860f52397f694';
+String _$pinnedPostsHash() => r'00318e4be656729119f8859a15560e6a24a734a4';
 
 /// Provider to get pinned posts for a specific crew
 

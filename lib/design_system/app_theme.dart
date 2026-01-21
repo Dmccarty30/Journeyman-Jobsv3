@@ -52,6 +52,14 @@ class AppTheme {
   // Electrical Colors
   static const Color groundBrown = Color(0xFF8B4513);
 
+  // PCB / Circuit Board Colors (Added for Professional Redesign)
+  static const Color pcbSubstrate = Color(0xFF0D4F35); // FR4 green
+  static const Color solderMask = Color(0xFF1A6B47); // Solder mask green
+  static const Color copperFresh = Color(0xFFB87333); // Fresh copper
+  static const Color copperAged = Color(0xFF8B6914); // Oxidized copper
+  static const Color silkscreen = Color(0xFFFFFFF0); // White silkscreen
+  static const Color tinPlating = Color(0xFFC0C0C0); // Tin-plated pads
+
   // Surface Colors
   static const Color surface = Color(0xFFFFFFFF);
   static const Color surfaceElevated = Color(0xFFF7FAFC);

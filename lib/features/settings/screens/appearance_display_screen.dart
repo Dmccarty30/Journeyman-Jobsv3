@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:journeyman_jobs/design_system/design_system.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:go_router/go_router.dart';
+import '../../navigation/services/app_router.dart';
 
 class AppearanceDisplayScreen extends StatefulWidget {
   const AppearanceDisplayScreen({super.key});
 
   @override
-  State<AppearanceDisplayScreen> createState() => _AppearanceDisplayScreenState();
+  State<AppearanceDisplayScreen> createState() =>
+      _AppearanceDisplayScreenState();
 }
 
 class _AppearanceDisplayScreenState extends State<AppearanceDisplayScreen> {
@@ -14,13 +17,13 @@ class _AppearanceDisplayScreenState extends State<AppearanceDisplayScreen> {
   bool _highContrastMode = false;
   bool _electricalEffects = true;
   String _selectedFontSize = 'Medium';
-  
+
   @override
   void initState() {
     super.initState();
     _loadSettings();
   }
-  
+
   Future<void> _loadSettings() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
@@ -30,7 +33,7 @@ class _AppearanceDisplayScreenState extends State<AppearanceDisplayScreen> {
       _selectedFontSize = prefs.getString('fontSize') ?? 'Medium';
     });
   }
-  
+
   Future<void> _updateSetting(String key, dynamic value) async {
     final prefs = await SharedPreferences.getInstance();
     if (value is bool) {
@@ -38,7 +41,7 @@ class _AppearanceDisplayScreenState extends State<AppearanceDisplayScreen> {
     } else if (value is String) {
       await prefs.setString(key, value);
     }
-    
+
     if (mounted) {
       JJSnackBar.showInfo(
         context: context,
@@ -112,6 +115,33 @@ class _AppearanceDisplayScreenState extends State<AppearanceDisplayScreen> {
                     }
                   },
                 ),
+                const Divider(),
+                _buildSectionHeader('Developer Tools'),
+                ListTile(
+                  contentPadding:
+                      const EdgeInsets.symmetric(vertical: AppTheme.spacingSm),
+                  leading: Container(
+                    padding: const EdgeInsets.all(AppTheme.spacingSm),
+                    decoration: BoxDecoration(
+                      color: AppTheme.primaryNavy.withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(AppTheme.radiusSm),
+                    ),
+                    child: const Icon(Icons.developer_mode,
+                        color: AppTheme.primaryNavy),
+                  ),
+                  title: const Text('Circuit Background Demo',
+                      style: AppTheme.titleMedium),
+                  subtitle: Text(
+                    'Configure and test circuit themes',
+                    style: AppTheme.bodySmall
+                        .copyWith(color: AppTheme.textSecondary),
+                  ),
+                  trailing: const Icon(Icons.chevron_right,
+                      color: AppTheme.textSecondary),
+                  onTap: () {
+                    context.push(AppRouter.circuitBackgroundDemo);
+                  },
+                ),
                 const SizedBox(height: AppTheme.spacingXl),
               ],
             ),
@@ -123,7 +153,8 @@ class _AppearanceDisplayScreenState extends State<AppearanceDisplayScreen> {
 
   Widget _buildSectionHeader(String title) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: AppTheme.spacingMd, top: AppTheme.spacingSm),
+      padding: const EdgeInsets.only(
+          bottom: AppTheme.spacingMd, top: AppTheme.spacingSm),
       child: Text(
         title.toUpperCase(),
         style: AppTheme.labelMedium.copyWith(
@@ -149,7 +180,7 @@ class _AppearanceDisplayScreenState extends State<AppearanceDisplayScreen> {
           Container(
             padding: const EdgeInsets.all(AppTheme.spacingSm),
             decoration: BoxDecoration(
-              color: AppTheme.primaryNavy.withValues(alpha:0.1),
+              color: AppTheme.primaryNavy.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(AppTheme.radiusSm),
             ),
             child: Icon(icon, color: AppTheme.primaryNavy),
@@ -162,7 +193,8 @@ class _AppearanceDisplayScreenState extends State<AppearanceDisplayScreen> {
                 Text(title, style: AppTheme.titleMedium),
                 Text(
                   subtitle,
-                  style: AppTheme.bodySmall.copyWith(color: AppTheme.textSecondary),
+                  style: AppTheme.bodySmall
+                      .copyWith(color: AppTheme.textSecondary),
                 ),
               ],
             ),
@@ -192,7 +224,7 @@ class _AppearanceDisplayScreenState extends State<AppearanceDisplayScreen> {
           Container(
             padding: const EdgeInsets.all(AppTheme.spacingSm),
             decoration: BoxDecoration(
-              color: AppTheme.primaryNavy.withValues(alpha:0.1),
+              color: AppTheme.primaryNavy.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(AppTheme.radiusSm),
             ),
             child: Icon(icon, color: AppTheme.primaryNavy),
@@ -224,5 +256,3 @@ class _AppearanceDisplayScreenState extends State<AppearanceDisplayScreen> {
     );
   }
 }
-
-

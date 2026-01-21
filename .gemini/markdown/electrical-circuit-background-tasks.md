@@ -304,25 +304,25 @@ static const Color tinPlating = Color(0xFFC0C0C0);       // Tin-plated pads
   - Document current random placement logic
   - Identify refactoring points for grid alignment
 
-- [ ] **4.2 - Implement Grid-Aligned Trace System**
+- [x] **4.2 - Implement Grid-Aligned Trace System**
   - Create `GridSystem` class with 40px configurable spacing
   - Implement Manhattan routing (horizontal/vertical only)
   - Add 45° diagonal routing for corner transitions
   - Store grid points for component snapping
 
-- [ ] **4.3 - Add Trace Width Hierarchy**
+- [x] **4.3 - Add Trace Width Hierarchy**
   - Define constants: `secondaryWidth = 2px`, `primaryWidth = 3px`, `powerRailWidth = 4px`
   - Classify traces by type (signal, power, ground)
   - Update `CircuitTrace` data class to include trace type
 
-- [ ] **4.4 - Implement Multi-Layer Rendering**
+- [x] **4.4 - Implement Multi-Layer Rendering**
   - Create substrate layer painter (fiberglass texture)
   - Create copper layer painter (main traces)
   - Create solder mask layer (green overlay with cutouts)
   - Create silkscreen layer (component designators)
   - Compose layers with proper opacity stacking
 
-- [ ] **4.5 - Add Via and Pad Rendering**
+- [x] **4.5 - Add Via and Pad Rendering**
   - Create via drawing method with annular ring
   - Create SMD pad shapes (rectangular, circular)
   - Create through-hole pad rendering
@@ -334,7 +334,7 @@ static const Color tinPlating = Color(0xFFC0C0C0);       // Tin-plated pads
   - Implement zone boundary edges
   - Add hatched fill pattern option
 
-- [ ] **4.7 - Create Professional Component Shapes**
+- [x] **4.7 - Create Professional Component Shapes**
   - Redesign resistor rendering (rectangular SMD with end caps)
   - Add electrolytic capacitor (cylindrical with stripe)
   - Create QFP IC package renderer
@@ -344,7 +344,7 @@ static const Color tinPlating = Color(0xFFC0C0C0);       // Tin-plated pads
   - Create connector header visuals
   - Add test point markers
 
-- [ ] **4.8 - Implement Component Clustering Logic**
+- [x] **4.8 - Implement Component Clustering Logic**
   - Create placement algorithm that clusters near intersections
   - Enforce 8px minimum spacing between components
   - Orient components parallel to nearby traces
@@ -364,65 +364,35 @@ static const Color tinPlating = Color(0xFFC0C0C0);       // Tin-plated pads
 
 ---
 
-### Phase 5: Version B – New Design (Clean Slate)
+### Phase 5: Version B – New Design (Cancelled)
+>
+> **Status**: **CANCELLED** per user request. Focus shifted to hyper-polishing Version A.
 
-**Context**: We create a completely fresh design from scratch, exploring modern techniques like shaders, particle systems, and alternative visual metaphors without the constraints of existing code.
+---
 
-> **Tasks**:
+### Phase 4.5: Version A – Hyper-Realism Polish (New)
 
-- [ ] **5.1 - Design Research & Concept Exploration**
-  - Research modern circuit/tech visual styles (references)
-  - Sketch 3–5 alternative visual concepts
-  - Consider: energy flow, neural networks, data streams
-  - Select most promising direction for development
+**Context**: "Make it look like an actual circuit board... circuits are gold... 3-D using shadows... finer lines."
 
-- [ ] **5.2 - Create New Background Widget Structure**
-  - Create `circuit_board_background_v2.dart`
-  - Define new class `CircuitBackgroundV2` widget
-  - Implement basic StatefulWidget structure
-  - Set up animation controllers
+- [x] **4.11 - Implement Metallic/Gold Trace Rendering**
+  - Use `LinearGradient` shaders for traces to simulate reflection
+  - Define "Gold" palette (Dark: 0xFFB8860B, Light: 0xFFFFD700)
+  - Apply specular highlights to rounded corners
 
-- [ ] **5.3 - Explore Shader-Based Effects**
-  - Research Flutter shader capabilities
-  - Implement gradient noise shader for substrate
-  - Create glow effect shader for traces
-  - Add blur effects for depth of field
+- [x] **4.12 - Add 3D Depth & Shadows**
+  - Implement drop shadows for all components (`elevation: 2`)
+  - Add inner shadows/bevels to board cutouts or holes
+  - simulating directional light source (Top-Left) for highlights
 
-- [ ] **5.4 - Build Procedural Generation System**
-  - Create seed-based repeatable generation
-  - Implement noise-based trace placement
-  - Add organic curve interpolation
-  - Ensure deterministic output for caching
+- [x] **4.13 - Enhanced Substrate Texture**
+  - Add subtle noise or fiberglass weave pattern to substrate
+  - Differentiate "Silicon" (white) aesthetic from Fr4 (green)
+  - Ensure contrast remains high for gold traces
 
-- [ ] **5.5 - Create New Component Library**
-  - Design minimalist component symbols
-  - Implement vector-based scalable icons
-  - Create component animation states
-  - Build component factory class
-
-- [ ] **5.6 - Implement Particle System**
-  - Create `CircuitParticle` class
-  - Implement particle emitters at component locations
-  - Add physics-based motion (drift, fade)
-  - Optimize for performance (<100 active particles)
-
-- [ ] **5.7 - Build Advanced Layering System**
-  - Create depth-sorted layer manager
-  - Implement parallax effect for layers
-  - Add layer-specific blur/opacity
-  - Support dynamic layer visibility
-
-- [ ] **5.8 - Design Alternative Visual Metaphors**
-  - Implement "data stream" visualization option
-  - Create "neural network" style connections option
-  - Add "matrix rain" inspired elements option
-  - Make metaphor selectable via configuration
-
-- [ ] **5.9 - Ensure Feature Parity with Version A**
-  - Match density configurations (low/medium/high/ultra)
-  - Implement same opacity controls
-  - Support same theme color inputs
-  - Match animation toggle behavior
+- [x] **4.14 - Component Realism Overhaul**
+  - Add pin legs/leads to chips (silver finish)
+  - Render actual text on major ICs (fake part numbers)
+  - Add polarity markers on capacitors and diodes
 
 ---
 
@@ -432,17 +402,17 @@ static const Color tinPlating = Color(0xFFC0C0C0);       // Tin-plated pads
 
 > **Tasks**:
 
-- [ ] **6.1 - Redesign Version A Current Flow System**
+- [x] **6.1 - Redesign Version A Current Flow System**
   - Replace single pulse with multi-pulse array
   - Implement variable intensity per pulse
   - Add pulse spawn at power source locations
   - Create pulse collision/merge behavior
 
-- [ ] **6.2 - Implement Exponential Glow Falloff**
-  - Replace uniform blur with exponential curve
-  - Create intensity peak at pulse center
-  - Add color gradient from core to edge
-  - Tune falloff constants for visual appeal
+- [x] **6.2 - Implement Adaptive Contrast Flow**
+  - Calculate flow color based on substrate luminance
+  - Use vibrant Electric Blue for light backgrounds
+  - Use bright Cyan/Gold/Amber for dark backgrounds
+  - Ensure high visibility across all themes
 
 - [ ] **6.3 - Add Variable Speed Animation**
   - Classify trace "importance" (power, signal, data)
@@ -450,7 +420,7 @@ static const Color tinPlating = Color(0xFFC0C0C0);       // Tin-plated pads
   - Apply easing curves to pulse motion
   - Randomize slight speed variations
 
-- [ ] **6.4 - Implement Component-Specific Animations**
+- [x] **6.4 - Implement Component-Specific Animations**
   - LED: Sine wave pulsing with glow diffusion
   - Switch: Toggle with arc flash effect
   - Capacitor: Charge/discharge ring expansion
@@ -536,6 +506,11 @@ static const Color tinPlating = Color(0xFFC0C0C0);       // Tin-plated pads
   - Position panel at bottom of screen
   - Use app's design system for widgets
   - Ensure controls don't obscure background
+
+- [x] **7.10 - Add Substrate Color Picker**
+  - Add "Motherboard Color" selector
+  - Override theme defaults for substrate
+  - Options: Green, Navy, Black, White ("Silicon"), Custom
 
 ---
 

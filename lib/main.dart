@@ -8,6 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'firebase_options.dart';
 import 'app.dart';
+import 'package:journeyman_jobs/design_system/electrical/circuit_settings_controller.dart';
 
 /// Antigravity Kit 2.0 - Bootstrap Only
 ///
@@ -43,6 +44,9 @@ void main() async {
 
   // Initialize Hive for local storage (Antigravity Kit 2.0)
   await JourneymanJobsApp.initializeHive();
+
+  // Load Global Circuit Settings (for persistent customization)
+  await CircuitSettingsController.instance.loadSettings();
 
   // ProviderScope wrapper around Material App
   runApp(
