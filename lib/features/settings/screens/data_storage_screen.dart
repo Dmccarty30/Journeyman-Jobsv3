@@ -14,14 +14,14 @@ class _DataStorageScreenState extends State<DataStorageScreen> {
   bool _autoDownloadEnabled = true;
   bool _wifiOnlyDownloads = true;
   String _cacheSize = 'Calculating...';
-  
+
   @override
   void initState() {
     super.initState();
     _loadSettings();
     _calculateCacheSize();
   }
-  
+
   Future<void> _loadSettings() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
@@ -30,11 +30,11 @@ class _DataStorageScreenState extends State<DataStorageScreen> {
       _wifiOnlyDownloads = prefs.getBool('wifiOnly') ?? true;
     });
   }
-  
+
   Future<void> _updateSetting(String key, bool value) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool(key, value);
-    
+
     if (mounted) {
       JJSnackBar.showSuccess(
         context: context,
@@ -42,7 +42,7 @@ class _DataStorageScreenState extends State<DataStorageScreen> {
       );
     }
   }
-  
+
   Future<void> _calculateCacheSize() async {
     // Simulate cache size calculation
     await Future.delayed(const Duration(milliseconds: 800));
@@ -52,15 +52,15 @@ class _DataStorageScreenState extends State<DataStorageScreen> {
       });
     }
   }
-  
+
   Future<void> _clearCache() async {
     setState(() {
       _cacheSize = 'Clearing...';
     });
-    
+
     // Simulate clearing cache
     await Future.delayed(const Duration(seconds: 1));
-    
+
     if (mounted) {
       setState(() {
         _cacheSize = '0.0 MB';
@@ -126,26 +126,31 @@ class _DataStorageScreenState extends State<DataStorageScreen> {
                 const Divider(),
                 _buildSectionHeader('Storage Management'),
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: AppTheme.spacingSm),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: AppTheme.spacingSm),
                   child: Row(
                     children: [
                       Container(
                         padding: const EdgeInsets.all(AppTheme.spacingSm),
                         decoration: BoxDecoration(
-                          color: AppTheme.primaryNavy.withValues(alpha:0.1),
-                          borderRadius: BorderRadius.circular(AppTheme.radiusSm),
+                          color: AppTheme.primaryNavy.withValues(alpha: 0.1),
+                          borderRadius:
+                              BorderRadius.circular(AppTheme.radiusSm),
                         ),
-                        child: const Icon(Icons.storage, color: AppTheme.primaryNavy),
+                        child: const Icon(Icons.storage,
+                            color: AppTheme.primaryNavy),
                       ),
                       const SizedBox(width: AppTheme.spacingMd),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text('Clear Cache', style: AppTheme.titleMedium),
+                            const Text('Clear Cache',
+                                style: AppTheme.titleMedium),
                             Text(
                               'Current cache size: $_cacheSize',
-                              style: AppTheme.bodySmall.copyWith(color: AppTheme.textSecondary),
+                              style: AppTheme.bodySmall
+                                  .copyWith(color: AppTheme.textSecondary),
                             ),
                           ],
                         ),
@@ -168,7 +173,8 @@ class _DataStorageScreenState extends State<DataStorageScreen> {
 
   Widget _buildSectionHeader(String title) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: AppTheme.spacingMd, top: AppTheme.spacingSm),
+      padding: const EdgeInsets.only(
+          bottom: AppTheme.spacingMd, top: AppTheme.spacingSm),
       child: Text(
         title.toUpperCase(),
         style: AppTheme.labelMedium.copyWith(
@@ -194,7 +200,7 @@ class _DataStorageScreenState extends State<DataStorageScreen> {
           Container(
             padding: const EdgeInsets.all(AppTheme.spacingSm),
             decoration: BoxDecoration(
-              color: AppTheme.primaryNavy.withValues(alpha:0.1),
+              color: AppTheme.primaryNavy.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(AppTheme.radiusSm),
             ),
             child: Icon(icon, color: AppTheme.primaryNavy),
@@ -204,10 +210,11 @@ class _DataStorageScreenState extends State<DataStorageScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(title, style: AppTheme.titleMedium),
+                Text(title, style: AppTheme.titleMedium),
                 Text(
                   subtitle,
-                  style: AppTheme.bodySmall.copyWith(color: AppTheme.textSecondary),
+                  style: AppTheme.bodySmall
+                      .copyWith(color: AppTheme.textSecondary),
                 ),
               ],
             ),
@@ -222,4 +229,3 @@ class _DataStorageScreenState extends State<DataStorageScreen> {
     );
   }
 }
-

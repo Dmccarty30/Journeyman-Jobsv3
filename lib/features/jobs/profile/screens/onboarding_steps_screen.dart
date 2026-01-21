@@ -1078,7 +1078,9 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
             child: Column(
               children: [
                 CheckboxListTile(
-                                        title: const Text('Network with Others', style: AppTheme.bodyMedium),                  subtitle: Text('Connect with other electricians',
+                  title: const Text('Network with Others',
+                      style: AppTheme.bodyMedium),
+                  subtitle: Text('Connect with other electricians',
                       style: AppTheme.bodySmall
                           .copyWith(color: AppTheme.textSecondary)),
                   value: _networkWithOthers,
@@ -1144,8 +1146,9 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
                   dense: true,
                 ),
                 CheckboxListTile(
-                                        title:
-                                        const Text('Find Long-term Work', style: AppTheme.bodyMedium),                  subtitle: Text('Secure stable employment',
+                  title: const Text('Find Long-term Work',
+                      style: AppTheme.bodyMedium),
+                  subtitle: Text('Secure stable employment',
                       style: AppTheme.bodySmall
                           .copyWith(color: AppTheme.textSecondary)),
                   value: _findLongTermWork,
@@ -1231,13 +1234,13 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
           ),
         ),
         const SizedBox(height: AppTheme.spacingSm),
-        const Text(
+        Text(
           title,
           style: AppTheme.headlineSmall,
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: AppTheme.spacingXs),
-        const Text(
+        Text(
           subtitle,
           style: AppTheme.bodyMedium,
           textAlign: TextAlign.center,
