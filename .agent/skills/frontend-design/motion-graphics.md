@@ -9,7 +9,7 @@
 
 ### What is Lottie?
 
-```
+```bash
 JSON-based vector animations:
 ├── Exported from After Effects via Bodymovin
 ├── Lightweight (smaller than GIF/video)
@@ -47,7 +47,7 @@ JSON-based vector animations:
 
 ### What Makes GSAP Different
 
-```
+```bash
 Professional timeline-based animation:
 ├── Precise control over sequences
 ├── ScrollTrigger for scroll-driven animations
@@ -96,7 +96,7 @@ Professional timeline-based animation:
 
 ### Line Drawing Principles
 
-```
+```bash
 How stroke-dashoffset drawing works:
 ├── Set dasharray to path length
 ├── Set dashoffset equal to dasharray (hidden)
@@ -126,7 +126,7 @@ How stroke-dashoffset drawing works:
 
 ### Core Properties
 
-```
+```bash
 CSS 3D Space:
 ├── perspective: depth of 3D field (500-1500px typical)
 ├── transform-style: preserve-3d (enable children 3D)
@@ -196,7 +196,7 @@ CSS 3D Space:
 
 ### Native CSS (Modern)
 
-```
+```bash
 CSS Scroll Timelines:
 ├── animation-timeline: scroll() - document scroll
 ├── animation-timeline: view() - element in viewport
@@ -226,7 +226,7 @@ CSS Scroll Timelines:
 
 ### GPU vs CPU Animation
 
-```
+```bash
 CHEAP (GPU-accelerated):
 ├── transform (translate, scale, rotate)
 ├── opacity
@@ -252,7 +252,7 @@ EXPENSIVE (triggers reflow):
 
 ## 8. Motion Graphics Decision Tree
 
-```
+```bash
 What animation do you need?
 │
 ├── Complex branded animation?

@@ -1,37 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:journeyman_jobs/design_system/design_system.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:go_router/go_router.dart';
 import 'package:journeyman_jobs/core/core.dart';
 import '../../../features/navigation/navigation.dart';
+import '../providers/settings_providers.dart';
+import '../models/settings_models.dart';
 
-class NotificationsScreen extends StatefulWidget {
+class NotificationsScreen extends ConsumerStatefulWidget {
   const NotificationsScreen({super.key});
 
   @override
-  State<NotificationsScreen> createState() => _NotificationsScreenState();
+  ConsumerState<NotificationsScreen> createState() =>
+      _NotificationsScreenState();
 }
 
-class _NotificationsScreenState extends State<NotificationsScreen>
+class _NotificationsScreenState extends ConsumerState<NotificationsScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   String _selectedFilter = 'all';
-
-  // Settings state
-  bool _isLoadingSettings = true;
   bool _notificationsEnabled = false;
-  bool _jobAlertsEnabled = true;
-  bool _unionUpdatesEnabled = true;
-  bool _systemNotificationsEnabled = true;
-  bool _stormWorkEnabled = true;
-  bool _unionRemindersEnabled = true;
-  bool _soundEnabled = true;
-  bool _vibrationEnabled = true;
-  bool _quietHoursEnabled = false;
-  TimeOfDay _quietHoursStart = const TimeOfDay(hour: 22, minute: 0);
-  TimeOfDay _quietHoursEnd = const TimeOfDay(hour: 7, minute: 0);
 
   final List<String> _filters = [
     'all',
@@ -57,7 +47,7 @@ class _NotificationsScreenState extends State<NotificationsScreen>
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
-    _loadSettings();
+    _checkNotificationPermission();
 
     // Check for tab query parameter
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -72,59 +62,16 @@ class _NotificationsScreenState extends State<NotificationsScreen>
     });
   }
 
+  Future<void> _checkNotificationPermission() async {
+    _notificationsEnabled =
+        await NotificationPermissionService.areNotificationsEnabled();
+    if (mounted) setState(() {});
+  }
+
   @override
   void dispose() {
     _tabController.dispose();
     super.dispose();
-  }
-
-  Future<void> _loadSettings() async {
-    try {
-      _notificationsEnabled =
-          await NotificationPermissionService.areNotificationsEnabled();
-      final prefs = await SharedPreferences.getInstance();
-
-      setState(() {
-        _jobAlertsEnabled = prefs.getBool('job_alerts_enabled') ?? true;
-        _unionUpdatesEnabled = prefs.getBool('union_updates_enabled') ?? true;
-        _systemNotificationsEnabled =
-            prefs.getBool('system_notifications_enabled') ?? true;
-        _stormWorkEnabled = prefs.getBool('storm_work_enabled') ?? true;
-        _unionRemindersEnabled =
-            prefs.getBool('union_reminders_enabled') ?? true;
-        _soundEnabled = prefs.getBool('sound_enabled') ?? true;
-        _vibrationEnabled = prefs.getBool('vibration_enabled') ?? true;
-        _quietHoursEnabled = prefs.getBool('quiet_hours_enabled') ?? false;
-        final startHour = prefs.getInt('quiet_hours_start') ?? 22;
-        final endHour = prefs.getInt('quiet_hours_end') ?? 7;
-        _quietHoursStart = TimeOfDay(hour: startHour, minute: 0);
-        _quietHoursEnd = TimeOfDay(hour: endHour, minute: 0);
-        _isLoadingSettings = false;
-      });
-    } catch (e) {
-      setState(() {
-        _isLoadingSettings = false;
-      });
-      debugPrint('Error loading notification settings: $e');
-    }
-  }
-
-  Future<void> _savePreference(String key, bool value) async {
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setBool(key, value);
-    } catch (e) {
-      debugPrint('Error saving preference $key: $e');
-    }
-  }
-
-  Future<void> _saveTimePreference(String key, TimeOfDay time) async {
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setInt(key, time.hour);
-    } catch (e) {
-      debugPrint('Error saving time preference $key: $e');
-    }
   }
 
   Future<void> _handleMasterToggle(bool enabled) async {
@@ -139,10 +86,16 @@ class _NotificationsScreenState extends State<NotificationsScreen>
       });
 
       if (granted) {
-        JJSnackBar.showSuccess(
-          context: context,
-          message: 'Notifications enabled successfully',
-        );
+        // Update Firestore via provider
+        await ref
+            .read(notificationSettingsProvider.notifier)
+            .updateSetting('notificationsEnabled', true);
+        if (mounted) {
+          JJSnackBar.showSuccess(
+            context: context,
+            message: 'Notifications enabled successfully',
+          );
+        }
       }
     } else if (!enabled) {
       final confirmed = await _showDisableConfirmationDialog();
@@ -152,10 +105,15 @@ class _NotificationsScreenState extends State<NotificationsScreen>
         setState(() {
           _notificationsEnabled = false;
         });
-        JJSnackBar.showInfo(
-          context: context,
-          message: 'Notifications disabled. You can re-enable them anytime.',
-        );
+        await ref
+            .read(notificationSettingsProvider.notifier)
+            .updateSetting('notificationsEnabled', false);
+        if (mounted) {
+          JJSnackBar.showInfo(
+            context: context,
+            message: 'Notifications disabled. You can re-enable them anytime.',
+          );
+        }
       }
     }
   }
@@ -218,10 +176,15 @@ class _NotificationsScreenState extends State<NotificationsScreen>
         false;
   }
 
-  Future<void> _selectQuietHoursTime(bool isStart) async {
+  Future<void> _selectQuietHoursTime(
+      bool isStart, NotificationSettingsModel settings) async {
+    final TimeOfDay initialTime = isStart
+        ? TimeOfDay(hour: settings.quietHoursStart, minute: 0)
+        : TimeOfDay(hour: settings.quietHoursEnd, minute: 0);
+
     final TimeOfDay? picked = await showTimePicker(
       context: context,
-      initialTime: isStart ? _quietHoursStart : _quietHoursEnd,
+      initialTime: initialTime,
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
@@ -235,18 +198,11 @@ class _NotificationsScreenState extends State<NotificationsScreen>
     );
 
     if (picked != null) {
-      setState(() {
-        if (isStart) {
-          _quietHoursStart = picked;
-        } else {
-          _quietHoursEnd = picked;
-        }
-      });
-
-      await _saveTimePreference(
-        isStart ? 'quiet_hours_start' : 'quiet_hours_end',
-        picked,
-      );
+      final newStart = isStart ? picked.hour : settings.quietHoursStart;
+      final newEnd = isStart ? settings.quietHoursEnd : picked.hour;
+      await ref
+          .read(notificationSettingsProvider.notifier)
+          .setQuietHours(newStart, newEnd);
     }
   }
 
@@ -334,10 +290,8 @@ class _NotificationsScreenState extends State<NotificationsScreen>
   }
 
   void _handleNotificationTap(String type, Map<String, dynamic> data) {
-    // Navigate based on notification type
     switch (type) {
       case 'jobs':
-        // Navigate to jobs screen, optionally with specific job ID
         final jobId = data['jobId'] as String?;
         if (jobId != null) {
           context.go('${AppRouter.jobs}/$jobId');
@@ -346,18 +300,14 @@ class _NotificationsScreenState extends State<NotificationsScreen>
         }
         break;
       case 'storm':
-        // Navigate to storm screen
         context.go(AppRouter.storm);
         break;
       case 'applications':
-        // Navigate to applications/applied section
-        // This might be in the profile or a dedicated screen
         context.go(AppRouter.profile);
         break;
       case 'union':
       case 'union_updates':
       case 'union_reminders':
-        // Navigate to unions/locals screen
         final localNumber = data['localNumber'] as String?;
         if (localNumber != null) {
           context.go('${AppRouter.locals}/$localNumber');
@@ -366,7 +316,6 @@ class _NotificationsScreenState extends State<NotificationsScreen>
         }
         break;
       case 'crews':
-        // Navigate to crews screen
         final crewId = data['crewId'] as String?;
         if (crewId != null) {
           context.go('${AppRouter.crews}/$crewId');
@@ -375,12 +324,8 @@ class _NotificationsScreenState extends State<NotificationsScreen>
         }
         break;
       case 'safety':
-        // Safety notifications might go to a safety resources screen
-        // For now, stay on notifications
-        break;
       case 'system':
       default:
-        // System notifications stay on the notifications screen
         break;
     }
   }
@@ -452,7 +397,6 @@ class _NotificationsScreenState extends State<NotificationsScreen>
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Notification icon
               Container(
                 width: 40,
                 height: 40,
@@ -467,7 +411,6 @@ class _NotificationsScreenState extends State<NotificationsScreen>
                 ),
               ),
               const SizedBox(width: AppTheme.spacingMd),
-              // Content
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -507,7 +450,6 @@ class _NotificationsScreenState extends State<NotificationsScreen>
                   ],
                 ),
               ),
-              // Unread indicator
               if (!isRead)
                 Container(
                   width: 8,
@@ -542,6 +484,7 @@ class _NotificationsScreenState extends State<NotificationsScreen>
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
+    final notificationSettingsAsync = ref.watch(notificationSettingsProvider);
 
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -577,7 +520,6 @@ class _NotificationsScreenState extends State<NotificationsScreen>
       body: Stack(
         children: [
           ElectricalCircuitBackground(
-            // Added background
             opacity: 0.35,
             componentDensity: ComponentDensity.high,
           ),
@@ -680,162 +622,170 @@ class _NotificationsScreenState extends State<NotificationsScreen>
                   ),
                 ],
               ),
-              // Settings Tab
-              _isLoadingSettings
-                  ? const Center(
-                      child: JJElectricalLoader(
-                        message: 'Loading settings...',
+              // Settings Tab - Using Riverpod Provider
+              notificationSettingsAsync.when(
+                loading: () => const Center(
+                  child: JJElectricalLoader(
+                    message: 'Loading settings...',
+                  ),
+                ),
+                error: (error, stack) => Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.error_outline,
+                          size: 48, color: AppTheme.errorRed),
+                      const SizedBox(height: AppTheme.spacingMd),
+                      Text('Failed to load settings',
+                          style: AppTheme.titleMedium),
+                      const SizedBox(height: AppTheme.spacingMd),
+                      ElevatedButton(
+                        onPressed: () =>
+                            ref.invalidate(notificationSettingsProvider),
+                        child: const Text('Retry'),
                       ),
-                    )
-                  : SingleChildScrollView(
-                      padding: const EdgeInsets.all(AppTheme.spacingMd),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // Master toggle
-                          _buildMasterToggleCard(),
+                    ],
+                  ),
+                ),
+                data: (settings) => SingleChildScrollView(
+                  padding: const EdgeInsets.all(AppTheme.spacingMd),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Master toggle
+                      _buildMasterToggleCard(),
 
-                          const SizedBox(height: AppTheme.spacingLg),
-                          // Notification types
-                          Text(
-                            'Notification Types',
-                            style: AppTheme.headlineSmall.copyWith(
-                              color: AppTheme.textPrimary,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          const SizedBox(height: AppTheme.spacingMd),
-
-                          // Individual notification type cards
-                          _buildSettingCard(
-                            icon: Icons.work_outline,
-                            title: 'Job Alerts',
-                            subtitle:
-                                'Get notified about new job opportunities',
-                            value: _jobAlertsEnabled,
-                            onChanged: (value) {
-                              setState(() {
-                                _jobAlertsEnabled = value;
-                              });
-                              _savePreference('job_alerts_enabled', value);
-                            },
-                            color: AppTheme.accentCopper,
-                          ),
-
-                          _buildSettingCard(
-                            icon: Icons.group,
-                            title: 'Union Updates',
-                            subtitle: 'Important updates from your union',
-                            value: _unionUpdatesEnabled,
-                            onChanged: (value) {
-                              setState(() {
-                                _unionUpdatesEnabled = value;
-                              });
-                              _savePreference('union_updates_enabled', value);
-                            },
-                            color: AppTheme.primaryNavy,
-                          ),
-
-                          _buildSettingCard(
-                            icon: Icons.settings,
-                            title: 'System Notifications',
-                            subtitle: 'App updates and system messages',
-                            value: _systemNotificationsEnabled,
-                            onChanged: (value) {
-                              setState(() {
-                                _systemNotificationsEnabled = value;
-                              });
-                              _savePreference(
-                                  'system_notifications_enabled', value);
-                            },
-                            color: AppTheme.infoBlue,
-                          ),
-
-                          _buildSettingCard(
-                            icon: Icons.flash_on,
-                            title: 'Storm Work',
-                            subtitle: 'Emergency storm work opportunities',
-                            value: _stormWorkEnabled,
-                            onChanged: (value) {
-                              setState(() {
-                                _stormWorkEnabled = value;
-                              });
-                              _savePreference('storm_work_enabled', value);
-                            },
-                            color: AppTheme.warningYellow,
-                          ),
-
-                          _buildSettingCard(
-                            icon: Icons.event_note,
-                            title: 'Union Reminders',
-                            subtitle:
-                                'Reminders for union events and deadlines',
-                            value: _unionRemindersEnabled,
-                            onChanged: (value) {
-                              setState(() {
-                                _unionRemindersEnabled = value;
-                              });
-                              _savePreference('union_reminders_enabled', value);
-                            },
-                            color: AppTheme.successGreen,
-                          ),
-
-                          const SizedBox(height: AppTheme.spacingLg),
-                          // Sound & Vibration
-                          Text(
-                            'Sound & Vibration',
-                            style: AppTheme.headlineSmall.copyWith(
-                              color: AppTheme.textPrimary,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          const SizedBox(height: AppTheme.spacingMd),
-
-                          // Individual sound and vibration cards
-                          _buildSettingCard(
-                            icon: Icons.volume_up,
-                            title: 'Sound',
-                            subtitle: 'Play sound for notifications',
-                            value: _soundEnabled,
-                            onChanged: (value) {
-                              setState(() {
-                                _soundEnabled = value;
-                              });
-                              _savePreference('sound_enabled', value);
-                            },
-                            color: AppTheme.accentCopper,
-                          ),
-
-                          _buildSettingCard(
-                            icon: Icons.vibration,
-                            title: 'Vibration',
-                            subtitle: 'Vibrate for notifications',
-                            value: _vibrationEnabled,
-                            onChanged: (value) {
-                              setState(() {
-                                _vibrationEnabled = value;
-                              });
-                              _savePreference('vibration_enabled', value);
-                            },
-                            color: AppTheme.primaryNavy,
-                          ),
-
-                          const SizedBox(height: AppTheme.spacingLg),
-                          // Quiet Hours
-                          Text(
-                            'Quiet Hours',
-                            style: AppTheme.headlineSmall.copyWith(
-                              color: AppTheme.textPrimary,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          const SizedBox(height: AppTheme.spacingMd),
-
-                          // Quiet hours card
-                          _buildQuietHoursCard(),
-                        ],
+                      const SizedBox(height: AppTheme.spacingLg),
+                      // Notification types
+                      Text(
+                        'Notification Types',
+                        style: AppTheme.headlineSmall.copyWith(
+                          color: AppTheme.textPrimary,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
-                    ),
+                      const SizedBox(height: AppTheme.spacingMd),
+
+                      // Individual notification type cards
+                      _buildSettingCard(
+                        icon: Icons.work_outline,
+                        title: 'Job Alerts',
+                        subtitle: 'Get notified about new job opportunities',
+                        value: settings.jobAlertsEnabled,
+                        onChanged: (value) async {
+                          await ref
+                              .read(notificationSettingsProvider.notifier)
+                              .updateSetting('jobAlertsEnabled', value);
+                        },
+                        color: AppTheme.accentCopper,
+                      ),
+
+                      _buildSettingCard(
+                        icon: Icons.group,
+                        title: 'Union Updates',
+                        subtitle: 'Important updates from your union',
+                        value: settings.unionUpdatesEnabled,
+                        onChanged: (value) async {
+                          await ref
+                              .read(notificationSettingsProvider.notifier)
+                              .updateSetting('unionUpdatesEnabled', value);
+                        },
+                        color: AppTheme.primaryNavy,
+                      ),
+
+                      _buildSettingCard(
+                        icon: Icons.settings,
+                        title: 'System Notifications',
+                        subtitle: 'App updates and system messages',
+                        value: settings.systemNotificationsEnabled,
+                        onChanged: (value) async {
+                          await ref
+                              .read(notificationSettingsProvider.notifier)
+                              .updateSetting(
+                                  'systemNotificationsEnabled', value);
+                        },
+                        color: AppTheme.infoBlue,
+                      ),
+
+                      _buildSettingCard(
+                        icon: Icons.flash_on,
+                        title: 'Storm Work',
+                        subtitle: 'Emergency storm work opportunities',
+                        value: settings.stormWorkEnabled,
+                        onChanged: (value) async {
+                          await ref
+                              .read(notificationSettingsProvider.notifier)
+                              .updateSetting('stormWorkEnabled', value);
+                        },
+                        color: AppTheme.warningYellow,
+                      ),
+
+                      _buildSettingCard(
+                        icon: Icons.event_note,
+                        title: 'Union Reminders',
+                        subtitle: 'Reminders for union events and deadlines',
+                        value: settings.unionRemindersEnabled,
+                        onChanged: (value) async {
+                          await ref
+                              .read(notificationSettingsProvider.notifier)
+                              .updateSetting('unionRemindersEnabled', value);
+                        },
+                        color: AppTheme.successGreen,
+                      ),
+
+                      const SizedBox(height: AppTheme.spacingLg),
+                      // Sound & Vibration
+                      Text(
+                        'Sound & Vibration',
+                        style: AppTheme.headlineSmall.copyWith(
+                          color: AppTheme.textPrimary,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: AppTheme.spacingMd),
+
+                      _buildSettingCard(
+                        icon: Icons.volume_up,
+                        title: 'Sound',
+                        subtitle: 'Play sound for notifications',
+                        value: settings.soundEnabled,
+                        onChanged: (value) async {
+                          await ref
+                              .read(notificationSettingsProvider.notifier)
+                              .updateSetting('soundEnabled', value);
+                        },
+                        color: AppTheme.accentCopper,
+                      ),
+
+                      _buildSettingCard(
+                        icon: Icons.vibration,
+                        title: 'Vibration',
+                        subtitle: 'Vibrate for notifications',
+                        value: settings.vibrationEnabled,
+                        onChanged: (value) async {
+                          await ref
+                              .read(notificationSettingsProvider.notifier)
+                              .updateSetting('vibrationEnabled', value);
+                        },
+                        color: AppTheme.primaryNavy,
+                      ),
+
+                      const SizedBox(height: AppTheme.spacingLg),
+                      // Quiet Hours
+                      Text(
+                        'Quiet Hours',
+                        style: AppTheme.headlineSmall.copyWith(
+                          color: AppTheme.textPrimary,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: AppTheme.spacingMd),
+
+                      _buildQuietHoursCard(settings),
+                    ],
+                  ),
+                ),
+              ),
             ],
           ),
         ],
@@ -843,7 +793,6 @@ class _NotificationsScreenState extends State<NotificationsScreen>
     );
   }
 
-  // New individual setting card widget
   Widget _buildSettingCard({
     required IconData icon,
     required String title,
@@ -918,7 +867,6 @@ class _NotificationsScreenState extends State<NotificationsScreen>
     );
   }
 
-  // Special card for master toggle
   Widget _buildMasterToggleCard() {
     return Container(
       margin: const EdgeInsets.only(bottom: AppTheme.spacingMd),
@@ -986,8 +934,7 @@ class _NotificationsScreenState extends State<NotificationsScreen>
     );
   }
 
-  // Special card for quiet hours with time selectors
-  Widget _buildQuietHoursCard() {
+  Widget _buildQuietHoursCard(NotificationSettingsModel settings) {
     return Container(
       margin: const EdgeInsets.only(bottom: AppTheme.spacingMd),
       decoration: BoxDecoration(
@@ -999,11 +946,9 @@ class _NotificationsScreenState extends State<NotificationsScreen>
         color: Colors.transparent,
         child: InkWell(
           borderRadius: BorderRadius.circular(AppTheme.radiusMd),
-          onTap: () {
-            setState(() {
-              _quietHoursEnabled = !_quietHoursEnabled;
-            });
-            _savePreference('quiet_hours_enabled', _quietHoursEnabled);
+          onTap: () async {
+            await ref.read(notificationSettingsProvider.notifier).updateSetting(
+                'quietHoursEnabled', !settings.quietHoursEnabled);
           },
           child: Padding(
             padding: const EdgeInsets.all(AppTheme.spacingMd),
@@ -1047,18 +992,17 @@ class _NotificationsScreenState extends State<NotificationsScreen>
                       ),
                     ),
                     Switch(
-                      value: _quietHoursEnabled,
-                      onChanged: (value) {
-                        setState(() {
-                          _quietHoursEnabled = value;
-                        });
-                        _savePreference('quiet_hours_enabled', value);
+                      value: settings.quietHoursEnabled,
+                      onChanged: (value) async {
+                        await ref
+                            .read(notificationSettingsProvider.notifier)
+                            .updateSetting('quietHoursEnabled', value);
                       },
                       activeThumbColor: AppTheme.accentCopper,
                     ),
                   ],
                 ),
-                if (_quietHoursEnabled) ...[
+                if (settings.quietHoursEnabled) ...[
                   const SizedBox(height: AppTheme.spacingMd),
                   Padding(
                     padding: const EdgeInsets.symmetric(
@@ -1069,9 +1013,10 @@ class _NotificationsScreenState extends State<NotificationsScreen>
                       children: [
                         Expanded(
                           child: TextButton(
-                            onPressed: () => _selectQuietHoursTime(true),
+                            onPressed: () =>
+                                _selectQuietHoursTime(true, settings),
                             child: Text(
-                              'Start: ${_quietHoursStart.format(context)}',
+                              'Start: ${TimeOfDay(hour: settings.quietHoursStart, minute: 0).format(context)}',
                               style: AppTheme.bodyMedium,
                             ),
                           ),
@@ -1084,9 +1029,10 @@ class _NotificationsScreenState extends State<NotificationsScreen>
                         ),
                         Expanded(
                           child: TextButton(
-                            onPressed: () => _selectQuietHoursTime(false),
+                            onPressed: () =>
+                                _selectQuietHoursTime(false, settings),
                             child: Text(
-                              'End: ${_quietHoursEnd.format(context)}',
+                              'End: ${TimeOfDay(hour: settings.quietHoursEnd, minute: 0).format(context)}',
                               style: AppTheme.bodyMedium,
                             ),
                           ),

@@ -9,7 +9,7 @@
 
 ### What Makes Glassmorphism Work
 
-```
+```swift
 Key Properties:
 ├── Semi-transparent background (not solid)
 ├── Backdrop blur (frosted glass effect)
@@ -39,6 +39,7 @@ Key Properties:
 ```
 
 ### When to Use Glassmorphism
+
 - ✅ Over colorful/image backgrounds
 - ✅ Modals, overlays, cards
 - ✅ Navigation bars with scrolling content behind
@@ -46,6 +47,7 @@ Key Properties:
 - ❌ Simple solid backgrounds (pointless)
 
 ### When NOT to Use
+
 - Low contrast situations
 - Accessibility-critical content
 - Performance-constrained devices
@@ -88,9 +90,11 @@ Key Concept: Soft, extruded elements using DUAL shadows
 ```
 
 ### Accessibility Warning
+
 ⚠️ **Low contrast** - use sparingly, ensure clear boundaries
 
 ### When to Use
+
 - Decorative elements
 - Subtle interactive states
 - Minimalist UI with flat colors
@@ -129,6 +133,7 @@ box-shadow: OFFSET-X OFFSET-Y BLUR SPREAD COLOR;
 4. **Blur scales with offset** (larger offset = larger blur)
 
 ### Dark Mode Shadows
+
 - Shadows less visible on dark backgrounds
 - May need to increase opacity
 - Or use glow/highlight instead

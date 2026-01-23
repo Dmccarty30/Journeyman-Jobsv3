@@ -34,7 +34,7 @@ final class AppearanceSettingsProvider extends $AsyncNotifierProvider<
 }
 
 String _$appearanceSettingsHash() =>
-    r'fdcaa92533b2753aeaeb4291506122b0746bbb45';
+    r'88ed48a63523c2a7e27223c899e9f94023eaf95e';
 
 abstract class _$AppearanceSettings
     extends $AsyncNotifier<AppearanceSettingsModel> {
@@ -79,7 +79,7 @@ final class NotificationSettingsProvider extends $AsyncNotifierProvider<
 }
 
 String _$notificationSettingsHash() =>
-    r'0eb746aae89f45a8676bf0f18dcc4b0050be2473';
+    r'95a1306e0a170913b67bdf3099a67dd1307cf086';
 
 abstract class _$NotificationSettings
     extends $AsyncNotifier<NotificationSettingsModel> {
@@ -123,7 +123,7 @@ final class JobSearchSettingsProvider
   JobSearchSettings create() => JobSearchSettings();
 }
 
-String _$jobSearchSettingsHash() => r'fac338a34e28771e434e1395ef4f735f933f7a0f';
+String _$jobSearchSettingsHash() => r'6ed35fcba2bef456a1c05f93476107b84f439468';
 
 abstract class _$JobSearchSettings
     extends $AsyncNotifier<JobSearchSettingsModel> {
@@ -136,6 +136,141 @@ abstract class _$JobSearchSettings
     final element = ref.element as $ClassProviderElement<
         AnyNotifier<AsyncValue<JobSearchSettingsModel>, JobSearchSettingsModel>,
         AsyncValue<JobSearchSettingsModel>,
+        Object?,
+        Object?>;
+    element.handleCreate(ref, build);
+  }
+}
+
+@ProviderFor(PrivacySecuritySettings)
+final privacySecuritySettingsProvider = PrivacySecuritySettingsProvider._();
+
+final class PrivacySecuritySettingsProvider extends $AsyncNotifierProvider<
+    PrivacySecuritySettings, PrivacySecuritySettingsModel> {
+  PrivacySecuritySettingsProvider._()
+      : super(
+          from: null,
+          argument: null,
+          retry: null,
+          name: r'privacySecuritySettingsProvider',
+          isAutoDispose: false,
+          dependencies: null,
+          $allTransitiveDependencies: null,
+        );
+
+  @override
+  String debugGetCreateSourceHash() => _$privacySecuritySettingsHash();
+
+  @$internal
+  @override
+  PrivacySecuritySettings create() => PrivacySecuritySettings();
+}
+
+String _$privacySecuritySettingsHash() =>
+    r'8732724bb22e64271214cf20d97293a3b8638b1b';
+
+abstract class _$PrivacySecuritySettings
+    extends $AsyncNotifier<PrivacySecuritySettingsModel> {
+  FutureOr<PrivacySecuritySettingsModel> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final ref = this.ref as $Ref<AsyncValue<PrivacySecuritySettingsModel>,
+        PrivacySecuritySettingsModel>;
+    final element = ref.element as $ClassProviderElement<
+        AnyNotifier<AsyncValue<PrivacySecuritySettingsModel>,
+            PrivacySecuritySettingsModel>,
+        AsyncValue<PrivacySecuritySettingsModel>,
+        Object?,
+        Object?>;
+    element.handleCreate(ref, build);
+  }
+}
+
+@ProviderFor(LanguageRegionSettings)
+final languageRegionSettingsProvider = LanguageRegionSettingsProvider._();
+
+final class LanguageRegionSettingsProvider extends $AsyncNotifierProvider<
+    LanguageRegionSettings, LanguageRegionSettingsModel> {
+  LanguageRegionSettingsProvider._()
+      : super(
+          from: null,
+          argument: null,
+          retry: null,
+          name: r'languageRegionSettingsProvider',
+          isAutoDispose: false,
+          dependencies: null,
+          $allTransitiveDependencies: null,
+        );
+
+  @override
+  String debugGetCreateSourceHash() => _$languageRegionSettingsHash();
+
+  @$internal
+  @override
+  LanguageRegionSettings create() => LanguageRegionSettings();
+}
+
+String _$languageRegionSettingsHash() =>
+    r'7d613f6ce96ca5885962f4f5b085a2ac05f15f9f';
+
+abstract class _$LanguageRegionSettings
+    extends $AsyncNotifier<LanguageRegionSettingsModel> {
+  FutureOr<LanguageRegionSettingsModel> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final ref = this.ref as $Ref<AsyncValue<LanguageRegionSettingsModel>,
+        LanguageRegionSettingsModel>;
+    final element = ref.element as $ClassProviderElement<
+        AnyNotifier<AsyncValue<LanguageRegionSettingsModel>,
+            LanguageRegionSettingsModel>,
+        AsyncValue<LanguageRegionSettingsModel>,
+        Object?,
+        Object?>;
+    element.handleCreate(ref, build);
+  }
+}
+
+@ProviderFor(DataStorageSettings)
+final dataStorageSettingsProvider = DataStorageSettingsProvider._();
+
+final class DataStorageSettingsProvider extends $AsyncNotifierProvider<
+    DataStorageSettings, DataStorageSettingsModel> {
+  DataStorageSettingsProvider._()
+      : super(
+          from: null,
+          argument: null,
+          retry: null,
+          name: r'dataStorageSettingsProvider',
+          isAutoDispose: false,
+          dependencies: null,
+          $allTransitiveDependencies: null,
+        );
+
+  @override
+  String debugGetCreateSourceHash() => _$dataStorageSettingsHash();
+
+  @$internal
+  @override
+  DataStorageSettings create() => DataStorageSettings();
+}
+
+String _$dataStorageSettingsHash() =>
+    r'a64656003ca35a7c0bc90b70a7da794cf8d0de4d';
+
+abstract class _$DataStorageSettings
+    extends $AsyncNotifier<DataStorageSettingsModel> {
+  FutureOr<DataStorageSettingsModel> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final ref = this.ref
+        as $Ref<AsyncValue<DataStorageSettingsModel>, DataStorageSettingsModel>;
+    final element = ref.element as $ClassProviderElement<
+        AnyNotifier<AsyncValue<DataStorageSettingsModel>,
+            DataStorageSettingsModel>,
+        AsyncValue<DataStorageSettingsModel>,
         Object?,
         Object?>;
     element.handleCreate(ref, build);

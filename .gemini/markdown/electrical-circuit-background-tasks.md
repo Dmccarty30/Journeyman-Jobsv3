@@ -35,7 +35,7 @@ This plan provides a comprehensive, actionable blueprint for transforming the ba
 
 A dedicated demo screen will be created showing both versions side-by-side:
 
-```
+```bash
 ┌───────────────────────────────────────────────┐
 │  🔘 Version A (Iterated)  │  🔘 Version B (New)  │  ← Toggle
 ├───────────────────────────┴──────────────────────┤
@@ -299,7 +299,7 @@ static const Color tinPlating = Color(0xFFC0C0C0);       // Tin-plated pads
 
 > **Tasks**:
 
-- [ ] **4.1 - Analyze Current Trace Algorithm**
+- [x] **4.1 - Analyze Current Trace Algorithm**
   - Review lines 364–435 in `circuit_board_background.dart`
   - Document current random placement logic
   - Identify refactoring points for grid alignment
@@ -328,7 +328,7 @@ static const Color tinPlating = Color(0xFFC0C0C0);       // Tin-plated pads
   - Create through-hole pad rendering
   - Place vias at layer transition points
 
-- [ ] **4.6 - Implement Copper Pour Areas**
+- [x] **4.6 - Implement Copper Pour Areas**
   - Create ground plane fill algorithm
   - Add thermal relief patterns around pads
   - Implement zone boundary edges
@@ -350,13 +350,13 @@ static const Color tinPlating = Color(0xFFC0C0C0);       // Tin-plated pads
   - Orient components parallel to nearby traces
   - Place ICs as visual anchor points (larger size)
 
-- [ ] **4.9 - Add 3D Shading to Components**
+- [x] **4.9 - Add 3D Shading to Components**
   - Implement gradient fills for depth effect
   - Add subtle drop shadows (2px offset)
   - Create metallic highlight on pads
   - Apply to all component types
 
-- [ ] **4.10 - Add Component Designator Labels**
+- [x] **4.10 - Add Component Designator Labels**
   - Render text labels (R1, C2, U3 format)
   - Position labels near component center
   - Use small, readable font size
@@ -414,7 +414,7 @@ static const Color tinPlating = Color(0xFFC0C0C0);       // Tin-plated pads
   - Use bright Cyan/Gold/Amber for dark backgrounds
   - Ensure high visibility across all themes
 
-- [ ] **6.3 - Add Variable Speed Animation**
+- [x] **6.3 - Add Variable Speed Animation**
   - Classify trace "importance" (power, signal, data)
   - Speed: power = slow, signal = medium, data = fast
   - Apply easing curves to pulse motion
@@ -427,19 +427,19 @@ static const Color tinPlating = Color(0xFFC0C0C0);       // Tin-plated pads
   - IC: Pin activity blink patterns
   - Crystal: Micro-oscillation vibration
 
-- [ ] **6.5 - Add Ambient Effects**
+- [x] **6.5 - Add Ambient Effects**
   - Implement 2-3% opacity "energy hum" pulse
   - Add random trace highlight intervals
   - Create "warm-up" glow sequence on launch
   - Tune timing for subtle, non-distracting feel
 
-- [ ] **6.6 - Create Version B Animation Paradigm**
+- [-] **6.6 - Create Version B Animation Paradigm**
   - Design unique animation style for V2
   - Implement flow-based motion system
   - Add responsive animations (react to touch)
   - Create smooth transitions between states
 
-- [ ] **6.7 - Performance Tune Animation Loops**
+- [x] **6.7 - Performance Tune Animation Loops**
   - Profile both versions with Flutter DevTools
   - Identify and eliminate janky frames
   - Use `shouldRepaint` optimization
@@ -453,55 +453,55 @@ static const Color tinPlating = Color(0xFFC0C0C0);       // Tin-plated pads
 
 > **Tasks**:
 
-- [ ] **7.1 - Create Demo Screen File Structure**
+- [x] **7.1 - Create Demo Screen File Structure**
   - Create `lib/features/demo/` directory
   - Create `circuit_background_demo.dart`
   - Add route registration in navigation
   - Create entry point from settings/debug menu
 
-- [ ] **7.2 - Build Version Toggle TabBar**
+- [x] **7.2 - Build Version Toggle TabBar**
   - Create TabController with 2 tabs
   - Label tabs: "Version A (Iterated)", "Version B (New)"
   - Style tabs to match app theme
   - Add smooth tab transition animation
 
-- [ ] **7.3 - Implement Split-Screen Layout**
+- [x] **7.3 - Implement Split-Screen Layout**
   - Create 50/50 horizontal split view
   - Left half: Background + sample widgets overlay
   - Right half: Clean background only
   - Add divider line between halves
 
-- [ ] **7.4 - Add Sample Widget Overlays**
+- [x] **7.4 - Add Sample Widget Overlays**
   - Add sample Card widget
   - Add sample Button widgets
   - Add sample Text elements
   - Mimic real app screen composition
 
-- [ ] **7.5 - Implement Animation Toggle Control**
+- [x] **7.5 - Implement Animation Toggle Control**
   - Add "Animations" switch in control panel
   - Wire toggle to both background versions
   - Show real-time effect of toggle
   - Default to animations ON
 
-- [ ] **7.6 - Implement Opacity Slider Control**
+- [x] **7.6 - Implement Opacity Slider Control**
   - Add labeled slider (0.0 – 1.0)
   - Wire slider to background opacity
   - Show real-time opacity adjustment
   - Default to current standard opacity
 
-- [ ] **7.7 - Implement Density Selector Control**
+- [x] **7.7 - Implement Density Selector Control**
   - Add segmented button: Low / Medium / High / Ultra
   - Wire selector to background density
   - Show real-time density change
   - Default to Medium
 
-- [ ] **7.8 - Add "Compare" Mode**
+- [x] **7.8 - Add "Compare" Mode**
   - Create "Compare" button
   - On press: Quickly flip A→B→A sequence
   - Use 500ms per flip for visual comparison
   - Show "Comparing..." indicator during flip
 
-- [ ] **7.9 - Style Demo Screen Controls**
+- [x] **7.9 - Style Demo Screen Controls**
   - Group controls in expandable panel
   - Position panel at bottom of screen
   - Use app's design system for widgets
@@ -520,7 +520,7 @@ static const Color tinPlating = Color(0xFFC0C0C0);       // Tin-plated pads
 
 > **Tasks**:
 
-- [ ] **8.1 - Add PCB Color Constants to Theme**
+- [x] **8.1 - Add PCB Color Constants to Theme**
   - Open `lib/core/theme/app_theme.dart`
   - Add `pcbSubstrate` color (0xFF0D4F35)
   - Add `solderMask` color (0xFF1A6B47)
@@ -529,31 +529,31 @@ static const Color tinPlating = Color(0xFFC0C0C0);       // Tin-plated pads
   - Add `silkscreen` color (0xFFFFFFF0)
   - Add `tinPlating` color (0xFFC0C0C0)
 
-- [ ] **8.2 - Create Theme Variant Definitions**
+- [x] **8.2 - Create Theme Variant Definitions**
   - Define `ClassicGreen` variant (default)
   - Define `NavyPremium` variant
   - Define `Stealth` variant (black)
   - Define `Vintage` variant (tan/aged)
 
-- [ ] **8.3 - Implement Theme Variant Class**
+- [x] **8.3 - Implement Theme Variant Class**
   - Create `CircuitThemeVariant` class
   - Store substrate, copper, mask, silkscreen colors
   - Add factory constructors for each variant
   - Expose via theme extension
 
-- [ ] **8.4 - Wire Theme to Background Widgets**
+- [x] **8.4 - Wire Theme to Background Widgets**
   - Update Version A to read theme colors
   - Update Version B to read theme colors
   - Test all 4 variants render correctly
   - Verify color consistency across layers
 
-- [ ] **8.5 - Implement Light/Dark Mode Switching**
+- [x] **8.5 - Implement Light/Dark Mode Switching**
   - Detect system brightness setting
   - For dark mode: invert substrate brightness
   - For dark mode: increase trace luminosity
   - For dark mode: add ambient LED glow
 
-- [ ] **8.6 - Add Runtime Theme Configuration**
+- [x] **8.6 - Add Runtime Theme Configuration**
   - Create theme selector in settings screen
   - Store user preference in SharedPreferences
   - Apply theme on app restart

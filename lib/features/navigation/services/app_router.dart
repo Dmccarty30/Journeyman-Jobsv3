@@ -57,8 +57,7 @@ class AppRouter {
       '/settings/job-search-preferences'; // New route constant
   static const String dataStorage =
       '/settings/data-storage'; // New route constant
-  static const String languageRegion =
-      '/settings/language-region'; // New route constant
+
   static const String circuitBackgroundDemo = '/demo/circuit-background';
 
   static final GoRouter router = GoRouter(
@@ -207,11 +206,7 @@ class AppRouter {
         name: 'notifications',
         builder: (context, state) => const NotificationsScreen(),
       ),
-      GoRoute(
-        path: appSettings,
-        name: 'app-settings',
-        builder: (context, state) => const AppSettingsScreen(),
-      ),
+
       GoRoute(
         path: privacySecurity,
         name: 'privacy-security',
@@ -232,11 +227,7 @@ class AppRouter {
         name: 'data-storage',
         builder: (context, state) => const DataStorageScreen(),
       ),
-      GoRoute(
-        path: languageRegion,
-        name: 'language-region',
-        builder: (context, state) => const LanguageRegionScreen(),
-      ),
+
       GoRoute(
         path: circuitBackgroundDemo,
         name: 'circuit-background-demo',

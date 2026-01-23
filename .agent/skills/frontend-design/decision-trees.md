@@ -20,7 +20,7 @@ This file helps you DECIDE, not copy.
 
 ## 1. Master Decision Tree
 
-```
+```bash
 ┌─────────────────────────────────────────────────────────────┐
 │                     WHAT ARE YOU BUILDING?                   │
 └─────────────────────────────────────────────────────────────┘
@@ -46,7 +46,7 @@ This file helps you DECIDE, not copy.
 
 ### Who is your target user?
 
-```
+```bash
 TARGET AUDIENCE
       │
       ├── Gen Z (18-25)
@@ -89,9 +89,9 @@ TARGET AUDIENCE
 
 ## 3. Color Selection Decision Tree
 
-### Instead of fixed hex codes, use this process:
+### Instead of fixed hex codes, use this process
 
-```
+```dart
 WHAT EMOTION/ACTION DO YOU WANT?
             │
             ├── Trust & Security
@@ -119,7 +119,8 @@ WHAT EMOTION/ACTION DO YOU WANT?
                     → ASK what accent color fits brand
 ```
 
-### The Process:
+### The Process
+
 1. Identify the emotion needed
 2. Narrow to color FAMILY
 3. ASK user for preference within family
@@ -129,7 +130,7 @@ WHAT EMOTION/ACTION DO YOU WANT?
 
 ## 4. Typography Decision Tree
 
-```
+```dart
 WHAT'S THE CONTENT TYPE?
           │
           ├── Data-Heavy (Dashboard, SaaS)
@@ -158,7 +159,8 @@ WHAT'S THE CONTENT TYPE?
               └── Priority: Fun, approachable, readable
 ```
 
-### Selection Process:
+### Selection Process
+
 1. Identify content type
 2. Choose style DIRECTION
 3. ASK user if they have brand fonts
@@ -169,12 +171,14 @@ WHAT'S THE CONTENT TYPE?
 ## 5. E-commerce Guidelines {#e-commerce}
 
 ### Key Principles (Not Fixed Rules)
+
 - **Trust first:** How will you show security?
 - **Action-oriented:** Where are the CTAs?
 - **Scannable:** Can users compare quickly?
 
-### Color Thinking:
-```
+### Color Thinking
+
+```dart
 E-commerce typically needs:
 ├── Trust color (often blue family) → ASK preference
 ├── Clean background (white/neutral) → depends on brand
@@ -183,8 +187,9 @@ E-commerce typically needs:
 └── Brand integration → ASK about existing colors
 ```
 
-### Layout Principles:
-```
+### Layout Principles
+
+```dart
 ┌────────────────────────────────────────────────────┐
 │  HEADER: Brand + Search + Cart                      │
 │  (Keep essential actions visible)                   │
@@ -209,7 +214,8 @@ E-commerce typically needs:
 └────────────────────────────────────────────────────┘
 ```
 
-### Psychology to Apply:
+### Psychology to Apply
+
 - Hick's Law: Limit navigation choices
 - Fitts' Law: Size CTAs appropriately
 - Social proof: Show where relevant
@@ -220,12 +226,14 @@ E-commerce typically needs:
 ## 6. SaaS Dashboard Guidelines {#saas}
 
 ### Key Principles
+
 - **Functional first:** Data clarity over decoration
 - **Calm UI:** Reduce cognitive load
 - **Consistent:** Predictable patterns
 
-### Color Thinking:
-```
+### Color Thinking
+
+```dart
 Dashboard typically needs:
 ├── Background: Light OR dark (ASK preference)
 ├── Surface: Slight contrast from background
@@ -234,8 +242,9 @@ Dashboard typically needs:
 └── Muted: For secondary information
 ```
 
-### Layout Principles:
-```
+### Layout Principles
+
+```dart
 Consider these patterns (not mandated):
 
 OPTION A: Sidebar + Content
@@ -253,7 +262,8 @@ OPTION C: Collapsed + Expandable
 → ASK user about their navigation preference
 ```
 
-### Psychology to Apply:
+### Psychology to Apply
+
 - Hick's Law: Group navigation items
 - Miller's Law: Chunk information
 - Cognitive Load: Whitespace, consistency
@@ -263,12 +273,14 @@ OPTION C: Collapsed + Expandable
 ## 7. Landing Page Guidelines {#landing-page}
 
 ### Key Principles
+
 - **Hero-centric:** First impression matters most
 - **Single focus:** One primary CTA
 - **Emotional:** Connect before selling
 
-### Color Thinking:
-```
+### Color Thinking
+
+```dart
 Landing page typically needs:
 ├── Brand primary: Hero background or accent
 ├── Clean secondary: Most of page
@@ -277,8 +289,9 @@ Landing page typically needs:
 └── ASK about brand colors first!
 ```
 
-### Structure Principles:
-```
+### Structure Principles
+
+```dart
 ┌────────────────────────────────────────────────────┐
 │  Navigation: Minimal, CTA visible                   │
 ├────────────────────────────────────────────────────┤
@@ -302,7 +315,8 @@ Landing page typically needs:
 └────────────────────────────────────────────────────┘
 ```
 
-### Psychology to Apply:
+### Psychology to Apply
+
 - Visceral: Beautiful hero impression
 - Serial Position: Key info top/bottom
 - Social Proof: Testimonials work
@@ -312,12 +326,14 @@ Landing page typically needs:
 ## 8. Portfolio Guidelines {#portfolio}
 
 ### Key Principles
+
 - **Personality:** Show who you are
 - **Work-focused:** Let projects speak
 - **Memorable:** Stand out from templates
 
-### Color Thinking:
-```
+### Color Thinking
+
+```dart
 Portfolio is personal - many options:
 ├── Minimal: Neutrals + one signature accent
 ├── Bold: Unexpected color choices
@@ -326,8 +342,9 @@ Portfolio is personal - many options:
 └── ASK about personal brand identity!
 ```
 
-### Structure Principles:
-```
+### Structure Principles
+
+```dart
 ┌────────────────────────────────────────────────────┐
 │  Navigation: Unique to your personality             │
 ├────────────────────────────────────────────────────┤
@@ -345,7 +362,8 @@ Portfolio is personal - many options:
 └────────────────────────────────────────────────────┘
 ```
 
-### Psychology to Apply:
+### Psychology to Apply
+
 - Von Restorff: Be uniquely memorable
 - Reflective: Personal story creates connection
 - Emotional: Personality over professionalism
@@ -387,30 +405,36 @@ Portfolio is personal - many options:
 ## 10. Complexity Estimation
 
 ### Quick Projects (Hours)
-```
+
+```dart
 Simple landing page
 Small portfolio
 Basic form
 Single component
 ```
+
 → Approach: Minimal decisions, focused execution
 
 ### Medium Projects (Days)
-```
+
+```dart
 Multi-page site
 Dashboard with modules
 E-commerce category
 Complex forms
 ```
+
 → Approach: Establish tokens, custom components
 
 ### Large Projects (Weeks)
-```
+
+```dart
 Full SaaS application
 E-commerce platform
 Custom design system
 Complex workflows
 ```
+
 → Approach: Full design system, documentation, testing
 
 ---

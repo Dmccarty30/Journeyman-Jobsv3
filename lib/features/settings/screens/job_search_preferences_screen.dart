@@ -1,53 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:journeyman_jobs/design_system/design_system.dart';
+import '../providers/settings_providers.dart';
 
-class JobSearchPreferencesScreen extends StatefulWidget {
+class JobSearchPreferencesScreen extends ConsumerStatefulWidget {
   const JobSearchPreferencesScreen({super.key});
 
   @override
-  State<JobSearchPreferencesScreen> createState() =>
+  ConsumerState<JobSearchPreferencesScreen> createState() =>
       _JobSearchPreferencesScreenState();
 }
 
 class _JobSearchPreferencesScreenState
-    extends State<JobSearchPreferencesScreen> {
-  double _defaultSearchRadius = 50.0;
-  String _units = 'Miles';
-  bool _autoApplyEnabled = false;
-  double _minimumHourlyRate = 35.0;
-
-  @override
-  void initState() {
-    super.initState();
-    _loadSettings();
-  }
-
-  Future<void> _loadSettings() async {
-    final prefs = await SharedPreferences.getInstance();
-
-    setState(() {
-      _defaultSearchRadius = prefs.getDouble('default_search_radius') ?? 50.0;
-      _units = prefs.getString('units') ?? 'Miles';
-      _autoApplyEnabled = prefs.getBool('auto_apply') ?? false;
-      _minimumHourlyRate = prefs.getDouble('minimum_hourly_rate') ?? 35.0;
-    });
-  }
-
-  Future<void> _saveSetting(String key, dynamic value) async {
-    final prefs = await SharedPreferences.getInstance();
-
-    if (value is bool) {
-      await prefs.setBool(key, value);
-    } else if (value is double) {
-      await prefs.setDouble(key, value);
-    } else if (value is String) {
-      await prefs.setString(key, value);
-    }
-  }
-
+    extends ConsumerState<JobSearchPreferencesScreen> {
   @override
   Widget build(BuildContext context) {
+    final settingsAsync = ref.watch(jobSearchSettingsProvider);
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -64,68 +33,80 @@ class _JobSearchPreferencesScreenState
             opacity: 0.35,
             componentDensity: ComponentDensity.high,
           ),
-          SingleChildScrollView(
-            padding: const EdgeInsets.all(AppTheme.spacingMd),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildSectionHeader('Search Filters'),
-                _buildSettingsCard([
-                  _buildSliderTile(
-                    icon: Icons.location_on,
-                    title: 'Default Search Radius',
-                    subtitle: '${_defaultSearchRadius.toInt()} $_units',
-                    value: _defaultSearchRadius,
-                    min: 10,
-                    max: 500,
-                    divisions: 49,
-                    onChanged: (value) {
-                      setState(() => _defaultSearchRadius = value);
-                      _saveSetting('default_search_radius', value);
-                    },
-                  ),
-                  const Divider(height: 1),
-                  _buildDropdownTile(
-                    icon: Icons.straighten,
-                    title: 'Distance Units',
-                    value: _units,
-                    options: ['Miles', 'Kilometers'],
-                    onChanged: (value) {
-                      setState(() => _units = value!);
-                      _saveSetting('units', value);
-                    },
-                  ),
-                  const Divider(height: 1),
-                  _buildSliderTile(
-                    icon: Icons.attach_money,
-                    title: 'Minimum Hourly Rate',
-                    subtitle: '\$${_minimumHourlyRate.toStringAsFixed(2)}/hr',
-                    value: _minimumHourlyRate,
-                    min: 20,
-                    max: 100,
-                    divisions: 80,
-                    onChanged: (value) {
-                      setState(() => _minimumHourlyRate = value);
-                      _saveSetting('minimum_hourly_rate', value);
-                    },
-                  ),
-                ]),
-                const SizedBox(height: AppTheme.spacingLg),
-                _buildSectionHeader('Application Automation'),
-                _buildSettingsCard([
-                  _buildSwitchTile(
-                    icon: Icons.flash_auto,
-                    title: 'Auto-Apply',
-                    subtitle: 'Automatically apply to matching jobs',
-                    value: _autoApplyEnabled,
-                    onChanged: (value) {
-                      setState(() => _autoApplyEnabled = value);
-                      _saveSetting('auto_apply', value);
-                    },
-                  ),
-                ]),
-                const SizedBox(height: AppTheme.spacingXl),
-              ],
+          settingsAsync.when(
+            loading: () => const Center(child: CircularProgressIndicator()),
+            error: (err, stack) => Center(child: Text('Error: $err')),
+            data: (settings) => SingleChildScrollView(
+              padding: const EdgeInsets.all(AppTheme.spacingMd),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildSectionHeader('Search Filters'),
+                  _buildSettingsCard([
+                    _buildSliderTile(
+                      icon: Icons.location_on,
+                      title: 'Default Search Radius',
+                      subtitle:
+                          '${settings.defaultSearchRadius.toInt()} ${settings.distanceUnits}',
+                      value: settings.defaultSearchRadius,
+                      min: 10,
+                      max: 500,
+                      divisions: 49,
+                      onChanged: (value) {
+                        ref
+                            .read(jobSearchSettingsProvider.notifier)
+                            .setSearchRadius(value);
+                      },
+                    ),
+                    const Divider(height: 1),
+                    _buildDropdownTile(
+                      icon: Icons.straighten,
+                      title: 'Distance Units',
+                      value: settings.distanceUnits,
+                      options: ['Miles', 'Kilometers'],
+                      onChanged: (value) {
+                        if (value != null) {
+                          ref
+                              .read(jobSearchSettingsProvider.notifier)
+                              .setDistanceUnits(value);
+                        }
+                      },
+                    ),
+                    const Divider(height: 1),
+                    _buildSliderTile(
+                      icon: Icons.attach_money,
+                      title: 'Minimum Hourly Rate',
+                      subtitle:
+                          '\$${settings.minimumHourlyRate.toStringAsFixed(2)}/hr',
+                      value: settings.minimumHourlyRate,
+                      min: 20,
+                      max: 100,
+                      divisions: 80,
+                      onChanged: (value) {
+                        ref
+                            .read(jobSearchSettingsProvider.notifier)
+                            .setMinimumHourlyRate(value);
+                      },
+                    ),
+                  ]),
+                  const SizedBox(height: AppTheme.spacingLg),
+                  _buildSectionHeader('Application Automation'),
+                  _buildSettingsCard([
+                    _buildSwitchTile(
+                      icon: Icons.flash_auto,
+                      title: 'Auto-Apply',
+                      subtitle: 'Automatically apply to matching jobs',
+                      value: settings.autoApplyEnabled,
+                      onChanged: (value) {
+                        ref
+                            .read(jobSearchSettingsProvider.notifier)
+                            .setAutoApply(value);
+                      },
+                    ),
+                  ]),
+                  const SizedBox(height: AppTheme.spacingXl),
+                ],
+              ),
             ),
           ),
         ],

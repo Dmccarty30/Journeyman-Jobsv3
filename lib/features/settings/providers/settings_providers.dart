@@ -347,3 +347,202 @@ class JobSearchSettings extends _$JobSearchSettings {
     }
   }
 }
+
+// ============================================
+// PRIVACY & SECURITY SETTINGS PROVIDER
+// ============================================
+
+@Riverpod(keepAlive: true)
+class PrivacySecuritySettings extends _$PrivacySecuritySettings {
+  @override
+  Future<PrivacySecuritySettingsModel> build() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      return ref
+          .read(settingsServiceProvider)
+          .loadCachedPrivacySecuritySettings();
+    }
+
+    final service = ref.read(settingsServiceProvider);
+    final subscription =
+        service.privacySecuritySettingsStream(user.uid).listen((settings) {
+      state = AsyncData(settings);
+    });
+
+    ref.onDispose(() => subscription.cancel());
+
+    return service.getPrivacySecuritySettings(user.uid);
+  }
+
+  /// Update profile visibility
+  Future<void> setProfileVisibility(String visibility) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return;
+
+    final current = state.value ?? const PrivacySecuritySettingsModel();
+    final updated = current.copyWith(profileVisibility: visibility);
+
+    state = AsyncData(updated);
+
+    try {
+      await ref.read(settingsServiceProvider).updatePrivacySecuritySetting(
+          user.uid, 'profileVisibility', visibility);
+    } catch (e) {
+      state = AsyncData(current);
+      rethrow;
+    }
+  }
+
+  /// Update location services
+  Future<void> setLocationServices(bool enabled) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return;
+
+    final current = state.value ?? const PrivacySecuritySettingsModel();
+    final updated = current.copyWith(locationServicesEnabled: enabled);
+
+    state = AsyncData(updated);
+
+    try {
+      await ref.read(settingsServiceProvider).updatePrivacySecuritySetting(
+          user.uid, 'locationServicesEnabled', enabled);
+    } catch (e) {
+      state = AsyncData(current);
+      rethrow;
+    }
+  }
+
+  /// Update biometric login
+  Future<void> setBiometricLogin(bool enabled) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return;
+
+    final current = state.value ?? const PrivacySecuritySettingsModel();
+    final updated = current.copyWith(biometricLoginEnabled: enabled);
+
+    state = AsyncData(updated);
+
+    try {
+      await ref.read(settingsServiceProvider).updatePrivacySecuritySetting(
+          user.uid, 'biometricLoginEnabled', enabled);
+    } catch (e) {
+      state = AsyncData(current);
+      rethrow;
+    }
+  }
+
+  /// Update two factor auth
+  Future<void> setTwoFactor(bool enabled) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return;
+
+    final current = state.value ?? const PrivacySecuritySettingsModel();
+    final updated = current.copyWith(twoFactorEnabled: enabled);
+
+    state = AsyncData(updated);
+
+    try {
+      await ref
+          .read(settingsServiceProvider)
+          .updatePrivacySecuritySetting(user.uid, 'twoFactorEnabled', enabled);
+    } catch (e) {
+      state = AsyncData(current);
+      rethrow;
+    }
+  }
+}
+
+// ============================================
+// DATA & STORAGE SETTINGS PROVIDER
+// ============================================
+
+@Riverpod(keepAlive: true)
+class DataStorageSettings extends _$DataStorageSettings {
+  @override
+  Future<DataStorageSettingsModel> build() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      return ref.read(settingsServiceProvider).loadCachedDataStorageSettings();
+    }
+
+    final service = ref.read(settingsServiceProvider);
+    final subscription =
+        service.dataStorageSettingsStream(user.uid).listen((settings) {
+      state = AsyncData(settings);
+    });
+
+    ref.onDispose(() => subscription.cancel());
+
+    return service.getDataStorageSettings(user.uid);
+  }
+
+  /// Update offline mode
+  Future<void> setOfflineMode(bool enabled) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return;
+
+    final current = state.value ?? const DataStorageSettingsModel();
+    final updated = current.copyWith(offlineModeEnabled: enabled);
+
+    state = AsyncData(updated);
+
+    try {
+      await ref
+          .read(settingsServiceProvider)
+          .updateDataStorageSetting(user.uid, 'offlineModeEnabled', enabled);
+    } catch (e) {
+      state = AsyncData(current);
+      rethrow;
+    }
+  }
+
+  /// Update auto download
+  Future<void> setAutoDownload(bool enabled) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return;
+
+    final current = state.value ?? const DataStorageSettingsModel();
+    final updated = current.copyWith(autoDownloadEnabled: enabled);
+
+    state = AsyncData(updated);
+
+    try {
+      await ref
+          .read(settingsServiceProvider)
+          .updateDataStorageSetting(user.uid, 'autoDownloadEnabled', enabled);
+    } catch (e) {
+      state = AsyncData(current);
+      rethrow;
+    }
+  }
+
+  /// Update wifi only
+  Future<void> setWifiOnly(bool enabled) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return;
+
+    final current = state.value ?? const DataStorageSettingsModel();
+    final updated = current.copyWith(wifiOnlyDownloads: enabled);
+
+    state = AsyncData(updated);
+
+    try {
+      await ref
+          .read(settingsServiceProvider)
+          .updateDataStorageSetting(user.uid, 'wifiOnlyDownloads', enabled);
+    } catch (e) {
+      state = AsyncData(current);
+      rethrow;
+    }
+  }
+
+  /// Calculate cache size
+  Future<String> calculateCacheSize() async {
+    return ref.read(settingsServiceProvider).calculateCacheSize();
+  }
+
+  /// Clear cache
+  Future<void> clearCache() async {
+    return ref.read(settingsServiceProvider).clearCache();
+  }
+}

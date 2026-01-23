@@ -9,7 +9,7 @@
 
 ### What is a Modular Scale?
 
-```
+```swift
 A mathematical relationship between font sizes:
 ├── Pick a BASE size (usually body text)
 ├── Pick a RATIO (multiplier)
@@ -30,7 +30,7 @@ A mathematical relationship between font sizes:
 
 ### Generate Your Scale
 
-```
+```dart
 Given: base = YOUR_BASE_SIZE, ratio = YOUR_RATIO
 
 Scale:
@@ -59,7 +59,7 @@ Scale:
 
 ### What Makes Fonts Work Together
 
-```
+```bash
 Contrast + Harmony:
 ├── Different ENOUGH to create hierarchy
 ├── Similar ENOUGH to feel cohesive
@@ -77,7 +77,7 @@ Contrast + Harmony:
 
 ### What to Look For
 
-```
+```bash   
 When pairing, compare:
 ├── x-height (height of lowercase letters)
 ├── Letter width (narrow vs wide)
@@ -107,7 +107,7 @@ When pairing, compare:
 
 ### The Relationship
 
-```
+```bash
 Line height depends on:
 ├── Font size (larger text = less line height needed)
 ├── Line length (longer lines = more line height)
@@ -137,7 +137,7 @@ Line height depends on:
 
 ### Optimal Reading Width
 
-```
+```bash
 The sweet spot: 45-75 characters per line
 ├── < 45: Too choppy, breaks flow
 ├── 45-75: Comfortable reading
@@ -168,7 +168,7 @@ max-width: 65ch; /* ch = width of "0" character */
 
 ### The Problem
 
-```
+```bash
 Fixed sizes don't scale well:
 ├── Desktop size too big on mobile
 ├── Mobile size too small on desktop
@@ -214,7 +214,7 @@ font-size: clamp(
 
 ### Creating Contrast
 
-```
+```go
 Good contrast = skip at least 2 weight levels
 ├── 400 body + 700 heading = good
 ├── 400 body + 500 emphasis = subtle
@@ -233,7 +233,7 @@ Good contrast = skip at least 2 weight levels
 
 ### Principles
 
-```
+```swift
 Large text (headings): tighter tracking
 ├── Letters are big, gaps feel larger
 └── Slight negative tracking looks better
@@ -263,7 +263,7 @@ ALL CAPS: always wider tracking
 
 ### Visual Hierarchy Through Type
 
-```
+```bash
 Ways to create hierarchy:
 ├── SIZE (most obvious)
 ├── WEIGHT (bold stands out)
@@ -294,7 +294,7 @@ If squinting at the page, the hierarchy should still be clear.
 
 ### F-Pattern Reading
 
-```
+```bash
 Users scan in F-pattern:
 ├── Across the top (first line)
 ├── Down the left side

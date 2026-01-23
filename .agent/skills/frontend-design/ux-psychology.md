@@ -10,18 +10,20 @@
 
 **Principle:** The time to make a decision increases logarithmically with the number of choices.
 
-```
+```dart
 Decision Time = a + b × log₂(n + 1)
 Where n = number of choices
 ```
 
 **Application:**
+
 - Navigation: Max 5-7 top-level items
 - Forms: Break into steps (progressive disclosure)
 - Options: Default selections when possible
 - Filters: Prioritize most-used, hide advanced
 
 **Example:**
+
 ```
 ❌ Bad: 15 menu items in one nav
 ✅ Good: 5 main categories + "More" 
@@ -42,12 +44,14 @@ Where D = distance, W = width
 ```
 
 **Application:**
+
 - CTAs: Make primary buttons larger (min 44px height)
 - Touch targets: 44×44px minimum on mobile
 - Placement: Important actions near natural cursor position
 - Corners: "Magic corners" (infinite edge = easy to hit)
 
 **Button Sizing:**
+
 ```css
 /* Size by importance */
 .btn-primary { height: 48px; padding: 0 24px; }
@@ -67,12 +71,14 @@ Where D = distance, W = width
 **Principle:** Average person can hold 7±2 chunks in working memory.
 
 **Application:**
+
 - Lists: Group into chunks of 5-7 items
 - Navigation: Max 7 menu items
 - Content: Break long content with headings
 - Phone numbers: 555-123-4567 (chunked)
 
 **Chunking Example:**
+
 ```
 ❌ 5551234567
 ✅ 555-123-4567
@@ -90,12 +96,14 @@ Where D = distance, W = width
 **Principle:** An item that stands out is more likely to be remembered.
 
 **Application:**
+
 - CTA buttons: Distinct color from other elements
 - Pricing: Highlight recommended plan
 - Important info: Visual differentiation
 - New features: Badge or callout
 
 **Example:**
+
 ```css
 /* All buttons gray, primary stands out */
 .btn { background: #E5E7EB; }
@@ -116,12 +124,14 @@ Where D = distance, W = width
 **Principle:** Items at the beginning (primacy) and end (recency) of a list are remembered best.
 
 **Application:**
+
 - Navigation: Most important items first and last
 - Lists: Key info at top and bottom
 - Forms: Most critical fields at start
 - CTAs: Repeat at top and bottom of long pages
 
 **Example:**
+
 ```
 Navigation: Home | [key items] | Contact
 
@@ -165,6 +175,7 @@ Long landing page:
 ### Designing for Each Level
 
 **Visceral:**
+
 ```css
 /* Beautiful first impression */
 .hero {
@@ -180,6 +191,7 @@ Long landing page:
 ```
 
 **Behavioral:**
+
 ```javascript
 // Instant feedback
 button.onclick = () => {
@@ -193,6 +205,7 @@ button.onclick = () => {
 ```
 
 **Reflective:**
+
 ```html
 <!-- Brand story and values -->
 <section class="about">
@@ -293,6 +306,7 @@ button.onclick = () => {
 ### Reduction Strategies
 
 **1. Simplify (Reduce Extraneous)**
+
 ```css
 /* Visual noise → Clean */
 .card-busy {
@@ -311,6 +325,7 @@ button.onclick = () => {
 ```
 
 **2. Chunk Information**
+
 ```html
 <!-- Overwhelming -->
 <form>
@@ -331,6 +346,7 @@ button.onclick = () => {
 ```
 
 **3. Progressive Disclosure**
+
 ```html
 <!-- Hide complexity until needed -->
 <div class="filters">
@@ -347,6 +363,7 @@ button.onclick = () => {
 ```
 
 **4. Use Familiar Patterns**
+
 ```
 ✅ Standard navigation placement
 ✅ Expected icon meanings (🔍 = search)
@@ -355,6 +372,7 @@ button.onclick = () => {
 ```
 
 **5. Offload Information**
+
 ```html
 <!-- Don't make users remember -->
 <label>
@@ -388,6 +406,7 @@ button.onclick = () => {
 ### Nudge Patterns
 
 **Smart Defaults:**
+
 ```html
 <!-- Pre-select the recommended option -->
 <input type="radio" name="plan" value="monthly">
@@ -396,6 +415,7 @@ button.onclick = () => {
 ```
 
 **Anchoring:**
+
 ```html
 <!-- Show original price to frame discount -->
 <div class="price">
@@ -406,6 +426,7 @@ button.onclick = () => {
 ```
 
 **Social Proof:**
+
 ```html
 <!-- Real-time activity -->
 <div class="activity">
@@ -418,6 +439,7 @@ button.onclick = () => {
 ```
 
 **Progress & Commitment:**
+
 ```html
 <!-- Show progress to encourage completion -->
 <div class="progress">

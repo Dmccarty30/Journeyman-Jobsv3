@@ -1,50 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:journeyman_jobs/design_system/design_system.dart';
+import '../providers/settings_providers.dart';
 
-class PrivacySecurityScreen extends StatefulWidget {
+class PrivacySecurityScreen extends ConsumerStatefulWidget {
   const PrivacySecurityScreen({super.key});
 
   @override
-  State<PrivacySecurityScreen> createState() => _PrivacySecurityScreenState();
+  ConsumerState<PrivacySecurityScreen> createState() =>
+      _PrivacySecurityScreenState();
 }
 
-class _PrivacySecurityScreenState extends State<PrivacySecurityScreen> {
-  String _profileVisibility = 'Union Members Only';
-  bool _locationServicesEnabled = true;
-  bool _biometricLoginEnabled = false;
-  bool _twoFactorEnabled = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _loadSettings();
-  }
-
-  Future<void> _loadSettings() async {
-    final prefs = await SharedPreferences.getInstance();
-
-    setState(() {
-      _profileVisibility =
-          prefs.getString('profile_visibility') ?? 'Union Members Only';
-      _locationServicesEnabled = prefs.getBool('location_services') ?? true;
-      _biometricLoginEnabled = prefs.getBool('biometric_login') ?? false;
-      _twoFactorEnabled = prefs.getBool('two_factor') ?? false;
-    });
-  }
-
-  Future<void> _saveSetting(String key, dynamic value) async {
-    final prefs = await SharedPreferences.getInstance();
-
-    if (value is bool) {
-      await prefs.setBool(key, value);
-    } else if (value is String) {
-      await prefs.setString(key, value);
-    }
-  }
-
+class _PrivacySecurityScreenState extends ConsumerState<PrivacySecurityScreen> {
   @override
   Widget build(BuildContext context) {
+    final settingsAsync = ref.watch(privacySecuritySettingsProvider);
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -61,62 +32,72 @@ class _PrivacySecurityScreenState extends State<PrivacySecurityScreen> {
             opacity: 0.35,
             componentDensity: ComponentDensity.high,
           ),
-          SingleChildScrollView(
-            padding: const EdgeInsets.all(AppTheme.spacingMd),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildSectionHeader('Privacy Controls'),
-                _buildSettingsCard([
-                  _buildDropdownTile(
-                    icon: Icons.visibility,
-                    title: 'Profile Visibility',
-                    value: _profileVisibility,
-                    options: ['Public', 'Union Members Only', 'Private'],
-                    onChanged: (value) {
-                      setState(() => _profileVisibility = value!);
-                      _saveSetting('profile_visibility', value);
-                    },
-                  ),
-                  const Divider(height: 1),
-                  _buildSwitchTile(
-                    icon: Icons.location_on,
-                    title: 'Location Services',
-                    subtitle: 'Used for job and weather alerts',
-                    value: _locationServicesEnabled,
-                    onChanged: (value) {
-                      setState(() => _locationServicesEnabled = value);
-                      _saveSetting('location_services', value);
-                    },
-                  ),
-                ]),
-                const SizedBox(height: AppTheme.spacingLg),
-                _buildSectionHeader('Account Security'),
-                _buildSettingsCard([
-                  _buildSwitchTile(
-                    icon: Icons.fingerprint,
-                    title: 'Biometric Login',
-                    subtitle: 'Use Face ID or Touch ID',
-                    value: _biometricLoginEnabled,
-                    onChanged: (value) {
-                      setState(() => _biometricLoginEnabled = value);
-                      _saveSetting('biometric_login', value);
-                    },
-                  ),
-                  const Divider(height: 1),
-                  _buildSwitchTile(
-                    icon: Icons.security,
-                    title: 'Two-Factor Authentication',
-                    subtitle: 'Extra security for your account',
-                    value: _twoFactorEnabled,
-                    onChanged: (value) {
-                      setState(() => _twoFactorEnabled = value);
-                      _saveSetting('two_factor', value);
-                    },
-                  ),
-                ]),
-                const SizedBox(height: AppTheme.spacingXl),
-              ],
+          settingsAsync.when(
+            loading: () => const Center(child: CircularProgressIndicator()),
+            error: (err, stack) => Center(child: Text('Error: $err')),
+            data: (settings) => SingleChildScrollView(
+              padding: const EdgeInsets.all(AppTheme.spacingMd),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildSectionHeader('Privacy Controls'),
+                  _buildSettingsCard([
+                    _buildDropdownTile(
+                      icon: Icons.visibility,
+                      title: 'Profile Visibility',
+                      value: settings.profileVisibility,
+                      options: ['Public', 'Union Members Only', 'Private'],
+                      onChanged: (value) {
+                        if (value != null) {
+                          ref
+                              .read(privacySecuritySettingsProvider.notifier)
+                              .setProfileVisibility(value);
+                        }
+                      },
+                    ),
+                    const Divider(height: 1),
+                    _buildSwitchTile(
+                      icon: Icons.location_on,
+                      title: 'Location Services',
+                      subtitle: 'Used for job and weather alerts',
+                      value: settings.locationServicesEnabled,
+                      onChanged: (value) {
+                        ref
+                            .read(privacySecuritySettingsProvider.notifier)
+                            .setLocationServices(value);
+                      },
+                    ),
+                  ]),
+                  const SizedBox(height: AppTheme.spacingLg),
+                  _buildSectionHeader('Account Security'),
+                  _buildSettingsCard([
+                    _buildSwitchTile(
+                      icon: Icons.fingerprint,
+                      title: 'Biometric Login',
+                      subtitle: 'Use Face ID or Touch ID',
+                      value: settings.biometricLoginEnabled,
+                      onChanged: (value) {
+                        ref
+                            .read(privacySecuritySettingsProvider.notifier)
+                            .setBiometricLogin(value);
+                      },
+                    ),
+                    const Divider(height: 1),
+                    _buildSwitchTile(
+                      icon: Icons.security,
+                      title: 'Two-Factor Authentication',
+                      subtitle: 'Extra security for your account',
+                      value: settings.twoFactorEnabled,
+                      onChanged: (value) {
+                        ref
+                            .read(privacySecuritySettingsProvider.notifier)
+                            .setTwoFactor(value);
+                      },
+                    ),
+                  ]),
+                  const SizedBox(height: AppTheme.spacingXl),
+                ],
+              ),
             ),
           ),
         ],

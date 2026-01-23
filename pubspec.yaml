@@ -68,7 +68,7 @@ dependencies:
   badges: ^3.1.1
   google_fonts: ^7.0.2
   flutter_svg: ^2.0.10
-  shadcn_ui: ^0.43.0
+  shadcn_ui: ^0.44.1
   local_ai_model:
     path: ./packages/local_ai_model
   
@@ -108,6 +108,8 @@ dependencies:
   
   # Antigravity Kit 2.0 - Secure token storage
   flutter_secure_storage: any
+  flutter_localizations:
+    sdk: flutter
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -143,6 +145,7 @@ flutter_launcher_icons:
 
 # The following section is specific to Flutter packages.
 flutter:
+  generate: true
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

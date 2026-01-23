@@ -424,3 +424,156 @@ class JobSearchSettingsModel {
     );
   }
 }
+
+/// Privacy and security settings stored in Firestore
+/// Path: users/{uid}/settings/privacySecurity
+class PrivacySecuritySettingsModel {
+  final String profileVisibility; // 'Public', 'Union Members Only', 'Private'
+  final bool locationServicesEnabled;
+  final bool biometricLoginEnabled;
+  final bool twoFactorEnabled;
+
+  // Metadata
+  final DateTime? updatedAt;
+  final int version;
+
+  const PrivacySecuritySettingsModel({
+    this.profileVisibility = 'Union Members Only',
+    this.locationServicesEnabled = true,
+    this.biometricLoginEnabled = false,
+    this.twoFactorEnabled = false,
+    this.updatedAt,
+    this.version = 1,
+  });
+
+  factory PrivacySecuritySettingsModel.fromFirestore(
+      Map<String, dynamic> data) {
+    return PrivacySecuritySettingsModel(
+      profileVisibility: data['profileVisibility'] ?? 'Union Members Only',
+      locationServicesEnabled: data['locationServicesEnabled'] ?? true,
+      biometricLoginEnabled: data['biometricLoginEnabled'] ?? false,
+      twoFactorEnabled: data['twoFactorEnabled'] ?? false,
+      updatedAt: data['updatedAt'] != null
+          ? (data['updatedAt'] as Timestamp).toDate()
+          : null,
+      version: data['version'] ?? 1,
+    );
+  }
+
+  Map<String, dynamic> toFirestore() {
+    return {
+      'profileVisibility': profileVisibility,
+      'locationServicesEnabled': locationServicesEnabled,
+      'biometricLoginEnabled': biometricLoginEnabled,
+      'twoFactorEnabled': twoFactorEnabled,
+      'updatedAt': FieldValue.serverTimestamp(),
+      'version': version,
+    };
+  }
+
+  PrivacySecuritySettingsModel copyWith({
+    String? profileVisibility,
+    bool? locationServicesEnabled,
+    bool? biometricLoginEnabled,
+    bool? twoFactorEnabled,
+    DateTime? updatedAt,
+    int? version,
+  }) {
+    return PrivacySecuritySettingsModel(
+      profileVisibility: profileVisibility ?? this.profileVisibility,
+      locationServicesEnabled:
+          locationServicesEnabled ?? this.locationServicesEnabled,
+      biometricLoginEnabled:
+          biometricLoginEnabled ?? this.biometricLoginEnabled,
+      twoFactorEnabled: twoFactorEnabled ?? this.twoFactorEnabled,
+      updatedAt: updatedAt ?? this.updatedAt,
+      version: version ?? this.version,
+    );
+  }
+
+  /// Create from SharedPreferences values for migration
+  factory PrivacySecuritySettingsModel.fromSharedPreferences({
+    required String visibility,
+    required bool location,
+    required bool biometric,
+    required bool twoFactor,
+  }) {
+    return PrivacySecuritySettingsModel(
+      profileVisibility: visibility,
+      locationServicesEnabled: location,
+      biometricLoginEnabled: biometric,
+      twoFactorEnabled: twoFactor,
+    );
+  }
+}
+
+/// Data and storage settings stored in Firestore
+/// Path: users/{uid}/settings/dataStorage
+class DataStorageSettingsModel {
+  final bool offlineModeEnabled;
+  final bool autoDownloadEnabled;
+  final bool wifiOnlyDownloads;
+
+  // Metadata
+  final DateTime? updatedAt;
+  final int version;
+
+  const DataStorageSettingsModel({
+    this.offlineModeEnabled = false,
+    this.autoDownloadEnabled = true,
+    this.wifiOnlyDownloads = true,
+    this.updatedAt,
+    this.version = 1,
+  });
+
+  factory DataStorageSettingsModel.fromFirestore(Map<String, dynamic> data) {
+    return DataStorageSettingsModel(
+      offlineModeEnabled: data['offlineModeEnabled'] ?? false,
+      autoDownloadEnabled: data['autoDownloadEnabled'] ?? true,
+      wifiOnlyDownloads: data['wifiOnlyDownloads'] ?? true,
+      updatedAt: data['updatedAt'] != null
+          ? (data['updatedAt'] as Timestamp).toDate()
+          : null,
+      version: data['version'] ?? 1,
+    );
+  }
+
+  Map<String, dynamic> toFirestore() {
+    return {
+      'offlineModeEnabled': offlineModeEnabled,
+      'autoDownloadEnabled': autoDownloadEnabled,
+      'wifiOnlyDownloads': wifiOnlyDownloads,
+      'updatedAt': FieldValue.serverTimestamp(),
+      'version': version,
+    };
+  }
+
+  DataStorageSettingsModel copyWith({
+    bool? offlineModeEnabled,
+    bool? autoDownloadEnabled,
+    bool? wifiOnlyDownloads,
+    DateTime? updatedAt,
+    int? version,
+  }) {
+    return DataStorageSettingsModel(
+      offlineModeEnabled: offlineModeEnabled ?? this.offlineModeEnabled,
+      autoDownloadEnabled: autoDownloadEnabled ?? this.autoDownloadEnabled,
+      wifiOnlyDownloads: wifiOnlyDownloads ?? this.wifiOnlyDownloads,
+      updatedAt: updatedAt ?? this.updatedAt,
+      version: version ?? this.version,
+    );
+  }
+
+  /// Create from SharedPreferences values for migration
+  factory DataStorageSettingsModel.fromSharedPreferences({
+    required bool offlineMode,
+    required bool autoDownload,
+    required bool wifiOnly,
+  }) {
+    return DataStorageSettingsModel(
+      offlineModeEnabled: offlineMode,
+      autoDownloadEnabled: autoDownload,
+      wifiOnlyDownloads: wifiOnly,
+    );
+  }
+}

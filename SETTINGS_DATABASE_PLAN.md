@@ -40,29 +40,71 @@ This avoids dual-write complexity and establishes a clear data flow from day one
 - [x] Implement migration function from SharedPreferences to Firestore
 - [ ] **VERIFY**: Unit test service methods - all pass
 
-### Phase 3: Providers (mobile-developer)
+### Phase 3: Riverpod Providers (mobile-developer)
 
 - [x] Create `AppearanceSettingsProvider` with Riverpod
 - [x] Create `NotificationSettingsProvider` with Riverpod
 - [x] Create `JobSearchSettingsProvider` with Riverpod
-- [ ] Generate Riverpod code with build_runner
-- [ ] Integrate with existing `AppThemeNotifier` for dark mode
-- [ ] **VERIFY**: Hot reload works, providers initialize correctly
+- [ ] Generate Riverpod code with `build_runner`
+- [ ] Integrate `AppearanceSettingsProvider` with existing `AppThemeNotifier`
+- [ ] **VERIFY**: Run app and confirm Providers initialize with either Firestore data or SharedPreferences fallback
 
-### Phase 4: UI Integration (mobile-developer)
+### Phase 4: UI Integration - Appearance & Display (mobile-developer)
 
-- [ ] Refactor `AppearanceDisplayScreen` to use provider
-  - [ ] Replace SharedPreferences calls with provider
-  - [ ] Implement action: toggle writes to Firestore
-  - [ ] Add real-time sync indicator
-- [ ] Refactor `NotificationsSettingsScreen` to use provider
-  - [ ] Replace SharedPreferences calls with provider
-  - [ ] Implement action: toggle writes to Firestore
-- [ ] Refactor `JobSearchPreferencesScreen` to use provider
-  - [ ] Replace SharedPreferences calls with provider
-  - [ ] Implement action: slider/dropdown changes write to Firestore
-- [ ] Add loading/error states to all settings screens
-- [ ] **VERIFY**: Toggle setting on Device A, confirm change on Device B
+- [x] **Dark Mode Toggle**:
+  - [x] Connect `JJCircuitBreakerSwitch` to `appearanceSettingsProvider.setDarkMode`
+  - [x] Remove legacy `SharedPreferences` logic from `appearance_display_screen.dart`
+  - [ ] Verify theme updates globally on toggle
+- [x] **High Contrast Toggle**:
+  - [x] Connect toggle to `appearanceSettingsProvider.setHighContrast`
+  - [x] Remove legacy local save logic
+- [x] **Electrical Effects Toggle**:
+  - [x] Connect toggle to `appearanceSettingsProvider.setElectricalEffects`
+  - [ ] Verify background effects show/hide immediately
+- [x] **Font Size Selector**:
+  - [x] Connect `DropdownButton` to `appearanceSettingsProvider.setFontSize`
+  - [ ] Verify app-wide text scaling updates
+- [ ] **Circuit Background Save**:
+  - [ ] Implement "Save Configuration" button action
+  - [ ] Push current local circuit state to `appearanceSettingsProvider.setCircuitBackground`
+- [ ] **Sync Status**:
+  - [ ] Add subtle "Cloud Syncing" indicator to the app bar
+- [ ] **VERIFY**: Change "Dark Mode" on Device A, confirm Device B updates instantly via Riverpod stream
+
+### Phase 5: UI Integration - Notifications (mobile-developer)
+
+- [ ] **Master Notification Toggle**:
+  - [ ] Link to `notificationSettingsProvider.updateSetting('notificationsEnabled', value)`
+- [ ] **Individual Category Toggles**:
+  - [ ] Link "Job Alerts" to Provider
+  - [ ] Link "Union Updates" to Provider
+  - [ ] Link "System Notifications" to Provider
+  - [ ] Link "Storm Work" to Provider
+  - [ ] Link "Union Reminders" to Provider
+- [ ] **Sound & Vibration Toggles**:
+  - [ ] Link "Sound" and "Vibration" to Provider
+- [ ] **Quiet Hours Configuration**:
+  - [ ] Link `TimePicker` results to `notificationSettingsProvider.setQuietHours`
+- [ ] **VERIFY**: Check Firestore `notifications` document after toggling "Storm Work" — confirm boolean value matches
+
+### Phase 6: UI Integration - Job Search (mobile-developer)
+
+- [ ] **Search Radius Slider**:
+  - [ ] Connect to `jobSearchSettingsProvider.setSearchRadius`
+- [ ] **Distance Units Selector**:
+  - [ ] Connect to `jobSearchSettingsProvider.setDistanceUnits`
+- [ ] **Minimum Hourly Rate Slider**:
+  - [ ] Connect to `jobSearchSettingsProvider.setMinimumHourlyRate`
+- [ ] **Auto-Apply Toggle**:
+  - [ ] Connect to `jobSearchSettingsProvider.setAutoApply`
+- [ ] **VERIFY**: Navigate away and back to the screen — confirm all sliders/toggles retain their Firestore values
+
+### Phase 7: Data Migration & First-Run Logic (backend-specialist)
+
+- [ ] Implement `MigrationOverlay` to show progress during first-run sync
+- [ ] Call `SettingsService.migrateFromSharedPreferences` on successful Auth
+- [ ] Verify migration flag is set in `SharedPreferences` to prevent repeat runs
+- [ ] **VERIFY**: Clear Firestore doc, run app with existing local settings, confirm Firestore is populated automatically
 
 ### Phase 5: Testing & Verification (test-engineer)
 
@@ -79,7 +121,7 @@ This avoids dual-write complexity and establishes a clear data flow from day one
 
 ### Collection Structure
 
-```
+```bash
 users/{uid}/settings/
 ├── appearance     → AppearanceSettingsModel
 ├── notifications  → NotificationSettingsModel

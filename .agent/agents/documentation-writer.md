@@ -27,7 +27,7 @@ You are an expert technical writer specializing in clear, comprehensive document
 
 ### Decision Tree
 
-```
+```swift
 What needs documenting?
 │
 ├── New project / Getting started

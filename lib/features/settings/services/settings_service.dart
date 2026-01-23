@@ -218,6 +218,145 @@ class SettingsService {
   }
 
   // ============================================
+  // PRIVACY & SECURITY SETTINGS
+  // ============================================
+
+  /// Get privacy & security settings as a stream (real-time updates)
+  Stream<PrivacySecuritySettingsModel> privacySecuritySettingsStream(
+      String uid) {
+    return _settingsDoc(uid, 'privacySecurity').snapshots().map((doc) {
+      if (doc.exists && doc.data() != null) {
+        return PrivacySecuritySettingsModel.fromFirestore(doc.data()!);
+      }
+      return const PrivacySecuritySettingsModel();
+    });
+  }
+
+  /// Get privacy & security settings once
+  Future<PrivacySecuritySettingsModel> getPrivacySecuritySettings(
+      String uid) async {
+    try {
+      final doc = await _settingsDoc(uid, 'privacySecurity').get();
+      if (doc.exists && doc.data() != null) {
+        return PrivacySecuritySettingsModel.fromFirestore(doc.data()!);
+      }
+      return const PrivacySecuritySettingsModel();
+    } catch (e) {
+      debugPrint('Error getting privacy & security settings: $e');
+      return const PrivacySecuritySettingsModel();
+    }
+  }
+
+  /// Update privacy & security settings
+  Future<void> updatePrivacySecuritySettings(
+    String uid,
+    PrivacySecuritySettingsModel settings,
+  ) async {
+    try {
+      await _settingsDoc(uid, 'privacySecurity').set(
+        settings.toFirestore(),
+        SetOptions(merge: true),
+      );
+      // Also cache to SharedPreferences
+      await _cachePrivacySecuritySettings(settings);
+    } catch (e) {
+      debugPrint('Error updating privacy & security settings: $e');
+      rethrow;
+    }
+  }
+
+  /// Update a single privacy & security setting field
+  Future<void> updatePrivacySecuritySetting(
+    String uid,
+    String field,
+    dynamic value,
+  ) async {
+    try {
+      await _settingsDoc(uid, 'privacySecurity').set({
+        field: value,
+        'updatedAt': FieldValue.serverTimestamp(),
+      }, SetOptions(merge: true));
+    } catch (e) {
+      debugPrint('Error updating privacy & security setting $field: $e');
+      rethrow;
+    }
+  }
+
+  // ============================================
+  // DATA & STORAGE SETTINGS
+  // ============================================
+
+  /// Get settings stream
+  Stream<DataStorageSettingsModel> dataStorageSettingsStream(String uid) {
+    return _settingsDoc(uid, 'dataStorage').snapshots().map((doc) {
+      if (doc.exists && doc.data() != null) {
+        return DataStorageSettingsModel.fromFirestore(doc.data()!);
+      }
+      return const DataStorageSettingsModel();
+    });
+  }
+
+  /// Get settings
+  Future<DataStorageSettingsModel> getDataStorageSettings(String uid) async {
+    try {
+      final doc = await _settingsDoc(uid, 'dataStorage').get();
+      if (doc.exists && doc.data() != null) {
+        return DataStorageSettingsModel.fromFirestore(doc.data()!);
+      }
+      return const DataStorageSettingsModel();
+    } catch (e) {
+      debugPrint('Error getting data & storage settings: $e');
+      return const DataStorageSettingsModel();
+    }
+  }
+
+  /// Update settings
+  Future<void> updateDataStorageSettings(
+    String uid,
+    DataStorageSettingsModel settings,
+  ) async {
+    try {
+      await _settingsDoc(uid, 'dataStorage').set(
+        settings.toFirestore(),
+        SetOptions(merge: true),
+      );
+      await _cacheDataStorageSettings(settings);
+    } catch (e) {
+      debugPrint('Error updating data & storage settings: $e');
+      rethrow;
+    }
+  }
+
+  /// Update single setting
+  Future<void> updateDataStorageSetting(
+    String uid,
+    String field,
+    dynamic value,
+  ) async {
+    try {
+      await _settingsDoc(uid, 'dataStorage').set({
+        field: value,
+        'updatedAt': FieldValue.serverTimestamp(),
+      }, SetOptions(merge: true));
+    } catch (e) {
+      debugPrint('Error updating data & storage setting $field: $e');
+      rethrow;
+    }
+  }
+
+  /// Calculate cache size (simulated for now)
+  Future<String> calculateCacheSize() async {
+    await Future.delayed(const Duration(milliseconds: 800));
+    return '42.5 MB'; // TODO: Implement actual calculation
+  }
+
+  /// Clear cache (simulated for now)
+  Future<void> clearCache() async {
+    await Future.delayed(const Duration(seconds: 1));
+    // TODO: Implement actual cache clearing
+  }
+
+  // ============================================
   // SHARED PREFERENCES CACHING
   // ============================================
 
@@ -280,6 +419,21 @@ class SettingsService {
       await prefs.setDouble('minimum_hourly_rate', settings.minimumHourlyRate);
     } catch (e) {
       debugPrint('Error caching job search settings: $e');
+    }
+  }
+
+  /// Cache privacy & security settings to SharedPreferences for offline fallback
+  Future<void> _cachePrivacySecuritySettings(
+      PrivacySecuritySettingsModel settings) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('profile_visibility', settings.profileVisibility);
+      await prefs.setBool(
+          'location_services', settings.locationServicesEnabled);
+      await prefs.setBool('biometric_login', settings.biometricLoginEnabled);
+      await prefs.setBool('two_factor', settings.twoFactorEnabled);
+    } catch (e) {
+      debugPrint('Error caching privacy & security settings: $e');
     }
   }
 
@@ -347,6 +501,52 @@ class SettingsService {
     }
   }
 
+  /// Load privacy & security settings from SharedPreferences (offline fallback)
+  Future<PrivacySecuritySettingsModel>
+      loadCachedPrivacySecuritySettings() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      return PrivacySecuritySettingsModel(
+        profileVisibility:
+            prefs.getString('profile_visibility') ?? 'Union Members Only',
+        locationServicesEnabled: prefs.getBool('location_services') ?? true,
+        biometricLoginEnabled: prefs.getBool('biometric_login') ?? false,
+        twoFactorEnabled: prefs.getBool('two_factor') ?? false,
+      );
+    } catch (e) {
+      debugPrint('Error loading cached privacy & security settings: $e');
+      return const PrivacySecuritySettingsModel();
+    }
+  }
+
+  /// Cache data & storage settings to SharedPreferences for offline fallback
+  Future<void> _cacheDataStorageSettings(
+      DataStorageSettingsModel settings) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('offlineMode', settings.offlineModeEnabled);
+      await prefs.setBool('autoDownload', settings.autoDownloadEnabled);
+      await prefs.setBool('wifiOnly', settings.wifiOnlyDownloads);
+    } catch (e) {
+      debugPrint('Error caching data & storage settings: $e');
+    }
+  }
+
+  /// Load data & storage settings from SharedPreferences (offline fallback)
+  Future<DataStorageSettingsModel> loadCachedDataStorageSettings() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      return DataStorageSettingsModel(
+        offlineModeEnabled: prefs.getBool('offlineMode') ?? false,
+        autoDownloadEnabled: prefs.getBool('autoDownload') ?? true,
+        wifiOnlyDownloads: prefs.getBool('wifiOnly') ?? true,
+      );
+    } catch (e) {
+      debugPrint('Error loading cached data & storage settings: $e');
+      return const DataStorageSettingsModel();
+    }
+  }
+
   // ============================================
   // MIGRATION
   // ============================================
@@ -374,6 +574,14 @@ class SettingsService {
       // Migrate job search settings
       final jobSearch = await loadCachedJobSearchSettings();
       await updateJobSearchSettings(uid, jobSearch);
+
+      // Migrate privacy & security settings
+      final privacySecurity = await loadCachedPrivacySecuritySettings();
+      await updatePrivacySecuritySettings(uid, privacySecurity);
+
+      // Migrate data & storage settings
+      final dataStorage = await loadCachedDataStorageSettings();
+      await updateDataStorageSettings(uid, dataStorage);
 
       // Mark as migrated
       await prefs.setBool(migrationKey, true);

@@ -1,57 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:journeyman_jobs/design_system/design_system.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:go_router/go_router.dart';
 import '../../navigation/services/app_router.dart';
+import '../providers/settings_providers.dart';
 
-class AppearanceDisplayScreen extends StatefulWidget {
+class AppearanceDisplayScreen extends ConsumerStatefulWidget {
   const AppearanceDisplayScreen({super.key});
 
   @override
-  State<AppearanceDisplayScreen> createState() =>
+  ConsumerState<AppearanceDisplayScreen> createState() =>
       _AppearanceDisplayScreenState();
 }
 
-class _AppearanceDisplayScreenState extends State<AppearanceDisplayScreen> {
-  bool _darkModeEnabled = false;
-  bool _highContrastMode = false;
-  bool _electricalEffects = true;
-  String _selectedFontSize = 'Medium';
-
-  @override
-  void initState() {
-    super.initState();
-    _loadSettings();
-  }
-
-  Future<void> _loadSettings() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _darkModeEnabled = prefs.getBool('darkMode') ?? false;
-      _highContrastMode = prefs.getBool('highContrast') ?? false;
-      _electricalEffects = prefs.getBool('electricalEffects') ?? true;
-      _selectedFontSize = prefs.getString('fontSize') ?? 'Medium';
-    });
-  }
-
-  Future<void> _updateSetting(String key, dynamic value) async {
-    final prefs = await SharedPreferences.getInstance();
-    if (value is bool) {
-      await prefs.setBool(key, value);
-    } else if (value is String) {
-      await prefs.setString(key, value);
-    }
-
-    if (mounted) {
-      JJSnackBar.showInfo(
-        context: context,
-        message: 'Setting updated successfully',
-      );
-    }
-  }
-
+class _AppearanceDisplayScreenState
+    extends ConsumerState<AppearanceDisplayScreen> {
   @override
   Widget build(BuildContext context) {
+    final appearanceAsync = ref.watch(appearanceSettingsProvider);
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -63,87 +30,179 @@ class _AppearanceDisplayScreenState extends State<AppearanceDisplayScreen> {
       body: Stack(
         children: [
           const ModernSvgCircuitBackground(opacity: 0.05),
-          SingleChildScrollView(
-            padding: const EdgeInsets.all(AppTheme.spacingMd),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildSectionHeader('Theme Settings'),
-                _buildToggleTile(
-                  title: 'Dark Mode',
-                  subtitle: 'Enable dark theme across the application',
-                  icon: Icons.dark_mode_outlined,
-                  value: _darkModeEnabled,
-                  onChanged: (value) {
-                    setState(() => _darkModeEnabled = value);
-                    _updateSetting('darkMode', value);
-                  },
-                ),
-                const Divider(),
-                _buildToggleTile(
-                  title: 'High Contrast',
-                  subtitle: 'Increase contrast for better visibility',
-                  icon: Icons.contrast,
-                  value: _highContrastMode,
-                  onChanged: (value) {
-                    setState(() => _highContrastMode = value);
-                    _updateSetting('highContrast', value);
-                  },
-                ),
-                const Divider(),
-                _buildToggleTile(
-                  title: 'Electrical Effects',
-                  subtitle: 'Enable animated electrical motifs and circuits',
-                  icon: Icons.bolt,
-                  value: _electricalEffects,
-                  onChanged: (value) {
-                    setState(() => _electricalEffects = value);
-                    _updateSetting('electricalEffects', value);
-                  },
-                ),
-                const Divider(),
-                _buildDropdownTile(
-                  title: 'Font Size',
-                  subtitle: 'Adjust the global text size',
-                  icon: Icons.format_size,
-                  value: _selectedFontSize,
-                  items: ['Small', 'Medium', 'Large', 'Extra Large'],
-                  onChanged: (value) {
-                    if (value != null) {
-                      setState(() => _selectedFontSize = value);
-                      _updateSetting('fontSize', value);
-                    }
-                  },
-                ),
-                const Divider(),
-                _buildSectionHeader('Developer Tools'),
-                ListTile(
-                  contentPadding:
-                      const EdgeInsets.symmetric(vertical: AppTheme.spacingSm),
-                  leading: Container(
-                    padding: const EdgeInsets.all(AppTheme.spacingSm),
-                    decoration: BoxDecoration(
-                      color: AppTheme.primaryNavy.withValues(alpha: 0.1),
-                      borderRadius: BorderRadius.circular(AppTheme.radiusSm),
+          appearanceAsync.when(
+            loading: () => const Center(
+              child: CircularProgressIndicator(color: AppTheme.accentCopper),
+            ),
+            error: (error, stack) => Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.error_outline,
+                      size: 48, color: AppTheme.errorRed),
+                  const SizedBox(height: AppTheme.spacingMd),
+                  Text('Failed to load settings', style: AppTheme.titleMedium),
+                  const SizedBox(height: AppTheme.spacingSm),
+                  Text(error.toString(),
+                      style: AppTheme.bodySmall
+                          .copyWith(color: AppTheme.textSecondary)),
+                  const SizedBox(height: AppTheme.spacingMd),
+                  ElevatedButton(
+                    onPressed: () => ref.invalidate(appearanceSettingsProvider),
+                    child: const Text('Retry'),
+                  ),
+                ],
+              ),
+            ),
+            data: (settings) => SingleChildScrollView(
+              padding: const EdgeInsets.all(AppTheme.spacingMd),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildSectionHeader('Theme Settings'),
+                  _buildToggleTile(
+                    title: 'Dark Mode',
+                    subtitle: 'Enable dark theme across the application',
+                    icon: Icons.dark_mode_outlined,
+                    value: settings.darkModeEnabled,
+                    onChanged: (value) async {
+                      try {
+                        await ref
+                            .read(appearanceSettingsProvider.notifier)
+                            .setDarkMode(value);
+                        if (mounted) {
+                          JJSnackBar.showInfo(
+                            context: context,
+                            message:
+                                'Dark mode ${value ? 'enabled' : 'disabled'}',
+                          );
+                        }
+                      } catch (e) {
+                        if (mounted) {
+                          JJSnackBar.showError(
+                            context: context,
+                            message: 'Failed to update setting',
+                          );
+                        }
+                      }
+                    },
+                  ),
+                  const Divider(),
+                  _buildToggleTile(
+                    title: 'High Contrast',
+                    subtitle: 'Increase contrast for better visibility',
+                    icon: Icons.contrast,
+                    value: settings.highContrastEnabled,
+                    onChanged: (value) async {
+                      try {
+                        await ref
+                            .read(appearanceSettingsProvider.notifier)
+                            .setHighContrast(value);
+                        if (mounted) {
+                          JJSnackBar.showInfo(
+                            context: context,
+                            message:
+                                'High contrast ${value ? 'enabled' : 'disabled'}',
+                          );
+                        }
+                      } catch (e) {
+                        if (mounted) {
+                          JJSnackBar.showError(
+                            context: context,
+                            message: 'Failed to update setting',
+                          );
+                        }
+                      }
+                    },
+                  ),
+                  const Divider(),
+                  _buildToggleTile(
+                    title: 'Electrical Effects',
+                    subtitle: 'Enable animated electrical motifs and circuits',
+                    icon: Icons.bolt,
+                    value: settings.electricalEffectsEnabled,
+                    onChanged: (value) async {
+                      try {
+                        await ref
+                            .read(appearanceSettingsProvider.notifier)
+                            .setElectricalEffects(value);
+                        if (mounted) {
+                          JJSnackBar.showInfo(
+                            context: context,
+                            message:
+                                'Electrical effects ${value ? 'enabled' : 'disabled'}',
+                          );
+                        }
+                      } catch (e) {
+                        if (mounted) {
+                          JJSnackBar.showError(
+                            context: context,
+                            message: 'Failed to update setting',
+                          );
+                        }
+                      }
+                    },
+                  ),
+                  const Divider(),
+                  _buildDropdownTile(
+                    title: 'Font Size',
+                    subtitle: 'Adjust the global text size',
+                    icon: Icons.format_size,
+                    value: settings.fontSize,
+                    items: ['Small', 'Medium', 'Large', 'Extra Large'],
+                    onChanged: (value) async {
+                      if (value != null) {
+                        try {
+                          await ref
+                              .read(appearanceSettingsProvider.notifier)
+                              .setFontSize(value);
+                          if (mounted) {
+                            JJSnackBar.showInfo(
+                              context: context,
+                              message: 'Font size set to $value',
+                            );
+                          }
+                        } catch (e) {
+                          if (mounted) {
+                            JJSnackBar.showError(
+                              context: context,
+                              message: 'Failed to update setting',
+                            );
+                          }
+                        }
+                      }
+                    },
+                  ),
+                  const Divider(),
+                  _buildSectionHeader('Developer Tools'),
+                  ListTile(
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: AppTheme.spacingSm),
+                    leading: Container(
+                      padding: const EdgeInsets.all(AppTheme.spacingSm),
+                      decoration: BoxDecoration(
+                        color: AppTheme.primaryNavy.withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(AppTheme.radiusSm),
+                      ),
+                      child: const Icon(Icons.developer_mode,
+                          color: AppTheme.primaryNavy),
                     ),
-                    child: const Icon(Icons.developer_mode,
-                        color: AppTheme.primaryNavy),
+                    title: const Text('Circuit Background Demo',
+                        style: AppTheme.titleMedium),
+                    subtitle: Text(
+                      'Configure and test circuit themes',
+                      style: AppTheme.bodySmall
+                          .copyWith(color: AppTheme.textSecondary),
+                    ),
+                    trailing: const Icon(Icons.chevron_right,
+                        color: AppTheme.textSecondary),
+                    onTap: () {
+                      context.push(AppRouter.circuitBackgroundDemo);
+                    },
                   ),
-                  title: const Text('Circuit Background Demo',
-                      style: AppTheme.titleMedium),
-                  subtitle: Text(
-                    'Configure and test circuit themes',
-                    style: AppTheme.bodySmall
-                        .copyWith(color: AppTheme.textSecondary),
-                  ),
-                  trailing: const Icon(Icons.chevron_right,
-                      color: AppTheme.textSecondary),
-                  onTap: () {
-                    context.push(AppRouter.circuitBackgroundDemo);
-                  },
-                ),
-                const SizedBox(height: AppTheme.spacingXl),
-              ],
+                  const SizedBox(height: AppTheme.spacingXl),
+                ],
+              ),
             ),
           ),
         ],

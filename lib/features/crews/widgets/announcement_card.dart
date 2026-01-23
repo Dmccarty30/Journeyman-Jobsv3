@@ -24,9 +24,7 @@ class AnnouncementCard extends ConsumerWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
         side: BorderSide(
-          color: isPinned
-              ? AppTheme.accentCopper.withValues(alpha: 0.5)
-              : AppTheme.borderLight,
+          color: AppTheme.borderLight,
           width: isPinned ? 2 : 1,
         ),
       ),

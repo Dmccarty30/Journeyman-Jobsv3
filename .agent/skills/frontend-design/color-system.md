@@ -9,7 +9,7 @@
 
 ### The Color Wheel
 
-```
+```dart
                     YELLOW
                       │
            Yellow-    │    Yellow-
@@ -42,7 +42,8 @@
 | **Split-Complementary** | Base + 2 colors adjacent to complement | Dynamic but balanced |
 | **Triadic** | 3 hues EQUIDISTANT on wheel | Vibrant, playful, creative |
 
-### How to Choose a Scheme:
+### How to Choose a Scheme
+
 1. **What's the project mood?** Calm → Analogous. Bold → Complementary.
 2. **How many colors needed?** Minimal → Monochromatic. Complex → Triadic.
 3. **Who's the audience?** Conservative → Monochromatic. Young → Triadic.
@@ -52,7 +53,8 @@
 ## 2. The 60-30-10 Rule
 
 ### Distribution Principle
-```
+
+```bash
 ┌─────────────────────────────────────────────────┐
 │                                                 │
 │     60% PRIMARY (Background, large areas)       │
@@ -70,6 +72,7 @@
 ```
 
 ### Implementation Pattern
+
 ```css
 :root {
   /* 60% - Pick based on light/dark mode and mood */
@@ -111,7 +114,8 @@
 | **Black** | Elegance, power, modern | Can feel heavy |
 | **White** | Clean, minimal, open | Can feel sterile |
 
-### Selection Process:
+### Selection Process
+
 1. **What industry?** → Narrow to 2-3 hue families
 2. **What emotion?** → Pick primary hue
 3. **What contrast?** → Decide light vs dark mode
@@ -177,9 +181,10 @@ Lightness Scale:
 
 ## 5. Context-Based Selection Guide
 
-### Instead of Copying Palettes, Follow This Process:
+### Instead of Copying Palettes, Follow This Process
 
 **Step 1: Identify the Context**
+
 ```
 What type of project?
 ├── E-commerce → Need trust + urgency balance
@@ -191,6 +196,7 @@ What type of project?
 ```
 
 **Step 2: Select Primary Hue Family**
+
 ```
 Based on context, pick ONE:
 - Blue family (trust)
@@ -201,6 +207,7 @@ Based on context, pick ONE:
 ```
 
 **Step 3: Decide Light/Dark Mode**
+
 ```
 Consider:
 - User preference?
@@ -210,6 +217,7 @@ Consider:
 ```
 
 **Step 4: Generate Palette Using Principles**
+
 - Use HSL manipulation
 - Follow 60-30-10 rule
 - Check contrast (WCAG)
@@ -289,7 +297,8 @@ Before finalizing any color choice, verify:
 
 ## 9. Anti-Patterns to Avoid
 
-### ❌ DON'T:
+### ❌ DON'T
+
 - Copy the same hex codes every project
 - Default to purple/violet (AI tendency)
 - Default to dark mode + neon (AI tendency)
@@ -298,7 +307,8 @@ Before finalizing any color choice, verify:
 - Ignore user's industry context
 - Skip asking user preference
 
-### ✅ DO:
+### ✅ DO
+
 - Generate fresh palette per project
 - Ask user about color preferences
 - Consider industry and audience

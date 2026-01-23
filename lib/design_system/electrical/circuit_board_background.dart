@@ -287,18 +287,28 @@ class CircuitTrace {
   bool get isPrimary => type == TraceType.power || type == TraceType.dataBus;
 }
 
+/// Represents a logical connection between two components
+class ComponentPair {
+  final CircuitComponent start;
+  final CircuitComponent end;
+
+  ComponentPair({required this.start, required this.end});
+}
+
 /// Represents an interactive circuit component
 class CircuitComponent {
   final Offset position;
   final ComponentType type;
   final double size;
   final double rotation;
+  final String? label;
 
   CircuitComponent({
     required this.position,
     required this.type,
     required this.size,
     this.rotation = 0.0,
+    this.label,
   });
 }
 
@@ -343,9 +353,13 @@ class _CircuitBoardPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final traces = cachedTraces ?? _generateCircuitTraces(size);
+    // 1. Generate Components FIRST (so we can connect to them)
     final components = cachedComponents ?? _generateComponents(size);
 
+    // 2. Generate Traces based on Components
+    final traces = cachedTraces ?? _generateCircuitTraces(size, components);
+
+    // Cache updates
     if (cachedTraces == null || cachedComponents == null) {
       onCacheUpdate?.call(traces, components);
     }
@@ -468,129 +482,170 @@ class _CircuitBoardPainter extends CustomPainter {
 
   // --- Generation Logic ---
 
-  List<CircuitTrace> _generateCircuitTraces(Size size) {
+  List<CircuitTrace> _generateCircuitTraces(
+      Size size, List<CircuitComponent> components) {
     final grid = CircuitGrid(size, spacing: 40.0);
-    final random = math.Random(12345); // Fixed seed
+    final random = math.Random(12345);
     final traces = <CircuitTrace>[];
 
-    // Trace counts based on density
-    final numTraces = (15 * componentDensity.multiplier).round();
+    // 1. Establish Logical Connections (Netlist)
+    final pairs = <ComponentPair>[];
+    final connectedComponents = <CircuitComponent>{};
 
-    for (int i = 0; i < numTraces; i++) {
-      // Find a random start point on the grid
-      final start = grid.getNearestIntersection(Offset(
-          random.nextDouble() * size.width, random.nextDouble() * size.height));
+    // A. Connect ICs to nearby Decoupling Capacitors/Resistors
+    final ics = components.where((c) => c.type == ComponentType.ic).toList();
+    for (final ic in ics) {
+      // Find nearby passives
+      final neighbors = components
+          .where((c) =>
+              c != ic &&
+              !connectedComponents.contains(c) &&
+              (c.type == ComponentType.capacitor ||
+                  c.type == ComponentType.resistor) &&
+              (c.position - ic.position).distance < 120.0) // 3 units
+          .toList();
 
-      // Determine Trace Type based on probability
-      TraceType type;
-      final r = random.nextDouble();
-      if (r < 0.15)
-        type = TraceType.power; // 15% Power rails
-      else if (r < 0.45)
-        type = TraceType.dataBus; // 30% Data bus
-      else
-        type = TraceType.signal; // 55% Signal traces
+      // Sort by distance
+      neighbors.sort((a, b) => (a.position - ic.position)
+          .distanceSquared
+          .compareTo((b.position - ic.position).distanceSquared));
 
-      final path = Path();
-      path.moveTo(start.dx, start.dy);
+      // Connect to up to 4 neighbors
+      for (var i = 0; i < math.min(4, neighbors.length); i++) {
+        pairs.add(ComponentPair(start: ic, end: neighbors[i]));
+        connectedComponents.add(neighbors[i]);
+      }
+      connectedComponents.add(ic);
+    }
 
-      var current = start;
-      final points = <Offset>[start];
+    // B. Connect Passives in Series (Rows)
+    // Find clusters of resistors/caps that are aligned
+    // This is simplified by just connecting remaining nearby passives
+    final passives = components.where((c) =>
+        !connectedComponents.contains(c) &&
+        (c.type == ComponentType.resistor ||
+            c.type == ComponentType.capacitor ||
+            c.type == ComponentType.diode));
 
-      // Walk params
-      final segments = random.nextInt(4) + 3; // 3-6 segments
-      // 0: Right, 1: Down, 2: Left, 3: Up
-      var direction = random.nextInt(4);
+    for (final p1 in passives) {
+      if (connectedComponents.contains(p1)) continue;
 
-      for (int j = 0; j < segments; j++) {
-        // Length is multiple of grid spacing
-        // Power traces longer, signals shorter
-        final lenMult = type == TraceType.power
-            ? (random.nextInt(4) + 3)
-            : (random.nextInt(3) + 2);
-        final length = lenMult * grid.spacing;
+      // Find nearest unconnected passive
+      CircuitComponent? nearest;
+      double minDist = double.infinity;
 
-        Offset target;
-        switch (direction) {
-          case 0:
-            target = current + Offset(length, 0);
-            break;
-          case 1:
-            target = current + Offset(0, length);
-            break;
-          case 2:
-            target = current + Offset(-length, 0);
-            break;
-          case 3:
-          default:
-            target = current + Offset(0, -length);
-            break;
-        }
-
-        // Clamp to screen bounds + margin
-        target = Offset(
-            target.dx.clamp(grid.spacing, size.width - grid.spacing),
-            target.dy.clamp(grid.spacing, size.height - grid.spacing));
-
-        // Re-snap to be sure
-        target = grid.snap(target);
-
-        if (target == current) {
-          // Hit wall or stuck, change dir and try smaller move
-          direction = (direction + 1) % 4;
-          continue;
-        }
-
-        // Add chamfered corner if not the last segment
-        if (j < segments - 1) {
-          final chamferSize = 10.0;
-          final dist = (target - current).distance;
-
-          if (dist > chamferSize * 2.5) {
-            // Draw line to start of chamfer
-            // We need to know the NEXT direction to chamfer correctly
-            // Assuming 90 deg turns
-
-            // Actually, simpler approach:
-            // Draw to target.
-            // But to do chamfers properly, we need to stop SHORT of target,
-            // then draw diagonal to new start of next segment.
-
-            // For now, simpler Manhattan with grid points is OK, let's just do direct lines first
-            // And add 45 degree segments explicitly if needed for visual flair.
-
-            path.lineTo(target.dx, target.dy);
-          } else {
-            path.lineTo(target.dx, target.dy);
-          }
-        } else {
-          path.lineTo(target.dx, target.dy);
-        }
-
-        current = target;
-        points.add(current);
-
-        // Pick next direction (always 90 degree turn)
-        if (direction % 2 == 0) {
-          // Was Horizontal
-          direction = random.nextBool() ? 1 : 3; // Go Vertical
-        } else {
-          // Was Vertical
-          direction = random.nextBool() ? 0 : 2; // Go Horizontal
+      for (final p2 in components) {
+        if (p1 == p2 || connectedComponents.contains(p2)) continue;
+        // Must be somewhat close
+        final d = (p1.position - p2.position).distance;
+        if (d < 100.0 && d < minDist) {
+          minDist = d;
+          nearest = p2;
         }
       }
 
-      // Add trace if valid
-      if (points.length > 1) {
-        traces.add(CircuitTrace(
-          path: path,
-          length: 0, // Computed later
-          keyPoints: points,
-          type: type,
-        ));
+      if (nearest != null) {
+        pairs.add(ComponentPair(start: p1, end: nearest));
+        connectedComponents.add(p1);
+        connectedComponents.add(nearest);
       }
     }
+
+    // 2. Route Traces for each Pair
+    for (final pair in pairs) {
+      final path = Path();
+      final start = pair.start.position;
+      final end = pair.end.position;
+
+      path.moveTo(start.dx, start.dy);
+
+      // Simple Manhattan Routing with optional Chamfer
+      // Determine if visual obstacle in middle? For now, blind routing.
+
+      // Randomize route preference: X-first or Y-first
+      final xFirst = random.nextBool();
+
+      final midX = (start.dx + end.dx) / 2;
+      final midY = (start.dy + end.dy) / 2;
+
+      // Add slight offset to mids to align to grid
+      final snappedMid = grid.snap(Offset(midX, midY));
+
+      // Route Points (Start -> [Knees] -> End)
+      final points = <Offset>[start];
+
+      if (random.nextDouble() > 0.5) {
+        // 2-Segment "L" shape
+        if (xFirst) {
+          points.add(Offset(end.dx, start.dy)); // Move X then Y
+        } else {
+          points.add(Offset(start.dx, end.dy)); // Move Y then X
+        }
+      } else {
+        // 3-Segment "Z" shape (via mid)
+        if (xFirst) {
+          points.add(Offset(snappedMid.dx, start.dy));
+          points.add(Offset(snappedMid.dx, end.dy));
+        } else {
+          points.add(Offset(start.dx, snappedMid.dy));
+          points.add(Offset(end.dx, snappedMid.dy));
+        }
+      }
+
+      points.add(end);
+
+      // Draw Path with 45-degree chamfers
+      _drawRoutePath(path, points);
+
+      traces.add(CircuitTrace(
+        path: path,
+        length: 0, // Computed later
+        keyPoints: [start, end],
+        type: _determineTraceType(pair),
+      ));
+    }
+
+    // 3. Add some "floating" traces for background texture (non-functional) based on density
+    // These start from edges or vias -> random grid points
+    final extraTraces = (5 * componentDensity.multiplier).round();
+    for (int i = 0; i < extraTraces; i++) {
+      // ... (Keep simplified version of old logic for background fill if needed)
+      // For now, let's keep it clean with primarily connected traces
+    }
+
     return traces;
+  }
+
+  TraceType _determineTraceType(ComponentPair pair) {
+    if (pair.start.type == ComponentType.ic ||
+        pair.end.type == ComponentType.ic) {
+      return TraceType.dataBus;
+    }
+    if (pair.start.type == ComponentType.connector ||
+        pair.end.type == ComponentType.connector) {
+      return TraceType.power;
+    }
+    return TraceType.signal;
+  }
+
+  // Helper to draw path with chamfered corners
+  void _drawRoutePath(Path path, List<Offset> points) {
+    if (points.isEmpty) return;
+    // Assume moveTo(points[0]) called
+
+    for (int i = 0; i < points.length - 1; i++) {
+      final current = points[i];
+      final next = points[i + 1];
+
+      // If simple straight line
+      if (current.dx == next.dx || current.dy == next.dy) {
+        path.lineTo(next.dx, next.dy);
+        continue;
+      }
+
+      // If diagonal needed (shouldn't happen with Manhattan points above unless chamfering)
+      path.lineTo(next.dx, next.dy);
+    }
   }
 
   List<CircuitComponent> _generateComponents(Size size) {
@@ -598,6 +653,16 @@ class _CircuitBoardPainter extends CustomPainter {
     final components = <CircuitComponent>[];
     final random = math.Random(24); // Fixed seed
     final density = componentDensity.multiplier;
+
+    // Designator Counters
+    int counts_U = 1; // ICs
+    int counts_R = 1; // Resistors
+    int counts_C = 1; // Capacitors
+    int counts_D = 1; // Diodes/LEDs
+    int counts_J = 1; // Connectors
+    int counts_Y = 1; // Crystals
+    int counts_L = 1; // Inductors
+    int counts_TP = 1; // Test Points
 
     // Clusters based on density
     final numClusters = (4 * density).round();
@@ -615,6 +680,7 @@ class _CircuitBoardPainter extends CustomPainter {
           type: ComponentType.ic,
           size: 40.0, // Large
           rotation: 0.0,
+          label: 'U${counts_U++}',
         ));
         // Add Crystal nearby
         if (random.nextBool()) {
@@ -622,6 +688,7 @@ class _CircuitBoardPainter extends CustomPainter {
             position: center + Offset(grid.spacing * 1.5, 0),
             type: ComponentType.crystal,
             size: 14.0,
+            label: 'Y${counts_Y++}',
           ));
         }
 
@@ -639,6 +706,7 @@ class _CircuitBoardPainter extends CustomPainter {
               type: ComponentType.capacitor,
               size: 16.0,
               rotation: random.nextBool() ? 0 : math.pi / 2,
+              label: 'C${counts_C++}',
             ));
           }
         }
@@ -655,14 +723,21 @@ class _CircuitBoardPainter extends CustomPainter {
 
           final typeR = random.nextDouble();
           ComponentType type;
-          if (typeR < 0.4)
+          String label;
+
+          if (typeR < 0.4) {
             type = ComponentType.resistor;
-          else if (typeR < 0.7)
+            label = 'R${counts_R++}';
+          } else if (typeR < 0.7) {
             type = ComponentType.capacitor;
-          else if (typeR < 0.9)
+            label = 'C${counts_C++}';
+          } else if (typeR < 0.9) {
             type = ComponentType.diode;
-          else
+            label = 'D${counts_D++}';
+          } else {
             type = ComponentType.inductor;
+            label = 'L${counts_L++}';
+          }
 
           if (pos.dx > 0 &&
               pos.dx < size.width &&
@@ -673,6 +748,7 @@ class _CircuitBoardPainter extends CustomPainter {
               type: type,
               size: 14.0,
               rotation: isHorizontal ? math.pi / 2 : 0,
+              label: label,
             ));
           }
         }
@@ -683,6 +759,7 @@ class _CircuitBoardPainter extends CustomPainter {
           type: ComponentType.connector,
           size: 20.0,
           rotation: random.nextBool() ? 0 : math.pi / 2,
+          label: 'J${counts_J++}',
         ));
       } else {
         // Scattered Vias / Test Points
@@ -696,12 +773,15 @@ class _CircuitBoardPainter extends CustomPainter {
               pos.dx < size.width &&
               pos.dy > 0 &&
               pos.dy < size.height) {
+            final isTestPoint = !random.nextBool();
+
             components.add(CircuitComponent(
               position: pos,
-              type: random.nextBool()
-                  ? ComponentType.via
-                  : ComponentType.testPoint,
+              type: isTestPoint ? ComponentType.testPoint : ComponentType.via,
               size: 8.0,
+              label: isTestPoint
+                  ? 'TP${counts_TP++}'
+                  : null, // Vias don't have labels usually
             ));
           }
         }
@@ -723,13 +803,51 @@ class _CircuitBoardPainter extends CustomPainter {
     if (component.type != ComponentType.via) {
       // Vias don't cast shadow
       canvas.save();
-      canvas.translate(2, 2); // Shadow offset
+      canvas.translate(3, 3); // Increased Shadow offset for 3D depth
       _drawComponentShape(canvas, component, shadowPaint, isShadow: true);
       canvas.restore();
     }
 
     // Draw Main Component
     _drawComponentShape(canvas, component, componentPaint, viaPaint: viaPaint);
+
+    // Draw Label (Silkscreen)
+    if (component.label != null && opacity > 0.3) {
+      // Only draw labels if opacity is high enough to be visible
+      canvas
+          .restore(); // Restore rotation to draw text upright (or keep rotated?)
+      // Usually silkscreen is aligned with component. Let's keep rotation.
+      canvas.save();
+      canvas.translate(component.position.dx, component.position.dy);
+      canvas.rotate(component.rotation);
+
+      final textSpan = TextSpan(
+        text: component.label,
+        style: TextStyle(
+          color: Colors.white.withValues(alpha: opacity * 0.7),
+          fontSize: component.size * 0.5,
+          fontFamily: 'Roboto',
+          fontWeight: FontWeight.bold,
+        ),
+      );
+      final textPainter = TextPainter(
+        text: textSpan,
+        textDirection: TextDirection.ltr,
+      );
+      textPainter.layout();
+
+      // Position label based on type
+      Offset labelOffset;
+      if (component.type == ComponentType.ic) {
+        labelOffset = Offset(-textPainter.width / 2, -component.size * 0.9);
+      } else {
+        labelOffset = Offset(component.size * 0.8, -textPainter.height / 2);
+      }
+
+      textPainter.paint(canvas, labelOffset);
+      canvas.restore(); // Restore local save
+      canvas.save(); // Re-establish for outer restore
+    }
 
     canvas.restore();
   }
