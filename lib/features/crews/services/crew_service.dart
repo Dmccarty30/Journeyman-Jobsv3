@@ -110,6 +110,21 @@ class CrewService {
     }, SetOptions(merge: true));
   }
 
+  Future<void> _decrementCrewCreationCount(String userId) async {
+    final counterRef = _firestore
+        .collection('counters')
+        .doc('crews')
+        .collection('user_crews')
+        .doc(userId);
+    final doc = await counterRef.get();
+    final currentCount = (doc.data()?['count'] as int?) ?? 0;
+    if (currentCount > 0) {
+      await counterRef.update({
+        'count': FieldValue.increment(-1),
+      });
+    }
+  }
+
   Future<bool> _checkInvitationLimit(String userId) async {
     final counterRef = _firestore
         .collection('counters')
@@ -451,6 +466,13 @@ class CrewService {
   // Delete crew (soft delete)
   Future<void> deleteCrew(String crewId) async {
     try {
+      // First, get the crew to find the foreman ID for counter decrement
+      final crewDoc = await _firestore.collection('crews').doc(crewId).get();
+      if (!crewDoc.exists) {
+        throw CrewException('Crew not found', code: 'crew-not-found');
+      }
+      final foremanId = crewDoc.data()?['foremanId'] as String?;
+
       if (!_connectivityService.isOnline) {
         // Offline: Update local crew data to inactive and mark as dirty
         final existingCrews = await _offlineDataService.getOfflineCrews();
@@ -472,6 +494,13 @@ class CrewService {
             .doc(crewId)
             .update({'isActive': false});
       }
+
+      // Decrement the foreman's crew creation count
+      if (foremanId != null) {
+        await _decrementCrewCreationCount(foremanId);
+      }
+    } on CrewException {
+      rethrow;
     } on FirebaseException catch (e) {
       throw CrewException('Firestore error deleting crew: ${e.message}',
           code: e.code);
@@ -666,6 +695,83 @@ class CrewService {
     } catch (e) {
       throw CrewException(
           'An unexpected error occurred while removing member: $e',
+          code: 'unknown-error');
+    }
+  }
+
+  // Leave crew (for non-foreman members to voluntarily leave)
+  Future<void> leaveCrew({
+    required String crewId,
+    required String userId,
+  }) async {
+    try {
+      // Get the crew to check if user is the foreman
+      final crewDoc = await _firestore.collection('crews').doc(crewId).get();
+      if (!crewDoc.exists) {
+        throw CrewException('Crew not found', code: 'crew-not-found');
+      }
+
+      final foremanId = crewDoc.data()?['foremanId'] as String?;
+      if (foremanId == userId) {
+        throw CrewException(
+          'Foreman cannot leave the crew. Transfer ownership or delete the crew instead.',
+          code: 'foreman-cannot-leave',
+        );
+      }
+
+      // Check if user is actually a member
+      final isInCrew = await isUserInCrew(crewId, userId);
+      if (!isInCrew) {
+        throw MemberException('User is not a member of this crew',
+            code: 'not-a-member');
+      }
+
+      if (!_connectivityService.isOnline) {
+        // Offline: Update local crew data and mark as dirty
+        final existingCrews = await _offlineDataService.getOfflineCrews();
+        final crewIndex = existingCrews.indexWhere((c) => c.id == crewId);
+        if (crewIndex != -1) {
+          final updatedCrew = existingCrews[crewIndex].copyWith(
+            memberCount: existingCrews[crewIndex].memberCount - 1,
+          );
+          existingCrews[crewIndex] = updatedCrew;
+          await _offlineDataService.storeCrewsOffline(existingCrews);
+          await _offlineDataService.markDataDirty('crew_$crewId', {
+            'memberCount': FieldValue.increment(-1),
+            '_operation': 'leaveCrew',
+            'userId': userId,
+          });
+
+          // Also remove from local crew members cache
+          final existingMembers =
+              await _offlineDataService.getOfflineCrewMembers();
+          existingMembers.removeWhere((m) => m.uid == userId);
+          await _offlineDataService.storeCrewMembersOffline(existingMembers);
+        } else {
+          throw CrewException('Crew not found in offline cache',
+              code: 'crew-not-found-offline');
+        }
+        return;
+      }
+
+      await _firestore.runTransaction((transaction) async {
+        transaction.delete(_firestore
+            .collection('crews')
+            .doc(crewId)
+            .collection('members')
+            .doc(userId));
+
+        transaction.update(_firestore.collection('crews').doc(crewId), {
+          'memberCount': FieldValue.increment(-1),
+        });
+      });
+    } on AppException {
+      rethrow;
+    } on FirebaseException catch (e) {
+      throw CrewException('Firestore error leaving crew: ${e.message}',
+          code: e.code);
+    } catch (e) {
+      throw CrewException('An unexpected error occurred while leaving crew: $e',
           code: 'unknown-error');
     }
   }

@@ -167,7 +167,7 @@ final class PrivacySecuritySettingsProvider extends $AsyncNotifierProvider<
 }
 
 String _$privacySecuritySettingsHash() =>
-    r'8732724bb22e64271214cf20d97293a3b8638b1b';
+    r'72d3a801a1060b99aa4848fff1e4a631454a2522';
 
 abstract class _$PrivacySecuritySettings
     extends $AsyncNotifier<PrivacySecuritySettingsModel> {
@@ -181,51 +181,6 @@ abstract class _$PrivacySecuritySettings
         AnyNotifier<AsyncValue<PrivacySecuritySettingsModel>,
             PrivacySecuritySettingsModel>,
         AsyncValue<PrivacySecuritySettingsModel>,
-        Object?,
-        Object?>;
-    element.handleCreate(ref, build);
-  }
-}
-
-@ProviderFor(LanguageRegionSettings)
-final languageRegionSettingsProvider = LanguageRegionSettingsProvider._();
-
-final class LanguageRegionSettingsProvider extends $AsyncNotifierProvider<
-    LanguageRegionSettings, LanguageRegionSettingsModel> {
-  LanguageRegionSettingsProvider._()
-      : super(
-          from: null,
-          argument: null,
-          retry: null,
-          name: r'languageRegionSettingsProvider',
-          isAutoDispose: false,
-          dependencies: null,
-          $allTransitiveDependencies: null,
-        );
-
-  @override
-  String debugGetCreateSourceHash() => _$languageRegionSettingsHash();
-
-  @$internal
-  @override
-  LanguageRegionSettings create() => LanguageRegionSettings();
-}
-
-String _$languageRegionSettingsHash() =>
-    r'7d613f6ce96ca5885962f4f5b085a2ac05f15f9f';
-
-abstract class _$LanguageRegionSettings
-    extends $AsyncNotifier<LanguageRegionSettingsModel> {
-  FutureOr<LanguageRegionSettingsModel> build();
-  @$mustCallSuper
-  @override
-  void runBuild() {
-    final ref = this.ref as $Ref<AsyncValue<LanguageRegionSettingsModel>,
-        LanguageRegionSettingsModel>;
-    final element = ref.element as $ClassProviderElement<
-        AnyNotifier<AsyncValue<LanguageRegionSettingsModel>,
-            LanguageRegionSettingsModel>,
-        AsyncValue<LanguageRegionSettingsModel>,
         Object?,
         Object?>;
     element.handleCreate(ref, build);

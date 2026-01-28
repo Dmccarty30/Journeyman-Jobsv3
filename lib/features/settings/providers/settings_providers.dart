@@ -12,6 +12,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../models/settings_models.dart';
 import '../services/settings_service.dart';
+import 'package:journeyman_jobs/core/services/biometric_service.dart';
 
 part 'settings_providers.g.dart';
 
@@ -418,6 +419,31 @@ class PrivacySecuritySettings extends _$PrivacySecuritySettings {
     if (user == null) return;
 
     final current = state.value ?? const PrivacySecuritySettingsModel();
+
+    // If enabling, verify biometrics first
+    if (enabled) {
+      final biometricService = ref.read(biometricServiceProvider);
+
+      // Check availability
+      final isAvailable = await biometricService.isBiometricAvailable;
+      if (!isAvailable) {
+        // Optimistically update to false (revert) if it was toggled in UI
+        state = AsyncData(current.copyWith(biometricLoginEnabled: false));
+        throw Exception('Biometrics not available on this device');
+      }
+
+      // Authenticate
+      final authenticated = await biometricService.authenticate(
+        localizedReason: 'Authenticate to enable biometric login',
+      );
+
+      if (!authenticated) {
+        // User failed/canceled
+        state = AsyncData(current.copyWith(biometricLoginEnabled: false));
+        return;
+      }
+    }
+
     final updated = current.copyWith(biometricLoginEnabled: enabled);
 
     state = AsyncData(updated);

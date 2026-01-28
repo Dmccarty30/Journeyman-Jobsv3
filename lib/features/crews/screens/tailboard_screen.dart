@@ -851,6 +851,37 @@ class _TailboardScreenState extends ConsumerState<TailboardScreen>
                   _showSnackBar('Analytics feature coming soon');
                 },
               ),
+              const Divider(color: TailboardTheme.border),
+              // Show Leave Crew for non-foreman members
+              if (!ref.read(isCrewForemanProvider(selectedCrew.id)))
+                ListTile(
+                  leading: const Icon(Icons.exit_to_app,
+                      color: TailboardTheme.warning),
+                  title: Text('Leave Crew',
+                      style: TailboardTheme.bodyMedium
+                          .copyWith(color: TailboardTheme.warning)),
+                  subtitle: Text('Remove yourself from this crew',
+                      style: TailboardTheme.bodySmall),
+                  onTap: () {
+                    Navigator.pop(context);
+                    _showLeaveCrewConfirmation(selectedCrew);
+                  },
+                ),
+              // Show Delete Crew for foreman only
+              if (ref.read(isCrewForemanProvider(selectedCrew.id)))
+                ListTile(
+                  leading: const Icon(Icons.delete_forever,
+                      color: TailboardTheme.error),
+                  title: Text('Delete Crew',
+                      style: TailboardTheme.bodyMedium
+                          .copyWith(color: TailboardTheme.error)),
+                  subtitle: Text('Permanently remove this crew',
+                      style: TailboardTheme.bodySmall),
+                  onTap: () {
+                    Navigator.pop(context);
+                    _showDeleteCrewConfirmation(selectedCrew);
+                  },
+                ),
             ],
             ListTile(
               leading:
@@ -865,6 +896,123 @@ class _TailboardScreenState extends ConsumerState<TailboardScreen>
         ),
       ),
     );
+  }
+
+  void _showLeaveCrewConfirmation(Crew crew) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: TailboardTheme.backgroundCard,
+        title: Text('Leave Crew', style: TailboardTheme.headingMedium),
+        content: Text(
+          'Are you sure you want to leave "${crew.name}"? You will need to be re-invited to rejoin.',
+          style: TailboardTheme.bodyMedium,
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('Cancel',
+                style: TextStyle(color: TailboardTheme.textSecondary)),
+          ),
+          TextButton(
+            onPressed: () async {
+              Navigator.pop(context);
+              await _leaveCrew(crew);
+            },
+            child:
+                Text('Leave', style: TextStyle(color: TailboardTheme.warning)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _leaveCrew(Crew crew) async {
+    final currentUserId = ref.read(currentUserIdProvider);
+    if (currentUserId == null) {
+      _showSnackBar('Not authenticated', isError: true);
+      return;
+    }
+
+    final success = await ref
+        .read(leaveCrewProvider.notifier)
+        .leaveCrew(crew.id, currentUserId);
+
+    if (success && mounted) {
+      _showSnackBar('Successfully left ${crew.name}');
+      // Navigate to crew onboarding if no crews remain
+      final remainingCrews = ref.read(userCrewsProvider);
+      if (remainingCrews.isEmpty) {
+        context.go('/crews/onboarding');
+      }
+    } else if (mounted) {
+      final error = ref.read(leaveCrewProvider).error;
+      _showSnackBar(
+        error?.toString() ?? 'Failed to leave crew',
+        isError: true,
+      );
+    }
+  }
+
+  void _showDeleteCrewConfirmation(Crew crew) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: TailboardTheme.backgroundCard,
+        title: Text('Delete Crew', style: TailboardTheme.headingMedium),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Are you sure you want to delete "${crew.name}"?',
+              style: TailboardTheme.bodyMedium,
+            ),
+            const SizedBox(height: 12),
+            Text(
+              'This will remove all members from the crew. This action cannot be undone.',
+              style: TailboardTheme.bodySmall
+                  .copyWith(color: TailboardTheme.error),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('Cancel',
+                style: TextStyle(color: TailboardTheme.textSecondary)),
+          ),
+          TextButton(
+            onPressed: () async {
+              Navigator.pop(context);
+              await _deleteCrew(crew);
+            },
+            child:
+                Text('Delete', style: TextStyle(color: TailboardTheme.error)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _deleteCrew(Crew crew) async {
+    final success =
+        await ref.read(deleteCrewProvider.notifier).deleteCrew(crew.id);
+
+    if (success && mounted) {
+      _showSnackBar('Crew "${crew.name}" deleted successfully');
+      // Navigate to crew onboarding if no crews remain
+      final remainingCrews = ref.read(userCrewsProvider);
+      if (remainingCrews.isEmpty) {
+        context.go('/crews/onboarding');
+      }
+    } else if (mounted) {
+      final error = ref.read(deleteCrewProvider).error;
+      _showSnackBar(
+        error?.toString() ?? 'Failed to delete crew',
+        isError: true,
+      );
+    }
   }
 
   void _showJobPreferences() async {

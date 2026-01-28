@@ -18,48 +18,49 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
 /// Service to handle Firebase Cloud Messaging (FCM) for push notifications
 class FCMService {
-  static final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
-  static final FlutterLocalNotificationsPlugin _localNotifications = 
+  static final FirebaseMessaging _firebaseMessaging =
+      FirebaseMessaging.instance;
+  static final FlutterLocalNotificationsPlugin _localNotifications =
       FlutterLocalNotificationsPlugin();
   static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   static final FirebaseAuth _auth = FirebaseAuth.instance;
-  
+
   static String? _currentToken;
   static BuildContext? _appContext;
-
 
   /// Initialize FCM service
   static Future<void> initialize(BuildContext appContext) async {
     _appContext = appContext;
-    
+
     // Initialize local notifications
     await _initializeLocalNotifications();
-    
+
     // Set up FCM handlers
     await _setupFCMHandlers();
-    
+
     // Get and store FCM token
     await _handleTokenRefresh();
-    
+
     debugPrint('FCM Service initialized successfully');
   }
 
   /// Initialize local notifications plugin
   static Future<void> _initializeLocalNotifications() async {
-    const androidSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
+    const androidSettings =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
     const iosSettings = DarwinInitializationSettings(
       requestAlertPermission: false,
       requestBadgePermission: false,
       requestSoundPermission: false,
     );
-    
+
     const initSettings = InitializationSettings(
       android: androidSettings,
       iOS: iosSettings,
     );
-    
+
     await _localNotifications.initialize(
-      initSettings,
+      settings: initSettings,
       onDidReceiveNotificationResponse: _onNotificationTapped,
     );
   }
@@ -68,13 +69,13 @@ class FCMService {
   static Future<void> _setupFCMHandlers() async {
     // Handle background messages
     FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
-    
+
     // Handle foreground messages
     FirebaseMessaging.onMessage.listen(_handleForegroundMessage);
-    
+
     // Handle notification taps when app is in background
     FirebaseMessaging.onMessageOpenedApp.listen(_handleMessageOpenedApp);
-    
+
     // Handle token refresh
     FirebaseMessaging.instance.onTokenRefresh.listen(_onTokenRefresh);
   }
@@ -123,10 +124,10 @@ class FCMService {
   /// Handle foreground messages (when app is open)
   static Future<void> _handleForegroundMessage(RemoteMessage message) async {
     debugPrint('Received foreground message: ${message.messageId}');
-    
+
     // Show local notification for foreground messages
     await _showLocalNotification(message);
-    
+
     // Update in-app notification badge or UI if needed
     await _createInAppNotification(message);
   }
@@ -134,7 +135,7 @@ class FCMService {
   /// Handle background messages
   static Future<void> _handleBackgroundMessage(RemoteMessage message) async {
     debugPrint('Handling background message: ${message.messageId}');
-    
+
     // Create in-app notification for when user opens app
     await _createInAppNotification(message);
   }
@@ -142,7 +143,7 @@ class FCMService {
   /// Handle notification tap when app was in background
   static Future<void> _handleMessageOpenedApp(RemoteMessage message) async {
     debugPrint('Message opened app: ${message.messageId}');
-    
+
     // Navigate based on notification data
     await _navigateFromNotification(message);
   }
@@ -151,12 +152,12 @@ class FCMService {
   static Future<void> _showLocalNotification(RemoteMessage message) async {
     final notification = message.notification;
     final data = message.data;
-    
+
     if (notification != null) {
       final type = data['type'] ?? 'system';
       final channelId = _getChannelId(type);
       final channelName = _getChannelName(type);
-      
+
       final androidDetails = AndroidNotificationDetails(
         channelId,
         channelName,
@@ -167,23 +168,23 @@ class FCMService {
         color: const Color(0xFFB45309), // AppTheme.accentCopper
         showWhen: true,
       );
-      
+
       const iosDetails = DarwinNotificationDetails(
         presentAlert: true,
         presentBadge: true,
         presentSound: true,
       );
-      
+
       final details = NotificationDetails(
         android: androidDetails,
         iOS: iosDetails,
       );
-      
+
       await _localNotifications.show(
-        message.hashCode,
-        notification.title,
-        notification.body,
-        details,
+        id: message.hashCode,
+        title: notification.title,
+        body: notification.body,
+        notificationDetails: details,
         payload: jsonEncode(data),
       );
     }
@@ -194,10 +195,10 @@ class FCMService {
     try {
       final user = _auth.currentUser;
       if (user == null) return;
-      
+
       final notification = message.notification;
       final data = message.data;
-      
+
       if (notification != null) {
         await _firestore.collection('notifications').add({
           'userId': user.uid,
@@ -231,11 +232,11 @@ class FCMService {
   /// Navigate based on notification data
   static Future<void> _navigateFromNotification(RemoteMessage message) async {
     if (_appContext == null) return;
-    
+
     final data = message.data;
     final type = data['type'] ?? 'system';
     final actionUrl = data['actionUrl'];
-    
+
     try {
       if (actionUrl != null && actionUrl.isNotEmpty) {
         // Use custom action URL if provided
@@ -315,12 +316,12 @@ class FCMService {
       // Get user's FCM token
       final userDoc = await _firestore.collection('users').doc(userId).get();
       final fcmToken = userDoc.data()?['fcmToken'] as String?;
-      
+
       if (fcmToken == null) {
         debugPrint('No FCM token found for user: $userId');
         return;
       }
-      
+
       // Create notification data
       final data = {
         'type': type,
@@ -329,7 +330,7 @@ class FCMService {
         'body': body,
         ...?additionalData,
       };
-      
+
       // Also create in-app notification
       await _firestore.collection('notifications').add({
         'userId': userId,
@@ -340,7 +341,7 @@ class FCMService {
         'timestamp': FieldValue.serverTimestamp(),
         'data': data,
       });
-      
+
       debugPrint('Notification queued for user: $userId');
     } catch (e) {
       debugPrint('Error sending notification: $e');
@@ -378,7 +379,7 @@ class FCMService {
             .resolvePlatformSpecificImplementation<
                 IOSFlutterLocalNotificationsPlugin>()
             ?.requestPermissions(badge: true);
-        
+
         // Clear the badge count
         // Note: This requires the app to have badge permissions
       }

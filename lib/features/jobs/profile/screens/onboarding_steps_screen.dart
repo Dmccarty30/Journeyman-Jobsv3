@@ -688,11 +688,10 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
                     Container(
                       height: 56,
                       padding: const EdgeInsets.symmetric(
-                          horizontal: AppTheme.spacingSm),
+                          horizontal: AppTheme.spacingMd),
                       decoration: BoxDecoration(
-                        border: Border.all(color: AppTheme.lightGray),
                         borderRadius: BorderRadius.circular(AppTheme.radiusMd),
-                        color: AppTheme.white,
+                        color: AppTheme.primaryNavy,
                       ),
                       child: DropdownButtonHideUnderline(
                         child: DropdownButton<String>(
@@ -701,14 +700,23 @@ class _OnboardingStepsScreenState extends State<OnboardingStepsScreen> {
                               : _stateController.text,
                           hint: Text(
                             'State',
-                            style: AppTheme.bodyMedium
-                                .copyWith(color: AppTheme.textLight),
+                            style: AppTheme.bodyMedium.copyWith(
+                                color: AppTheme.white.withValues(alpha: 0.7)),
                           ),
                           isExpanded: true,
+                          icon: const Icon(Icons.arrow_drop_down,
+                              color: AppTheme.white),
+                          dropdownColor: AppTheme.primaryNavy,
+                          style: AppTheme.bodyMedium
+                              .copyWith(color: AppTheme.white),
                           items: _usStates.map((state) {
                             return DropdownMenuItem(
                               value: state,
-                              child: Text(state, style: AppTheme.bodyMedium),
+                              child: Text(
+                                state,
+                                style: AppTheme.bodyMedium
+                                    .copyWith(color: AppTheme.white),
+                              ),
                             );
                           }).toList(),
                           onChanged: (value) {

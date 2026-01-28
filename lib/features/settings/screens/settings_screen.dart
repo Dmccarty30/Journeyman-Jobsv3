@@ -205,13 +205,6 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                       onTap: () => context.push(AppRouter.dataStorage),
                     ),
                     _MenuOption(
-                      icon:
-                          Icons.language_outlined, // Icon for Language & Region
-                      title: 'Language & Region',
-                      subtitle: 'Set language, date, and time formats',
-                      onTap: () => context.push(AppRouter.languageRegion),
-                    ),
-                    _MenuOption(
                       icon: Icons.security_outlined,
                       title: 'Privacy & Security',
                       subtitle: 'Control your data and privacy',

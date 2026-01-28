@@ -10,33 +10,34 @@ class LocalNotificationService {
   static final FlutterLocalNotificationsPlugin _notifications =
       FlutterLocalNotificationsPlugin();
   static final FirebaseAuth _auth = FirebaseAuth.instance;
-  
+
   static bool _isInitialized = false;
 
   /// Initialize the local notification service
   static Future<void> initialize() async {
     if (_isInitialized) return;
-    
-    const androidSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
+
+    const androidSettings =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
     const iosSettings = DarwinInitializationSettings(
       requestAlertPermission: true,
       requestBadgePermission: true,
       requestSoundPermission: true,
     );
-    
+
     const initSettings = InitializationSettings(
       android: androidSettings,
       iOS: iosSettings,
     );
-    
+
     await _notifications.initialize(
-      initSettings,
+      settings: initSettings,
       onDidReceiveNotificationResponse: _onNotificationTapped,
     );
-    
+
     // Create notification channels for Android
     await _createNotificationChannels();
-    
+
     _isInitialized = true;
     debugPrint('Local Notification Service initialized');
   }
@@ -82,7 +83,6 @@ class LocalNotificationService {
     }
   }
 
-
   /// Schedule union meeting reminder
   static Future<void> scheduleUnionMeetingReminder({
     required String meetingId,
@@ -97,8 +97,9 @@ class LocalNotificationService {
 
       if (!await _areUnionRemindersEnabled()) return;
 
-      DateTime reminderTime = meetingTime.subtract(Duration(hours: hoursBeforeMeeting));
-      
+      DateTime reminderTime =
+          meetingTime.subtract(Duration(hours: hoursBeforeMeeting));
+
       if (reminderTime.isBefore(DateTime.now())) return;
 
       // Check quiet hours
@@ -141,11 +142,11 @@ class LocalNotificationService {
       });
 
       await _notifications.zonedSchedule(
-        meetingId.hashCode,
-        'IBEW Local $localNumber Meeting',
-        '$meetingTitle starts in $hoursBeforeMeeting hours',
-        tz.TZDateTime.from(reminderTime, tz.local),
-        details,
+        id: meetingId.hashCode,
+        title: 'IBEW Local $localNumber Meeting',
+        body: '$meetingTitle starts in $hoursBeforeMeeting hours',
+        scheduledDate: tz.TZDateTime.from(reminderTime, tz.local),
+        notificationDetails: details,
         androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
         matchDateTimeComponents: DateTimeComponents.time,
         payload: payload,
@@ -157,11 +158,10 @@ class LocalNotificationService {
     }
   }
 
-
   /// Cancel a scheduled notification
   static Future<void> cancelNotification(int id) async {
     try {
-      await _notifications.cancel(id);
+      await _notifications.cancel(id: id);
       debugPrint('Cancelled notification with id: $id');
     } catch (e) {
       debugPrint('Error cancelling notification: $e');
@@ -179,7 +179,8 @@ class LocalNotificationService {
   }
 
   /// Get pending notifications
-  static Future<List<PendingNotificationRequest>> getPendingNotifications() async {
+  static Future<List<PendingNotificationRequest>>
+      getPendingNotifications() async {
     try {
       return await _notifications.pendingNotificationRequests();
     } catch (e) {
@@ -218,14 +219,14 @@ class LocalNotificationService {
   static Future<bool> _isInQuietHours(DateTime time) async {
     final prefs = await SharedPreferences.getInstance();
     final quietHoursEnabled = prefs.getBool('quiet_hours_enabled') ?? false;
-    
+
     if (!quietHoursEnabled) return false;
-    
+
     final startHour = prefs.getInt('quiet_hours_start') ?? 22; // 10 PM
-    final endHour = prefs.getInt('quiet_hours_end') ?? 7;     // 7 AM
-    
+    final endHour = prefs.getInt('quiet_hours_end') ?? 7; // 7 AM
+
     final hour = time.hour;
-    
+
     if (startHour < endHour) {
       // Quiet hours within same day (e.g., 1 PM to 5 PM)
       return hour >= startHour && hour < endHour;
@@ -239,7 +240,7 @@ class LocalNotificationService {
   static Future<DateTime?> _adjustForQuietHours(DateTime originalTime) async {
     final prefs = await SharedPreferences.getInstance();
     final endHour = prefs.getInt('quiet_hours_end') ?? 7; // 7 AM
-    
+
     // Schedule for the end of quiet hours
     final adjustedTime = DateTime(
       originalTime.year,
@@ -248,15 +249,15 @@ class LocalNotificationService {
       endHour,
       0,
     );
-    
+
     // If the adjusted time is still in the past, schedule for next day
     if (adjustedTime.isBefore(DateTime.now())) {
       return adjustedTime.add(const Duration(days: 1));
     }
-    
+
     return adjustedTime;
   }
-  
+
   /// Schedule job deadline reminder
   static Future<void> scheduleJobDeadlineReminder({
     required String jobId,
@@ -269,8 +270,9 @@ class LocalNotificationService {
       final user = _auth.currentUser;
       if (user == null) return;
 
-      DateTime reminderTime = deadline.subtract(Duration(hours: hoursBeforeDeadline));
-      
+      DateTime reminderTime =
+          deadline.subtract(Duration(hours: hoursBeforeDeadline));
+
       if (reminderTime.isBefore(DateTime.now())) return;
 
       // Check quiet hours
@@ -313,11 +315,12 @@ class LocalNotificationService {
       });
 
       await _notifications.zonedSchedule(
-        jobId.hashCode,
-        'Job Application Deadline',
-        'Deadline for $jobTitle at $company is in $hoursBeforeDeadline hours',
-        tz.TZDateTime.from(reminderTime, tz.local),
-        details,
+        id: jobId.hashCode,
+        title: 'Job Application Deadline',
+        body:
+            'Deadline for $jobTitle at $company is in $hoursBeforeDeadline hours',
+        scheduledDate: tz.TZDateTime.from(reminderTime, tz.local),
+        notificationDetails: details,
         androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
         matchDateTimeComponents: DateTimeComponents.time,
         payload: payload,
@@ -328,7 +331,7 @@ class LocalNotificationService {
       debugPrint('Error scheduling job deadline reminder: $e');
     }
   }
-  
+
   /// Schedule safety training reminder
   static Future<void> scheduleSafetyTrainingReminder({
     required String trainingId,
@@ -340,8 +343,9 @@ class LocalNotificationService {
       final user = _auth.currentUser;
       if (user == null) return;
 
-      DateTime reminderTime = expiryDate.subtract(Duration(days: daysBeforeExpiry));
-      
+      DateTime reminderTime =
+          expiryDate.subtract(Duration(days: daysBeforeExpiry));
+
       if (reminderTime.isBefore(DateTime.now())) return;
 
       // Check quiet hours
@@ -384,11 +388,11 @@ class LocalNotificationService {
       });
 
       await _notifications.zonedSchedule(
-        trainingId.hashCode,
-        '🔺 Safety Training Expiry',
-        '$trainingName expires in $daysBeforeExpiry days',
-        tz.TZDateTime.from(reminderTime, tz.local),
-        details,
+        id: trainingId.hashCode,
+        title: '🔺 Safety Training Expiry',
+        body: '$trainingName expires in $daysBeforeExpiry days',
+        scheduledDate: tz.TZDateTime.from(reminderTime, tz.local),
+        notificationDetails: details,
         androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
         matchDateTimeComponents: DateTimeComponents.time,
         payload: payload,

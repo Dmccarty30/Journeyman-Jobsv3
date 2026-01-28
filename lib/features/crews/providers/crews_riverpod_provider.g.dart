@@ -1387,3 +1387,114 @@ abstract class _$CrewCreationNotifier extends $Notifier<AsyncValue<void>> {
     element.handleCreate(ref, build);
   }
 }
+
+/// Notifier for deleting crews (foreman only)
+
+@ProviderFor(DeleteCrewNotifier)
+final deleteCrewProvider = DeleteCrewNotifierProvider._();
+
+/// Notifier for deleting crews (foreman only)
+final class DeleteCrewNotifierProvider
+    extends $NotifierProvider<DeleteCrewNotifier, AsyncValue<void>> {
+  /// Notifier for deleting crews (foreman only)
+  DeleteCrewNotifierProvider._()
+      : super(
+          from: null,
+          argument: null,
+          retry: null,
+          name: r'deleteCrewProvider',
+          isAutoDispose: true,
+          dependencies: null,
+          $allTransitiveDependencies: null,
+        );
+
+  @override
+  String debugGetCreateSourceHash() => _$deleteCrewNotifierHash();
+
+  @$internal
+  @override
+  DeleteCrewNotifier create() => DeleteCrewNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(AsyncValue<void> value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<AsyncValue<void>>(value),
+    );
+  }
+}
+
+String _$deleteCrewNotifierHash() =>
+    r'584cd043e6bc54b37974b035ae938c44e809408c';
+
+/// Notifier for deleting crews (foreman only)
+
+abstract class _$DeleteCrewNotifier extends $Notifier<AsyncValue<void>> {
+  AsyncValue<void> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final ref = this.ref as $Ref<AsyncValue<void>, AsyncValue<void>>;
+    final element = ref.element as $ClassProviderElement<
+        AnyNotifier<AsyncValue<void>, AsyncValue<void>>,
+        AsyncValue<void>,
+        Object?,
+        Object?>;
+    element.handleCreate(ref, build);
+  }
+}
+
+/// Notifier for leaving crews (non-foreman members)
+
+@ProviderFor(LeaveCrewNotifier)
+final leaveCrewProvider = LeaveCrewNotifierProvider._();
+
+/// Notifier for leaving crews (non-foreman members)
+final class LeaveCrewNotifierProvider
+    extends $NotifierProvider<LeaveCrewNotifier, AsyncValue<void>> {
+  /// Notifier for leaving crews (non-foreman members)
+  LeaveCrewNotifierProvider._()
+      : super(
+          from: null,
+          argument: null,
+          retry: null,
+          name: r'leaveCrewProvider',
+          isAutoDispose: true,
+          dependencies: null,
+          $allTransitiveDependencies: null,
+        );
+
+  @override
+  String debugGetCreateSourceHash() => _$leaveCrewNotifierHash();
+
+  @$internal
+  @override
+  LeaveCrewNotifier create() => LeaveCrewNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(AsyncValue<void> value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<AsyncValue<void>>(value),
+    );
+  }
+}
+
+String _$leaveCrewNotifierHash() => r'af73f6fa170818d3a07f0796f0c89154c3531dda';
+
+/// Notifier for leaving crews (non-foreman members)
+
+abstract class _$LeaveCrewNotifier extends $Notifier<AsyncValue<void>> {
+  AsyncValue<void> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final ref = this.ref as $Ref<AsyncValue<void>, AsyncValue<void>>;
+    final element = ref.element as $ClassProviderElement<
+        AnyNotifier<AsyncValue<void>, AsyncValue<void>>,
+        AsyncValue<void>,
+        Object?,
+        Object?>;
+    element.handleCreate(ref, build);
+  }
+}

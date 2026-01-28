@@ -268,3 +268,69 @@ class CrewCreationNotifier extends _$CrewCreationNotifier {
     state = const AsyncValue.data(null);
   }
 }
+
+/// Notifier for deleting crews (foreman only)
+@riverpod
+class DeleteCrewNotifier extends _$DeleteCrewNotifier {
+  @override
+  AsyncValue<void> build() {
+    return const AsyncValue.data(null);
+  }
+
+  Future<bool> deleteCrew(String crewId) async {
+    state = const AsyncValue.loading();
+    try {
+      final crewService = ref.read(crewServiceProvider);
+      await crewService.deleteCrew(crewId);
+
+      // Clear selected crew if it was the deleted one
+      final selectedCrew = ref.read(selectedCrewProvider);
+      if (selectedCrew?.id == crewId) {
+        ref.read(selectedCrewProvider.notifier).clearCrew();
+      }
+
+      state = const AsyncValue.data(null);
+      return true;
+    } catch (e, stack) {
+      state = AsyncValue.error(e, stack);
+      return false;
+    }
+  }
+
+  void reset() {
+    state = const AsyncValue.data(null);
+  }
+}
+
+/// Notifier for leaving crews (non-foreman members)
+@riverpod
+class LeaveCrewNotifier extends _$LeaveCrewNotifier {
+  @override
+  AsyncValue<void> build() {
+    return const AsyncValue.data(null);
+  }
+
+  Future<bool> leaveCrew(String crewId, String userId) async {
+    state = const AsyncValue.loading();
+    try {
+      final crewService = ref.read(crewServiceProvider);
+      await crewService.leaveCrew(crewId: crewId, userId: userId);
+
+      // Clear selected crew if it was the one we left
+      final selectedCrew = ref.read(selectedCrewProvider);
+      if (selectedCrew?.id == crewId) {
+        ref.read(selectedCrewProvider.notifier).clearCrew();
+      }
+
+      state = const AsyncValue.data(null);
+      return true;
+    } catch (e, stack) {
+      state = AsyncValue.error(e, stack);
+      return false;
+    }
+  }
+
+  void reset() {
+    state = const AsyncValue.data(null);
+  }
+}
