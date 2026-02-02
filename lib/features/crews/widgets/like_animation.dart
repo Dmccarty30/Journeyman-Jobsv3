@@ -11,7 +11,7 @@ class LikeAnimation extends StatefulWidget {
   final Color? likedColor;
   final Color? unlikedColor;
   final Duration? animationDuration;
-  
+
   const LikeAnimation({
     super.key,
     required this.isLiked,
@@ -21,7 +21,7 @@ class LikeAnimation extends StatefulWidget {
     this.unlikedColor,
     this.animationDuration,
   });
-  
+
   @override
   State<LikeAnimation> createState() => _LikeAnimationState();
 }
@@ -33,15 +33,16 @@ class _LikeAnimationState extends State<LikeAnimation>
   late Animation<Color?> _colorAnimation;
   late Animation<double> _particleAnimation;
   bool _isAnimating = false;
-  
+
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: widget.animationDuration ?? SocialAnimations.likeAnimationDuration,
+      duration:
+          widget.animationDuration ?? SocialAnimations.likeAnimationDuration,
       vsync: this,
     );
-    
+
     // Scale animation: 0.8 → 1.5 → 1.0
     _scaleAnimation = TweenSequence([
       TweenSequenceItem(tween: Tween<double>(begin: 0.8, end: 1.5), weight: 50),
@@ -50,29 +51,37 @@ class _LikeAnimationState extends State<LikeAnimation>
       parent: _controller,
       curve: SocialAnimations.likeCurve,
     ));
-    
+
     // Color animation: gray → copper → red
     _colorAnimation = TweenSequence([
-      TweenSequenceItem(tween: ColorTween(begin: AppTheme.mediumGray, end: AppTheme.accentCopper), weight: 50),
-      TweenSequenceItem(tween: ColorTween(begin: AppTheme.accentCopper, end: widget.likedColor ?? SocialAnimations.likeColor), weight: 50),
+      TweenSequenceItem(
+          tween: ColorTween(
+              begin: AppTheme.mediumGray, end: AppTheme.accentCopper),
+          weight: 50),
+      TweenSequenceItem(
+          tween: ColorTween(
+              begin: AppTheme.accentCopper,
+              end: widget.likedColor ?? SocialAnimations.likeColor),
+          weight: 50),
     ]).animate(CurvedAnimation(
       parent: _controller,
       curve: Curves.easeInOut,
     ));
-    
+
     // Particle animation
-    _particleAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+    _particleAnimation =
+        Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
       parent: _controller,
       curve: Curves.easeOut,
     ));
   }
-  
+
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
   }
-  
+
   void _handleLike() {
     if (!_isAnimating) {
       _isAnimating = true;
@@ -83,7 +92,7 @@ class _LikeAnimationState extends State<LikeAnimation>
       widget.onLike();
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -109,7 +118,7 @@ class _LikeAnimationState extends State<LikeAnimation>
                   ),
                 ),
               ),
-              
+
               // Particle effects when liked
               if (widget.isLiked && _particleAnimation.value > 0)
                 _buildParticleEffects(),
@@ -119,7 +128,7 @@ class _LikeAnimationState extends State<LikeAnimation>
       ),
     );
   }
-  
+
   Widget _buildParticleEffects() {
     final particles = SocialAnimations.generateParticles(
       count: 8,
@@ -128,7 +137,7 @@ class _LikeAnimationState extends State<LikeAnimation>
       minSize: 2.0,
       maxSize: 4.0,
     );
-    
+
     return Stack(
       children: particles.map((particle) {
         return AnimatedParticle(
@@ -150,7 +159,7 @@ class AnimatedLikeButton extends StatefulWidget {
   final Color? unlikedColor;
   final Duration? animationDuration;
   final bool showCount;
-  
+
   const AnimatedLikeButton({
     super.key,
     required this.isLiked,
@@ -162,7 +171,7 @@ class AnimatedLikeButton extends StatefulWidget {
     this.animationDuration,
     this.showCount = true,
   });
-  
+
   @override
   State<AnimatedLikeButton> createState() => _AnimatedLikeButtonState();
 }
@@ -172,23 +181,24 @@ class _AnimatedLikeButtonState extends State<AnimatedLikeButton>
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
   late Animation<Color?> _colorAnimation;
-  late Animation<double> _countAnimation;
   bool _isAnimating = false;
-  
+
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: widget.animationDuration ?? SocialAnimations.likeAnimationDuration,
+      duration:
+          widget.animationDuration ?? SocialAnimations.likeAnimationDuration,
       vsync: this,
     );
-    
+
     // Scale animation for button
-    _scaleAnimation = Tween<double>(begin: 1.0, end: 1.2).animate(CurvedAnimation(
+    _scaleAnimation =
+        Tween<double>(begin: 1.0, end: 1.2).animate(CurvedAnimation(
       parent: _controller,
       curve: Curves.easeOutBack,
     ));
-    
+
     // Color animation
     _colorAnimation = ColorTween(
       begin: widget.unlikedColor ?? AppTheme.textSecondary,
@@ -197,20 +207,14 @@ class _AnimatedLikeButtonState extends State<AnimatedLikeButton>
       parent: _controller,
       curve: Curves.easeInOut,
     ));
-    
-    // Count animation
-    _countAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-      parent: _controller,
-      curve: Curves.elasticOut,
-    ));
   }
-  
+
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
   }
-  
+
   void _handleLike() {
     if (!_isAnimating) {
       _isAnimating = true;
@@ -222,7 +226,7 @@ class _AnimatedLikeButtonState extends State<AnimatedLikeButton>
       widget.onLike();
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -230,44 +234,49 @@ class _AnimatedLikeButtonState extends State<AnimatedLikeButton>
       child: AnimatedBuilder(
         animation: _controller,
         builder: (context, child) {
-          return Row(
-            mainAxisSize: MainAxisSize.min,
+          return Stack(
+            clipBehavior: Clip.none,
             children: [
-              // Animated heart icon
-              AnimatedScale(
-                scale: _scaleAnimation.value,
-                duration: const Duration(milliseconds: 100),
-                child: Icon(
-                  widget.isLiked ? Icons.favorite : Icons.favorite_border,
-                  color: widget.isLiked
-                      ? (_colorAnimation.value ?? AppTheme.mediumGray)
-                      : (widget.unlikedColor ?? AppTheme.textSecondary),
-                  size: widget.size,
-                ),
-              ),
-              
-              // Like count with animation
-              if (widget.showCount) ...[
-                const SizedBox(width: 4),
-                AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 300),
-                  child: Text(
-                    '${widget.likeCount}',
-                    key: ValueKey(widget.likeCount),
-                    style: AppTheme.bodySmall.copyWith(
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Animated heart icon
+                  AnimatedScale(
+                    scale: _scaleAnimation.value,
+                    duration: const Duration(milliseconds: 100),
+                    child: Icon(
+                      widget.isLiked ? Icons.favorite : Icons.favorite_border,
                       color: widget.isLiked
                           ? (_colorAnimation.value ?? AppTheme.mediumGray)
-                          : AppTheme.textSecondary,
-                      fontWeight: FontWeight.w500,
+                          : (widget.unlikedColor ?? AppTheme.textSecondary),
+                      size: widget.size,
                     ),
                   ),
-                ),
-              ],
-              
+
+                  // Like count with animation
+                  if (widget.showCount) ...[
+                    const SizedBox(width: 4),
+                    AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 300),
+                      child: Text(
+                        '${widget.likeCount}',
+                        key: ValueKey(widget.likeCount),
+                        style: AppTheme.bodySmall.copyWith(
+                          color: widget.isLiked
+                              ? (_colorAnimation.value ?? AppTheme.mediumGray)
+                              : AppTheme.textSecondary,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ],
+                ],
+              ),
               // Particle effects when liked
-              if (widget.isLiked && _controller.status == AnimationStatus.forward)
+              if (widget.isLiked &&
+                  _controller.status == AnimationStatus.forward)
                 Positioned.fill(
-                  child: _buildParticleEffects(),
+                  child: Center(child: _buildParticleEffects()),
                 ),
             ],
           );
@@ -275,7 +284,7 @@ class _AnimatedLikeButtonState extends State<AnimatedLikeButton>
       ),
     );
   }
-  
+
   Widget _buildParticleEffects() {
     final particles = SocialAnimations.generateParticles(
       count: 6,
@@ -284,7 +293,7 @@ class _AnimatedLikeButtonState extends State<AnimatedLikeButton>
       minSize: 1.5,
       maxSize: 3.0,
     );
-    
+
     return Stack(
       children: particles.map((particle) {
         return AnimatedParticle(
@@ -302,7 +311,7 @@ class HeartBurstAnimation extends StatefulWidget {
   final int heartCount;
   final double maxSize;
   final Duration? duration;
-  
+
   const HeartBurstAnimation({
     super.key,
     required this.onComplete,
@@ -310,7 +319,7 @@ class HeartBurstAnimation extends StatefulWidget {
     this.maxSize = 30.0,
     this.duration,
   });
-  
+
   @override
   State<HeartBurstAnimation> createState() => _HeartBurstAnimationState();
 }
@@ -320,7 +329,7 @@ class _HeartBurstAnimationState extends State<HeartBurstAnimation>
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
   late Animation<double> _fadeAnimation;
-  
+
   @override
   void initState() {
     super.initState();
@@ -328,28 +337,30 @@ class _HeartBurstAnimationState extends State<HeartBurstAnimation>
       duration: widget.duration ?? SocialAnimations.likeAnimationDuration,
       vsync: this,
     );
-    
-    _scaleAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+
+    _scaleAnimation =
+        Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
       parent: _controller,
       curve: Curves.elasticOut,
     ));
-    
-    _fadeAnimation = Tween<double>(begin: 1.0, end: 0.0).animate(CurvedAnimation(
+
+    _fadeAnimation =
+        Tween<double>(begin: 1.0, end: 0.0).animate(CurvedAnimation(
       parent: _controller,
       curve: const Interval(0.5, 1.0, curve: Curves.easeOut),
     ));
-    
+
     _controller.forward().whenComplete(() {
       widget.onComplete();
     });
   }
-  
+
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
@@ -362,7 +373,7 @@ class _HeartBurstAnimationState extends State<HeartBurstAnimation>
             final distance = _scaleAnimation.value * 50;
             final x = math.cos(angle) * distance;
             final y = math.sin(angle) * distance;
-            
+
             return Positioned(
               left: x,
               top: y,

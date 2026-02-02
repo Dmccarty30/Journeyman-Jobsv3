@@ -16,6 +16,8 @@
 
 ## CREWS SCREEN
 
+- When I go to create a new crew, when i press the `save preferences` button, it should save the crew and then navigate me back to the crews list.
+
 ## SETTINGS SCREEN
 
 ## LOCALS SCREEN

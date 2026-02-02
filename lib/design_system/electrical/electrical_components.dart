@@ -19,3 +19,4 @@ export 'modern_svg_circuit_background.dart';
 export 'power_line_loader.dart';
 export 'three_phase_sine_wave_loader.dart';
 export 'transmission_tower_icon.dart';
+export 'ultra_modern_background.dart';

@@ -127,32 +127,14 @@ class _CircuitBackgroundDemoScreenState
   }
 
   Widget _buildVersionBPreview() {
-    // Placeholder for Version B
+    // New ultra-modern reactive background
     return _buildSplitView(
-      background: Stack(
-        children: [
-          // Reuse V1 for now until V2 is built, but maybe with different settings/label
-          ElectricalCircuitBackground(
-            opacity: _opacity,
-            animationSpeed: _animationSpeed,
-            componentDensity: _density,
-            enableCurrentFlow: _enableAnimations,
-            enableInteractiveComponents: _enableAnimations,
-            themeVariant: _selectedTheme,
-          ),
-          Center(
-            child: Container(
-              padding: const EdgeInsets.all(16),
-              color: Colors.black54,
-              child: const Text(
-                'Version B (Coming Soon)',
-                style: TextStyle(color: Colors.white, fontSize: 24),
-              ),
-            ),
-          ),
-        ],
+      background: UltraModernBackground(
+        opacity: _opacity,
+        animationSpeed: _animationSpeed,
+        enableAnimations: _enableAnimations,
       ),
-      label: 'future: circuit_board_background_v2.dart',
+      label: 'new: ultra_modern_background.dart',
     );
   }
 

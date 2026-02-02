@@ -15,8 +15,7 @@ class AnnouncementCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    const isPinned = false; // Post model doesn't have isPinned yet
-    final hasReacted = false; // Need to check reactions subcollection
+    final isPinned = post.isPinned;
 
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:journeyman_jobs/design_system/design_system.dart'
     show ComponentDensity;
 
